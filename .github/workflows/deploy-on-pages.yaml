@@ -11,6 +11,16 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  REACT_APP_GTM_ID: ${{ vars.GTM_ID }}
+  REACT_APP_BACKEND_URL: ${{ vars.BACKEND_URL }}
+  REACT_APP_CLARITY_TOKEN: ${{ vars.CLARITY_TOKEN }}
+  REACT_APP_GOFTINO_TOKEN: ${{ vars.GOFTINO_TOKEN }}
+  REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID: ${{ vars.GOOGLE_ANALYTICS_TRACKING_ID }}
+  REACT_APP_GOOGLE_CLIENT_ID: ${{ vars.GOOGLE_CLIENT_ID }}
+  REACT_APP_SENTRY_DNS: ${{ vars.SENTRY_DNS }}
+  SENTRY_AUTH_TOKEN: ${{ vars.SENTRY_AUTH_TOKEN }}
+
 jobs:
   deploy-react-to-gh-pages:
     runs-on: ubuntu-latest
