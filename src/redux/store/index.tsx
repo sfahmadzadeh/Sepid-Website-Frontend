@@ -1,10 +1,10 @@
 import { UserInfoType } from 'types/profile';
-import { updateToken } from '../../configs/axios';
+import { updateToken } from 'configs/axios';
 import createStore from './createStore';
 
 export const getPersistedState = (): { userInfo: UserInfoType; token: string; refresh: string; } => {
-  return localStorage.getItem('rastaState')
-    ? JSON.parse(localStorage.getItem('rastaState'))
+  return localStorage.getItem('sepid-state')
+    ? JSON.parse(localStorage.getItem('sepid-state'))
     : {};
 }
 

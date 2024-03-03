@@ -176,7 +176,6 @@ const isFetching = (state) => {
 };
 
 const isNotFetching = (state) => {
-  console.log(state)
   state.isFetching = false;
 };
 
@@ -309,11 +308,10 @@ const accountSlice = createSlice({
     builder.addMatcher(
       UserSlice.endpoints.loginGoogleUser.matchFulfilled,
       (state, { payload }) => {
-        console.log(payload)
         state.userInfo = { ...state.userInfo, ...payload.user };
         // state.id = payload.account.id;
-        state.token = payload.access_token;
-        state.refresh = payload.refresh_token;
+        state.token = payload.access;
+        state.refresh = payload.refresh;
         state.isFetching = false;
       }
     )

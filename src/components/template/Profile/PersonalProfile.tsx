@@ -94,8 +94,6 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
 
   const selectedProvince = Iran.Provinces.find(province => province.title == userInfo.province);
 
-  console.log(userInfo.birth_date)
-
   return (
     <Grid container item spacing={2}>
       <Grid item xs={12}>
