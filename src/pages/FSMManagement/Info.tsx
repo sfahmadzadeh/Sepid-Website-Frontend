@@ -2,19 +2,10 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import makeStyles from '@mui/styles/makeStyles';
-import { Workshop } from '../../types/models';
-
-const useStyles = makeStyles((theme) => ({
-  absolute: {
-    position: 'absolute',
-    right: 2,
-    zIndex: 5,
-  },
-}));
+import { Workshop } from 'types/models';
 
 type InfoPropsType = {
   workshop: Workshop;
@@ -23,11 +14,10 @@ type InfoPropsType = {
 const Info: FC<InfoPropsType> = ({
   workshop,
 }) => {
-  const classes = useStyles();
   const t = useTranslate();
 
   return (
-    <>
+    <Fragment>
       <Grid
         container item
         spacing={2}
@@ -41,7 +31,7 @@ const Info: FC<InfoPropsType> = ({
           <Typography align='center'>{workshop?.description}</Typography>
         </Grid>
       </Grid>
-    </>
+    </Fragment>
   );
 }
 
@@ -49,8 +39,4 @@ const mapStateToProps = (state) => ({
   workshop: state.workshop.workshop,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-  }
-)(Info);
+export default connect(mapStateToProps)(Info);

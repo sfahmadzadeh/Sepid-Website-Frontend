@@ -4,9 +4,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  Checkbox,
-  FormControlLabel,
-  Grid,
   Typography,
   TextField,
   Box,
@@ -14,7 +11,6 @@ import {
   Stack
 } from '@mui/material';
 import { NotificationsActive } from '@mui/icons-material';
-import { makeStyles } from '@mui/styles'
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import validateURL from 'utils/validators/urlValidator'
@@ -27,13 +23,6 @@ import {
 } from 'redux/slices/events';
 import TeamMember from 'components/atoms/TeamMember';
 
-
-const useStyles = makeStyles({
-  icon: {
-    textAlign: 'center',
-  },
-});
-
 const TeamInfo = ({
   name,
   team_head,
@@ -45,7 +34,6 @@ const TeamInfo = ({
   updateTeamChatRoomLink,
   chatRoom,
 }) => {
-  const classes = useStyles();
   const [teamLink, setTeamLink] = useState(chatRoom)
   const [linkIsValid, setLinkIsValid] = useState(false)
   const [disableRequest, setDisableRequest] = useState(false)

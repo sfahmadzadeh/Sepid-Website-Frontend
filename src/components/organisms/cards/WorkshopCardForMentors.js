@@ -5,28 +5,14 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Chip,
-  Grid,
   Typography,
 } from '@mui/material';
-import { makeStyles } from '@mui/styles'
 import React from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useParams } from 'react-router-dom';
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 300,
-  },
-  media: {
-    height: 150,
-  },
-  icon: {
-    textAlign: 'center',
-  },
-});
 
-const WorkshopCard = ({
+const MentorFSMCard = ({
   id,
   name,
   cover_page,
@@ -34,12 +20,11 @@ const WorkshopCard = ({
   teamsNumber = 0,
   mentorsNumber = 0,
 }) => {
-  const classes = useStyles();
   const t = useTranslate();
   const { programId } = useParams();
 
   return (
-    <Card className={classes.root}
+    <Card
       sx={{
         maxWidth: 300,
         marginTop: '0px',
@@ -65,7 +50,7 @@ const WorkshopCard = ({
       <CardActionArea disabled>
         {cover_page &&
           <CardMedia
-            className={classes.media}
+            sx={{ height: 150 }}
             image={cover_page}
             title={name}
           />
@@ -106,4 +91,4 @@ const WorkshopCard = ({
   );
 };
 
-export default WorkshopCard;
+export default MentorFSMCard;

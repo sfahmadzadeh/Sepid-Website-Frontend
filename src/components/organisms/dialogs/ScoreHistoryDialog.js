@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Box,
   Dialog,
   Table,
   TableBody,
@@ -8,30 +9,11 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import React, { useContext, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { StatePageContext } from 'pages/FSM';
-import { getScoresAction } from '../../redux/slices/currentState';
-
-const useStyles = makeStyles((theme) => ({
-  dialog: {
-    maxHeight: '80vh',
-  },
-  appbar: {
-    padding: theme.spacing(1, 2),
-  },
-  body: {
-    maxHeight: '100%',
-    overflowY: 'auto',
-    overflowX: 'hidden',
-  },
-  score: {
-    padding: theme.spacing(2),
-    width: 40,
-  },
-}));
+import { getScoresAction } from 'redux/slices/currentState';
 
 function ScoreHistoryDialog({
   open,
@@ -40,8 +22,6 @@ function ScoreHistoryDialog({
   totalScore,
   getScores,
 }) {
-  const classes = useStyles();
-
   const { fsmId, playerId } = useContext(StatePageContext);
 
   useEffect(() => {
@@ -56,19 +36,30 @@ function ScoreHistoryDialog({
       onClose={handleClose}
       maxWidth="xs"
       fullWidth
-      className={classes.dialog}>
-      <AppBar position="static" className={classes.appbar}>
+      sx={{ maxHeight: '80vh' }}>
+      <AppBar position="static"
+        sx={{
+          padding: 1,
+        }}>
         <Typography variant="h3" align="center">
           جمع امتیازات: {totalScore}
         </Typography>
       </AppBar>
 
-      <div className={classes.body}>
-        <Table className={classes.table} aria-label="simple table">
+      <Box sx={{
+        maxHeight: '100%',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+      }}>
+        <Table aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center">نام گام</TableCell>
-              <TableCell align="center" className={classes.score}>
+              <TableCell align="center"
+                sx={{
+                  padding: 2,
+                  width: 40,
+                }}>
                 امتیاز
               </TableCell>
               <TableCell align="center">توضیحات</TableCell>
@@ -85,7 +76,6 @@ function ScoreHistoryDialog({
                 <TableCell
                   component="th"
                   scope="row"
-                  className={classes.score}
                   align="center">
                   {result.score}
                 </TableCell>
@@ -96,7 +86,7 @@ function ScoreHistoryDialog({
             ))}
           </TableBody>
         </Table>
-      </div>
+      </Box>
     </Dialog>
   );
 }

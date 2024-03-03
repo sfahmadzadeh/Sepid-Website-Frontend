@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import AdapterJalali from '@date-io/date-fns-jalali';
+import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from "moment";
@@ -93,6 +93,8 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
   };
 
   const selectedProvince = Iran.Provinces.find(province => province.title == userInfo.province);
+
+  console.log(userInfo.birth_date)
 
   return (
     <Grid container item spacing={2}>
@@ -200,13 +202,12 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
 
         <Grid item xs={12} sm={6}>
           <FormControl required fullWidth>
-            <LocalizationProvider dateAdapter={AdapterJalali}>
+            <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
               <DatePicker
                 label={'تاریخ تولد'}
                 openTo='year'
                 views={['year', 'month', 'day']}
-                value={moment(userInfo.birth_date) || ''}
-                renderInput={(params) => <TextField value={moment(userInfo.birth_date) || ''} required {...{ ...params, error: false }} sx={{ width: "100%" }} />}
+                value={userInfo.birth_date ? new Date(userInfo.birth_date) : null}
                 onChange={(date) => setUserInfo({ ...userInfo, birth_date: moment(date).format('YYYY-MM-DD') })}
               />
             </LocalizationProvider>

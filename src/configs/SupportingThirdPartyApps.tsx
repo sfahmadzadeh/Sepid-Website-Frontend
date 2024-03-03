@@ -1,7 +1,7 @@
 import * as Sentry from "@sentry/react";
 import TagManager from 'react-gtm-module'
 import ReactGA from "react-ga4";
-import { getPersistedState } from "redux/store";
+import { getPersistedState } from 'redux/store';
 
 const initSentry = () => {
   const userInfo = getPersistedState().userInfo;

@@ -1,5 +1,4 @@
 import { Grid, Hidden, IconButton, SvgIcon } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import {
   Clear,
   Delete as DeleteIcon,
@@ -24,27 +23,14 @@ import {
   removeAllWhiteboardNodesAction,
   removeSelectedWhiteboardNodeAction,
   undo,
-} from '../../redux/slices/whiteboard';
-import downloadFromURL from '../../utils/downloadFromURL';
+} from 'redux/slices/whiteboard';
+import downloadFromURL from 'utils/downloadFromURL';
 import DrawingModes from './Drawing/DrawingModes';
 import CircleMenu from './Components/CircleMenu';
 import RectangleMenu from './Components/RectangleMenu';
 import RemoveAllNodesDialog from './Components/RemoveAllNodesDialog';
 
-const useStyles = makeStyles((theme) => ({
-  whiteboardNavbar: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    padding: theme.spacing(1),
-    zIndex: 3,
-    '& .MuiIconButton-root': {
-      position: 'relative',
-      pointerEvents: 'auto',
-    },
-  },
-}));
+
 
 function WhiteboardNavbar({
   drawingMode,
@@ -60,7 +46,6 @@ function WhiteboardNavbar({
   isFullScreen,
   setIsFullScreen,
 }) {
-  const classes = useStyles();
   const [openRemoveNodes, setOpenRemoveNodes] = useState(false);
 
   const { teamId } = useContext(StatePageContext);
@@ -69,7 +54,18 @@ function WhiteboardNavbar({
     <Grid
       container
       justifyContent="space-between"
-      className={classes.whiteboardNavbar}>
+      sx={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        padding: 1,
+        zIndex: 3,
+        '& .MuiIconButton-root': {
+          position: 'relative',
+          pointerEvents: 'auto',
+        },
+      }}>
       <Grid item>
         <IconButton onClick={handleClose} size="large">
           <Clear />

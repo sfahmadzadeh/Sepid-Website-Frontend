@@ -1,5 +1,5 @@
-import makeStyles from '@mui/styles/makeStyles';
 import React, { useContext, useEffect, useState, useRef } from 'react';
+import { Box } from '@mui/material';
 import { connect } from 'react-redux';
 
 import { StatePageContext } from 'pages/FSM';
@@ -13,19 +13,9 @@ import {
   removeWhiteboardNodeAction,
   selectWhiteboardNodeAction,
   updateWhiteboardNodeAction,
-} from '../../redux/slices/whiteboard';
+} from 'redux/slices/whiteboard';
 import Drawing from './Drawing';
 import WhiteboardNavbar from './WhiteboardNavbar';
-
-const useStyles = makeStyles(() => ({
-  whiteboard: {
-    position: 'relative',
-    display: 'inline-block',
-    background: '#F7F9FC',
-    touchAction: 'none',
-    width: '100%',
-  },
-}));
 
 function Whiteboard({
   width,
@@ -70,7 +60,13 @@ function Whiteboard({
   }, [teamId]);
 
   return (
-    <div className={classes.whiteboard}>
+    <Box sx={{
+      position: 'relative',
+      display: 'inline-block',
+      background: '#F7F9FC',
+      touchAction: 'none',
+      width: '100%',
+    }}>
       <WhiteboardNavbar
         getDataURL={() => stage.toDataURL()}
         handleClose={handleClose}
@@ -91,7 +87,7 @@ function Whiteboard({
         paintingConfig={paintingConfig}
         removeNode={removeNode}
       />
-    </div>
+    </Box>
   );
 }
 

@@ -22,8 +22,8 @@ const EventSkeletonCard: FC = () => {
         direction="column"
         justifyContent="space-between" spacing={2}
         sx={(theme) => ({
-          padding: theme.spacing(2),
-          paddingLeft: theme.spacing(2),
+          padding: 2,
+          paddingLeft: 2,
         })}>
         <Grid item>
           <Skeleton width="50%" />

@@ -13,44 +13,18 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import makeStyles from '@mui/styles/makeStyles';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 
 import {
   createInstitutesAction,
   getInstitutesAction,
-} from '../../../redux/slices/account';
+} from 'redux/slices/account';
 import {
   addNotificationAction,
-} from '../../../redux/slices/notifications';
+} from 'redux/slices/notifications';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    overflow: 'hidden',
-    padding: theme.spacing(2),
-  },
-  padding: {
-    padding: theme.spacing(2),
-  },
-  profileImage: {
-    maxHeight: '100px',
-    borderRadius: '5px',
-  },
-  logo: {
-    height: 100,
-  },
-  formControl: {
-    width: '100%',
-  },
-  paper: {
-    width: '100%',
-    height: '100%',
-    padding: theme.spacing(2),
-  },
-}));
-
-function Index({
+const AddInstituteDialog = ({
   open,
   handleClose,
   createInstitutes,
@@ -59,8 +33,7 @@ function Index({
   province,
   city,
   isFetching,
-}) {
-  const classes = useStyles();
+}) => {
   const [data, setData] = useState();
 
   const doSetData = (event) => {
@@ -163,10 +136,9 @@ function Index({
           </Grid>
 
           {/* <Grid item container xs={12} sm={6}>
-            <FormControl required size='small'  className={classes.formControl}>
+            <FormControl required size='small' sx={{ width: '100%' }}>
               <InputLabel>نوع</InputLabel>
               <Select
-                className={classes.dropDown}
                 onChange={doSetData}
                 name='institute_type'
                 label='نوع'
@@ -265,4 +237,4 @@ export default connect(mapStateToProps, {
   addNotification: addNotificationAction,
   createInstitutes: createInstitutesAction,
   getInstitutes: getInstitutesAction,
-})(Index);
+})(AddInstituteDialog);

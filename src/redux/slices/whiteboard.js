@@ -2,15 +2,15 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import undoable, { includeAction } from 'redux-undo';
 import { ActionCreators as UndoActionCreators } from 'redux-undo';
 
-import DrawingModes from '../../components/Whiteboard/Drawing/DrawingModes';
+import DrawingModes from 'components/Whiteboard/Drawing/DrawingModes';
 import {
   addWhiteboardNode,
   getWhiteboard,
   removeWhiteboardNode,
   removeWhiteboardNodes,
   updateWhiteboardNode,
-} from '../../parse/whiteboard';
-import makeId from '../../utils/makeId';
+} from 'parse/whiteboard';
+import makeId from 'utils/makeId';
 
 const initialState = {
   mode: DrawingModes.MOVE,

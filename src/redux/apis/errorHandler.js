@@ -1,4 +1,4 @@
-import { Apis } from '../apis';
+import { Apis } from '.';
 import {
   refreshTokenUrl,
 } from '../constants/urls';
