@@ -5,13 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reduxStore from './redux/store';
 import { initSupportingThirdPartyApps } from 'configs/SupportingThirdPartyApps';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 initSupportingThirdPartyApps();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <Provider store={reduxStore}>
-      <App />
-    </Provider>
-  </BrowserRouter>
+  <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+    <BrowserRouter>
+      <Provider store={reduxStore}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+  </GoogleOAuthProvider>
 );

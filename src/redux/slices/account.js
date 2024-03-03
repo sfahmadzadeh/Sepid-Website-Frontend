@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { Apis } from '../apis';
 import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
 import {
@@ -12,6 +12,7 @@ import {
   studentshipCRUDUrl,
   verificationCodeUrl,
 } from '../constants/urls';
+import { UserSlice } from 'redux/features/UserSlice';
 
 export const createAccountAction = createAsyncThunkApi(
   'account/createAccountAction',
@@ -175,6 +176,7 @@ const isFetching = (state) => {
 };
 
 const isNotFetching = (state) => {
+  console.log(state)
   state.isFetching = false;
 };
 
@@ -189,7 +191,6 @@ const initialState = {
   discountCodes: [],
 };
 
-
 const accountSlice = createSlice({
   name: 'account',
   initialState,
@@ -202,112 +203,162 @@ const accountSlice = createSlice({
     },
   },
 
-  extraReducers: {
-    [loginAction.pending.toString()]: isFetching,
-    [loginAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.userInfo = { ...state.userInfo, ...response.account };
-      state.id = response.account.id;
-      state.token = response.access;
-      state.refresh = response.refresh;
-      state.isFetching = false;
-    },
-    [loginAction.rejected.toString()]: isNotFetching,
+  extraReducers: (builder) => {
 
-
-    [createAccountAction.pending.toString()]: isFetching,
-    [createAccountAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.userInfo = { ...state.userInfo, ...response.account };
-      state.id = response.account.id;
-      state.token = response.access;
-      state.refresh = response.refresh;
-      state.isFetching = false;
-    },
-    [createAccountAction.rejected.toString()]: isNotFetching,
-
-
-    [changePasswordAction.pending.toString()]: isFetching,
-    [changePasswordAction.fulfilled.toString()]: isNotFetching,
-    [changePasswordAction.rejected.toString()]: isNotFetching,
-
-
-    [getUserProfileAction.pending.toString()]: isFetching,
-    [getUserProfileAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.userInfo = { ...state.userInfo, ...response };
-      state.isFetching = false;
-    },
-    [getUserProfileAction.rejected.toString()]: isNotFetching,
-
-
-    [getInstitutesAction.pending.toString()]: isFetching,
-    [getInstitutesAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.institutes = response;
-      state.isFetching = false;
-    },
-    [getInstitutesAction.rejected.toString()]: isNotFetching,
-
-
-    [createInstitutesAction.pending.toString()]: isFetching,
-    [createInstitutesAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.institutes = [...state.institutes, response];
-      state.newlyAddedInstitute = response;
-      state.isFetching = false;
-    },
-    [createInstitutesAction.rejected.toString()]: isNotFetching,
-
-
-    [updateUserInfoAction.pending.toString()]: isFetching,
-    [updateUserInfoAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.userInfo = { ...state.userInfo, ...response }
-      state.isFetching = false;
-    },
-    [updateUserInfoAction.rejected.toString()]: isNotFetching,
-
-
-    [updateStudentShipAction.pending.toString()]: isFetching,
-    [updateStudentShipAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.userInfo = {
-        ...state.userInfo,
-        school_studentship: {
-          ...state.userInfo.school_studentship,
-          ...response,
-        }
+    builder.addCase(
+      loginAction.fulfilled,
+      (state, { payload: { response } }) => {
+        state.userInfo = { ...state.userInfo, ...response.account };
+        state.id = response.account.id;
+        state.token = response.access;
+        state.refresh = response.refresh;
+        state.isFetching = false;
       }
-      state.isFetching = false;
-    },
-    [updateStudentShipAction.rejected.toString()]: isNotFetching,
+    );
 
-
-    // for mentors
-    [createDiscountCodeAction.pending.toString()]: isFetching,
-    [createDiscountCodeAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.discountCodes = [...state.discountCodes, response]
-      state.isFetching = false;
-    },
-    [createDiscountCodeAction.rejected.toString()]: isNotFetching,
-
-
-    [deleteDiscountCodeAction.pending.toString()]: isFetching,
-    [deleteDiscountCodeAction.fulfilled.toString()]: (state, action) => {
-      const discountCodeId = action?.meta?.arg?.discountCodeId;
-      const newDiscountCodes = [...state.discountCodes]
-      for (let i = 0; i < newDiscountCodes.length; i++) {
-        if (newDiscountCodes[i].id == discountCodeId) {
-          newDiscountCodes.splice(i, 1);
-          break;
-        }
+    builder.addCase(
+      createAccountAction.fulfilled,
+      (state, { payload: { response } }) => {
+        state.userInfo = { ...state.userInfo, ...response.account };
+        state.id = response.account.id;
+        state.token = response.access;
+        state.refresh = response.refresh;
+        state.isFetching = false;
       }
-      state.discountCodes = newDiscountCodes;
-      state.isFetching = false;
-    },
-    [deleteDiscountCodeAction.rejected.toString()]: isNotFetching,
+    );
 
-    [getAllMerchandiseDiscountCodesAction.pending.toString()]: isFetching,
-    [getAllMerchandiseDiscountCodesAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.discountCodes = response;
-      state.isFetching = false;
-    },
-    [getAllMerchandiseDiscountCodesAction.rejected.toString()]: isNotFetching,
-  },
+    builder.addCase(
+      getUserProfileAction.fulfilled,
+      (state, { payload: { response } }) => {
+        state.userInfo = { ...state.userInfo, ...response };
+        state.isFetching = false;
+      }
+    );
+
+    builder.addCase(
+      getInstitutesAction.fulfilled,
+      (state, { payload: { response } }) => {
+        state.institutes = response;
+        state.isFetching = false;
+      },
+    );
+
+    builder.addCase(
+      createInstitutesAction.fulfilled,
+      (state, { payload: { response } }) => {
+        state.institutes = [...state.institutes, response];
+        state.newlyAddedInstitute = response;
+        state.isFetching = false;
+      },
+    );
+
+    builder.addCase(
+      updateUserInfoAction.fulfilled,
+      (state, { payload: { response } }) => {
+        state.userInfo = { ...state.userInfo, ...response }
+        state.isFetching = false;
+      }
+    );
+
+    builder.addCase(
+      updateStudentShipAction.fulfilled,
+      (state, { payload: { response } }) => {
+        state.userInfo = {
+          ...state.userInfo,
+          school_studentship: {
+            ...state.userInfo.school_studentship,
+            ...response,
+          }
+        }
+        state.isFetching = false;
+      }
+    );
+
+    builder.addCase(
+      createDiscountCodeAction.fulfilled,
+      (state, { payload: { response } }) => {
+        state.discountCodes = [...state.discountCodes, response]
+        state.isFetching = false;
+      }
+    );
+
+    builder.addCase(
+      deleteDiscountCodeAction.fulfilled,
+      (state, action) => {
+        const discountCodeId = action?.meta?.arg?.discountCodeId;
+        const newDiscountCodes = [...state.discountCodes]
+        for (let i = 0; i < newDiscountCodes.length; i++) {
+          if (newDiscountCodes[i].id == discountCodeId) {
+            newDiscountCodes.splice(i, 1);
+            break;
+          }
+        }
+        state.discountCodes = newDiscountCodes;
+        state.isFetching = false;
+      }
+    );
+
+    builder.addCase(
+      getAllMerchandiseDiscountCodesAction.fulfilled,
+      (state, { payload: { response } }) => {
+        state.discountCodes = response;
+        state.isFetching = false;
+      },
+    )
+
+    builder.addMatcher(
+      UserSlice.endpoints.loginGoogleUser.matchFulfilled,
+      (state, { payload }) => {
+        console.log(payload)
+        state.userInfo = { ...state.userInfo, ...payload.user };
+        // state.id = payload.account.id;
+        state.token = payload.access_token;
+        state.refresh = payload.refresh_token;
+        state.isFetching = false;
+      }
+    )
+
+    ///////////// LOADINGS /////////////
+
+    builder.addMatcher(
+      isAnyOf(
+        loginAction.pending,
+        createAccountAction.pending,
+        changePasswordAction.pending,
+        getUserProfileAction.pending,
+        getInstitutesAction.pending,
+        createInstitutesAction.pending,
+        updateUserInfoAction.pending,
+        updateStudentShipAction.pending,
+        createDiscountCodeAction.pending,
+        deleteDiscountCodeAction.pending,
+        getAllMerchandiseDiscountCodesAction.pending,
+        UserSlice.endpoints.getGoogleUserProfile.matchPending,
+        UserSlice.endpoints.loginGoogleUser.matchPending,
+      ),
+      isFetching,
+    );
+
+    builder.addMatcher(
+      isAnyOf(
+        loginAction.rejected,
+        createAccountAction.rejected,
+        changePasswordAction.fulfilled,
+        changePasswordAction.rejected,
+        getUserProfileAction.rejected,
+        getInstitutesAction.rejected,
+        createInstitutesAction.rejected,
+        updateUserInfoAction.rejected,
+        updateStudentShipAction.rejected,
+        createDiscountCodeAction.rejected,
+        deleteDiscountCodeAction.rejected,
+        getAllMerchandiseDiscountCodesAction.rejected,
+        UserSlice.endpoints.getGoogleUserProfile.matchRejected,
+        UserSlice.endpoints.loginGoogleUser.matchRejected,
+      ),
+      isNotFetching,
+    );
+  }
 });
 
 export const { logout: logoutAction } = accountSlice.actions;

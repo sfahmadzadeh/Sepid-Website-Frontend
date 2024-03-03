@@ -166,7 +166,7 @@ const StudentProfile: FC<StudentProfilePropsType> = ({
               <Select
                 onChange={handleFieldsChange}
                 name="grade"
-                value={schoolStudentship.grade || ''}
+                value={schoolStudentship.grade}
                 label="پایه">
                 {GRADES.map((grade) => (
                   <MenuItem key={grade.value} value={grade.value}>

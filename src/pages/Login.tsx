@@ -12,6 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { loginAction } from 'redux/slices/account';
 import appendPreviousParams from 'utils/AppendPreviousParams';
 import { toEnglishNumber } from 'utils/translateNumber';
+import GoogleLogin from 'components/organisms/GoogleLogin';
 
 type LoginPagePropsType = {
   isFetching: boolean;
@@ -29,7 +30,6 @@ const LoginPage: FC<LoginPagePropsType> = ({
     password: '',
     username: '',
   });
-
   const urlParams = new URLSearchParams(window.location.search);
   const programId = urlParams.get('private_program_id');
 
@@ -43,7 +43,6 @@ const LoginPage: FC<LoginPagePropsType> = ({
     }
   }, [programId, navigate, token])
 
-
   const putData = (event) => {
     setData({
       ...data,
@@ -51,7 +50,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
     });
   };
 
-  const doLogin = () => {
+  const regularLogin = () => {
     const { username, password } = data;
     if (!username || !password) {
       return;
@@ -71,7 +70,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
         <Stack
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
-              doLogin();
+              regularLogin();
             }
           }}
           width='md' sx={{ marginTop: 5, padding: 2, width: '100%' }} spacing={1.5} component={Paper}>
@@ -108,15 +107,15 @@ const LoginPage: FC<LoginPagePropsType> = ({
             type="password"
             inputMode='text'
           />
-
           <Button
-            onClick={doLogin}
+            onClick={regularLogin}
             variant="contained"
             color="primary"
             disabled={isFetching}
             fullWidth>
             بزن بریم
           </Button>
+          <GoogleLogin />
         </Stack>
         <Stack>
           <Typography gutterBottom align='center'>

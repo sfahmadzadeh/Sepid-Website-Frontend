@@ -13,7 +13,7 @@ const reduxStore = createStore(getPersistedState());
 reduxStore.subscribe(() => {
   const state = reduxStore.getState();
   localStorage.setItem(
-    'rastaState',
+    'sepid-state',
     JSON.stringify({
       account: {
         userInfo: state.account.userInfo,
