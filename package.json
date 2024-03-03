@@ -53,10 +53,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && yarn run sentry:sourcemaps",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org rasta-kamva-academy --project kamva-platform-frontend ./build && sentry-cli --url https://sentry.hamravesh.com sourcemaps upload --org rasta-kamva-academy --project kamva-platform-frontend ./build"
+    "eject": "react-scripts eject"
   },
   "browserslist": {
     "production": [
