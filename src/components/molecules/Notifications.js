@@ -35,7 +35,7 @@ const Notifications = ({ notifications = [], removeSnackbar }) => {
           key,
           anchorOrigin: {
             vertical: 'top',
-            horizontal: 'left',
+            horizontal: 'right',
           },
           TransitionComponent: function TransitionComponent(props) {
             return <Grow {...props} />;
