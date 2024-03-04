@@ -10,7 +10,7 @@ ARG REACT_APP_CLARITY_TOKEN
 ARG REACT_APP_GOFTINO_TOKEN
 
 COPY ./package.json ./
-RUN npm i
+RUN npm i --legacy-peer-deps
 ENV PATH="./node_modules/.bin:$PATH"
 COPY . .
 RUN npm run build
