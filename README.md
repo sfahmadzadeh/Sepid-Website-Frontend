@@ -5,8 +5,8 @@
 
 - `git clone git@github.com:Rastaiha/Kamva-Frontend.git`
 - `cd Kamva-Frontend`
-- `yarn`
-- `yarn start`
+- `npm i`
+- `npm start`
 
 اکنون می‌توانید پروژه را روی آدرس `http://localhost:3000/` مشاهده کنید.
 

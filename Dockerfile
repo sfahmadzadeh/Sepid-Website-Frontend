@@ -9,11 +9,11 @@ ARG REACT_APP_GTM_ID
 ARG REACT_APP_CLARITY_TOKEN
 ARG REACT_APP_GOFTINO_TOKEN
 
-COPY ./package.json ./yarn.lock ./
-RUN yarn
+COPY ./package.json ./
+RUN npm i
 ENV PATH="./node_modules/.bin:$PATH"
 COPY . .
-RUN yarn run build
+RUN npm run build
 
 FROM nginx:latest as production
 ENV SERVER_NAME = _
