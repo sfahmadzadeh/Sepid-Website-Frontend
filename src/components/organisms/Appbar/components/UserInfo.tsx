@@ -28,7 +28,7 @@ function UserInfo({ isUserAuthenticated }: UserInfoPropsType) {
 }
 
 const mapStateToProps = (state) => ({
-  isUserAuthenticated: Boolean(state.account.token),
+  isUserAuthenticated: Boolean(state.account.accessToken),
 });
 
 export default connect(mapStateToProps, {

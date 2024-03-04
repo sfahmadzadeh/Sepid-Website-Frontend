@@ -22,7 +22,7 @@ const GoogleLogin = () => {
 
   const {
     data: googleUserProfile,
-  } = useGetGoogleUserProfileQuery({ access_token: googleUser?.access_token }, { skip: !googleUser })
+  } = useGetGoogleUserProfileQuery({ accessToken: googleUser?.access_token }, { skip: !googleUser })
 
   const [loginWithGoogle, result] = useLoginGoogleUserMutation();
 

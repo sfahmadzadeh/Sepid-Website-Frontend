@@ -8,12 +8,12 @@ type LoginGoogleUserInputType = {
 
 type LoginGoogleUserOutputType = {
   user: any;
-  access_token: string;
-  refresh_token: string;
+  access: string;
+  refresh: string;
 };
 
 type GetGoogleUserProfileInput = {
-  access_token: string;
+  accessToken: string;
 }
 
 type GetGoogleUserProfileOutput = {
@@ -31,9 +31,9 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getGoogleUserProfile: builder.query<GetGoogleUserProfileOutput, GetGoogleUserProfileInput>({
       query: (body) => ({
-        url: `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${body.access_token}`,
+        url: `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${body.accessToken}`,
         headers: {
-          Authorization: `Bearer ${body.access_token}`,
+          Authorization: `Bearer ${body.accessToken}`,
           Accept: 'application/json'
         }
       })
@@ -45,11 +45,7 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
         body,
       }),
       transformResponse: (response: any): LoginGoogleUserOutputType => {
-        return {
-          user: response.user,
-          access_token: response.access_token,
-          refresh_token: response.refresh_token,
-        };
+        return response;
       },
     }),
   })

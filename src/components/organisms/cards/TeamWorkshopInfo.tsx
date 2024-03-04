@@ -42,7 +42,6 @@ type TeamWorkshopInfoPropsType = {
   name: string,
   members: any[],
   teamId: number,
-  token: string,
   playerId: number,
   playerIdFromRedux: number,
   deleteRequestMentor: Function,
@@ -58,7 +57,6 @@ const TeamWorkshopInfo: FC<TeamWorkshopInfoPropsType> = ({
   name,
   members,
   teamId,
-  token,
   playerId,
   playerIdFromRedux,
   deleteRequestMentor,
@@ -162,7 +160,7 @@ available playerId field, otherwise we fetch one team members Id and use it to a
   const redirect = () => {
     setClick(true);
     if (!playerId) {
-      getPlayerFromTeam({ teamId, id: fsmId, token });
+      getPlayerFromTeam({ teamId, id: fsmId });
     }
   };
 
@@ -357,7 +355,6 @@ const TimeChip: FC<TimeChipPropsType> = (props) => {
 
 const mapStateToProps = (state, ownProps) => ({
   playerIdFromRedux: state.events.playerId[ownProps.teamId],
-  token: state.account.token,
 });
 
 export default connect(mapStateToProps, {

@@ -661,7 +661,7 @@ const eventSlice = createSlice({
       newPlayerId[meta.arg.teamId] = payload.response.id;
       state.playerId = newPlayerId;
       // window.open(
-      //   `https://kamva.academy/join/${payload?.response?.id}/${meta?.arg?.token}/`
+      //   `https://kamva.academy/join/${payload?.response?.id}/${meta?.arg?.accessToken}/`
       // );
     },
 

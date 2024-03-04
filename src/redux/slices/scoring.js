@@ -83,10 +83,6 @@ export const getScoreTypesAction = createAsyncThunkApi(
 );
 
 const initialState = {
-  token: null,
-  refresh: null,
-  user: {},
-  discountCodes: [],
   scores: [],
 };
 

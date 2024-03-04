@@ -28,7 +28,7 @@ type InfoPropsType = {
   getFSMPlayers: Function,
   getRequestMentor: Function,
   deleteRequestMentor: Function,
-  token: Token,
+  accessToken: Token,
   requests: Request,
   players: Player,
   createRequestMentor: Function,
@@ -39,7 +39,7 @@ const Teams: FC<InfoPropsType> = ({
   getFSMPlayers,
   getRequestMentor,
   deleteRequestMentor,
-  token,
+  accessToken,
   requests,
   players,
   createRequestMentor,
@@ -88,7 +88,7 @@ const Teams: FC<InfoPropsType> = ({
 
   const visitPlayer = (playerId) => {
     deleteRequestMentor({ teamId: playerId, fsmId })
-    window.open(`https://kamva.academy/join/${playerId}/${token}/`);
+    window.open(`https://kamva.academy/join/${playerId}/${accessToken}/`);
   }
 
   return (
@@ -151,7 +151,7 @@ const Teams: FC<InfoPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  token: state.account.token,
+  accessToken: state.account.accessToken,
   players: state.workshop.players,
   requests: state.events.teamsRequests || {},
 });

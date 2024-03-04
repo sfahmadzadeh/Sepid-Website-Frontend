@@ -8,9 +8,9 @@ export const ManageContentServiceApi = createApi({
     // Fill in your own server starting URL here
     baseUrl: BACKEND_URL + 'api/',
     prepareHeaders: (headers, { getState, endpoint }) => {
-      const accessToken = (getState() as any).account?.token;
+      const accessToken = (getState() as any).account?.accessToken;
       //todo: what should we do with refresh token?!
-      const refreshToken = (getState() as any).account?.refresh;
+      const refreshToken = (getState() as any).account?.refreshToken;
       if (accessToken) {
         headers.append('Authorization', `JWT ${accessToken}`)
       }

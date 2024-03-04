@@ -22,14 +22,14 @@ type CreateAccountPropsType = {
   isFetching: boolean;
   createAccount: any;
   getVerificationCode: any;
-  token: string;
+  accessToken: string;
 }
 
 const CreateAccount: FC<CreateAccountPropsType> = ({
   isFetching,
   createAccount,
   getVerificationCode,
-  token,
+  accessToken,
 }) => {
   const navigate = useNavigate();
   const [buttonDisable, setButtonDisable] = useState(false);
@@ -46,14 +46,14 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
   const programId = urlParams.get('private_program_id');
 
   useEffect(() => {
-    if (token) {
+    if (accessToken) {
       if (programId) {
         navigate(`/program/${programId}/`);
       } else {
         navigate('/programs/');
       }
     }
-  }, [programId, navigate, token])
+  }, [programId, navigate, accessToken])
 
   const collectData = (event) => {
     setData({
@@ -222,7 +222,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  token: state.account.token,
+  accessToken: state.account.accessToken,
   isFetching: state.account.isFetching,
 });
 

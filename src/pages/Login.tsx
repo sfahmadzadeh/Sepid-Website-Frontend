@@ -17,13 +17,13 @@ import GoogleLogin from 'components/organisms/GoogleLogin';
 type LoginPagePropsType = {
   isFetching: boolean;
   login: any;
-  token: string;
+  accessToken: string;
 };
 
 const LoginPage: FC<LoginPagePropsType> = ({
   isFetching,
   login,
-  token,
+  accessToken,
 }) => {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -34,14 +34,14 @@ const LoginPage: FC<LoginPagePropsType> = ({
   const programId = urlParams.get('private_program_id');
 
   useEffect(() => {
-    if (token) {
+    if (accessToken) {
       if (programId) {
         navigate(`/program/${programId}/`);
       } else {
         navigate('/programs/');
       }
     }
-  }, [programId, navigate, token])
+  }, [programId, navigate, accessToken])
 
   const putData = (event) => {
     setData({
@@ -136,7 +136,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
 };
 
 const mapStateToProps = (state) => ({
-  token: state.account.token,
+  accessToken: state.account.accessToken,
   isFetching: state.account.isFetching,
 });
 

@@ -184,8 +184,8 @@ const initialState = {
   userInfo: {},
   institutes: [],
   isFetching: false,
-  token: '',
-  refresh: '',
+  accessToken: '',
+  refreshToken: '',
   user: {},
   discountCodes: [],
 };
@@ -196,8 +196,8 @@ const accountSlice = createSlice({
   reducers: {
     logout: () => initialState,
     refreshToken: (state, action) => {
-      state.token = action.payload.access;
-      state.refresh = action.payload.refresh;
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
       window.location.reload();
     },
   },
@@ -209,8 +209,8 @@ const accountSlice = createSlice({
       (state, { payload: { response } }) => {
         state.userInfo = { ...state.userInfo, ...response.account };
         state.id = response.account.id;
-        state.token = response.access;
-        state.refresh = response.refresh;
+        state.accessToken = response.access;
+        state.refreshToken = response.refresh;
         state.isFetching = false;
       }
     );
@@ -220,8 +220,8 @@ const accountSlice = createSlice({
       (state, { payload: { response } }) => {
         state.userInfo = { ...state.userInfo, ...response.account };
         state.id = response.account.id;
-        state.token = response.access;
-        state.refresh = response.refresh;
+        state.accessToken = response.access;
+        state.refreshToken = response.refresh;
         state.isFetching = false;
       }
     );
@@ -310,8 +310,8 @@ const accountSlice = createSlice({
       (state, { payload }) => {
         state.userInfo = { ...state.userInfo, ...payload.user };
         // state.id = payload.account.id;
-        state.token = payload.access;
-        state.refresh = payload.refresh;
+        state.accessToken = payload.access;
+        state.refreshToken = payload.refresh;
         state.isFetching = false;
       }
     )

@@ -2,16 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Navigate, Outlet, useParams } from 'react-router-dom';
 
-const PrivateRoute = ({ token }) => {
+const PrivateRoute = ({  accessToken }) => {
   const { programId } = useParams();
-  if (!token) {
+  if (!accessToken) {
     return <Navigate to={programId ? `/?private_program_id=${programId}` : '/'} />
   }
   return <Outlet />
 };
 
 const mapStateToProps = (state) => ({
-  token: state.account.token,
+  accessToken: state.account.accessToken,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);
