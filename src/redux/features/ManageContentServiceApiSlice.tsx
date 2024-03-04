@@ -4,6 +4,7 @@ import { BACKEND_URL } from 'configs/Constants'
 
 export const ManageContentServiceApi = createApi({
   reducerPath: 'manage-content-service',
+  tagTypes: ['programs'],
   baseQuery: fetchBaseQuery({
     // Fill in your own server starting URL here
     baseUrl: BACKEND_URL + 'api/',

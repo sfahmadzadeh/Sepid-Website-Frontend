@@ -39,6 +39,7 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
       })
     }),
     loginGoogleUser: builder.mutation<LoginGoogleUserOutputType, LoginGoogleUserInputType>({
+      invalidatesTags: ['programs'],
       query: (body) => ({
         url: 'auth/accounts/login-with-google/',
         method: 'POST',
