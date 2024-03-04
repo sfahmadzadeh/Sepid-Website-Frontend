@@ -25,7 +25,7 @@ const initSentry = () => {
 }
 
 const initGoogleAnalytics = () => {
-  ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID);
+  ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID);
 }
 
 const initGoogleTagManager = () => {
