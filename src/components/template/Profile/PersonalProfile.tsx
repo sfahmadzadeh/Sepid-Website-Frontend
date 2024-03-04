@@ -37,8 +37,8 @@ type PersonalProfilePropsType = {
 }
 
 const hasUserCompletedPrimaryInformation = (userInfo) => {
-  const { first_name, last_name, national_code, birth_date, gender, province, city } = userInfo;
-  return first_name && last_name && national_code && birth_date && gender && province && city;
+  const { first_name, last_name, birth_date, gender, province, city } = userInfo;
+  return first_name && last_name && birth_date && gender && province && city;
 }
 
 const PersonalProfile: FC<PersonalProfilePropsType> = ({
@@ -167,7 +167,6 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
 
         <Grid item xs={12} sm={6}>
           <TextField
-            required
             fullWidth
             value={userInfo.national_code || ''}
             name="national_code"
@@ -183,7 +182,6 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
 
         <Grid item xs={12} sm={6}>
           <TextField
-            required
             fullWidth
             disabled={true}
             value={userInfo.phone_number || ''}
@@ -202,7 +200,7 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
           <FormControl required fullWidth>
             <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
               <DatePicker
-                label={'تاریخ تولد'}
+                label={'تاریخ تولد*'}
                 openTo='year'
                 views={['year', 'month', 'day']}
                 value={userInfo.birth_date ? new Date(userInfo.birth_date) : null}
@@ -219,7 +217,7 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
             name="email"
             onChange={handleFieldsChange}
             inputProps={{ className: 'ltr-input' }}
-            label="ایمیل (اختیاری)"
+            label="ایمیل"
           />
         </Grid>
 
