@@ -29,6 +29,14 @@ function Statics({
     getEventWorkshops({ programId, pageNumber });
   }, [pageNumber]);
 
+  const getTotalParticipantsCountOfAllProgramFSMs = (allEventWorkshops) => {
+    let totalParticipantsCount = 0;
+    for (let fsm of allEventWorkshops) {
+      totalParticipantsCount += fsm.players_count;
+    }
+    return totalParticipantsCount;
+  }
+
   return (
     <Stack spacing={3} alignItems={'start'} justifyContent={'center'} paddingTop={2}>
 
@@ -48,6 +56,9 @@ function Statics({
       <Stack spacing={1}>
         <Typography variant='h3' gutterBottom>
           {'آمار کارگاه‌ها'}
+        </Typography>
+        <Typography variant='h5'>
+          {`مجموع تعداد ورود به کارگاه‌ها : ${toPersianNumber(getTotalParticipantsCountOfAllProgramFSMs(allEventWorkshops))} نفر`}
         </Typography>
         <Stack>
           <Grid container spacing={2} alignItems='center' justifyContent="center">
