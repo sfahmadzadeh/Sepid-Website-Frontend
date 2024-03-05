@@ -34,8 +34,8 @@ function Index({
   event,
   discountCodes,
 }) {
-  const [value, setValue] = useState();
-  const [username, setUsername] = useState();
+  const [value, setValue] = useState<number>();
+  const [username, setUsername] = useState<string>();
 
   useEffect(() => {
     if (event?.merchandise?.id) {
@@ -46,12 +46,19 @@ function Index({
   const handleCreateDiscountCode = () => {
     if (!username) {
       addNotification({
-        message: 'شماره تلفن کاربر مورد نظر را وارد کنید..',
+        message: 'شماره تلفن کاربر مورد نظر را وارد کنید.',
         type: 'error',
       });
       return;
     }
-    if (value > 100 || value < 0 || value.toString().includes('.')) {
+    if (!value) {
+      addNotification({
+        message: 'لطفاً عددی را وارد کنید',
+        type: 'error',
+      });
+      return;
+    }
+    if (value && value > 100 || value < 0 || value.toString().includes('.')) {
       addNotification({
         message: 'لطفاً عددی طبیعی بین ۰ تا ۱۰۰ وارد کنید.',
         type: 'error',
@@ -67,7 +74,7 @@ function Index({
 
   return (
     <>
-      <Grid container spacing={2} alignItems="center" justify="center">
+      <Grid container spacing={2} alignItems="center" justifyContent="center">
         <Grid item xs={12}>
           <Typography variant='h4'>
             {'ایجاد کد تخفیف'}
@@ -88,7 +95,7 @@ function Index({
               variant='outlined'
               label='درصد تخفیف'
               inputProps={{ className: 'ltr-input' }}
-              value={value} onChange={(e) => setValue(toEnglishNumber(e.target.value))} />
+              value={value} onChange={(e) => setValue(parseInt(toEnglishNumber(e.target.value)))} />
           </Grid>
           <Grid item xs={12} sm={4} >
             <Button

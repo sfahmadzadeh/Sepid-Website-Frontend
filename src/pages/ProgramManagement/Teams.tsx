@@ -117,7 +117,7 @@ function Teams({
         </Grid>
 
         <Box width='100%' height='30px'></Box>
-        <Divider width='100%'></Divider>
+        <Divider />
         <Box width='100%' height='10px'></Box>
 
         <Grid item xs={12}>
@@ -162,7 +162,7 @@ function Teams({
         </Grid>
 
         <Box width='100%' height='30px'></Box>
-        <Divider width='100%'></Divider>
+        <Divider />
         <Box width='100%' height='10px'></Box>
 
         <Grid item xs={12}>

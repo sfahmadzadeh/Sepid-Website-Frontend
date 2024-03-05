@@ -25,7 +25,7 @@ export const toPersianNumber = (num) => {
   return converted;
 };
 
-export const toEnglishNumber = (num) => {
+export const toEnglishNumber = (num: string) => {
   const english = {
     '۰': '0',
     '۱': '1',
