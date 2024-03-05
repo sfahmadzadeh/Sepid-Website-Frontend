@@ -1,4 +1,12 @@
-import { Divider, Paper, Typography, Box, Collapse, IconButton } from '@mui/material';
+import {
+  Divider,
+  Paper,
+  Typography,
+  Box,
+  Collapse,
+  IconButton,
+  Skeleton,
+} from '@mui/material';
 import React, { useEffect, useState, FC } from 'react';
 import RoadMapType1 from 'components/organisms/RoadMap/RoadMapType1';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
@@ -55,8 +63,6 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
     }
   }, [currentNodeId])
 
-  if (!FSMRoadmap || !playerTakenPath) return null;
-
   return (
     <Box component={Paper}>
       <Typography variant='h4' padding={1}>
@@ -67,7 +73,10 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
       </Typography>
       <Collapse in={openRoadMap}>
         <Divider />
-        <RoadMapType1 currentNodeId={currentNodeId} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlighedPath={_playerTakenPath} />
+        {(!FSMRoadmap || !playerTakenPath)
+          ? <Skeleton variant='rectangular' height={200} sx={{ borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }} />
+          : <RoadMapType1 currentNodeId={currentNodeId} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlighedPath={_playerTakenPath} />
+        }
       </Collapse>
     </Box>
   );
