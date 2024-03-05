@@ -6,7 +6,7 @@ import DiscountIcon from '@mui/icons-material/Discount';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import InfoIcon from '@mui/icons-material/Info';
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import BarChartIcon from '@mui/icons-material/BarChart';
 
 import React, { useEffect, useState, FC } from 'react';
 import { connect } from 'react-redux';
@@ -23,7 +23,8 @@ import Info from './Info';
 import RegistrationForm from './RegistrationForm';
 import RegistrationReceipts from './RegistrationReceipts';
 import Teams from './Teams';
-import Workshops from './Workshops';
+import FSMs from './FSMs';
+import Statistics from './Statistics';
 
 const tabs: { name: string, label: string, icon: any, component: any }[] = [
   {
@@ -33,7 +34,7 @@ const tabs: { name: string, label: string, icon: any, component: any }[] = [
     component: Info,
   },
   {
-    name: 'registration',
+    name: 'registration-form',
     label: 'فرم ثبت‌نام',
     icon: HistoryEduIcon,
     component: RegistrationForm,
@@ -57,21 +58,18 @@ const tabs: { name: string, label: string, icon: any, component: any }[] = [
     component: Teams,
   },
   {
-    name: 'workshops',
+    name: 'fsms',
     label: 'کارگاه‌ها',
     icon: ClassIcon,
-    component: Workshops,
+    component: FSMs,
+  },
+  {
+    name: 'statistics',
+    label: 'آمارها',
+    icon: BarChartIcon,
+    component: Statistics,
   },
 ];
-
-const SECTIONS = {
-  'info': 0,
-  'registration': 1,
-  'registration-receipts': 2,
-  'discount-codes': 3,
-  'teams': 4,
-  'workshops': 5
-}
 
 type EventType = {
   getOneEventInfo: Function,
@@ -86,8 +84,8 @@ const Event: FC<EventType> = ({
 }) => {
   const t = useTranslate();
   const { programId, section } = useParams();
-  const [tabIndex, setTabIndex] = useState(SECTIONS[section]);
-  const TabComponent = tabs[SECTIONS[section]].component;
+  const [tabIndex, setTabIndex] = useState(tabs.indexOf(tabs.find(tab => tab.name == section)));
+  const TabComponent = tabs.find(tab => tab.name == section).component;
   const navigate = useNavigate();
 
   useEffect(() => {

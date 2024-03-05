@@ -35,7 +35,7 @@ function Index({
         item
         spacing={2}
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         direction="row">
 
         <Grid item container justifyContent='space-between' xs={12} spacing={2} style={{ marginTop: 2 }}>

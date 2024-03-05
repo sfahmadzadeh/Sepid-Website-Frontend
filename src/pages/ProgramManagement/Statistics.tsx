@@ -9,8 +9,8 @@ import {
   addUserToTeamAction,
 } from 'redux/slices/events';
 
-function Index({
-  event,
+function Statistics({
+  program,
 }) {
 
   return (
@@ -19,13 +19,13 @@ function Index({
         container item
         spacing={2}
         alignItems="center"
-        justify="center"
+        justifyContent="center"
         direction="row">
         <Grid item xs={12}>
-          <Typography variant='h1' align='center'>{event?.name}</Typography>
+          <Typography variant='h1' align='center'>{program?.name}</Typography>
         </Grid>
         <Grid item xs={12} >
-          <Typography align='center'>{event?.description}</Typography>
+          <Typography align='center'>{program?.description}</Typography>
         </Grid>
       </Grid>
     </Fragment>
@@ -33,7 +33,7 @@ function Index({
 }
 
 const mapStateToProps = (state) => ({
-  event: state.events.event,
+  program: state.events.event,
 });
 
 export default connect(
@@ -41,4 +41,4 @@ export default connect(
   {
     addUserToTeam: addUserToTeamAction,
   }
-)(Index);
+)(Statistics);
