@@ -4,7 +4,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Pagination } from '@mui/material';
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MentorFSMCard from 'components/organisms/cards/MentorFSMCard';
@@ -25,11 +25,11 @@ function Index({
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
-    getEventWorkshops({  programId, pageNumber });
+    getEventWorkshops({ programId, pageNumber });
   }, [pageNumber]);
 
   return (
-    <>
+    <Fragment>
       <Grid
         container
         item
@@ -81,14 +81,13 @@ function Index({
               onChange={(e, value) => setPageNumber(value)}
             />
           </Grid>
-
         </Grid>
       </Grid>
       <CreateWorkshopDialog
         open={openCreateWorkshopDialog}
         handleClose={() => setOpenCreateWorkshopDialog(false)}
       />
-    </>
+    </Fragment>
   );
 }
 const mapStateToProps = (state) => ({

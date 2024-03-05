@@ -35,6 +35,14 @@ function Statics({
       justifyContent="center"
       direction="row">
 
+      <Grid item container justifyContent='space-between' xs={12} spacing={2} style={{ marginTop: 2 }}>
+        <Grid item>
+          <Typography variant='h2'>
+            {'آمار'}
+          </Typography>
+        </Grid>
+      </Grid>
+
       <Grid container spacing={2}
         alignItems='stretch'
         margin='10px 5px'
@@ -65,7 +73,6 @@ function Statics({
             onChange={(e, value) => setPageNumber(value)}
           />
         </Grid>
-
       </Grid>
     </Grid>
   );
