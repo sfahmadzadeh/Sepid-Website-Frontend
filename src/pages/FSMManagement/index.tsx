@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -38,16 +38,16 @@ type EventPropsType = {
   getEventTeams: Function,
   getOneEventInfo: Function,
   getOneWorkshopsInfo: Function,
-  workshop: Workshop,
-  event: ProgramType,
+  fsm: Workshop,
+  program: ProgramType,
 }
 
 const FSMManagement: FC<EventPropsType> = ({
   getEventTeams,
   getOneEventInfo,
   getOneWorkshopsInfo,
-  workshop,
-  event,
+  fsm,
+  program,
 }) => {
   const t = useTranslate();
   const navigate = useNavigate();
@@ -85,8 +85,8 @@ const FSMManagement: FC<EventPropsType> = ({
     }
   ]
 
-  const tabs: any[] = (workshop && workshop.id == fsmId && workshop.fsm_learning_type == 'Supervised') ?
-    (workshop.fsm_p_type == 'Team') ?
+  const tabs: any[] = (fsm && fsm.id == fsmId && fsm.fsm_learning_type == 'Supervised') ?
+    (fsm.fsm_p_type == 'Team') ?
       [
         ...initialTabs,
         {
@@ -95,7 +95,7 @@ const FSMManagement: FC<EventPropsType> = ({
           icon: QuestionAnswerIcon,
           component: TeamRequests,
         },
-      ] : (workshop.fsm_p_type == 'Individual') ?
+      ] : (fsm.fsm_p_type == 'Individual') ?
         [
           ...initialTabs,
           {
@@ -106,23 +106,18 @@ const FSMManagement: FC<EventPropsType> = ({
           },
         ] : initialTabs : initialTabs
 
-  const [currentTab, setCurrentTab] = useState(null);
-
-  useEffect(() => {
-    setCurrentTab(tabs.find(tab => tab.name === section) || tabs[0]);
-  }, [section])
-
   useEffect(() => {
     getOneEventInfo({ programId });
     getOneWorkshopsInfo({ fsmId });
   }, []);
 
   useEffect(() => {
-    if (event && event.registration_form) {
-      getEventTeams({ registrationFormId: event.registration_form });
+    if (program && program.registration_form) {
+      getEventTeams({ registrationFormId: program.registration_form });
     }
-  }, [event]);
+  }, [program]);
 
+  const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab) return null;
   const TabComponent = currentTab.component;
 
@@ -136,7 +131,6 @@ const FSMManagement: FC<EventPropsType> = ({
                 <Button
                   key={index}
                   onClick={() => {
-                    setCurrentTab(tab)
                     navigate(`/program/${programId}/fsm/${fsmId}/manage/${tabs[index].name}/`)
                   }}
                   variant={currentTab.name === tab.name ? 'contained' : 'outlined'}
@@ -175,8 +169,8 @@ const FSMManagement: FC<EventPropsType> = ({
 };
 
 const mapStateToProps = (state) => ({
-  event: state.events.event,
-  workshop: state.workshop.workshop,
+  program: state.events.event,
+  fsm: state.workshop.workshop,
 });
 
 export default connect(mapStateToProps, {
