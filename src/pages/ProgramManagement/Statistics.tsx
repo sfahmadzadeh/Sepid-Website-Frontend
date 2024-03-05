@@ -1,44 +1,81 @@
 import {
+  Button,
   Grid,
   Typography,
 } from '@mui/material';
-import React, { Fragment } from 'react';
+import { Pagination } from '@mui/material';
+import React, { useEffect, useState, FC, Fragment } from 'react';
 import { connect } from 'react-redux';
-
+import { useParams } from 'react-router-dom';
+import MentorStaticsFSMCard from 'components/organisms/cards/MentorStaticsFSMCard';
+import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import {
-  addUserToTeamAction,
+  getEventWorkshopsAction,
 } from 'redux/slices/events';
+import { addMentorToWorkshopAction } from 'redux/slices/events';
 
-function Statistics({
-  program,
+function Statics({
+  getEventWorkshops,
+  workshopsCount,
+  allEventWorkshops,
 }) {
+  const { programId } = useParams();
+  const [pageNumber, setPageNumber] = useState(1);
+
+  useEffect(() => {
+    getEventWorkshops({ programId, pageNumber });
+  }, [pageNumber]);
 
   return (
-    <Fragment>
-      <Grid
-        container item
-        spacing={2}
-        alignItems="center"
+    <Grid
+      container
+      item
+      spacing={2}
+      alignItems="center"
+      justifyContent="center"
+      direction="row">
+
+      <Grid container spacing={2}
+        alignItems='stretch'
+        margin='10px 5px'
         justifyContent="center"
-        direction="row">
-        <Grid item xs={12}>
-          <Typography variant='h1' align='center'>{program?.name}</Typography>
-        </Grid>
-        <Grid item xs={12} >
-          <Typography align='center'>{program?.description}</Typography>
-        </Grid>
+        sx={(theme) => ({
+          height: '100%',
+          justifyContent: 'start',
+          [theme.breakpoints.down('sm')]: {
+            justifyContent: 'center',
+            marginRight: "0px",
+          },
+        })}>
+        {allEventWorkshops?.map((workshop) => (
+          <Grid container item xs={12} sm={6} md={4} key={workshop.id} alignItems='center' justifyContent='center'>
+            <MentorStaticsFSMCard {...workshop} />
+          </Grid>
+        ))}
       </Grid>
-    </Fragment>
+
+      <Grid item container>
+        <Grid item>
+          <Pagination
+            variant="outlined"
+            color="primary"
+            shape='rounded'
+            count={Math.ceil(workshopsCount / ITEMS_PER_PAGE_NUMBER)}
+            page={pageNumber}
+            onChange={(e, value) => setPageNumber(value)}
+          />
+        </Grid>
+
+      </Grid>
+    </Grid>
   );
 }
-
 const mapStateToProps = (state) => ({
-  program: state.events.event,
+  workshopsCount: state.events.workshopsCount,
+  allEventWorkshops: state.events.workshops,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    addUserToTeam: addUserToTeamAction,
-  }
-)(Statistics);
+export default connect(mapStateToProps, {
+  addMentorToWorkshop: addMentorToWorkshopAction,
+  getEventWorkshops: getEventWorkshopsAction,
+})(Statics);
