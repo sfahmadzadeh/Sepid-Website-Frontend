@@ -52,11 +52,11 @@ const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state = {}, playerId 
           lg={notQuestions.length > 0 ? 4 : 8}
           position={{ xs: null, md: 'sticky' }} top={0}>
           <Stack spacing={2}>
-            <Stack spacing={2} component={Paper} sx={{ padding: 2 }}>
-              <Typography width={'fit-content'} alignSelf={'center'} textAlign={'center'} alignContent={'center'} position={'relative'} align="center" component="h2" variant="h3">
-                <Box position={'absolute'} left={0} marginLeft={-7} marginTop={-2.2}>
-                  <FSMStateHelpButton hints={hints} />
-                </Box>
+            <Stack spacing={2} component={Paper} sx={{ padding: 2 }} position={'relative'}>
+              <Box sx={{ position: 'absolute', left: -26, top: -24, rotate: '24deg' }}>
+                <FSMStateHelpButton hints={hints} />
+              </Box>
+              <Typography component="h2" variant="h3" align='center' alignSelf={'center'}>
                 {state.name}
               </Typography>
               {questionWidgets}

@@ -1,7 +1,6 @@
-import React, { FC, useState } from 'react';
-import { Button, Fab, IconButton, Tooltip, Typography } from '@mui/material';
+import React, { FC, Fragment, useState } from 'react';
+import { IconButton, Tooltip } from '@mui/material';
 import HelpDialog from 'components/organisms/dialogs/FSMStateHelpDialog';
-import { Help as HelpIcon } from '@mui/icons-material';
 
 
 type FSMStateHelpButtonPropsType = {
@@ -15,7 +14,7 @@ const FSMStateHelpButton: FC<FSMStateHelpButtonPropsType> = ({ hints }) => {
   if (hints.length === 0) return null;
 
   return (
-    <>
+    <Fragment>
       <Tooltip arrow title='راهنمایی'>
         <IconButton disableRipple onMouseOver={() => setIsHover(true)} onMouseOut={() => setIsHover(false)} onClick={() => setOpenDialog(true)}>
           <img width={40} src={process.env.PUBLIC_URL + ((isHover || openDialog) ? '/images/idea-on.png' : '/images/idea-off.png')} />
@@ -26,7 +25,7 @@ const FSMStateHelpButton: FC<FSMStateHelpButtonPropsType> = ({ hints }) => {
         handleClose={() => setOpenDialog(false)}
         helps={hints}
       />
-    </>
+    </Fragment>
   );
 };
 
