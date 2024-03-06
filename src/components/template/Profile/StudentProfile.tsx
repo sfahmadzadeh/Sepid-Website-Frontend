@@ -10,6 +10,7 @@ import {
   Select,
   Tooltip,
   Typography,
+  FormHelperText,
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
@@ -157,6 +158,9 @@ const StudentProfile: FC<StudentProfilePropsType> = ({
                     {'موردی وجود ندارد.'}
                   </MenuItem>}
               </Select>
+              <FormHelperText>
+                {'چنانچه مدرسه‌ی شما در لیست نیست، می‌توانید با زدن دکمه‌ی + مدرسه‌ی خود را اضافه کنید.'}
+              </FormHelperText>
             </FormControl>
           </Grid>
 
