@@ -111,30 +111,6 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
           autoComplete="on"
           variant="outlined"
           fullWidth
-          onChange={putData}
-          label="رمز عبور جدید"
-          name="password"
-          inputProps={{ className: 'ltr-input' }}
-          type="password"
-          inputMode='text'
-        />
-
-        <TextField
-          autoComplete="on"
-          variant="outlined"
-          fullWidth
-          onChange={putData}
-          label="تکرار رمز عبور جدید"
-          inputProps={{ className: 'ltr-input' }}
-          name="confirmationPassword"
-          type="password"
-          inputMode='text'
-        />
-
-        <TextField
-          autoComplete="on"
-          variant="outlined"
-          fullWidth
           onChange={(e) => {
             if (isJustDigits(e.target.value)) {
               putData(e);
@@ -188,6 +164,30 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
             {buttonText}
           </Button>
         </Stack>
+
+        <TextField
+          autoComplete="on"
+          variant="outlined"
+          fullWidth
+          onChange={putData}
+          label="رمز عبور جدید"
+          name="password"
+          inputProps={{ className: 'ltr-input' }}
+          type="password"
+          inputMode='text'
+        />
+
+        <TextField
+          autoComplete="on"
+          variant="outlined"
+          fullWidth
+          onChange={putData}
+          label="تکرار رمز عبور جدید"
+          inputProps={{ className: 'ltr-input' }}
+          name="confirmationPassword"
+          type="password"
+          inputMode='text'
+        />
 
         <Button
           onClick={doChangePassword}
