@@ -212,6 +212,7 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
 
         <Grid item xs={12} sm={6}>
           <TextField
+            disabled={true}
             fullWidth
             value={userInfo.email || ''}
             name="email"
