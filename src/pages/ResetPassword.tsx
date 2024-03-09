@@ -69,7 +69,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
     setButtonText('۱ دقیقه صبر کن');
     getVerificationCode({
       phoneNumber: data.phoneNumber,
-      codeType: 'changePass',
+      codeType: 'change-user-password',
     }).then(() => {
       setTimeout(
         () => {

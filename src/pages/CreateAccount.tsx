@@ -70,7 +70,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
     setButtonDisable(true);
     getVerificationCode({
       phoneNumber: data.phoneNumber,
-      codeType: 'verify',
+      codeType: 'create-user-account',
     }).then(() => {
       setTimeout(() => {
         setButtonDisable(false);
