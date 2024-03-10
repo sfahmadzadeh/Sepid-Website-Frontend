@@ -1,13 +1,16 @@
 import {
   createSelector,
 } from '@reduxjs/toolkit';
-import { PartyType } from 'types/global';
+import { PartyType, PageType } from 'types/global';
 import { ManagePartyServiceApi } from './ManagePartyServiceApiSlice'
 
 export const PartySlice = ManagePartyServiceApi.injectEndpoints({
   endpoints: builder => ({
     getParty: builder.query<PartyType, void>({
-      query: () => `party-manager/get_party_by_domain/`,
+      query: () => `party/get-party/`,
+    }),
+    getPageMetadata: builder.query<PageType, { partyUuid: string, pageAddress: string }>({
+      query: ({ partyUuid, pageAddress }) => `site-appearance/get-page-metadata/?party=${partyUuid}&page_address=${pageAddress}`,
     })
   })
 })
@@ -17,4 +20,7 @@ export const selectPartyUUID = createSelector(
   reponse => reponse.data?.uuid,
 )
 
-export const { useGetPartyQuery } = PartySlice;
+export const {
+  useGetPartyQuery,
+  useGetPageMetadataQuery,
+} = PartySlice;

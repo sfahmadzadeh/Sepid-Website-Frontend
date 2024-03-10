@@ -4,18 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
 import appendPreviousParams from 'utils/AppendPreviousParams';
-import { useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
 
   const { data: party } = useGetPartyQuery();
+  const { data: websiteMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
 
   return (
     <Fragment>
-      {party &&
+      {websiteMetadata &&
         <Helmet>
-          <title>{party.main_page_header_data.title + ' | خطای ۴۰۴'}</title>
+          <title>{websiteMetadata.header_data.title + ' | خطای ۴۰۴'}</title>
         </Helmet>
       }
       <Container>

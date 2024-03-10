@@ -1,3 +1,5 @@
+import { BannerType } from "./redux/WebSiteAppearance";
+
 export type directionType = 'rtl' | 'ltr';
 
 export type AppbarModes = 'DASHBOARD' | 'FSM' | 'MENTOR_FSM' | 'PROGRAM' | 'GENERAL' | 'ARTICLE' | 'None';
@@ -52,8 +54,13 @@ export type PartyType = {
   name: string;
   display_name: string;
   logo: LogoType;
-  main_page_header_data: HeaderData;
-  main_page_og_metadata: OpenGraphMetaData;
+}
+
+export type PageType = {
+  address_pattern: string;
+  header_data: HeaderData;
+  og_metadata: OpenGraphMetaData;
+  banners: BannerType[];
 }
 
 export type LogoType = {

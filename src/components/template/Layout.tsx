@@ -15,10 +15,6 @@ const Layout: FC<LayoutPropsType> = ({
   appbarMode = 'DASHBOARD',
   children,
 }) => {
-  const { programId } = useParams();
-  const { fsmId } = useParams();
-
-  const { data: party } = useGetPartyQuery();
 
   return (
     <Fragment>

@@ -17,7 +17,7 @@ import selectTheme from './configs/themes';
 import Notifier from './components/molecules/Notifications';
 import { initParseServer } from './parse/init';
 import { resetRedirectAction } from './redux/slices/redirect';
-import { useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
 import Root from './routes';
 import translations from './translations';
 import LinearLoading from 'components/atoms/LinearLoading';
@@ -31,9 +31,7 @@ const App = ({
   const navigate = useNavigate();
 
   const { data: party } = useGetPartyQuery();
-  useEffect(() => {
-    if (party) document.title = party.main_page_header_data.title;
-  }, [party])
+  const { data: websiteMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
 
   useEffect(() => {
     if (redirectTo !== null) {
@@ -52,18 +50,21 @@ const App = ({
 
   return (
     <Fragment>
-      {party &&
+      {websiteMetadata?.header_data &&
         <Helmet>
-          <title>{party.main_page_header_data.title}</title>
-          <link rel="icon" href={party.logo.mobile_image} />
-          <meta name="description" content={party.main_page_header_data.description} />
-          <meta name="theme-color" content={party.main_page_header_data.theme_color} />
-
-          <meta property="og:title" content={party.main_page_og_metadata.title} />
-          <meta property="og:description" content={party.main_page_og_metadata.description} />
-          <meta property="og:type" content={party.main_page_og_metadata.type} />
-          <meta property="og:image" content={party.main_page_og_metadata.image} />
-          <meta property="og:url" content={party.main_page_og_metadata.url} />
+          <title>{websiteMetadata.header_data.title}</title>
+          <link rel="icon" href={websiteMetadata.header_data.icon} />
+          <meta name="description" content={websiteMetadata.header_data.description} />
+          <meta name="theme-color" content={websiteMetadata.header_data.theme_color} />
+        </Helmet>
+      }
+      {websiteMetadata?.og_metadata &&
+        <Helmet>
+          <meta property="og:title" content={websiteMetadata.og_metadata.title} />
+          <meta property="og:description" content={websiteMetadata.og_metadata.description} />
+          <meta property="og:type" content={websiteMetadata.og_metadata.type} />
+          <meta property="og:image" content={websiteMetadata.og_metadata.image} />
+          <meta property="og:url" content={websiteMetadata.og_metadata.url} />
         </Helmet>
       }
       <IntlProvider translations={translations}>
