@@ -34,9 +34,8 @@ function Whiteboard({
   setIsFullScreen,
   getWhiteboardNodes,
 }) {
-  const classes = useStyles();
   const subscriberRef = useRef(null);
-  const [stage, setStage] = useState();
+  const [stage, setStage] = useState(null);
 
   const { teamId } = useContext(StatePageContext);
 
