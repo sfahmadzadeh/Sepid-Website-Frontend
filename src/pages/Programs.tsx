@@ -1,31 +1,19 @@
 import { Divider, Grid, Typography, Stack } from '@mui/material';
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import ProgramCard from 'components/organisms/cards/ProgramCard';
-import {
-  getProgramsAction,
-} from 'redux/slices/events';
-import {
-  getBannersAction,
-} from 'redux/slices/WebSiteAppearance';
 import Layout from 'components/template/Layout';
 import { ProgramType } from 'types/models';
 import ProgramSkeletonCard from 'components/organisms/cards/EventSkeletonCard';
 import Banner from 'components/molecules/Banner';
 import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
-import { useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
 
 
-const Programs = ({
-  getBanners,
-  banners,
-}) => {
-
-  useEffect(() => {
-    getBanners({ parameters: { banner_type: 'ProgramsPage' } });
-  }, []);
-
+const Programs = ({ }) => {
   const { data: party } = useGetPartyQuery();
+  const { data: pageMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+
+  const banners = pageMetadata?.banners || [];
 
   const {
     data: programs = [],
@@ -91,11 +79,4 @@ const Programs = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  banners: state.WebSiteAppearance.banners,
-});
-
-export default connect(mapStateToProps, {
-  getPrograms: getProgramsAction,
-  getBanners: getBannersAction,
-})(Programs);
+export default Programs;

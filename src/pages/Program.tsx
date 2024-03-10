@@ -14,9 +14,6 @@ import Layout from 'components/template/Layout';
 import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import Banner from 'components/molecules/Banner';
-import {
-  getBannersAction,
-} from 'redux/slices/WebSiteAppearance';
 import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
 
 type ProgramPropsType = {
@@ -34,24 +31,23 @@ type ProgramPropsType = {
 const Program: FC<ProgramPropsType> = ({
   getEventWorkshops,
   getOneEventInfo,
-  getBanners,
 
   program,
   isLoading,
   workshops,
   workshopsCount,
-  banners,
 }) => {
   const { programId } = useParams();
   const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(1);
 
   const { data: party } = useGetPartyQuery();
-  const { data: websiteMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+  const { data: pageMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+
+  const banners = pageMetadata?.banners || [];
 
   useEffect(() => {
     getOneEventInfo({ programId });
-    getBanners({ parameters: { banner_type: 'ProgramPage' } });
   }, []);
 
   useEffect(() => {
@@ -72,9 +68,9 @@ const Program: FC<ProgramPropsType> = ({
 
   return (
     <Fragment>
-      {websiteMetadata && program &&
+      {pageMetadata && program &&
         <Helmet>
-          <title>{websiteMetadata.header_data.title + ' | ' + program.name}</title>
+          <title>{pageMetadata.header_data.title + ' | ' + program.name}</title>
         </Helmet>
       }
       <Layout appbarMode='PROGRAM'>
@@ -114,11 +110,9 @@ const mapStateToProps = (state, ownProps) => ({
   isLoading: state.events.getWorkshopsLoading,
   program: state.events.event,
   workshopsCount: state.events.workshopsCount,
-  banners: state.WebSiteAppearance.banners,
 });
 
 export default connect(mapStateToProps, {
   getEventWorkshops: getEventWorkshopsAction,
   getOneEventInfo: getOneEventInfoAction,
-  getBanners: getBannersAction,
 })(Program);
