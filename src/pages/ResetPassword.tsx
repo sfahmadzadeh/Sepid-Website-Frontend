@@ -3,6 +3,7 @@ import React, { useState, FC } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useGetPartyQuery } from 'redux/features/PartySlice';
 
 import {
   changePasswordAction,
@@ -29,6 +30,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
     phoneNumber: '',
     code: '',
   });
+  const { data: party } = useGetPartyQuery();
 
   const putData = (event) => {
     setData({
@@ -69,6 +71,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
     setButtonText('۱ دقیقه صبر کن');
     getVerificationCode({
       phoneNumber: data.phoneNumber,
+      partyDisplayName: party.display_name,
       codeType: 'change-user-password',
     }).then(() => {
       setTimeout(

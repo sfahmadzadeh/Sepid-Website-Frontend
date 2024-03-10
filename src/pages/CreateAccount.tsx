@@ -17,6 +17,7 @@ import appendPreviousParams from 'utils/AppendPreviousParams';
 import isNumber from 'utils/validators/isNumber';
 import isPhoneNumber from 'utils/validators/isPhoneNumber';
 import { toast } from 'react-toastify';
+import { useGetPartyQuery } from 'redux/features/PartySlice';
 
 type CreateAccountPropsType = {
   isFetching: boolean;
@@ -44,6 +45,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
 
   const urlParams = new URLSearchParams(window.location.search);
   const programId = urlParams.get('private_program_id');
+  const { data: party } = useGetPartyQuery();
 
   useEffect(() => {
     if (accessToken) {
@@ -71,6 +73,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
     getVerificationCode({
       phoneNumber: data.phoneNumber,
       codeType: 'create-user-account',
+      partyDisplayName: party.display_name,
     }).then(() => {
       setTimeout(() => {
         setButtonDisable(false);

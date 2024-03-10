@@ -38,9 +38,10 @@ export const getVerificationCodeAction = createAsyncThunkApi(
   Apis.POST,
   verificationCodeUrl,
   {
-    bodyCreator: ({ phoneNumber, codeType }) => ({
+    bodyCreator: ({ phoneNumber, codeType, partyDisplayName }) => ({
       phone_number: phoneNumber,
       code_type: codeType,
+      party_display_name: partyDisplayName,
     }),
     defaultNotification: {
       success: 'کد تایید فرستاده شد! این کد بعد از ۵ دقیقه منقضی می‌شود.',
