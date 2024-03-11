@@ -83,7 +83,7 @@ const MentorFSMCard = ({
       <CardActions>
         <Button
           variant="contained" fullWidth color="primary"
-          component={Link} to={`/program/${programId}/fsm/${id}/manage/info`}>
+          component={Link} to={`/program/${programId}/fsm/${id}/manage/`}>
           {'ویرایش کارگاه'}
         </Button>
       </CardActions>

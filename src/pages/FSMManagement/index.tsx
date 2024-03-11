@@ -85,6 +85,12 @@ const FSMManagement: FC<EventPropsType> = ({
     }
   ]
 
+  useEffect(() => {
+    if (!section) {
+      navigate(`/program/${programId}/fsm/${fsmId}/manage/info/`)
+    }
+  }, [section])
+
   const tabs: any[] = (fsm && fsm.id == fsmId && fsm.fsm_learning_type == 'Supervised') ?
     (fsm.fsm_p_type == 'Team') ?
       [

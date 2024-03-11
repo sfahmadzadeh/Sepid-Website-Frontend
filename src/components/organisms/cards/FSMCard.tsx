@@ -75,11 +75,12 @@ export const FSMCard: FC<FSMCardPropsType> = ({
               <Box>
                 {fsm.is_mentor ?
                   <Tooltip title='ورود به بخش همیاران' arrow>
-                    <IconButton component={Link} to={`/program/${programId}/fsm/${fsm?.id}/manage/info`} >
+                    <IconButton component={Link} to={`/program/${programId}/fsm/${fsm?.id}/manage/`} >
                       <ModeEditTwoToneIcon />
                     </IconButton>
                   </Tooltip> :
-                  <Box />}
+                  <Box />
+                }
               </Box>
             </Stack>
             {fsm.cover_page &&

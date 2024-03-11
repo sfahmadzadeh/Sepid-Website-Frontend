@@ -84,9 +84,14 @@ const Event: FC<EventType> = ({
 }) => {
   const t = useTranslate();
   const { programId, section } = useParams();
-  const [tabIndex, setTabIndex] = useState(tabs.indexOf(tabs.find(tab => tab.name == section)));
-  const TabComponent = tabs.find(tab => tab.name == section).component;
+  const [tabIndex, setTabIndex] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!section) {
+      navigate(`/program/${programId}/manage/info/`);
+    }
+  }, [section])
 
   useEffect(() => {
     getOneEventInfo({ programId });
@@ -97,6 +102,9 @@ const Event: FC<EventType> = ({
       getEventTeams({ registrationFormId: event?.registration_form });
     }
   }, [event?.registration_form]);
+
+  if (!section) return null;
+  const TabComponent = tabs.find(tab => tab.name == section).component;
 
   return (
     <Layout appbarMode='PROGRAM'>

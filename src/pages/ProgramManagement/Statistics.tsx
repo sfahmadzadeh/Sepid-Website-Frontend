@@ -61,7 +61,7 @@ function Statics({
           {`مجموع تعداد ورود به کارگاه‌ها : ${toPersianNumber(getTotalParticipantsCountOfAllProgramFSMs(allEventWorkshops))} نفر`}
         </Typography>
         <Stack>
-          <Grid container spacing={2} alignItems='center' justifyContent="center">
+          <Grid container spacing={2} alignItems='center' justifyContent='start'>
             {allEventWorkshops?.map((workshop) => (
               <Grid item xs={12} sm={6} md={4} key={workshop.id} alignItems='center' justifyContent='center'>
                 <MentorStaticsFSMCard {...workshop} />

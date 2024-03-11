@@ -24,6 +24,19 @@ const ProgramContactInfo: FC<ProgramContactInfoPropsType> = ({
     return null;
   }
 
+  const {
+    bale_link,
+    eitaa_link,
+    instagram_link,
+    phone_number,
+    shad_link,
+    telegram_link,
+  } = programContactInfo;
+
+  if (!bale_link || !eitaa_link || !instagram_link || !phone_number || !shad_link || !telegram_link) {
+    return null;
+  }
+
   const sociaMedias = [
     {
       icon: EitaaSVG,

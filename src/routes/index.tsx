@@ -64,9 +64,9 @@ const Root = () => {
         <Route path="/program/:programId/" element={<Program />} />
 
         {/* only mentors can visit: */}
-        <Route path="/program/:programId/manage/:section/" element={<ProgramManagement />} />
+        <Route path="/program/:programId/manage/:section?/" element={<ProgramManagement />} />
         <Route path="/program/:programId/fsm/:fsmId/manage/correction/:answerId/" element={<Correction />} />
-        <Route path="/program/:programId/fsm/:fsmId/manage/:section/" element={<FSMManagement />} />
+        <Route path="/program/:programId/fsm/:fsmId/manage/:section?/" element={<FSMManagement />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

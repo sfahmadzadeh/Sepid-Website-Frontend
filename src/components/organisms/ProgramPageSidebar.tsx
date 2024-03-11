@@ -63,7 +63,7 @@ const ProgramPageSidebar = ({
             variant="contained"
             color='info'
             fullWidth
-            onClick={() => navigate(`/program/${program.id}/manage/info`)}>
+            onClick={() => navigate(`/program/${program.id}/manage/`)}>
             {'مدیریت دوره'}
           </Button>
         }
