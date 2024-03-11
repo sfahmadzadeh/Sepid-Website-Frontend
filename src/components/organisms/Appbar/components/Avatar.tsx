@@ -44,9 +44,9 @@ function AvatarComponent({ name = 'بی‌نام', logout }: AvatarComponentProp
         </Typography>
         <MenuItem onClick={() => {
           if (programId) {
-            navigate(`/program/${programId}/profile/personal/`);
+            navigate(`/program/${programId}/user-profile/`);
           } else {
-            navigate('/profile/personal/');
+            navigate('/user-profile/');
           }
         }}>
           <Stack direction='row' spacing={1} alignItems={'center'}>

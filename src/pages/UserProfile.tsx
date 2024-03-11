@@ -2,6 +2,7 @@ import { Grid, Tab, Tabs } from '@mui/material';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+
 import Layout from 'components/template/Layout';
 import ProfileTemplate from 'components/template/Profile';
 import {
@@ -10,6 +11,7 @@ import {
 import {
   getOneEventInfoAction,
 } from 'redux/slices/events';
+
 
 
 let tabs = [
@@ -53,6 +55,16 @@ const Profile = ({
   const { programId, section } = useParams();
 
   useEffect(() => {
+    if (!section) {
+      if (programId) {
+        navigate(`/program/${programId}/user-profile/personal/`);
+      } else {
+        navigate('/user-profile/personal/');
+      }
+    }
+  }, [])
+
+  useEffect(() => {
     if (programId) {
       getOneEventInfo({ programId });
     }
@@ -69,6 +81,8 @@ const Profile = ({
     tabs = [tabs[0]];
   }
 
+  if (!section) return null;
+
   return (
     <Layout appbarMode={programId ? 'PROGRAM' : 'DASHBOARD'}>
       <Grid
@@ -81,7 +95,7 @@ const Profile = ({
               orientation="vertical"
               variant="scrollable"
               value={SECTIONS[section]}
-              onChange={(event, newValue) => navigate(programId ? `/program/${programId}/profile/${tabs[newValue].name}` : `/profile/${tabs[newValue].name}`)}>
+              onChange={(event, newValue) => navigate(programId ? `/program/${programId}/user-profile/${tabs[newValue].name}/` : `/user-profile/${tabs[newValue].name}/`)}>
               {
                 tabs.map((tab, index) => {
                   return (
