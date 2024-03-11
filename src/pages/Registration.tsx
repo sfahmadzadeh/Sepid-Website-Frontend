@@ -10,7 +10,7 @@ import {
 } from 'redux/slices/events';
 import Layout from 'components/template/Layout';
 import { ProgramType, RegistrationFormType } from 'types/models';
-import useRegistrationSteps from 'components/Hooks/useRegistrationSteps';
+import useRegistrationSteps from 'components/hooks/useRegistrationSteps';
 
 type RegistrationProcessPropsType = {
   registrationForm: RegistrationFormType;

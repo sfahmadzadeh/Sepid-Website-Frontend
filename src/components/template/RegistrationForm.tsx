@@ -13,7 +13,7 @@ import {
 import { WidgetModes } from 'components/organisms/Widget';
 import ProgramInfo from 'components/organisms/ProgramInfo';
 import { ProgramType, RegistrationFormType } from 'types/models';
-import useCollectWidgetsAnswers from 'components/Hooks/useCollectWidgetsAnswers';
+import useCollectWidgetsAnswers from 'components/hooks/useCollectWidgetsAnswers';
 
 const ANSWER_TYPES = {
   SmallAnswerProblem: 'SmallAnswer',
