@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {
@@ -23,7 +23,7 @@ const RespondInvitation: FC<RespondInvitationPropsType> = ({
   const [rejectedInvitationId, setRejectedInvitationId] = useState<number>(null);
 
   return (
-    <>
+    <Fragment>
       <IconButton
         size="small"
         onClick={() => {
@@ -58,7 +58,8 @@ const RespondInvitation: FC<RespondInvitationPropsType> = ({
           })
         }
       />
-    </>);
+    </Fragment>
+  );
 }
 
 export default connect(null, {

@@ -1,11 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Apis } from '../apis';
-import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
+import { Apis } from 'redux/apis';
+import { createAsyncThunkApi } from 'redux/apis/cerateApiAsyncThunk';
 import {
   makeAnswerEmptyUrl,
   sendWidgetAnswerUrl,
   uploadFileUrl,
-} from '../constants/urls';
+} from 'redux/constants/urls';
 
 export type InitialStateType = {
   isFetching: boolean;

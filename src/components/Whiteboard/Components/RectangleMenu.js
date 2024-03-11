@@ -17,7 +17,7 @@ import { StatePageContext } from 'pages/FSM';
 import {
   addNewRectangleNodeAction,
   changeWhiteboardModeAction,
-} from '../../../redux/slices/whiteboard';
+} from 'redux/slices/whiteboard';
 import DrawingModes from '../Drawing/DrawingModes';
 
 const RectangleMenu = ({ changeMode, addNewRectangleNode }) => {

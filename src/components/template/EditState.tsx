@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Save as SaveIcon, Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, FC, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router';
@@ -61,7 +61,7 @@ const EditState: FC<EditStatePropsType> = ({
   );
 
   return (
-    <>
+    <Fragment>
       <Stack spacing={2}>
         {paperId &&
           <Stack direction='row' alignItems='flex-start' justifyContent='space-between'>
@@ -133,7 +133,7 @@ const EditState: FC<EditStatePropsType> = ({
         handleClose={() => setOpenDeleteWidgetDialog(false)}
         callBackFunction={() => removeState({ paperId })}
       />
-    </>
+    </Fragment>
   );
 }
 

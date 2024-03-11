@@ -73,91 +73,89 @@ function Index({
   }
 
   return (
-    <>
-      <Grid container spacing={2} alignItems="center" justifyContent="center">
-        <Grid item xs={12}>
-          <Typography variant='h4'>
-            {'ایجاد کد تخفیف'}
-          </Typography>
+    <Grid container spacing={2} alignItems="center" justifyContent="center">
+      <Grid item xs={12}>
+        <Typography variant='h4'>
+          {'ایجاد کد تخفیف'}
+        </Typography>
+      </Grid>
+      <Grid item container xs spacing={1}>
+        <Grid item xs={12} sm={4} >
+          <TextField
+            size='small' fullWidth
+            variant='outlined'
+            label='نام کاربری'
+            inputProps={{ className: 'ltr-input' }}
+            value={username} onChange={(e) => setUsername(toEnglishNumber(e.target.value))} />
         </Grid>
-        <Grid item container xs spacing={1}>
-          <Grid item xs={12} sm={4} >
-            <TextField
-              size='small' fullWidth
-              variant='outlined'
-              label='نام کاربری'
-              inputProps={{ className: 'ltr-input' }}
-              value={username} onChange={(e) => setUsername(toEnglishNumber(e.target.value))} />
-          </Grid>
-          <Grid item xs={12} sm={4} >
-            <TextField
-              size='small' fullWidth
-              variant='outlined'
-              label='درصد تخفیف'
-              inputProps={{ className: 'ltr-input' }}
-              value={value} onChange={(e) => setValue(parseInt(toEnglishNumber(e.target.value)))} />
-          </Grid>
-          <Grid item xs={12} sm={4} >
-            <Button
-              fullWidth variant='contained'
-              color='primary'
-              onClick={handleCreateDiscountCode}>{'ایجاد'}</Button>
-          </Grid>
+        <Grid item xs={12} sm={4} >
+          <TextField
+            size='small' fullWidth
+            variant='outlined'
+            label='درصد تخفیف'
+            inputProps={{ className: 'ltr-input' }}
+            value={value} onChange={(e) => setValue(parseInt(toEnglishNumber(e.target.value)))} />
         </Grid>
-
-        <Grid item xs={12}>
-          <Typography variant='h4'>
-            {'کدهای تخفیف موجود'}
-          </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell align='center'>صاحب</TableCell>
-                  <TableCell align='center'>شماره</TableCell>
-                  <TableCell align='center'>کد</TableCell>
-                  <TableCell align='center'>درصد تخفیف</TableCell>
-                  <TableCell align='center'>دفعات باقی‌مانده</TableCell>
-                  <TableCell align='center'>حذف</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {discountCodes?.map((discountCode, index) =>
-                  <TableRow key={index}>
-                    <TableCell align='center'>
-                      {discountCode?.first_name && discountCode.last_name ?
-                        `${discountCode?.first_name} ${discountCode.last_name}` :
-                        '-'
-                      }
-                    </TableCell>
-                    <TableCell align='center'>
-                      {discountCode?.phone_number || '-'}
-                    </TableCell>
-                    <TableCell align='center'>
-                      {discountCode?.code}
-                    </TableCell>
-                    <TableCell align='center'>
-                      {toPersianNumber(discountCode?.value)}
-                    </TableCell>
-                    <TableCell align='center'>
-                      {toPersianNumber(discountCode?.remaining)}
-                    </TableCell>
-                    <TableCell align='center'>
-                      <IconButton size='small'
-                        onClick={() => { handleDeleteDiscountCode(discountCode?.id) }}>
-                        <ClearIcon />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
+        <Grid item xs={12} sm={4} >
+          <Button
+            fullWidth variant='contained'
+            color='primary'
+            onClick={handleCreateDiscountCode}>{'ایجاد'}</Button>
         </Grid>
       </Grid>
-    </>
+
+      <Grid item xs={12}>
+        <Typography variant='h4'>
+          {'کدهای تخفیف موجود'}
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell align='center'>صاحب</TableCell>
+                <TableCell align='center'>شماره</TableCell>
+                <TableCell align='center'>کد</TableCell>
+                <TableCell align='center'>درصد تخفیف</TableCell>
+                <TableCell align='center'>دفعات باقی‌مانده</TableCell>
+                <TableCell align='center'>حذف</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {discountCodes?.map((discountCode, index) =>
+                <TableRow key={index}>
+                  <TableCell align='center'>
+                    {discountCode?.first_name && discountCode.last_name ?
+                      `${discountCode?.first_name} ${discountCode.last_name}` :
+                      '-'
+                    }
+                  </TableCell>
+                  <TableCell align='center'>
+                    {discountCode?.phone_number || '-'}
+                  </TableCell>
+                  <TableCell align='center'>
+                    {discountCode?.code}
+                  </TableCell>
+                  <TableCell align='center'>
+                    {toPersianNumber(discountCode?.value)}
+                  </TableCell>
+                  <TableCell align='center'>
+                    {toPersianNumber(discountCode?.remaining)}
+                  </TableCell>
+                  <TableCell align='center'>
+                    <IconButton size='small'
+                      onClick={() => { handleDeleteDiscountCode(discountCode?.id) }}>
+                      <ClearIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+    </Grid>
   );
 }
 

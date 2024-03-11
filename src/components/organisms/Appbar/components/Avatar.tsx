@@ -1,5 +1,5 @@
 import { Avatar, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { stringToColor } from 'utils/stringToColor';
@@ -26,7 +26,7 @@ function AvatarComponent({ name = 'بی‌نام', logout }: AvatarComponentProp
   };
 
   return (
-    <>
+    <Fragment>
       <IconButton onClick={handleClick}>
         <Avatar
           sx={{ backgroundColor: stringToColor(name) }}
@@ -65,7 +65,7 @@ function AvatarComponent({ name = 'بی‌نام', logout }: AvatarComponentProp
           </Stack>
         </MenuItem>
       </Menu>
-    </>
+    </Fragment>
   );
 }
 

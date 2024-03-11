@@ -16,6 +16,7 @@ export const checkUsernameAction = createAsyncThunkApi(
 const initialState = {
   inviteeUserFirstName: '',
   inviteeUserLastName: '',
+  isFetching: false,
 };
 
 

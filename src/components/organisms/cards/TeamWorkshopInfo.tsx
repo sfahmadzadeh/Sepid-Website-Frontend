@@ -17,7 +17,7 @@ import {
   IconButton,
 } from '@mui/material';
 import { NotificationsActive } from '@mui/icons-material';
-import React, { FC, useEffect, useState, useRef } from 'react';
+import React, { FC, useEffect, useState, useRef, Fragment } from 'react';
 import { connect } from 'react-redux';
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import StarIcon from '@mui/icons-material/Star';
@@ -278,11 +278,10 @@ available playerId field, otherwise we fetch one team members Id and use it to a
       <CardActions sx={{ paddingTop: '0px' }}> {/* this action hols the redirect button and also the time and level widgets*/}
         <Grid container direction="column" spacing={1}>
           <Grid item
-            sx={(theme) => ({
+            sx={{
               justifyContent: 'end',
-            })}
-          >
-            <>
+            }}>
+            <Fragment>
               <Divider sx={{ margin: '15px auto 15px auto', width: '80%' }}></Divider>
               <Stack direction={'row'} sx={{ justifyContent: "space-between", fontSize: '10px', padding: '0 0 10px 0', alignItems: 'center' }}> {/* this stack is for time chip and the level team is in */}
                 <Box>
@@ -296,7 +295,7 @@ available playerId field, otherwise we fetch one team members Id and use it to a
                   </span>
                 </Tooltip>}
               </Stack>
-            </>
+            </Fragment>
 
             {playerId ? (
               <Button

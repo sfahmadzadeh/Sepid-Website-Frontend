@@ -31,7 +31,8 @@ const UsersAvatar = () => {
   return (
     <Fragment>
       <Tooltip
-        components={Button}
+        // components={Button}
+        // component={Button}
         onClick={handleClick}
         arrow
         title={`گروه ${myTeam?.name}`}>

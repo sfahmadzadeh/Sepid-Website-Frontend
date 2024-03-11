@@ -16,9 +16,7 @@ const Answer: FC<AnswerPropsType> = ({
 
 }) => {
 
-  return (
-    <></>
-  );
+  return null;
 };
 
 export default Answer;

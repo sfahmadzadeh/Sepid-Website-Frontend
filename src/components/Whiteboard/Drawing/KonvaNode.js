@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, Fragment } from 'react';
 import { Circle, Image, Line, Rect, Transformer } from 'react-konva';
 
 import KonvaTextNode from './Components/KonvaTextNode';
@@ -26,12 +26,12 @@ export default function KonvaNode({
   const transformerProps =
     type === 'TEXT'
       ? {
-          enabledAnchors: ['middle-left', 'middle-right'],
-          boundBoxFunc: function (oldBox, newBox) {
-            newBox.width = Math.max(30, newBox.width);
-            return newBox;
-          },
-        }
+        enabledAnchors: ['middle-left', 'middle-right'],
+        boundBoxFunc: function (oldBox, newBox) {
+          newBox.width = Math.max(30, newBox.width);
+          return newBox;
+        },
+      }
       : {};
 
   const setNode = useCallback(
@@ -62,7 +62,7 @@ export default function KonvaNode({
   const Node = nodeComponents[type];
 
   return (
-    <>
+    <Fragment>
       <Node
         ref={setNode}
         {...shape}
@@ -97,6 +97,6 @@ export default function KonvaNode({
         transformer={transformerEl.current}
       />
       <Transformer ref={transformerEl} {...transformerProps} />
-    </>
+    </Fragment>
   );
 }

@@ -1,8 +1,8 @@
 import Axios from 'axios';
-import { BACKEND_URL } from 'configs/Constants';
+import { MCS_URL } from 'configs/Constants';
 
 const baseAxios = Axios.create({
-  baseURL: BACKEND_URL + 'api/',
+  baseURL: MCS_URL,
   timeout: 60000,
   maxRedirects: 5,
 });

@@ -92,61 +92,59 @@ const Teams: FC<InfoPropsType> = ({
   }
 
   return (
-    <>
-      <Grid container spacing={1} alignItems="center" justifyContent="center">
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell align='center'>شناسه</TableCell>
-                <TableCell align='center'>نام</TableCell>
-                <TableCell align='center'>آخرین بازدید</TableCell>
-                <TableCell align='center'>عملیات</TableCell>
+    <Grid container spacing={1} alignItems="center" justifyContent="center">
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell align='center'>شناسه</TableCell>
+              <TableCell align='center'>نام</TableCell>
+              <TableCell align='center'>آخرین بازدید</TableCell>
+              <TableCell align='center'>عملیات</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {reqPlayers?.map((player) => (
+              <TableRow key={player.id}>
+                <TableCell align='center'>
+                  {player.id}
+                </TableCell>
+                <TableCell align='center'>
+                  {player.user}
+                </TableCell>
+                <TableCell align='center'>
+                  {player.last_visit}
+                </TableCell>
+                <TableCell align='center'>
+                  <Button color='primary' variant='contained' onClick={() => visitPlayer(player.id)}>
+                    {'سرزدن'}
+                  </Button>
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {reqPlayers?.map((player) => (
-                <TableRow key={player.id}>
-                  <TableCell align='center'>
-                    {player.id}
-                  </TableCell>
-                  <TableCell align='center'>
-                    {player.user}
-                  </TableCell>
-                  <TableCell align='center'>
-                    {player.last_visit}
-                  </TableCell>
-                  <TableCell align='center'>
-                    <Button color='primary' variant='contained' onClick={() => visitPlayer(player.id)}>
-                      {'سرزدن'}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
+            ))}
 
-              {nonReqPlayers?.map((player) => (
-                <TableRow key={player.id}>
-                  <TableCell align='center'>
-                    {player.id}
-                  </TableCell>
-                  <TableCell align='center'>
-                    {player.user}
-                  </TableCell>
-                  <TableCell align='center'>
-                    {player.last_visit}
-                  </TableCell>
-                  <TableCell align='center'>
-                    <Button disabled color='primary' variant='contained' onClick={() => visitPlayer(player.id)}>
-                      {'سرزدن'}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Grid>
-    </>
+            {nonReqPlayers?.map((player) => (
+              <TableRow key={player.id}>
+                <TableCell align='center'>
+                  {player.id}
+                </TableCell>
+                <TableCell align='center'>
+                  {player.user}
+                </TableCell>
+                <TableCell align='center'>
+                  {player.last_visit}
+                </TableCell>
+                <TableCell align='center'>
+                  <Button disabled color='primary' variant='contained' onClick={() => visitPlayer(player.id)}>
+                    {'سرزدن'}
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Grid>
   );
 }
 

@@ -11,7 +11,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router-dom';
@@ -74,7 +74,7 @@ function RegistrationReceipt({
         <Grid item xs={12} sm={4}>
           <Stack component={Paper} spacing={2} sx={{ padding: 1, width: '100%' }}>
             {userInfo &&
-              <>
+              <Fragment>
                 <Typography align='center' variant='h2'>
                   {(userInfo.first_name && userInfo.last_name) ? `${userInfo.first_name} ${userInfo.last_name}` : 'بی‌نام'}
                 </Typography>
@@ -97,7 +97,7 @@ function RegistrationReceipt({
                   </Grid>
                 </Grid>
                 {status &&
-                  <>
+                  <Fragment>
                     <FormControl fullWidth variant="outlined">
                       <InputLabel>وضعیت ثبت‌نام</InputLabel>
                       <Select
@@ -121,9 +121,10 @@ function RegistrationReceipt({
                         {registrationReceipt?.is_participating ? 'ثبت‌نام قطعی است' : 'ثبت'}
                       </Button>
                     </Box>
-                  </>
+                  </Fragment>
                 }
-              </>}
+              </Fragment>
+            }
           </Stack>
         </Grid>
       </Grid>

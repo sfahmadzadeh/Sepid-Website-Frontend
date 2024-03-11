@@ -1,7 +1,7 @@
 import { Button, SvgIcon } from '@mui/material';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
-import ScoreHistoryDialog from '../../../Dialog/ScoreHistoryDialog';
+import ScoreHistoryDialog from 'components/organisms/dialogs/ScoreHistoryDialog';
 
 const ScoreIcon = () => (
   <SvgIcon>
@@ -14,7 +14,7 @@ const ScoreHistoryButton = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <Fragment>
       <Button
         variant="outlined"
         startIcon={<ScoreIcon />}
@@ -22,7 +22,7 @@ const ScoreHistoryButton = () => {
         کارنامه
       </Button>
       <ScoreHistoryDialog open={open} handleClose={() => setOpen(false)} />
-    </>
+    </Fragment>
   );
 };
 

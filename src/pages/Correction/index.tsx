@@ -7,7 +7,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router-dom';
-import Widget, { WidgetModes } from '../../components/organisms/Widget';
+import Widget, { WidgetModes } from 'components/organisms/Widget';
 import {
   getAnswerAction,
   getScoresAndCommentsAction,
@@ -41,7 +41,7 @@ function Correction({
   }, [answer])
 
   if (!problem) {
-    return <></>
+    return null;
   }
 
   const problemWithAnswer = {

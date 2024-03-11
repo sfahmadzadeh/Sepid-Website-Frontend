@@ -59,7 +59,7 @@ export const persianMessages = { //todo: handle english
   '4056': 'you can\'t revoke an accepted invitation',
   '4057': 'اطلاعات بخش دانش‌آموزی ناقص است!',
   '4058': 'you must provide your gender',
-  '4059': 'team member capacity is full',
+  '4059': 'ظرفیت گروه پر است.',
   '4060': 'only team heads can revoke invitations',
   '4061': 'only registration form modifiers can validate receipts',
   '4062': 'user\'s document is not verified yet',
@@ -100,8 +100,6 @@ export const persianMessages = { //todo: handle english
   '5002': 'given registration form is illegal, a form must either associate with an event or a fsm',
   '5003': 'given merchandise is illegal, a merch must be either for an event or a fsm',
   '5004': 'each event/fsm must have a registration form, given one doesn\'t',
-
-  '4059': 'ظرفیت گروه پر است.',
 
   '6000': 'شما قبلاً به این سوال پاسخ درست داده‌اید',
   '6001': 'شما به اندازه‌ی کافی امتیاز ندارید',

@@ -20,16 +20,15 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   }, []);
 
   const registrationForm = papers[registrationFormId];
+  if (!registrationForm) {
+    return null;
+  }
 
   return (
-    <>
-      {registrationForm &&
-        <EditPaper
-          widgets={registrationForm.widgets}
-          paperId={registrationFormId}
-        />
-      }
-    </>
+    <EditPaper
+      widgets={registrationForm.widgets}
+      paperId={registrationFormId}
+    />
   );
 };
 

@@ -3,7 +3,7 @@ import {
   CloudUpload as CloudUploadIcon,
 } from '@mui/icons-material';
 import ClearIcon from '@mui/icons-material/Clear';
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, FC, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import {
@@ -86,7 +86,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
       <Typography>{text}</Typography>
       <Stack justifyContent='flex-end' spacing={1}>
         {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
-          <>
+          <Fragment>
             <Button
               component="label"
               htmlFor={'raised-button-file' + widgetId}
@@ -105,7 +105,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
               type="file"
               onChange={changeFile}
             />
-          </>
+          </Fragment>
         }
         {(mode !== WidgetModes.Edit && fileLink?.link) &&
           <Button

@@ -72,7 +72,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
           alignItems='stretch'
           spacing={1}>
           {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
-            <>
+            <Fragment>
               <TextField
                 fullWidth
                 variant='outlined'
@@ -94,17 +94,17 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
                   {t('submit')}
                 </Button>
               }
-            </>
+            </Fragment>
           }
           {mode === WidgetModes.Review &&
-            <>
+            <Fragment>
               {answer ?
                 <Typography>{answer}</Typography> :
                 <Typography color='red' variant='caption'>
                   {'پاسخی برای این سوال ثبت نشده است.'}
                 </Typography>
               }
-            </>
+            </Fragment>
           }
         </Stack>
       </Stack>

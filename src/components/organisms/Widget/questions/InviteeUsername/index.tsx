@@ -6,7 +6,7 @@ import {
   Typography,
   CircularProgress,
 } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { checkUsernameAction } from 'redux/slices/Question';
@@ -86,15 +86,17 @@ const InviteeUsername: FC<InviteeUsernamePropsType> = ({
         alignItems="stretch"
         spacing={1}>
         {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
-          <>
+          <Fragment>
             <TextField
               InputProps={{
                 endAdornment:
-                  isFetching ? (
-                    <InputAdornment position="start">
-                      <CircularProgress size={25} />
-                    </InputAdornment>
-                  ) : <></>
+                  isFetching ?
+                    (
+                      <InputAdornment position="start">
+                        <CircularProgress size={25} />
+                      </InputAdornment>
+                    ) :
+                    null
               }}
               fullWidth
               variant='outlined'
@@ -119,17 +121,17 @@ const InviteeUsername: FC<InviteeUsernamePropsType> = ({
                 {t('submit')}
               </Button>
             }
-          </>
+          </Fragment>
         }
         {mode === WidgetModes.Review &&
-          <>
+          <Fragment>
             {username ?
               <Typography>{username}</Typography> :
               <Typography color='red' variant='caption'>
                 {'پاسخی برای این سوال ثبت نشده است.'}
               </Typography>
             }
-          </>
+          </Fragment>
         }
       </Stack>
     </Stack>

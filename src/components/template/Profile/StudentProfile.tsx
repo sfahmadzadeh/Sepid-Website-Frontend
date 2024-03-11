@@ -12,7 +12,7 @@ import {
   Typography,
   FormHelperText,
 } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getInstitutesAction } from 'redux/slices/account';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -125,7 +125,7 @@ const StudentProfile: FC<StudentProfilePropsType> = ({
   };
 
   return (
-    <>
+    <Fragment>
       <Grid container item spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h2" gutterBottom>مشخصات دانش‌آموزی</Typography>
@@ -201,7 +201,7 @@ const StudentProfile: FC<StudentProfilePropsType> = ({
           setAddInstituteDialogStatus(false);
         }}
       />
-    </>
+    </Fragment>
   );
 }
 

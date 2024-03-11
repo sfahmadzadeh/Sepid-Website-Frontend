@@ -15,7 +15,7 @@ function MentorButton({ callMentor }) {
 
   return (
     <Button
-      size={width == 'xs' ? 'small' : ''}
+      size={width == 'xs' ? 'small' : null}
       variant="contained"
       color="primary"
       disabled={!isEnable}

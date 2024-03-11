@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ClearIcon from '@mui/icons-material/Clear';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
@@ -164,7 +164,7 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
             <Paper sx={{ position: 'relative', padding: 1, width: '100%' }}>
               <Stack spacing={2}>
                 {registrationReceipt && !registrationReceipt?.team && !team && (
-                  <>
+                  <Fragment>
                     <Typography variant="caption">
                       {
                         'شما در گروهی عضو نیستید. یا خودتان یک گروه بسازید  و دیگران را به آن دعوت کنید، یا یکی از دعوت‌نامه‌هایی را که برایتان ارسال شده، قبول کنید.'
@@ -190,10 +190,10 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
                         {'ایجاد'}
                       </Button>
                     </Stack>
-                  </>
+                  </Fragment>
                 )}
                 {team &&
-                  <>
+                  <Fragment>
                     <Typography align="center" variant="h2" gutterBottom>
                       {`گروه «${team.name}»`}
                     </Typography>
@@ -229,7 +229,7 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
                         </Stack>
                       );
                     })}
-                  </>
+                  </Fragment>
                 }
                 {!registrationReceipt && !team &&
                   <Stack alignItems='center' justifyContent='center' spacing={2}>

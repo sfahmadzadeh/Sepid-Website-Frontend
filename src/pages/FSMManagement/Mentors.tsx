@@ -13,7 +13,7 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, useState, FC, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -73,7 +73,7 @@ const Mentors: FC<MentorsPropsType> = ({
   };
 
   return (
-    <>
+    <Fragment>
       <Grid
         container
         item
@@ -166,7 +166,7 @@ const Mentors: FC<MentorsPropsType> = ({
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Fragment>
   );
 }
 

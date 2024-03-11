@@ -12,7 +12,7 @@ const redirectSlice = createSlice({
   extraReducers: {
     [enterWorkshopAction.fulfilled.toString()]: (state, { meta }) => {
       return ({
-        redirectTo: `/program/${meta.arg.programId}/fsm/${meta.arg.fsmId}`,
+        redirectTo: `/program/${meta.arg.programId}/fsm/${meta.arg.fsmId}/`,
       })
     },
   },

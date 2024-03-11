@@ -4,7 +4,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router';
@@ -13,11 +13,17 @@ import {
   addStateAction,
 } from 'redux/slices/workshop';
 
-function CreateStateDialog({
+type CreateStateDialogPropsType = {
+  addState: any;
+  open: boolean;
+  handleClose: any;
+}
+
+const CreateStateDialog: FC<CreateStateDialogPropsType> = ({
   addState,
   open,
   handleClose,
-}) {
+}) => {
   const [name, setName] = useState('');
   const { fsmId } = useParams();
   const t = useTranslate();
@@ -45,9 +51,6 @@ function CreateStateDialog({
   );
 }
 
-export default connect(
-  null,
-  {
-    addState: addStateAction,
-  }
-)(CreateStateDialog);
+export default connect(null, {
+  addState: addStateAction,
+})(CreateStateDialog);

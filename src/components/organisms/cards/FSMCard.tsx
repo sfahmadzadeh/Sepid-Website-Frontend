@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import { Lock, LockOpen } from '@mui/icons-material';
 import ModeEditTwoToneIcon from '@mui/icons-material/ModeEditTwoTone';
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, FC } from 'react';
 import { connect } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
@@ -23,10 +23,16 @@ import PasswordDialog from 'components/organisms/dialogs/PasswordDialog';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import { toPersianNumber } from 'utils/translateNumber';
 
-export const FSMCard = ({
-  workshop,
-  isLoading,
-  enterWorkshop,
+type FSMCardPropsType = {
+  fsm: any;
+  isLoading?: boolean;
+  enterFSM?: any;
+}
+
+export const FSMCard: FC<FSMCardPropsType> = ({
+  fsm,
+  isLoading = false,
+  enterFSM,
 }) => {
   const { programId } = useParams();
   const [openPassword, setOpenPassword] = useState(false);
@@ -62,25 +68,25 @@ export const FSMCard = ({
               }}>
 
               <Stack direction='row' alignSelf='center' marginTop='7px'>
-                <Box marginLeft='5px' marginRight='5px'>{workshop?.has_lock ? <Lock /> : <LockOpen />}</Box>
-                <Typography>{workshop?.fsm_p_type == 'Team' ? 'گروهی' : 'فردی'}</Typography>
+                <Box marginLeft='5px' marginRight='5px'>{fsm?.has_lock ? <Lock /> : <LockOpen />}</Box>
+                <Typography>{fsm?.fsm_p_type == 'Team' ? 'گروهی' : 'فردی'}</Typography>
               </Stack>
 
               <Box>
-                {workshop.is_mentor ?
+                {fsm.is_mentor ?
                   <Tooltip title='ورود به بخش همیاران' arrow>
-                    <IconButton component={Link} to={`/program/${programId}/fsm/${workshop?.id}/manage/info`} >
+                    <IconButton component={Link} to={`/program/${programId}/fsm/${fsm?.id}/manage/info`} >
                       <ModeEditTwoToneIcon />
                     </IconButton>
                   </Tooltip> :
                   <Box />}
               </Box>
             </Stack>
-            {workshop.cover_page &&
+            {fsm.cover_page &&
               <CardMedia
                 sx={{ minHeight: 300 }}
-                image={workshop.cover_page}
-                title={workshop.name}
+                image={fsm.cover_page}
+                title={fsm.name}
               />
             }
           </Fragment>
@@ -100,7 +106,7 @@ export const FSMCard = ({
             <Stack justifyContent={'space-between'}>
               <Stack direction={'row'} justifyContent={'space-between'} alignItems={'start'}>
                 <Typography gutterBottom variant="h4" component="h2">
-                  {workshop.name}
+                  {fsm.name}
                 </Typography>
                 {/* <Tooltip title='تعداد کسانی که کارگاه را شروع کرده‌اند' arrow>
                   <Chip
@@ -112,7 +118,7 @@ export const FSMCard = ({
                 </Tooltip> */}
               </Stack>
               <Typography variant="body2" color="textSecondary" component="p">
-                {workshop.description}
+                {fsm.description}
               </Typography>
             </Stack>
           )}
@@ -121,15 +127,15 @@ export const FSMCard = ({
       <CardActions>
         {!isLoading &&
           <Button
-            disabled={isLoading || !workshop?.is_active}
+            disabled={isLoading || !fsm?.is_active}
             size="large"
             fullWidth
             variant="outlined"
             color="primary"
             onClick={
-              workshop?.has_lock
+              fsm?.has_lock
                 ? () => setOpenPassword(true)
-                : () => enterWorkshop({ fsmId: workshop.id, programId })
+                : () => enterFSM({ fsmId: fsm.id, programId })
             }>
             {'بزن بریم!'}
           </Button>
@@ -139,13 +145,13 @@ export const FSMCard = ({
         programId={programId}
         open={openPassword}
         handleClose={() => setOpenPassword(false)}
-        fsmId={workshop?.id}
-        enterWorkshop={enterWorkshop}
+        fsmId={fsm?.id}
+        enterWorkshop={enterFSM}
       />
     </Card>
   );
 };
 
 export default connect(null, {
-  enterWorkshop: enterWorkshopAction
+  enterFSM: enterWorkshopAction
 })(FSMCard);

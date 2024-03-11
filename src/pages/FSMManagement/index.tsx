@@ -160,7 +160,7 @@ const FSMManagement: FC<EventPropsType> = ({
         </Grid>
         <Grid item sm={9} xs={12}>
           <Paper elevation={3} sx={{ padding: 2 }} >
-            {TabComponent ? <TabComponent {...currentTab} /> : <></>}
+            {TabComponent ? <TabComponent {...currentTab} /> : null}
           </Paper>
         </Grid>
       </Grid>

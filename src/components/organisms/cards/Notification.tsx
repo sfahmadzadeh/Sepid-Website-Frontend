@@ -29,7 +29,7 @@ const Announcement = ({ title, date, text, image }) => {
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="subtitle" >
+              <Typography variant='subtitle1'>
                 {date}
               </Typography>
             </Grid>
@@ -46,6 +46,5 @@ const Announcement = ({ title, date, text, image }) => {
     </Paper>
   );
 }
-
 
 export default Announcement;

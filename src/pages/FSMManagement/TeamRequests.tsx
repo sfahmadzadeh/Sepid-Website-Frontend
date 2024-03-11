@@ -80,14 +80,33 @@ const Teams: FC<TeamPropsType> = ({
 
   }, [eventTeams, starredTeams])
 
-  if (!teamsRequests){
-    return <></>
+  if (!teamsRequests) {
+    return null;
   }
 
-  const reqTeams = 
-      teams.filter(
-        (team) => teamsRequests[team.id + '.' + fsmId]
-      ).sort((a, b) => {
+  const reqTeams =
+    teams.filter(
+      (team) => teamsRequests[team.id + '.' + fsmId]
+    ).sort((a, b) => {
+      if (!isNaN(parseInt(a.name)) && !isNaN(parseInt(b.name)) && parseInt(b.name) !== parseInt(a.name)) {
+        return parseInt(a.name) - parseInt(b.name)
+      }
+      return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)
+    }).map(team => ({
+      ...team,
+      component:
+        <TeamWorkshopInfoCard
+          {...team}
+          teamId={team.id}
+          fsmId={fsmId}
+          playerId={teamsRequests[team.id + '.' + fsmId]}
+          toggleStar={toggleStar}
+        />
+    }))
+
+  const nonReqTeams =
+    teams.filter(
+      (team) => !teamsRequests[team.id + '.' + fsmId]).sort((a, b) => {
         if (!isNaN(parseInt(a.name)) && !isNaN(parseInt(b.name)) && parseInt(b.name) !== parseInt(a.name)) {
           return parseInt(a.name) - parseInt(b.name)
         }
@@ -99,49 +118,28 @@ const Teams: FC<TeamPropsType> = ({
             {...team}
             teamId={team.id}
             fsmId={fsmId}
-            playerId={teamsRequests[team.id + '.' + fsmId]}
             toggleStar={toggleStar}
           />
       }))
-
-  const nonReqTeams = 
-      teams.filter(
-        (team) => !teamsRequests[team.id + '.' + fsmId]).sort((a, b) => {
-          if (!isNaN(parseInt(a.name)) && !isNaN(parseInt(b.name)) && parseInt(b.name) !== parseInt(a.name)) {
-            return parseInt(a.name) - parseInt(b.name)
-          }
-          return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)
-        }).map(team => ({
-          ...team,
-          component:
-            <TeamWorkshopInfoCard
-              {...team}
-              teamId={team.id}
-              fsmId={fsmId}
-              toggleStar={toggleStar}
-            />
-        }))
   return (
-    <>
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="همه گروه‌ها" {...a11yProps(0)} />
-            <Tab label="گروه‌های نشان شده" {...a11yProps(1)} />
-            <Tab label="درخواست‌ها" {...a11yProps(2)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          <TeamsTab reqTeams={reqTeams} nonReqTeams={nonReqTeams} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <TeamsTab reqTeams={reqTeams.filter(team => team.isStarred)} nonReqTeams={nonReqTeams.filter(team => team.isStarred)} />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <TeamsTab reqTeams={reqTeams} nonReqTeams={[]} />
-        </TabPanel>
+    <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="همه گروه‌ها" {...a11yProps(0)} />
+          <Tab label="گروه‌های نشان شده" {...a11yProps(1)} />
+          <Tab label="درخواست‌ها" {...a11yProps(2)} />
+        </Tabs>
       </Box>
-    </>
+      <TabPanel value={value} index={0}>
+        <TeamsTab reqTeams={reqTeams} nonReqTeams={nonReqTeams} />
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <TeamsTab reqTeams={reqTeams.filter(team => team.isStarred)} nonReqTeams={nonReqTeams.filter(team => team.isStarred)} />
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <TeamsTab reqTeams={reqTeams} nonReqTeams={[]} />
+      </TabPanel>
+    </Box>
   );
 }
 

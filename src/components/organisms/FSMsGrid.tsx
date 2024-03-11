@@ -14,7 +14,7 @@ function FSMsGrid({ programId, fsms, isLoading }) {
       <Grid container spacing={2}>
         {[...Array(numberOfSkeleton)].map((e, i) => (
           <Grid item key={i} xs={12} sm={6} lg={4}>
-            <FSMCard isLoading={true} />
+            <FSMCard isLoading={true} fsm={null} />
           </Grid>
         ))}
       </Grid>
@@ -27,7 +27,7 @@ function FSMsGrid({ programId, fsms, isLoading }) {
       <Grid container spacing={2}>
         {tmpArr.map((workshop) => (
           <Grid item key={workshop.id} xs={12} sm={6} lg={4}>
-            <FSMCard programId={programId} workshop={workshop} />
+            <FSMCard fsm={workshop} />
           </Grid>
         ))}
       </Grid>

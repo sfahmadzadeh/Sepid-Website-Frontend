@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router-dom';
@@ -14,7 +14,7 @@ import {
   createCommentAction,
   getAnswerAction,
   setScoreAction,
-} from '../../redux/slices/scoring';
+} from 'redux/slices/scoring';
 
 function Index({
   setScore,
@@ -51,7 +51,7 @@ function Index({
   }
 
   return (
-    <>
+    <Fragment>
       <Stack spacing={2} justifyContent='center'>
         <Box>
           <Typography variant='h2' align='center' gutterBottom>{'نمره‌دهی'}</Typography>
@@ -87,7 +87,7 @@ function Index({
           <Button onClick={() => handleCreateComment()} variant='outlined' color='primary' fullWidth>{'ثبت'}</Button>
         </Stack>
       </Stack>
-    </>
+    </Fragment>
   );
 }
 

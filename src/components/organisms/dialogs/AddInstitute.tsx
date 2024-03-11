@@ -34,7 +34,7 @@ const AddInstituteDialog = ({
   city,
   isFetching,
 }) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState(null);
 
   const doSetData = (event) => {
     setData({

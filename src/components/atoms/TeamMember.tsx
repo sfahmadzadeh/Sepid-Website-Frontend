@@ -8,7 +8,7 @@ import {
   MenuItem,
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import React, { FC, useState } from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import AreYouSure from 'components/organisms/dialogs/AreYouSure'
 import { removeFromTeamAction } from 'redux/slices/events';
@@ -58,7 +58,7 @@ const TeamMember: FC<TeamMemberPropsType> = ({
   }
 
   return (
-    <>
+    <Fragment>
       <Stack direction='row' key={memberId} alignItems='start' justifyContent='space-between'>
         <FormControlLabel
           control={
@@ -91,7 +91,7 @@ const TeamMember: FC<TeamMemberPropsType> = ({
         handleClose={() => setRemoveTeamMemberDialog(false)}
         callBackFunction={submitRemoveFromTeam}
       />
-    </>
+    </Fragment>
   );
 };
 

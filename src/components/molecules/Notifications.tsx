@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 
-import { removeNotificationAction } from '../../redux/slices/notifications';
+import { removeNotificationAction } from 'redux/slices/notifications';
 
 let displayed = [];
 

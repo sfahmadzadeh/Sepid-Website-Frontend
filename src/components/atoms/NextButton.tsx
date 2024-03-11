@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { FC, Fragment, useContext, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,17 @@ import {
 import ChangeStateDialog from 'components/organisms/dialogs/ChangeStateDialog';
 import StatePasswordDialog from 'components/organisms/dialogs/StatePasswordDialog';
 
-function NextButton({ outwardEdges = [], goForward, mentorMoveForward }) {
+type NextButtonPropsType = {
+  outwardEdges: any[]
+  goForward: any;
+  mentorMoveForward: any;
+}
+
+const NextButton: FC<NextButtonPropsType> = ({
+  outwardEdges = [],
+  goForward,
+  mentorMoveForward,
+}) => {
   const t = useTranslate();
   const [openChangeStateDialog, setOpenChangeStateDialog] = useState(false);
   const [selectedEdge, setSelectedEdge] = useState(null);
@@ -52,11 +62,11 @@ function NextButton({ outwardEdges = [], goForward, mentorMoveForward }) {
   };
 
   if (outwardEdges.length === 0) {
-    return (<></>)
+    return (null)
   }
 
   return (
-    <>
+    <Fragment>
       <Button
         fullWidth
         variant="contained"
@@ -84,7 +94,7 @@ function NextButton({ outwardEdges = [], goForward, mentorMoveForward }) {
           })
         }
       />
-    </>
+    </Fragment>
   );
 }
 

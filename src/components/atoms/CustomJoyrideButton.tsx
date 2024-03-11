@@ -1,5 +1,5 @@
 import { Button, Tooltip, IconButton } from '@mui/material';
-import React, { FC, useState } from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
 import HelpIcon from '@mui/icons-material/Help';
 
@@ -22,7 +22,7 @@ const CustomJoyrideButton: FC<CustomJoyrideButtonPropsType> = ({
   };
 
   return (
-    <>
+    <Fragment>
       <Joyride
         callback={handleJoyrideCallback}
         continuous
@@ -54,7 +54,7 @@ const CustomJoyrideButton: FC<CustomJoyrideButtonPropsType> = ({
           <HelpIcon />
         </IconButton>
       </Tooltip>
-    </>
+    </Fragment>
   );
 };
 

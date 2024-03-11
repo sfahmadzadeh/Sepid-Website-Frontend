@@ -84,6 +84,9 @@ export const getScoreTypesAction = createAsyncThunkApi(
 
 const initialState = {
   scores: [],
+  answer: null,
+  comments: null,
+  isFetching: false,
 };
 
 

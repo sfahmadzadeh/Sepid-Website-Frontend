@@ -11,7 +11,7 @@ import {
   Stack
 } from '@mui/material';
 import { NotificationsActive } from '@mui/icons-material';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import validateURL from 'utils/validators/urlValidator'
 import AreYouSure from 'components/organisms/dialogs/AreYouSure'
@@ -51,7 +51,7 @@ const TeamInfo = ({
   }
 
   return (
-    <>
+    <Fragment>
       <Card
         sx={{
           maxWidth: 300,
@@ -127,7 +127,7 @@ const TeamInfo = ({
         handleClose={() => setDeleteDialogId(false)}
         callBackFunction={() => deleteTeam({ teamId: teamId })}
       />
-    </>
+    </Fragment>
   );
 };
 

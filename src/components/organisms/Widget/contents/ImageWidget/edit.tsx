@@ -1,20 +1,19 @@
 import {
   Button,
-  Dialog,
   Divider,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  TextField,
   Stack,
+  TextField,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import UploadFile from 'components/molecules/UploadFile';
 
-
-function AudioEditWidget({
+function ImageEditWidget({
   onEdit,
   handleClose,
 
@@ -25,11 +24,11 @@ function AudioEditWidget({
   file: previousFile,
 }) {
   const t = useTranslate();
-  const [link, setLink] = useState(oldLink);
-  const [file, setFile] = useState(null);
+  const [link, setLink] = useState<string>(oldLink);
+  const [file, setFile] = useState<any>(null);
 
   const handleClick = () => {
-    let payload = {
+    let payload: any = {
       paper: paperId,
     };
     if (file) {
@@ -48,12 +47,12 @@ function AudioEditWidget({
       ...payload,
       widgetId,
       onSuccess: handleClose,
-    });
+    })
   };
 
   return (
     <Dialog disableScrollLock open={open} onClose={handleClose}>
-      <DialogTitle>صوت</DialogTitle>
+      <DialogTitle>{t('image')}</DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
           <UploadFile widgetId={widgetId} paperId={paperId} file={file} setFile={setFile} previousFile={previousFile} />
@@ -61,10 +60,10 @@ function AudioEditWidget({
           <DialogContentText>{t('uploadFileFillUrl')}</DialogContentText>
           <TextField
             fullWidth
-            label="آدرس صوت"
+            label="آدرس عکس"
             value={link}
             inputProps={{ className: 'ltr-input' }}
-            placeholder="http://example.com/example.mp3"
+            placeholder="http://example.com/example.png"
             onChange={(e) => setLink(e.target.value)}
           />
         </Stack>
@@ -78,4 +77,4 @@ function AudioEditWidget({
   );
 }
 
-export default AudioEditWidget;
+export default ImageEditWidget;

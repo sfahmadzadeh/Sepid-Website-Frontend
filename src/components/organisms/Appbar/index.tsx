@@ -10,7 +10,7 @@ import {
   useScrollTrigger,
 } from '@mui/material';
 import { EventAvailable, Menu as MenuIcon } from '@mui/icons-material';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux'
 import HideOnScroll from './components/HideOnScroll';
 import useWidth from 'utils/UseWidth';
@@ -69,7 +69,7 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
   // todo: rightItems and leftItems don't contain just items! they also have a strange item
 
   return (
-    <>
+    <Fragment>
       <HideOnScroll disable={!hideOnScroll}>
         <AppBar
           sx={
@@ -129,7 +129,7 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
           ))}
         </List>
       </Drawer>
-    </>
+    </Fragment>
   );
 }
 

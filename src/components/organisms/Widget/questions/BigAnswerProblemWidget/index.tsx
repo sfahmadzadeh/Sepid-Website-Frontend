@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from '@mui/material';
-import React, { FC, useState } from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
 import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
@@ -72,7 +72,7 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
         </Button>
       }
       {mode === WidgetModes.Review &&
-        <>
+        <Fragment>
           {answer ?
             <TinyPreview
               frameProps={{
@@ -86,7 +86,7 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
               {'پاسخی برای این سوال ثبت نشده است.'}
             </Typography>
           }
-        </>
+        </Fragment>
       }
     </Stack>
   );

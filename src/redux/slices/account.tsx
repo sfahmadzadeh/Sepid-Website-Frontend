@@ -182,13 +182,15 @@ const isNotFetching = (state) => {
 
 const initialState = {
   // userInfo includes both user account information + user profile information
-  userInfo: {},
+  id: null,
+  userInfo: null,
   institutes: [],
   isFetching: false,
   accessToken: '',
   refreshToken: '',
   user: {},
   discountCodes: [],
+  newlyAddedInstitute: null,
 };
 
 const accountSlice = createSlice({

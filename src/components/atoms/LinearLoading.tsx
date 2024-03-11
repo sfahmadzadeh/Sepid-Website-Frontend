@@ -16,7 +16,7 @@ const LinearLoading: FC<LinearLoadingPropsType> = ({
       </div>
     )
   } else {
-    return (<></>)
+    return (null)
   }
 };
 

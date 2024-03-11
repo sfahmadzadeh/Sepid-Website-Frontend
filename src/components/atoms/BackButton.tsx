@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React, { useContext } from 'react';
+import React, { FC, useContext } from 'react';
 import { connect } from 'react-redux';
 
 import { StatePageContext } from 'pages/FSM';
@@ -8,7 +8,19 @@ import {
   mentorMoveBackwardAction,
 } from 'redux/slices/currentState';
 
-function BackButton({ inwardEdges = [], goBackward, mentorMoveBackward, playerId }) {
+type BackButtonPropsType = {
+  inwardEdges: any[];
+  goBackward: any;
+  mentorMoveBackward: any;
+  playerId: number;
+}
+
+const BackButton: FC<BackButtonPropsType> = ({
+  inwardEdges = [],
+  goBackward,
+  mentorMoveBackward,
+  playerId,
+}) => {
   const { isMentor, teamId } = useContext(StatePageContext);
 
   if (inwardEdges.length === 0) {

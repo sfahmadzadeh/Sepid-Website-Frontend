@@ -11,9 +11,7 @@ const hasUserCompletedAcademicInformation = (userInfo) => {
 }
 
 function AcademicProfile({ onSuccess }) {
-  return (
-    <></>
-  );
+  return null;
 }
 
 const mapStateToProps = (state) => ({

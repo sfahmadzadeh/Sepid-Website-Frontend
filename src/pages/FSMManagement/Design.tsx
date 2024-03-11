@@ -3,11 +3,11 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router';
 
-import StatesTabbar from '../../components/organisms/StatesTabbar';
+import StatesTabbar from 'components/organisms/StatesTabbar';
 import {
   getAllWorkshopStatesInfoAction,
 } from 'redux/slices/workshop';
@@ -49,13 +49,12 @@ const DesignWorkshop: FC<DesignWorkshopPropsType> = ({
   const hints = currentState?.hints;
 
   return (
-    <>
+    <Fragment>
       <Box sx={{ margin: -2, marginBottom: 4 }}>
         <StatesTabbar
           value={tab}
           setValue={setTab}
           tabs={allStates.map((state) => state.name)}
-          fsmId={fsmId}
         />
       </Box>
       {currentState ?
@@ -65,7 +64,7 @@ const DesignWorkshop: FC<DesignWorkshopPropsType> = ({
           {'گامی وجود ندارد.'}
         </Typography>
       }
-    </>
+    </Fragment>
   );
 };
 

@@ -1,8 +1,20 @@
 import { Button, Icon, Typography } from '@mui/material';
-import React from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function DashboardButton({ variant = 'text', name, to, onClick }) {
+type DashboardButtonPropsType = {
+  name: string;
+  variant?: "text" | "outlined" | "contained";
+  to?: any;
+  onClick?: any;
+}
+
+const DashboardButton: FC<DashboardButtonPropsType> = ({
+  name,
+  variant = 'text',
+  to,
+  onClick,
+}) => {
   const navigate = useNavigate();
 
   return (

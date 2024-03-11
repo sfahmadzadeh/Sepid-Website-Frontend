@@ -12,7 +12,7 @@ import {
   deleteWidgetHintAction,
 } from 'redux/slices/Paper';
 
-import Widget, { WidgetModes } from '../organisms/Widget';
+import Widget, { WidgetModes } from 'components/organisms/Widget';
 import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog';
 import { toPersianNumber } from 'utils/translateNumber';
 

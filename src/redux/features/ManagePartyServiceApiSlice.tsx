@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { MPS_URL } from 'configs/Constants'
 
 
 export const ManagePartyServiceApi = createApi({
   reducerPath: 'mangage-party-service',
   baseQuery: fetchBaseQuery({
-    // Fill in your own server starting URL here
-    baseUrl: 'https://mps.sepid.org/api/',
+    baseUrl: MPS_URL,
   }),
   endpoints: build => ({
   })

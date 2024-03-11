@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import GraphMapBase from './Base';
 
 const _nodes = [
@@ -21,9 +21,9 @@ const _links = [
 const GraphType2 = () => {
 
   return (
-    <>
+    <Fragment>
       <GraphMapBase dragAndDrop={true} currentNodeId={'علی'} nodes={_nodes} links={_links} />
-    </>
+    </Fragment>
   );
 };
 

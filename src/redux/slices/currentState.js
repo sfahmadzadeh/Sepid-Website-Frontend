@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import moment from 'moment';
 
-import { requestMentor } from '../../parse/mentor';
-import { changeTeamState } from '../../parse/team';
-import { Apis } from '../apis';
+import { requestMentor } from 'parse/mentor';
+import { changeTeamState } from 'parse/team';
+import { Apis } from 'redux/apis';
 import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
 import {
   enterWorkshopUrl,

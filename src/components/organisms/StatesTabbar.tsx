@@ -2,19 +2,27 @@ import { Button, Grid, Box } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import React, { useState } from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 
 import CreateStateDialog from './dialogs/CreateStateDialog';
 
+type StatesTabbarPropsType = {
+  value: any;
+  setValue: any;
+  tabs: any[];
+}
 
-export default function StatesTabbar({ value, setValue, tabs = [], fsmId }) {
+const StatesTabbar: FC<StatesTabbarPropsType> = ({
+  value,
+  setValue,
+  tabs = [],
+}) => {
   const t = useTranslate();
-
   const [openCreateStateDialog, setOpenCreateStateDialog] = useState(false);
 
   return (
-    <>
+    <Fragment>
       <Box sx={{
         flexGrow: 1,
         width: '100%',
@@ -58,8 +66,9 @@ export default function StatesTabbar({ value, setValue, tabs = [], fsmId }) {
       <CreateStateDialog
         open={openCreateStateDialog}
         handleClose={() => setOpenCreateStateDialog(false)}
-        fsmId={fsmId}
       />
-    </>
+    </Fragment>
   );
 }
+
+export default StatesTabbar;

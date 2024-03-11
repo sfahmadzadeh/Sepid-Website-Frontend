@@ -19,7 +19,7 @@ const Banner: FC<BannerPropsType> = ({ banners }) => {
   // https://swiperjs.com/react
 
   if (banners.length === 0) {
-    return <></>
+    return null;
   }
 
   return (
