@@ -5,7 +5,7 @@ import { MPS_URL } from 'configs/Constants'
 export const ManagePartyServiceApi = createApi({
   reducerPath: 'mangage-party-service',
   baseQuery: fetchBaseQuery({
-    baseUrl: MPS_URL,
+    baseUrl: MPS_URL + 'api/',
   }),
   endpoints: build => ({
   })

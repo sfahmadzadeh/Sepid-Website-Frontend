@@ -1,5 +1,5 @@
-export const MCS_URL = process.env.REACT_APP_BACKEND_URL || 'https://mcs.sepid.org/api/';
-export const MPS_URL = process.env.REACT_APP_MPS_URL || 'https://mps.sepid.org/api/';
+export const MCS_URL = process.env.REACT_APP_BACKEND_URL || 'https://mcs.sepid.org/';
+export const MPS_URL = process.env.REACT_APP_MPS_URL || 'https://mps.sepid.org/';
 
 export const PARSE_SERVER_URL =
   process.env.NODE_ENV === 'development'

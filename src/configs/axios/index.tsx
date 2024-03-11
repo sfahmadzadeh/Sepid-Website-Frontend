@@ -2,7 +2,7 @@ import Axios from 'axios';
 import { MCS_URL } from 'configs/Constants';
 
 const baseAxios = Axios.create({
-  baseURL: MCS_URL,
+  baseURL: MCS_URL + 'api/',
   timeout: 60000,
   maxRedirects: 5,
 });
