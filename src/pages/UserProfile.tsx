@@ -62,7 +62,7 @@ const Profile = ({
         navigate('/user-profile/personal/');
       }
     }
-  }, [])
+  }, [section])
 
   useEffect(() => {
     if (programId) {
