@@ -11,7 +11,6 @@ import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginAction } from 'redux/slices/account';
 import appendPreviousParams from 'utils/AppendPreviousParams';
-import { toEnglishNumber } from 'utils/translateNumber';
 import GoogleLogin from 'components/organisms/GoogleLogin';
 
 type LoginPagePropsType = {
@@ -46,7 +45,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
   const putData = (event) => {
     setData({
       ...data,
-      [event.target.name]: toEnglishNumber(event.target.value),
+      [event.target.name]: event.target.value,
     });
   };
 

@@ -7,6 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FC } from 'react';
+import isNumber from 'utils/validators/isNumber';
 
 type MakeInvitationDialogPropsType = {
   inviteSomeone: any;
@@ -29,15 +30,6 @@ const MakeInvitationDialog: FC<MakeInvitationDialogPropsType> = ({ inviteSomeone
     ;
   };
 
-  const isJustDigits = (number) => {
-    var regex = new RegExp(`\\d{${number.length}}`);
-    if (regex.test(number)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   return (
     <Dialog disableScrollLock maxWidth="sm" open={open} onClose={handleClose}>
       <DialogContent>
@@ -50,7 +42,7 @@ const MakeInvitationDialog: FC<MakeInvitationDialogPropsType> = ({ inviteSomeone
           variant="outlined"
           value={phoneNumber}
           onChange={(e) => {
-            if (isJustDigits(e.target.value)) {
+            if (isNumber(e.target.value)) {
               setPhoneNumber(e.target.value);
             }
           }}

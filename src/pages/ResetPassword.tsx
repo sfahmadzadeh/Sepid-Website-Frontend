@@ -10,7 +10,7 @@ import {
   getVerificationCodeAction,
 } from 'redux/slices/account';
 import appendPreviousParams from 'utils/AppendPreviousParams';
-import { toEnglishNumber } from 'utils/translateNumber';
+import isNumber from 'utils/validators/isNumber';
 
 type ResetPasswordPropsType = {
   isFetching: boolean;
@@ -35,17 +35,8 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
   const putData = (event) => {
     setData({
       ...data,
-      [event.target.name]: toEnglishNumber(event.target.value),
+      [event.target.name]: event.target.value,
     });
-  };
-
-  const isJustDigits = (number) => {
-    var regex = new RegExp(`\\d{${number.length}}`);
-    if (regex.test(toEnglishNumber(number))) {
-      return true;
-    } else {
-      return false;
-    }
   };
 
   const isPhoneNumberValid = (phoneNumber) => {
@@ -115,7 +106,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
           variant="outlined"
           fullWidth
           onChange={(e) => {
-            if (isJustDigits(e.target.value)) {
+            if (isNumber(e.target.value)) {
               putData(e);
             }
           }}
@@ -143,7 +134,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
             variant="outlined"
             fullWidth
             onChange={(e) => {
-              if (isJustDigits(e.target.value)) {
+              if (isNumber(e.target.value)) {
                 putData(e);
               }
             }}
