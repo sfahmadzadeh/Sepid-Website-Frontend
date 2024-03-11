@@ -34,7 +34,7 @@ const Root = () => {
       <Route path="/create-account/" element={<CreateAccount />} />
       <Route path="/articles/" element={<Articles />} />
       <Route path="/article/:articleId/" element={<Article />} />
-      <Route path="/profile/:partyName/" element={<PartyProfile />} />
+      <Route path="/profile/:partyName?/" element={<PartyProfile />} />
 
       <Route path="/" element={<PrivateRoute />}>
 
