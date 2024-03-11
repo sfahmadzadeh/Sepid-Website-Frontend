@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import AboutUs from 'pages/AboutUs';
 import ResetPassword from 'pages/ResetPassword';
 import CreateAccount from 'pages/CreateAccount';
 import RegistrationReceipt from 'pages/RegistrationReceipt';
@@ -22,16 +21,12 @@ import PrivateRoute from './PrivateRoute';
 import FSMManagement from 'pages/FSMManagement';
 import Correction from 'pages/Correction';
 import EditArticle from 'pages/EditArticle';
-import CustomPage from 'pages/CustomPage';
 
 const Root = () => {
 
   return (
     <Routes>
-      <Route path="/l/mr4k2309" element={<CustomPage />} ></Route>
-
-      <Route path="/about-us/" element={<AboutUs />} />
-
+      
       <Route path="/" element={<Login />} />
       <Route path="/login/" element={<Login />} />
       <Route path="/reset-password/" element={<ResetPassword />} />
