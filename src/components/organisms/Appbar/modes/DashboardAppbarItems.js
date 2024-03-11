@@ -8,7 +8,7 @@ const DashboardAppbarItems = ({}) => {
 
   const eventsButton = <DashboardButton name={'دوره‌ها'} to={'/programs/'} />;
   const articlesButton = <DashboardButton name={'مقاله‌ها'} to={'/articles/'} />;
-  const aboutUsButton = <DashboardButton name={'درباره ما'} onClick={() => window.location.href = 'https://platform.kamva.academy/about-us/'} />;
+  const aboutUsButton = <DashboardButton name={'درباره ما'} onClick={() => window.location.href = 'https://platform.kamva.academy/article/2075/'} />;
   const contactUsButton = <DashboardButton name={'تماس با ما'} onClick={() => window.location.href = 'https://platform.kamva.academy/article/2044/'} />;
   const brand = <Brand />
   const userInfo = <UserInfo />
