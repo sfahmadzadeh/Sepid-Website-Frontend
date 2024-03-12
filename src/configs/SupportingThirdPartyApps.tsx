@@ -43,6 +43,7 @@ const initClarity = () => {
 }
 
 const initGoftino = (token: string) => {
+  if (!token) return;
   (function () {
     var i = token,
       a = window,
@@ -68,7 +69,7 @@ const initGoftino = (token: string) => {
 
 export const initSupportingThirdPartyApps = (thridPartiesTokens: any[]) => {
   if (process.env.NODE_ENV === 'production') {
-    initGoftino(thridPartiesTokens.find(thirdParty => thirdParty.third_party_type == 'SiteSupportService').token);
+    initGoftino(thridPartiesTokens.find(thirdParty => thirdParty.third_party_type == 'SiteSupportService')?.token);
     initSentry();
     initGoogleAnalytics();
     initGoogleTagManager();
