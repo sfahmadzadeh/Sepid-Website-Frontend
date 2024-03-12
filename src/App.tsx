@@ -21,6 +21,8 @@ import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartyS
 import Root from './routes';
 import translations from './translations';
 import LinearLoading from 'components/atoms/LinearLoading';
+import { useGetThirdPartiesQuery } from 'redux/features/ThirdPartySlice';
+import { initSupportingThirdPartyApps } from 'configs/SupportingThirdPartyApps';
 
 const App = ({
   dir,
@@ -32,6 +34,13 @@ const App = ({
 
   const { data: party } = useGetPartyQuery();
   const { data: websiteMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+  const { data: thridPartiesTokens } = useGetThirdPartiesQuery({ partyUuid: party?.uuid }, { skip: !Boolean(party) })
+
+  useEffect(() => {
+    if (thridPartiesTokens) {
+      initSupportingThirdPartyApps(thridPartiesTokens);
+    }
+  }, [thridPartiesTokens])
 
   useEffect(() => {
     if (redirectTo !== null) {

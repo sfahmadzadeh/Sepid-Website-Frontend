@@ -42,9 +42,9 @@ const initClarity = () => {
   })(window, document, "clarity", "script", process.env.REACT_APP_CLARITY_TOKEN);
 }
 
-const initGoftino = () => {
+const initGoftino = (token: string) => {
   (function () {
-    var i = process.env.REACT_APP_GOFTINO_TOKEN,
+    var i = token,
       a = window,
       d = document;
     function g() {
@@ -66,14 +66,12 @@ const initGoftino = () => {
   })();
 }
 
-export const initSupportingThirdPartyApps = () => {
+export const initSupportingThirdPartyApps = (thridPartiesTokens: any[]) => {
   if (process.env.NODE_ENV === 'production') {
-    initGoftino();
+    initGoftino(thridPartiesTokens.find(thirdParty => thirdParty.third_party_type == 'SiteSupportService').token);
     initSentry();
     initGoogleAnalytics();
     initGoogleTagManager();
     initClarity();
   }
 }
-
-
