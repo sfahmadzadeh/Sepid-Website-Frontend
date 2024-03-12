@@ -33,7 +33,7 @@ const ProgramContactInfo: FC<ProgramContactInfoPropsType> = ({
     telegram_link,
   } = programContactInfo;
 
-  if (!bale_link || !eitaa_link || !instagram_link || !phone_number || !shad_link || !telegram_link) {
+  if (!bale_link && !eitaa_link && !instagram_link && !phone_number && !shad_link && !telegram_link) {
     return null;
   }
 
