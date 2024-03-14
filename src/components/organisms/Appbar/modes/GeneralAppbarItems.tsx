@@ -3,7 +3,7 @@ import DashboardButton from '../components/DashboardButton';
 import Brand from '../components/Brand';
 
 const GeneralAppbarItems = ({}) => {
-  const backToLanding = <DashboardButton name={'بازگشت'} to={-1} />;
+  const backToLanding = <DashboardButton label={'بازگشت'} to={-1} />;
   const brand = <Brand />;
 
   const desktopLeftItems = [backToLanding];

@@ -6,10 +6,10 @@ import UserInfo from '../components/UserInfo';
 
 const DashboardAppbarItems = ({}) => {
 
-  const eventsButton = <DashboardButton name={'دوره‌ها'} to={'/programs/'} />;
-  const articlesButton = <DashboardButton name={'مقاله‌ها'} to={'/articles/'} />;
-  const aboutUsButton = <DashboardButton name={'درباره ما'} onClick={() => window.location.href = 'https://platform.kamva.academy/article/2075/'} />;
-  const contactUsButton = <DashboardButton name={'تماس با ما'} onClick={() => window.location.href = 'https://platform.kamva.academy/article/2044/'} />;
+  const eventsButton = <DashboardButton label={'دوره‌ها'} to={'/programs/'} />;
+  const articlesButton = <DashboardButton label={'مقاله‌ها'} to={'/articles/'} />;
+  const aboutUsButton = <DashboardButton label={'درباره ما'} onClick={() => window.location.href = 'https://platform.kamva.academy/article/2075/'} />;
+  const contactUsButton = <DashboardButton label={'تماس با ما'} onClick={() => window.location.href = 'https://platform.kamva.academy/article/2044/'} />;
   const brand = <Brand />
   const userInfo = <UserInfo />
 

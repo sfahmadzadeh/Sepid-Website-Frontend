@@ -13,7 +13,7 @@ const MentorFSMAppbarItems = ({ fsm, mentorId }) => {
   const search = useLocation().search;
   let teamId = new URLSearchParams(search).get('teamId');
   const chatRoomButton = <ChatRoomButton />;
-  const backToEventButton = <DashboardButton onClick={() => { announceMentorDeparture(teamId, mentorId) }} name={'بازگشت'} to={`/program/${programId}/fsm/${fsmId}/manage/requests/`} />;
+  const backToEventButton = <DashboardButton onClick={() => { announceMentorDeparture(teamId, mentorId) }} label={'بازگشت'} to={`/program/${programId}/fsm/${fsmId}/manage/requests/`} />;
   const whiteboardButton = <WhiteboardButton />;
   const teamAvatar = <TeamAvatar />;
   const userAvatar = <UserAvatar />;

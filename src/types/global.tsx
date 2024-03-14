@@ -82,3 +82,9 @@ export type OpenGraphMetaData = {
   image: string;
   url: string;
 }
+
+export type AppbarMenuItemType = {
+  to: string;
+  label: string;
+  items: AppbarMenuItemType[];
+}

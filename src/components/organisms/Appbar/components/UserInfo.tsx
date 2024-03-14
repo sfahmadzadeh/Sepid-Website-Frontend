@@ -19,8 +19,8 @@ function UserInfo({ isUserAuthenticated }: UserInfoPropsType) {
           <Avatar />
         </Fragment> :
         <Fragment>
-          <DashboardButton variant='outlined' name='ورود' to={'/login/'} onClick={null} />
-          <DashboardButton variant='contained' name='عضویت' to={'/create-account/'} onClick={null} />
+          <DashboardButton variant='outlined' label='ورود' to={'/login/'} onClick={null} />
+          <DashboardButton variant='contained' label='عضویت' to={'/create-account/'} onClick={null} />
         </Fragment>
       }
     </Stack>
