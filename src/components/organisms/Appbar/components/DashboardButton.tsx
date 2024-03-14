@@ -19,12 +19,16 @@ const DashboardButton: FC<DashboardButtonPropsType> = ({
   onClick,
   items,
 }) => {
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   const onClickWrapper = (event) => {
     if (to) {
-      navigate(to);
+      if (to.startsWith('http')) {
+        window.location.href = to;
+      } else {
+        navigate(to);
+      }
     }
     if (onClick) {
       onClick();

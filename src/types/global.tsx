@@ -56,11 +56,17 @@ export type PartyType = {
   logo: LogoType;
 }
 
-export type PageType = {
+export type PageMetadataType = {
   address_pattern: string;
   header_data: HeaderData;
   og_metadata: OpenGraphMetaData;
   banners: BannerType[];
+  appbar: { body: BackendAppbarType };
+}
+
+export type BackendAppbarType = {
+  desktopLeftItems: AppbarMenuItemType[];
+  desktopRightItems: AppbarMenuItemType[];
 }
 
 export type LogoType = {
@@ -87,4 +93,5 @@ export type AppbarMenuItemType = {
   to: string;
   label: string;
   items: AppbarMenuItemType[];
+  position: 'right' | 'left';
 }

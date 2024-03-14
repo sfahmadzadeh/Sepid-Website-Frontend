@@ -1,4 +1,4 @@
-import StudentDashboardItems from './modes/DashboardAppbarItems';
+import DashboardAppbarItems from './modes/DashboardAppbarItems';
 import ProgramAppBarItems from './modes/ProgramAppbarItems';
 import GeneralAppbarItems from './modes/GeneralAppbarItems';
 import FSMAppbarItems from './modes/FSMAppbarItems';
@@ -6,7 +6,7 @@ import MentorFSMAppBar from './modes/MentorFSMAppbarItems';
 import { AppbarItemsType, AppbarModes } from 'types/global';
 
 const mode2component = {
-  DASHBOARD: StudentDashboardItems,
+  DASHBOARD: DashboardAppbarItems,
   FSM: FSMAppbarItems,
   MENTOR_FSM: MentorFSMAppBar,
   PROGRAM: ProgramAppBarItems,

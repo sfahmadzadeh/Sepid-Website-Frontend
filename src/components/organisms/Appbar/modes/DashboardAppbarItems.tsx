@@ -1,24 +1,41 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import DashboardButton from '../components/DashboardButton';
+import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
 import Brand from '../components/Brand';
+import DefaultAppbarItems from './DefaultAppbarItems';
 import UserInfo from '../components/UserInfo';
 
-const DashboardAppbarItems = ({}) => {
+const DashboardAppbarItems = ({ }) => {
 
-  const eventsButton = <DashboardButton label={'دوره‌ها'} to={'/programs/'} />;
-  const articlesButton = <DashboardButton label={'مقاله‌ها'} to={'/articles/'} />;
-  const aboutUsButton = <DashboardButton label={'درباره ما'} onClick={() => window.location.href = 'https://platform.kamva.academy/article/2075/'} />;
-  const contactUsButton = <DashboardButton label={'تماس با ما'} onClick={() => window.location.href = 'https://platform.kamva.academy/article/2044/'} />;
-  const brand = <Brand />
+  const { data: party } = useGetPartyQuery();
+  const { data: pageMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+
+  if (!pageMetadata?.appbar?.body) {
+    return DefaultAppbarItems({})
+  }
+
+  const desktopLeftItems = [];
+  pageMetadata.appbar.body.desktopLeftItems.filter(item => item.position === 'left').forEach((item, index) => {
+    desktopLeftItems.push(
+      <DashboardButton key={index} label={item.label} to={item.to} items={item.items} />
+    );
+  })
+  const desktopRightItems = [];
+  pageMetadata.appbar.body.desktopLeftItems.filter(item => item.position === 'right').forEach((item, index) => {
+    desktopRightItems.push(
+      <DashboardButton key={index} label={item.label} to={item.to} items={item.items} />
+    );
+  })
+  const brand = <Brand />;
   const userInfo = <UserInfo />
 
   return {
-    desktopLeftItems: [userInfo],
-    desktopRightItems: [brand, eventsButton, articlesButton, aboutUsButton, contactUsButton],
+    desktopLeftItems: [...desktopLeftItems, userInfo],
+    desktopRightItems: [brand, ...desktopRightItems],
     mobileLeftItems: [userInfo],
     mobileRightItems: [],
-    mobileMenuListItems: [eventsButton, articlesButton, aboutUsButton, contactUsButton],
+    mobileMenuListItems: [...desktopLeftItems, ...desktopRightItems],
   };
 };
 
