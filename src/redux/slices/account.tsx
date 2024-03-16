@@ -19,10 +19,10 @@ export const createAccountAction = createAsyncThunkApi(
   Apis.POST,
   accountCRUDUrl,
   {
-    bodyCreator: ({ phoneNumber, password, code, firstName, lastName }) => ({
+    bodyCreator: ({ phoneNumber, password, verificationCode, firstName, lastName }) => ({
       phone_number: phoneNumber,
       password,
-      code,
+      code: verificationCode,
       first_name: firstName,
       last_name: lastName,
     }),

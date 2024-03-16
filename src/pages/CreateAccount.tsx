@@ -9,43 +9,36 @@ import {
 } from '@mui/material';
 import {
   createAccountAction,
-  getVerificationCodeAction,
 } from 'redux/slices/account';
 import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import appendPreviousParams from 'utils/AppendPreviousParams';
-import isNumber from 'utils/validators/isNumber';
-import isPhoneNumber from 'utils/validators/isPhoneNumber';
 import { toast } from 'react-toastify';
-import { useGetPartyQuery } from 'redux/features/PartySlice';
+import VerifyPhoneNumber from 'components/molecules/VerifyPhoneNumber';
 
 type CreateAccountPropsType = {
   isFetching: boolean;
   createAccount: any;
-  getVerificationCode: any;
   accessToken: string;
 }
 
 const CreateAccount: FC<CreateAccountPropsType> = ({
   isFetching,
   createAccount,
-  getVerificationCode,
   accessToken,
 }) => {
   const navigate = useNavigate();
-  const [buttonDisable, setButtonDisable] = useState(false);
-  const [data, setData] = useState({
+  const [data, _setData] = useState({
     firstName: '',
     lastName: '',
     phoneNumber: '',
     password: '',
     confirmationPassword: '',
-    code: '',
+    verificationCode: '',
   });
 
   const urlParams = new URLSearchParams(window.location.search);
   const programId = urlParams.get('private_program_id');
-  const { data: party } = useGetPartyQuery();
 
   useEffect(() => {
     if (accessToken) {
@@ -57,27 +50,10 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
     }
   }, [programId, navigate, accessToken])
 
-  const collectData = (event) => {
-    setData({
+  const setData = (event) => {
+    _setData({
       ...data,
       [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleGettingVerificationCode = () => {
-    if (!isPhoneNumber(data.phoneNumber)) {
-      toast.error('شماره تلفن وارد‌شده معتبر نیست');
-      return;
-    }
-    setButtonDisable(true);
-    getVerificationCode({
-      phoneNumber: data.phoneNumber,
-      codeType: 'create-user-account',
-      partyDisplayName: party.display_name,
-    }).then(() => {
-      setTimeout(() => {
-        setButtonDisable(false);
-      }, 60000);
     });
   };
 
@@ -116,7 +92,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
         <TextField
           variant="outlined"
           fullWidth
-          onChange={collectData}
+          onChange={setData}
           value={data.firstName}
           name="firstName"
           label="نام"
@@ -127,7 +103,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
         <TextField
           variant="outlined"
           fullWidth
-          onChange={collectData}
+          onChange={setData}
           value={data.lastName}
           name="lastName"
           label="نام خانوادگی"
@@ -135,58 +111,18 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
           inputMode='text'
         />
 
-        <TextField
-          variant="outlined"
-          fullWidth
-          onChange={(e) => {
-            if (isNumber(e.target.value)) {
-              collectData(e);
-            }
+        <VerifyPhoneNumber
+          data={{
+            phoneNumber: data.phoneNumber,
+            verificationCode: data.verificationCode
           }}
-          value={data.phoneNumber}
-          name="phoneNumber"
-          label="شماره تلفن همراه"
-          placeholder='09...'
-          inputProps={{ className: 'ltr-input' }}
-          type="tel"
-          inputMode='tel'
+          setData={setData}
         />
 
-        <Stack direction='row' spacing={1}>
-          <TextField
-            variant="outlined"
-            fullWidth
-            onChange={(e) => {
-              if (isNumber(e.target.value)) {
-                collectData(e);
-              }
-            }}
-            value={data.code}
-            name="code"
-            label="کد تایید پیامک‌شده"
-            inputProps={{ className: 'ltr-input' }}
-            autoComplete='false'
-            type='number'
-            inputMode='numeric'
-          />
-          <Button
-            size="small"
-            variant="contained"
-            color="primary"
-            sx={{
-              width: '40%',
-              whiteSpace: 'nowrap',
-            }}
-            onClick={handleGettingVerificationCode}
-            disabled={buttonDisable}>
-            {buttonDisable ? '۱ دقیقه صبر کن' : 'دریافت کد'}
-          </Button>
-        </Stack>
-
         <TextField
           variant="outlined"
           fullWidth
-          onChange={collectData}
+          onChange={setData}
           label="گذرواژه"
           name="password"
           inputProps={{ className: 'ltr-input' }}
@@ -197,7 +133,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
         <TextField
           variant="outlined"
           fullWidth
-          onChange={collectData}
+          onChange={setData}
           label="تکرار گذرواژه"
           inputProps={{ className: 'ltr-input' }}
           name="confirmationPassword"
@@ -231,5 +167,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   createAccount: createAccountAction,
-  getVerificationCode: getVerificationCodeAction,
 })(CreateAccount);
