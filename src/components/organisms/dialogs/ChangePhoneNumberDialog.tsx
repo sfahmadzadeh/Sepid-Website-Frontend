@@ -24,10 +24,11 @@ const ChangePhoneNumberDialog: FC<ChangePhoneNumberDialogPropsType> = ({
   open,
   handleClose,
 }) => {
-  const [data, _setData] = useState({
+  const initialData = {
     phoneNumber: '',
     verificationCode: '',
-  });
+  }
+  const [data, _setData] = useState(initialData);
 
   const setData = (event) => {
     _setData({
@@ -45,6 +46,7 @@ const ChangePhoneNumberDialog: FC<ChangePhoneNumberDialogPropsType> = ({
     }
     if (result.isSuccess) {
       toast.success('شماره تلفن همراه با موفقیت تغییر کرد.')
+      _setData(initialData);
       handleClose();
     }
   }, [result])
