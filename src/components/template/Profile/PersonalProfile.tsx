@@ -10,6 +10,7 @@ import {
   Radio,
   RadioGroup,
   Select,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
@@ -27,6 +28,7 @@ import { toEnglishNumber } from 'utils/translateNumber';
 import { UserInfoType } from 'types/profile';
 import isNumber from 'utils/validators/isNumber';
 import { toast } from 'react-toastify';
+import ChangePhoneNumberDialog from 'components/organisms/dialogs/ChangePhoneNumberDialog';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
@@ -47,6 +49,7 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
   onSuccess,
 }) => {
   const [userInfo, setUserInfo] = useState(null);
+  const [isChangePhoneNumberDialogOpen, setIsChangePhoneNumberDialogOpen] = useState(false);
 
   useEffect(() => {
     if (initialUserInfo) {
@@ -181,19 +184,35 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            disabled={true}
-            value={userInfo.phone_number || ''}
-            onChange={(e) => {
-              if (isNumber(e.target.value)) {
-                handleFieldsChange(e);
-              }
-            }}
-            name="phone_number"
-            inputProps={{ className: 'ltr-input' }}
-            label="شماره موبایل"
-          />
+          <Stack direction={'row'} spacing={1}>
+            <TextField
+              fullWidth
+              disabled={true}
+              value={userInfo.phone_number || ''}
+              onChange={(e) => {
+                if (isNumber(e.target.value)) {
+                  handleFieldsChange(e);
+                }
+              }}
+              name="phone_number"
+              inputProps={{ className: 'ltr-input' }}
+              label="شماره موبایل"
+            />
+            <Button
+              size='small'
+              variant="contained"
+              color="primary"
+              sx={{
+                width: '40%',
+                whiteSpace: 'nowrap',
+              }}
+              onClick={() => setIsChangePhoneNumberDialogOpen(state => !state)}>
+              {userInfo.phone_number ? 'تغییر' : 'تعیین'}
+            </Button>
+            <ChangePhoneNumberDialog
+              handleClose={() => setIsChangePhoneNumberDialogOpen(state => !state)}
+              open={isChangePhoneNumberDialogOpen} />
+          </Stack>
         </Grid>
 
         <Grid item xs={12} sm={6}>

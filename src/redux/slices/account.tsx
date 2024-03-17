@@ -319,6 +319,14 @@ const accountSlice = createSlice({
       }
     )
 
+    builder.addMatcher(
+      UserSlice.endpoints.changePhoneNumber.matchFulfilled,
+      (state, { payload }) => {
+        state.userInfo = { ...state.userInfo, ...payload };
+        state.isFetching = false;
+      }
+    )
+
     ///////////// LOADINGS /////////////
 
     builder.addMatcher(
@@ -336,6 +344,7 @@ const accountSlice = createSlice({
         getAllMerchandiseDiscountCodesAction.pending,
         UserSlice.endpoints.getGoogleUserProfile.matchPending,
         UserSlice.endpoints.loginGoogleUser.matchPending,
+        UserSlice.endpoints.changePhoneNumber.matchPending,
       ),
       isFetching,
     );
@@ -356,6 +365,7 @@ const accountSlice = createSlice({
         getAllMerchandiseDiscountCodesAction.rejected,
         UserSlice.endpoints.getGoogleUserProfile.matchRejected,
         UserSlice.endpoints.loginGoogleUser.matchRejected,
+        UserSlice.endpoints.changePhoneNumber.matchRejected,
       ),
       isNotFetching,
     );

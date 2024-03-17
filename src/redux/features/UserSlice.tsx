@@ -27,6 +27,11 @@ type GetGoogleUserProfileOutput = {
   verified_email: boolean
 }
 
+type ChangePhoneNumberInput = {
+  phone_number: string;
+  code: string;
+}
+
 export const UserSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getGoogleUserProfile: builder.query<GetGoogleUserProfileOutput, GetGoogleUserProfileInput>({
@@ -38,6 +43,7 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
         }
       })
     }),
+
     loginGoogleUser: builder.mutation<LoginGoogleUserOutputType, LoginGoogleUserInputType>({
       invalidatesTags: ['programs'],
       query: (body) => ({
@@ -49,10 +55,19 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
         return response;
       },
     }),
+
+    changePhoneNumber: builder.mutation<any, ChangePhoneNumberInput>({
+      query: (body) => ({
+        url: 'auth/accounts/change-phone-number/',
+        method: 'POST',
+        body,
+      }),
+    })
   })
 });
 
 export const {
   useGetGoogleUserProfileQuery,
   useLoginGoogleUserMutation,
+  useChangePhoneNumberMutation,
 } = UserSlice;

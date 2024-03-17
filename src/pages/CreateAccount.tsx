@@ -117,6 +117,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
             verificationCode: data.verificationCode
           }}
           setData={setData}
+          verifyType='on-create-user-account'
         />
 
         <TextField

@@ -20,12 +20,16 @@ type VerifyPhoneNumberPropsType = {
     verificationCode: string;
   };
   setData: any;
+  verifyType: 'on-create-user-account' | 'on-change-phone-number';
 }
+
+type VerificationCodeType = 'create-user-account' | 'change-user-phone-number';
 
 const VerifyPhoneNumber: FC<VerifyPhoneNumberPropsType> = ({
   getVerificationCode,
   data,
   setData,
+  verifyType,
 }) => {
   const [isButtonDisabled, setIsButtonDisable] = useState(false);
   const { data: party } = useGetPartyQuery();
@@ -42,7 +46,7 @@ const VerifyPhoneNumber: FC<VerifyPhoneNumberPropsType> = ({
     setIsButtonDisable(true);
     getVerificationCode({
       phoneNumber: data.phoneNumber,
-      codeType: 'create-user-account',
+      codeType: verifyType === 'on-create-user-account' ? 'create-user-account' : 'change-user-phone-number',
       partyDisplayName: party.display_name,
     }).then(() => {
       setTimeout(() => {
@@ -52,7 +56,7 @@ const VerifyPhoneNumber: FC<VerifyPhoneNumberPropsType> = ({
   };
 
   return (
-    <Fragment>
+    <Stack spacing={1} paddingTop={1}>
       <TextField
         variant="outlined"
         fullWidth
@@ -100,7 +104,7 @@ const VerifyPhoneNumber: FC<VerifyPhoneNumberPropsType> = ({
           {isButtonDisabled ? '۱ دقیقه صبر کن' : 'دریافت کد'}
         </Button>
       </Stack>
-    </Fragment>
+    </Stack>
   );
 };
 
