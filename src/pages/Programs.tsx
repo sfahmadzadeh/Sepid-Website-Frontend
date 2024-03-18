@@ -7,6 +7,7 @@ import ProgramSkeletonCard from 'components/organisms/cards/EventSkeletonCard';
 import Banner from 'components/molecules/Banner';
 import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
 import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
+import NoDataFound from 'components/molecules/NoDataFound';
 
 
 const Programs = ({ }) => {
@@ -25,21 +26,31 @@ const Programs = ({ }) => {
 
   const activeProgramsElement = (
     <Grid item container spacing={2} xs={12}>
-      {activePrograms.map((program, index) => (
-        <Grid key={index} container item xs={12} sm={6} md={4} justifyContent='center' alignItems='flex-start' >
-          <ProgramCard program={program} />
+      {activePrograms.length > 0 ?
+        activePrograms.map((program, index) => (
+          <Grid key={index} container item xs={12} sm={6} md={4} justifyContent='center' alignItems='flex-start' >
+            <ProgramCard program={program} />
+          </Grid>
+        )) :
+        <Grid container justifyContent={'center'}>
+          <NoDataFound />
         </Grid>
-      ))}
+      }
     </Grid>
   );
 
   const inactiveProgramsElement = (
     <Grid item container spacing={2} xs={12}>
-      {inactivePrograms.map((program, index) => (
-        <Grid key={index} container item xs={12} sm={6} md={4} justifyContent='center' alignItems='flex-start' >
-          <ProgramCard program={program} />
+      {inactivePrograms.length > 0 ?
+        inactivePrograms.map((program, index) => (
+          <Grid key={index} container item xs={12} sm={6} md={4} justifyContent='center' alignItems='flex-start' >
+            <ProgramCard program={program} />
+          </Grid>
+        )) :
+        <Grid container item justifyContent='center' alignItems='center'>
+          <NoDataFound />
         </Grid>
-      ))}
+      }
     </Grid>
   );
 

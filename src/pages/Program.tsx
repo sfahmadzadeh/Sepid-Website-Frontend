@@ -23,8 +23,8 @@ type ProgramPropsType = {
 
   program: any;
   isLoading: any;
-  workshops: any;
-  workshopsCount: number;
+  fsms: any;
+  fsmsCount: number;
   banners: any;
 }
 
@@ -34,8 +34,8 @@ const Program: FC<ProgramPropsType> = ({
 
   program,
   isLoading,
-  workshops,
-  workshopsCount,
+  fsms,
+  fsmsCount,
 }) => {
   const { programId } = useParams();
   const navigate = useNavigate();
@@ -85,19 +85,20 @@ const Program: FC<ProgramPropsType> = ({
             </Typography>
             <Stack>
               <FSMsGrid
-                programId={programId}
-                fsms={workshops}
+                fsms={fsms}
                 isLoading={isLoading}
               />
             </Stack>
-            <Pagination
-              variant="outlined"
-              color="primary"
-              shape='rounded'
-              count={Math.ceil(workshopsCount / ITEMS_PER_PAGE_NUMBER)}
-              page={pageNumber}
-              onChange={(e, value) => setPageNumber(value)}
-            />
+            {(!isLoading && fsms.length > 0) &&
+              <Pagination
+                variant="outlined"
+                color="primary"
+                shape='rounded'
+                count={Math.ceil(fsmsCount / ITEMS_PER_PAGE_NUMBER)}
+                page={pageNumber}
+                onChange={(e, value) => setPageNumber(value)}
+              />
+            }
           </Stack>
         </Stack>
       </Layout>
@@ -106,10 +107,10 @@ const Program: FC<ProgramPropsType> = ({
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  workshops: state.events.workshops,
+  fsms: state.events.workshops,
   isLoading: state.events.getWorkshopsLoading,
   program: state.events.event,
-  workshopsCount: state.events.workshopsCount,
+  fsmsCount: state.events.workshopsCount,
 });
 
 export default connect(mapStateToProps, {

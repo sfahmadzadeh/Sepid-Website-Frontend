@@ -9,6 +9,7 @@ import Layout from 'components/template/Layout';
 import { ITEMS_PER_PAGE_NUMBER } from '../configs/Constants';
 import { useGetArticlesQuery } from 'redux/features/ArticleSlice';
 import { useGetPartyQuery } from 'redux/features/PartySlice';
+import NoDataFound from 'components/molecules/NoDataFound';
 
 type ArticlesPropsType = {
 }
@@ -18,7 +19,7 @@ const Articles: FC<ArticlesPropsType> = ({
   const [pageNumber, setPageNumber] = useState(1);
 
   const { data: party } = useGetPartyQuery();
-  const { data } = useGetArticlesQuery({ partyUuid: party?.uuid, pageNumber }, { skip: !Boolean(party) });
+  const { data, isLoading } = useGetArticlesQuery({ partyUuid: party?.uuid, pageNumber }, { skip: !Boolean(party) });
   const articles = data?.articles || [];
   const count = data?.count || 0;
 
@@ -36,17 +37,24 @@ const Articles: FC<ArticlesPropsType> = ({
               <ArticleCard {...article} />
             </Grid>
           ))}
+          {(!isLoading && articles.length === 0) &&
+            <Grid container justifyContent={'center'}>
+              <NoDataFound variant={4} />
+            </Grid>
+          }
         </Grid>
-        <Grid item>
-          <Pagination
-            variant="outlined"
-            color="primary"
-            shape='rounded'
-            count={Math.ceil(count / ITEMS_PER_PAGE_NUMBER)}
-            page={pageNumber}
-            onChange={(e, value) => setPageNumber(value)}
-          />
-        </Grid>
+        {(!isLoading && articles.length > 0) &&
+          <Grid item>
+            <Pagination
+              variant="outlined"
+              color="primary"
+              shape='rounded'
+              count={Math.ceil(count / ITEMS_PER_PAGE_NUMBER)}
+              page={pageNumber}
+              onChange={(e, value) => setPageNumber(value)}
+            />
+          </Grid>
+        }
       </Grid>
     </Layout>
   );

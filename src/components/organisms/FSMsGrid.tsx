@@ -1,10 +1,11 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import React from 'react';
 
 import FSMCard from 'components/organisms/cards/FSMCard';
 import useWidth from 'utils/UseWidth';
+import NoDataFound from 'components/molecules/NoDataFound';
 
-function FSMsGrid({ programId, fsms, isLoading }) {
+function FSMsGrid({ fsms, isLoading }) {
   const width = useWidth();
 
   const numberOfSkeleton = width === 'sm' || width === 'md' ? 4 : 3;
@@ -36,9 +37,7 @@ function FSMsGrid({ programId, fsms, isLoading }) {
 
   return (
     <Box my={4}>
-      <Typography variant='h3' align='center'>
-        {'هنوز کارگاه یا آزمونی وجود ندارد!'}
-      </Typography>
+      <NoDataFound variant={2} message={'هنوز کارگاه یا آزمونی وجود ندارد!'} />
     </Box>
   );
 
