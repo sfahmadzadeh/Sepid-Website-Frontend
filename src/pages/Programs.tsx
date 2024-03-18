@@ -19,6 +19,7 @@ const Programs = ({ }) => {
   const {
     data: programs = [],
     isLoading,
+    isSuccess,
   } = useGetProgramsQuery({ partyUuid: party?.uuid }, { skip: !Boolean(party) });
 
   const activePrograms: ProgramType[] = programs.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
@@ -26,30 +27,30 @@ const Programs = ({ }) => {
 
   const activeProgramsElement = (
     <Grid item container spacing={2} xs={12}>
-      {activePrograms.length > 0 ?
+      {(isSuccess && activePrograms.length === 0) ?
+        <Grid container justifyContent={'center'}>
+          <NoDataFound />
+        </Grid> :
         activePrograms.map((program, index) => (
           <Grid key={index} container item xs={12} sm={6} md={4} justifyContent='center' alignItems='flex-start' >
             <ProgramCard program={program} />
           </Grid>
-        )) :
-        <Grid container justifyContent={'center'}>
-          <NoDataFound />
-        </Grid>
+        ))
       }
     </Grid>
   );
 
   const inactiveProgramsElement = (
     <Grid item container spacing={2} xs={12}>
-      {inactivePrograms.length > 0 ?
+      {(isSuccess && inactivePrograms.length === 0) ?
+        <Grid container item justifyContent='center' alignItems='center'>
+          <NoDataFound />
+        </Grid> :
         inactivePrograms.map((program, index) => (
           <Grid key={index} container item xs={12} sm={6} md={4} justifyContent='center' alignItems='flex-start' >
             <ProgramCard program={program} />
           </Grid>
-        )) :
-        <Grid container item justifyContent='center' alignItems='center'>
-          <NoDataFound />
-        </Grid>
+        ))
       }
     </Grid>
   );
