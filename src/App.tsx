@@ -65,6 +65,11 @@ const App = ({
           <link rel="icon" href={websiteMetadata.header_data.icon} />
           <meta name="description" content={websiteMetadata.header_data.description} />
           <meta name="theme-color" content={websiteMetadata.header_data.theme_color} />
+
+          <meta name="msapplication-TileImage" content={websiteMetadata.header_data.icon} />
+          <meta name="msapplication-TileColor" content={websiteMetadata.header_data.theme_color} />
+
+          {/* <link rel="manifest" href="/site.webmanifest" /> */}
         </Helmet>
       }
       {websiteMetadata?.og_metadata &&
