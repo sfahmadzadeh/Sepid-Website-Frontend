@@ -6,16 +6,16 @@ const Brand = () => {
 
   const {
     data: party,
-    isLoading,
+    isSuccess,
   } = useGetPartyQuery();
 
-  if (isLoading) {
+  if (!isSuccess) {
     return (
       <Stack direction='row' alignItems={'center'} justifyContent={'center'} sx={{ userSelect: 'none' }} spacing={1}>
         <Skeleton variant="circular" width={50} height={50} />
         <Skeleton variant="rounded" width={150} height={50} />
       </Stack>
-    )
+    );
   }
 
   return (
@@ -25,7 +25,7 @@ const Brand = () => {
         {party.display_name}
       </Typography>
     </Stack>
-  )
+  );
 }
 
 export default Brand;
