@@ -7,14 +7,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   
   <title>در حال بارگیری</title>
-  <link rel="icon" href="%PUBLIC_URL%/logo.png" />
+  <link rel="icon" href="%PUBLIC_URL%/logo.png/" />
   <meta name="description" content="" />
   <meta name="theme-color" content="#ffffff" />
 
-  <meta property="og:title" content="آکادمی کاموا" />
+  <meta property="og:title" content="پلتفرم سپید" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="%PUBLIC_URL%/logo.png" />
-  <meta property="og:description" content="بستر برگزاری دوره‌های برخط" />
+  <meta property="og:description" content="نسل بعدی تولید و عرضه‌ی محتوا" />
+  <meta property="og:url" content="https://sepid.org/" />
+
+  <script>
+    fetch('https://mps.sepid.org/api/party/get-og_metadata/')
+      .then(response => response.json())
+      .then(data => {
+        document.title = data.title;
+
+        var ogUrl = document.createElement('meta');
+        ogUrl.setAttribute('property', 'og:url');
+        ogUrl.content = data.url;
+        document.getElementsByTagName('head')[0].appendChild(ogUrl);
+
+        var ogType = document.createElement('meta');
+        ogType.setAttribute('property', 'og:type');
+        ogType.content = data.type;
+        document.getElementsByTagName('head')[0].appendChild(ogType);
+
+        var ogTitle = document.createElement('meta');
+        ogTitle.setAttribute('property', 'og:title');
+        ogTitle.content = data.title;
+        document.getElementsByTagName('head')[0].appendChild(ogTitle);
+
+        var ogDescription = document.createElement('meta');
+        ogDescription.setAttribute('property', 'og:description');
+        ogDescription.content = data.description;
+        document.getElementsByTagName('head')[0].appendChild(ogDescription);
+
+        var ogImage = document.createElement('meta');
+        ogImage.setAttribute('property', 'og:image');
+        ogImage.content = data.image;
+        document.getElementsByTagName('head')[0].appendChild(ogImage);
+
+      })
+      .catch((error) => console.error('Error:', error));
+  </script>
 
   <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/favicon/apple-touch-icon.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/favicon/favicon-32x32.png" />
