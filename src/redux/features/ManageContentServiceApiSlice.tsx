@@ -1,12 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { MCS_URL } from 'configs/Constants'
+import { logoutAction } from 'redux/slices/account';
 
-
-export const ManageContentServiceApi = createApi({
-  reducerPath: 'manage-content-service',
-  tagTypes: ['programs'],
-  baseQuery: fetchBaseQuery({
-    // Fill in your own server starting URL here
+const _manageContentServiceBaseQuery = async (args, api, extraOptions) => {
+  const result = await fetchBaseQuery({
     baseUrl: MCS_URL + 'api/',
     prepareHeaders: (headers, { getState, endpoint }) => {
       const accessToken = (getState() as any).account?.accessToken;
@@ -17,7 +14,23 @@ export const ManageContentServiceApi = createApi({
       }
       return headers
     },
-  }),
+  })(args, api, extraOptions);
+
+  if (result.error) {
+    if (result.error.status === 401 || result.error.status === 403) {
+      // Handle 403 error
+      // For example, you can dispatch a logout action
+      api.dispatch(logoutAction());
+    }
+    // Handle other types of errors
+  }
+  return result;
+};
+
+export const ManageContentServiceApi = createApi({
+  reducerPath: 'manage-content-service',
+  tagTypes: ['programs'],
+  baseQuery: _manageContentServiceBaseQuery,
   endpoints: build => ({
   })
 })
