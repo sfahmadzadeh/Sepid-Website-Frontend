@@ -20,7 +20,7 @@ const Brand = () => {
 
   return (
     <Stack direction='row' alignItems={'center'} justifyContent={'center'} sx={{ userSelect: 'none' }} spacing={1}>
-      <img alt="sepid-logo" src={party.logo.desktop_image} width={50} />
+      <img alt="academy-logo" src={party.logo.desktop_image} width={50} />
       <Typography fontFamily={"Lalezar"} sx={{ color: "#3498DB", fontSize: { xs: 36, md: 40 }, fontWeight: 500 }}>
         {party.display_name}
       </Typography>
