@@ -11,45 +11,51 @@
   <meta name="description" content="" />
   <meta name="theme-color" content="#ffffff" />
 
-  <meta property="og:title" content="پلتفرم سپید" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="%PUBLIC_URL%/logo.png" />
-  <meta property="og:description" content="نسل بعدی تولید و عرضه‌ی محتوا" />
-  <meta property="og:url" content="https://sepid.org/" />
-
   <script>
+    const setOpenGraphMetaData = (openGraphGMetaData) => {
+      document.title = openGraphGMetaData.title;
+
+      var ogUrl = document.createElement('meta');
+      ogUrl.setAttribute('property', 'og:url');
+      ogUrl.content = openGraphGMetaData.url;
+      document.getElementsByTagName('head')[0].appendChild(ogUrl);
+
+      var ogType = document.createElement('meta');
+      ogType.setAttribute('property', 'og:type');
+      ogType.content = openGraphGMetaData.type;
+      document.getElementsByTagName('head')[0].appendChild(ogType);
+
+      var ogTitle = document.createElement('meta');
+      ogTitle.setAttribute('property', 'og:title');
+      ogTitle.content = openGraphGMetaData.title;
+      document.getElementsByTagName('head')[0].appendChild(ogTitle);
+
+      var ogDescription = document.createElement('meta');
+      ogDescription.setAttribute('property', 'og:description');
+      ogDescription.content = openGraphGMetaData.description;
+      document.getElementsByTagName('head')[0].appendChild(ogDescription);
+
+      var ogImage = document.createElement('meta');
+      ogImage.setAttribute('property', 'og:image');
+      ogImage.content = openGraphGMetaData.image;
+      document.getElementsByTagName('head')[0].appendChild(ogImage);
+
+    }
     fetch('https://mps.sepid.org/api/party/get-og_metadata/')
       .then(response => response.json())
       .then(data => {
-        document.title = data.title;
-
-        var ogUrl = document.createElement('meta');
-        ogUrl.setAttribute('property', 'og:url');
-        ogUrl.content = data.url;
-        document.getElementsByTagName('head')[0].appendChild(ogUrl);
-
-        var ogType = document.createElement('meta');
-        ogType.setAttribute('property', 'og:type');
-        ogType.content = data.type;
-        document.getElementsByTagName('head')[0].appendChild(ogType);
-
-        var ogTitle = document.createElement('meta');
-        ogTitle.setAttribute('property', 'og:title');
-        ogTitle.content = data.title;
-        document.getElementsByTagName('head')[0].appendChild(ogTitle);
-
-        var ogDescription = document.createElement('meta');
-        ogDescription.setAttribute('property', 'og:description');
-        ogDescription.content = data.description;
-        document.getElementsByTagName('head')[0].appendChild(ogDescription);
-
-        var ogImage = document.createElement('meta');
-        ogImage.setAttribute('property', 'og:image');
-        ogImage.content = data.image;
-        document.getElementsByTagName('head')[0].appendChild(ogImage);
-
+        setOpenGraphMetaData(data);
       })
-      .catch((error) => console.error('Error:', error));
+      .catch((error) => {
+        console.error('Error:', error);
+        setOpenGraphMetaData({
+          title: 'پلتفرم سپید',
+          type: 'website',
+          image: '%PUBLIC_URL%/logo.png',
+          description: 'نسل بعدی تولید و عرضه‌ی محتوا',
+          url: 'https://sepid.org/',
+        })
+      });
   </script>
 
   <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/favicon/apple-touch-icon.png" />
