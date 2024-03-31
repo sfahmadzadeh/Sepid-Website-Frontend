@@ -1,6 +1,6 @@
 import { Step, StepButton, StepLabel, Stepper } from '@mui/material';
 import React, { FC } from 'react';
-import { RegistrationStepNameType, RegistrationStepType } from 'types/global';
+import { RegistrationStepType } from 'types/global';
 import useWidth from 'utils/UseWidth';
 
 type MyStepperPropsType = {

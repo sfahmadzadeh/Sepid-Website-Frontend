@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import React, { FC, Fragment, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {

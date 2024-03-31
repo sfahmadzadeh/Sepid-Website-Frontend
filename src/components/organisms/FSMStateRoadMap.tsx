@@ -82,7 +82,6 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
   );
 };
 
-
 const mapStatesToProps = (state) => ({
   playerTakenPath: state.Roadmap.playerTakenPath,
   FSMRoadmap: state.Roadmap.FSMRoadmap,
@@ -92,5 +91,3 @@ export default connect(mapStatesToProps, {
   getPlayerTakenPath: getPlayerTakenPathAction,
   getFSMRoadmap: getFSMRoadmapAction,
 })(FSMStateRoadMap);
-
-

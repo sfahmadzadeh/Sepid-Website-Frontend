@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { loginAction } from 'redux/slices/account';
 import appendPreviousParams from 'utils/AppendPreviousParams';
-import GoogleLogin from 'components/organisms/GoogleLogin';
+import GoogleLogin from 'components/molecules/GoogleLogin';
 
 type LoginPagePropsType = {
   isFetching: boolean;

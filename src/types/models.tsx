@@ -27,7 +27,7 @@ export type ProgramType = {
   registration_receipt: string | null;
   registration_since: string | null;
   registration_till: string | null;
-  start_date: string | null
+  start_date: string | null;
   team_size: number;
   user_registration_status:
   'Waiting' |
@@ -49,7 +49,6 @@ export type Request = any
 export type RegistrationFormType = any
 export type Merchandise = any
 export type Article = any
-export type Notification = any
 export type Problem = any
 export type Submission = any
 export type SubmissionIsLoading = boolean
@@ -60,3 +59,15 @@ export type Player = any
 export type Token = any
 export type Mentor = { id: string, first_name: string, last_name: string, email: string, phone_number: string, profilePicturePath?: string }
 export type UploadedFile = { link: string, name: string, id: string }
+
+export type PartyType = any;
+
+export type MessageType = {
+  id: number;
+  reply_to: any;
+  sender: PartyType;
+  recipient: PartyType;
+  content: string; // todo: change content to Widget
+  seen: boolean;
+  received_datetime: any;
+}

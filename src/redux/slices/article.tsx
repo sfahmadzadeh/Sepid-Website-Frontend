@@ -13,7 +13,6 @@ const initialState: ArticlesInitialStateType = {
   widgets: [],
   articles: [],
   teams: {},
-  notifications: [],
   problems: [],
   submissions: [],
   articlesCount: 0,

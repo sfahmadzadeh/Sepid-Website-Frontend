@@ -3,18 +3,18 @@ import {
   AccountCircle as AccountCircleIcon,
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
-import React, { Fragment, useState } from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import dateFormatter from 'utils/dateFormatter';
+import { MessageType } from 'types/models';
 
-type Notification = {
-  id: number;
-  message: string;
-  time: any;
-  seen: boolean;
+type NotificationButtonPropsType = {
+  notifications: MessageType[];
 }
 
-const NotificationButton = ({ notifications = [] }: { notifications: Notification[] }) => {
+const NotificationButton: FC<NotificationButtonPropsType> = ({
+  notifications = [],
+}) => {
   const t = useTranslate();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -62,13 +62,13 @@ const NotificationButton = ({ notifications = [] }: { notifications: Notificatio
             overflowY: 'auto',
           }}>
           {notifications
-            .sort((a, b) => b.time - a.time)
+            .sort((a, b) => b.received_datetime - a.received_datetime)
             .map((notification) => (
               <MenuItem
                 key={notification.id}
                 sx={{
                   padding: 1,
-                  borderBottom: notification.seen ? '1px solid #ccc' : '1px solid #faa',
+                  borderBottom: notification ? '1px solid #ccc' : '1px solid #faa',
                   borderLeft: notification.seen ? '1px solid #ccc' : '6px solid red',
                   background: notification.seen ? '#fff' : '#f9f4f4',
                 }}>
@@ -86,12 +86,12 @@ const NotificationButton = ({ notifications = [] }: { notifications: Notificatio
                   <Grid item>
                     <Typography component="small" variant="body2">
                       {dateFormatter({
-                        date: notification.time,
+                        date: notification.received_datetime,
                         format: 'hh:mm:ss',
                       })}
                     </Typography>
                     <Typography component="p" variant="subtitle2">
-                      {notification.message}
+                      {notification.content}
                     </Typography>
                   </Grid>
                 </Grid>
