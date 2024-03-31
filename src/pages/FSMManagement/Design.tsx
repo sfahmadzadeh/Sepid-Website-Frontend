@@ -49,22 +49,22 @@ const DesignWorkshop: FC<DesignWorkshopPropsType> = ({
   const hints = currentState?.hints;
 
   return (
-    <Fragment>
-      <Box sx={{ margin: -2, marginBottom: 4 }}>
-        <StatesTabbar
-          value={tab}
-          setValue={setTab}
-          tabs={allStates.map((state) => state.name)}
-        />
+    <Stack >
+      <StatesTabbar
+        value={tab}
+        setValue={setTab}
+        tabs={allStates.map((state) => state.name)}
+      />
+      <Box padding={2} paddingTop={4}>
+        {currentState ?
+          <EditState {...currentState} />
+          :
+          <Typography align="center" variant="h3" gutterBottom>
+            {'گامی وجود ندارد.'}
+          </Typography>
+        }
       </Box>
-      {currentState ?
-        <EditState {...currentState} />
-        :
-        <Typography align="center" variant="h3" gutterBottom>
-          {'گامی وجود ندارد.'}
-        </Typography>
-      }
-    </Fragment>
+    </Stack>
   );
 };
 

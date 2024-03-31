@@ -2,6 +2,7 @@ import {
   Button,
   Grid,
   Paper,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
@@ -15,33 +16,35 @@ const GoToAnswer = () => {
   const [answerId, setAnswerId] = useState<number>(null);
 
   return (
-    <Grid
-      container item
-      justifyContent='center'
-      alignItems='center'
-      xs={12} sm={8} md={4}>
-      <Grid item xs={12}>
-        <Paper sx={{ padding: 2 }}>
-          <Grid item container>
-            <Grid container item justifyContent='center' spacing={2}>
-              <Grid item xs={12}>
-                <Typography gutterBottom variant='h2' align='center'>
-                  {'شناسه پاسخ خود را وارد کنید'}
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField fullWidth label='شناسه' value={answerId} onChange={(e) => isNumber(e.target.value) ? setAnswerId(parseInt(e.target.value)) : {}} />
-              </Grid>
-              <Grid item xs={12}>
-                <Button variant='contained' fullWidth onClick={() => { navigate(`/program/${programId}/fsm/${fsmId}/manage/correction/${answerId}/`) }}>
-                  {'ثبت'}
-                </Button>
+    <Stack>
+      <Grid
+        padding={2}
+        container
+        justifyContent='center'
+        alignItems='center'>
+        <Grid item xs={12} md={4}>
+          <Paper sx={{ padding: 2 }}>
+            <Grid item container>
+              <Grid container item justifyContent='center' spacing={2}>
+                <Grid item xs={12}>
+                  <Typography gutterBottom variant='h2' align='center'>
+                    {'شناسه پاسخ خود را وارد کنید'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='شناسه' value={answerId} onChange={(e) => isNumber(e.target.value) ? setAnswerId(parseInt(e.target.value)) : {}} />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button variant='contained' fullWidth onClick={() => { navigate(`/program/${programId}/fsm/${fsmId}/manage/correction/${answerId}/`) }}>
+                    {'ثبت'}
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Paper>
+          </Paper>
+        </Grid>
       </Grid>
-    </Grid>
+    </Stack>
   )
 }
 

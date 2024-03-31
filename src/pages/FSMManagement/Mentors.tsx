@@ -3,6 +3,7 @@ import {
   Divider,
   Grid,
   IconButton,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -56,7 +57,7 @@ const Mentors: FC<MentorsPropsType> = ({
   }, [fsmId])
 
   useEffect(() => {
-    getEventWorkshops({  programId, pageNumber });
+    getEventWorkshops({ programId, pageNumber });
   }, [pageNumber]);
 
   const putData = (e) => {
@@ -73,8 +74,9 @@ const Mentors: FC<MentorsPropsType> = ({
   };
 
   return (
-    <Fragment>
+    <Stack>
       <Grid
+        padding={2}
         container
         item
         spacing={2}
@@ -166,7 +168,7 @@ const Mentors: FC<MentorsPropsType> = ({
           </TableBody>
         </Table>
       </TableContainer>
-    </Fragment>
+    </Stack>
   );
 }
 

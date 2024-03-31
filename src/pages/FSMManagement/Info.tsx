@@ -1,5 +1,6 @@
 import {
   Grid,
+  Stack,
   Typography,
 } from '@mui/material';
 import React, { FC, Fragment } from 'react';
@@ -17,8 +18,9 @@ const Info: FC<InfoPropsType> = ({
   const t = useTranslate();
 
   return (
-    <Fragment>
+    <Stack>
       <Grid
+        padding={2}
         container item
         spacing={2}
         alignItems="center"
@@ -31,7 +33,7 @@ const Info: FC<InfoPropsType> = ({
           <Typography align='center'>{workshop?.description}</Typography>
         </Grid>
       </Grid>
-    </Fragment>
+    </Stack>
   );
 }
 

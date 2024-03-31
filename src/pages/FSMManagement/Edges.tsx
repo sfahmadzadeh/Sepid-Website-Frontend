@@ -7,6 +7,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -63,7 +64,7 @@ const Index: FC<IndexPropsType> = ({
   }, [])
 
   return (
-    <Grid container spacing={1} alignItems="center" justifyContent="center">
+    <Stack>
       <TableContainer>
         <Table>
           <TableHead>
@@ -200,7 +201,7 @@ const Index: FC<IndexPropsType> = ({
           </TableBody>
         </Table>
       </TableContainer>
-    </Grid>
+    </Stack>
   );
 }
 
@@ -209,13 +210,10 @@ const mapStateToProps = (state) => ({
   allStates: state.workshop.allStates,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    addEdge: addEdgeAction,
-    getAllWorkshopEdges: getAllWorkshopEdgesAction,
-    getAllWorkshopStatesInfo: getAllWorkshopStatesInfoAction,
-    removeEdge: removeEdgeAction,
-    updateEdge: updateEdgeAction,
-  }
-)(Index);
+export default connect(mapStateToProps, {
+  addEdge: addEdgeAction,
+  getAllWorkshopEdges: getAllWorkshopEdgesAction,
+  getAllWorkshopStatesInfo: getAllWorkshopStatesInfoAction,
+  removeEdge: removeEdgeAction,
+  updateEdge: updateEdgeAction,
+})(Index);
