@@ -17,6 +17,7 @@ import TimelineIcon from '@mui/icons-material/Timeline';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import InfoIcon from '@mui/icons-material/Info';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import {
   getEventTeamsAction,
   getOneEventInfoAction,
@@ -27,12 +28,52 @@ import {
 import Layout from 'components/template/Layout';
 import Design from './Design';
 import Edges from './Edges';
+import Statistics from './Statistics';
 import IndividualRequests from './IndividualRequests';
 import Info from './Info';
 import TeamRequests from './TeamRequests';
 import { Workshop, ProgramType } from 'types/models';
 import Mentors from './Mentors';
 import GoToAnswer from './GoToAnswer';
+
+const initialTabs = [
+  {
+    name: 'info',
+    label: 'اطلاعات کلی',
+    icon: InfoIcon,
+    component: Info,
+  },
+  {
+    name: 'design',
+    label: 'طراحی',
+    icon: DesignServicesIcon,
+    component: Design,
+  },
+  {
+    name: 'edges',
+    label: 'یال‌ها',
+    icon: TimelineIcon,
+    component: Edges,
+  },
+  {
+    name: 'mentors',
+    label: 'همیارها',
+    icon: PersonIcon,
+    component: Mentors,
+  },
+  {
+    name: 'correction',
+    label: 'تصحیح',
+    icon: BorderColorIcon,
+    component: GoToAnswer,
+  },
+  {
+    name: 'statistics',
+    label: 'آمار',
+    icon: BarChartIcon,
+    component: Statistics,
+  },
+]
 
 type EventPropsType = {
   getEventTeams: Function,
@@ -52,38 +93,6 @@ const FSMManagement: FC<EventPropsType> = ({
   const t = useTranslate();
   const navigate = useNavigate();
   const { fsmId, programId, section } = useParams();
-  const initialTabs = [
-    {
-      name: 'info',
-      label: 'اطلاعات کلی',
-      icon: InfoIcon,
-      component: Info,
-    },
-    {
-      name: 'design',
-      label: 'طراحی',
-      icon: DesignServicesIcon,
-      component: Design,
-    },
-    {
-      name: 'edges',
-      label: 'یال‌ها',
-      icon: TimelineIcon,
-      component: Edges,
-    },
-    {
-      name: 'mentors',
-      label: 'همیارها',
-      icon: PersonIcon,
-      component: Mentors,
-    },
-    {
-      name: 'correction',
-      label: 'تصحیح',
-      icon: BorderColorIcon,
-      component: GoToAnswer,
-    }
-  ]
 
   useEffect(() => {
     if (!section) {
@@ -165,7 +174,7 @@ const FSMManagement: FC<EventPropsType> = ({
           </Stack>
         </Grid>
         <Grid item sm={9} xs={12}>
-          <Paper elevation={3} sx={{ padding: 2 }} >
+          <Paper elevation={3}>
             {TabComponent ? <TabComponent {...currentTab} /> : null}
           </Paper>
         </Grid>
