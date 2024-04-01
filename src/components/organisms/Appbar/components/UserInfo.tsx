@@ -15,7 +15,7 @@ function UserInfo({ isUserAuthenticated }: UserInfoPropsType) {
     <Stack direction={'row'} alignItems={'center'} justifyContent={'center'} spacing={1}>
       {isUserAuthenticated ?
         <Fragment>
-          <NotificationButton notifications={[]} />  {/* todo: set real notifications */}
+          <NotificationButton />
           <Avatar />
         </Fragment> :
         <Fragment>
@@ -31,6 +31,4 @@ const mapStateToProps = (state) => ({
   isUserAuthenticated: Boolean(state.account.accessToken),
 });
 
-export default connect(mapStateToProps, {
-
-})(UserInfo);
+export default connect(mapStateToProps)(UserInfo);

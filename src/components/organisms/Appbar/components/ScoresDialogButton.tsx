@@ -6,7 +6,7 @@ import {
 } from 'redux/slices/scoring'
 import { useParams } from 'react-router-dom';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
-import UserCurrentScores from 'components/organisms/UserCurrentScores';
+import UserCurrentScores from 'components/organisms/lists/UserCurrentScores';
 
 type ScoreDialogButtonPropsType = {
   getScoreTypes: any;

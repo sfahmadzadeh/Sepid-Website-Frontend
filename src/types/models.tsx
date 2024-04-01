@@ -60,13 +60,22 @@ export type Token = any
 export type Mentor = { id: string, first_name: string, last_name: string, email: string, phone_number: string, profilePicturePath?: string }
 export type UploadedFile = { link: string, name: string, id: string }
 
-export type PartyType = any;
+export type LogoType = {
+  mobile_image: string;
+  desctop_image: string;
+}
+
+export type PartyType = {
+  displayName: string;
+  logo: LogoType;
+};
 
 export type MessageType = {
   id: number;
-  reply_to: any;
+  reply_to?: MessageType;
   sender: PartyType;
   recipient: PartyType;
+  title: string;
   content: string; // todo: change content to Widget
   seen: boolean;
   received_datetime: any;

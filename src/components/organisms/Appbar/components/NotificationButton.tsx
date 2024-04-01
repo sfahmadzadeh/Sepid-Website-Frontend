@@ -1,22 +1,116 @@
-import { Badge, Grid, IconButton, MenuItem, MenuList, Paper, Popover, Typography } from '@mui/material';
 import {
-  AccountCircle as AccountCircleIcon,
+  Badge,
+  IconButton,
+  Popover,
+} from '@mui/material';
+import {
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import React, { FC, Fragment, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import dateFormatter from 'utils/dateFormatter';
+import NotificationsList from 'components/organisms/lists/NotificationsList';
 import { MessageType } from 'types/models';
 
 type NotificationButtonPropsType = {
-  notifications: MessageType[];
 }
 
 const NotificationButton: FC<NotificationButtonPropsType> = ({
-  notifications = [],
 }) => {
   const t = useTranslate();
 
+  const notifications: MessageType[] = [];
+  // [
+  //   {
+  //     id: 1,
+  //     sender: {
+  //       displayName: 'حاج‌آقا ترکاشوند',
+  //       logo: {
+  //         desctop_image: '',
+  //         mobile_image: 'https://platform.kamva.academy/logo.png',
+  //       }
+  //     },
+  //     recipient: null,
+  //     title: 'احسنت! پاسخ شما درست بود',
+  //     content: 'به خاطر پاسخ درست شما به پرسش فلان، صد سکه‌ی تمام بهار آزادی در خیال به شما اضافه شد',
+  //     seen: false,
+  //     received_datetime: 'erfedgrf',
+  //   },
+  //   {
+  //     id: 2,
+  //     sender: {
+  //       displayName: 'میناکاریان صندوقچه',
+  //       logo: {
+  //         desctop_image: '',
+  //         mobile_image: 'https://minigames.kamva.academy/logo.png',
+  //       }
+  //     },
+  //     recipient: null,
+  //     title: 'احسنت! پاسخ شما درست بود',
+  //     content: 'به خاطر پاسخ درست شما به پرسش فلان، صد سکه‌ی تمام بهار آزادی در خیال به شما اضافه شد',
+  //     seen: true,
+  //     received_datetime: 'erfedgrf',
+  //   },
+  //   {
+  //     id: 3,
+  //     sender: {
+  //       displayName: 'حاج‌آقا ترکاشوند',
+  //       logo: {
+  //         desctop_image: '',
+  //         mobile_image: 'https://platform.kamva.academy/logo.png',
+  //       }
+  //     },
+  //     recipient: null,
+  //     title: 'احسنت! پاسخ شما درست بود',
+  //     content: 'به خاطر پاسخ درست شما به پرسش فلان، صد سکه‌ی تمام بهار آزادی در خیال به شما اضافه شد',
+  //     seen: false,
+  //     received_datetime: 'erfedgrf',
+  //   },
+  //   {
+  //     id: 4,
+  //     sender: {
+  //       displayName: 'میناکاریان صندوقچه',
+  //       logo: {
+  //         desctop_image: '',
+  //         mobile_image: 'https://minigames.kamva.academy/logo.png',
+  //       }
+  //     },
+  //     recipient: null,
+  //     title: 'احسنت! پاسخ شما درست بود',
+  //     content: 'به خاطر پاسخ درست شما به پرسش فلان، صد سکه‌ی تمام بهار آزادی در خیال به شما اضافه شد',
+  //     seen: true,
+  //     received_datetime: 'erfedgrf',
+  //   },
+  //   {
+  //     id: 5,
+  //     sender: {
+  //       displayName: 'حاج‌آقا ترکاشوند',
+  //       logo: {
+  //         desctop_image: '',
+  //         mobile_image: 'https://platform.kamva.academy/logo.png',
+  //       }
+  //     },
+  //     recipient: null,
+  //     title: 'احسنت! پاسخ شما درست بود',
+  //     content: 'به خاطر پاسخ درست شما به پرسش فلان، صد سکه‌ی تمام بهار آزادی در خیال به شما اضافه شد',
+  //     seen: false,
+  //     received_datetime: 'erfedgrf',
+  //   },
+  //   {
+  //     id: 6,
+  //     sender: {
+  //       displayName: 'میناکاریان صندوقچه',
+  //       logo: {
+  //         desctop_image: '',
+  //         mobile_image: 'https://minigames.kamva.academy/logo.png',
+  //       }
+  //     },
+  //     recipient: null,
+  //     title: 'احسنت! پاسخ شما درست بود',
+  //     content: 'به خاطر پاسخ درست شما به پرسش فلان، صد سکه‌ی تمام بهار آزادی در خیال به شما اضافه شد',
+  //     seen: true,
+  //     received_datetime: 'erfedgrf',
+  //   },
+  // ];
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handlePopoverOpen = (event) => {
@@ -27,13 +121,15 @@ const NotificationButton: FC<NotificationButtonPropsType> = ({
     setAnchorEl(null);
   };
 
+  const unSeenNotifications = notifications.filter(notification => !notification.seen);
+
   return (
     <Fragment>
       <IconButton onClick={handlePopoverOpen} size='small' disableRipple>
-        <Badge badgeContent={notifications.length}
+        <Badge badgeContent={unSeenNotifications.length}
           sx={() => ({
             '& .MuiBadge-badge': {
-              background: 'red',
+              background: '#00a1c9',
               color: 'white',
             },
           })}>
@@ -45,64 +141,17 @@ const NotificationButton: FC<NotificationButtonPropsType> = ({
         open={Boolean(anchorEl)}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'center',
+          horizontal: 'left',
         }}
         transformOrigin={{
           vertical: 'top',
-          horizontal: 'center',
+          horizontal: 'left',
         }}
         anchorEl={anchorEl}
         onClose={handlePopoverClose}
         disableRestoreFocus
         marginThreshold={30}>
-        <MenuList component={Paper}
-          sx={{
-            minWidth: 200,
-            maxHeight: 400,
-            overflowY: 'auto',
-          }}>
-          {notifications
-            .sort((a, b) => b.received_datetime - a.received_datetime)
-            .map((notification) => (
-              <MenuItem
-                key={notification.id}
-                sx={{
-                  padding: 1,
-                  borderBottom: notification ? '1px solid #ccc' : '1px solid #faa',
-                  borderLeft: notification.seen ? '1px solid #ccc' : '6px solid red',
-                  background: notification.seen ? '#fff' : '#f9f4f4',
-                }}>
-                <Grid container justifyContent="flex-start" spacing={1}>
-                  <Grid item>
-                    <div style={{ textAlign: 'center' }}>
-                      <div>
-                        <AccountCircleIcon />
-                      </div>
-                      <Typography component="small" variant="body2">
-                        {t('support')}
-                      </Typography>
-                    </div>
-                  </Grid>
-                  <Grid item>
-                    <Typography component="small" variant="body2">
-                      {dateFormatter({
-                        date: notification.received_datetime,
-                        format: 'hh:mm:ss',
-                      })}
-                    </Typography>
-                    <Typography component="p" variant="subtitle2">
-                      {notification.content}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </MenuItem>
-            ))}
-          {notifications.length === 0 &&
-            <Typography textAlign={'center'} padding={2} fontSize={16} fontWeight={400}>
-              {'اعلان خوانده‌نشده‌ای نداری 🤝'}
-            </Typography>
-          }
-        </MenuList>
+        <NotificationsList notifications={unSeenNotifications} />
       </Popover >
     </Fragment>
   );
