@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -134,7 +134,7 @@ const FSMManagement: FC<EventPropsType> = ({
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab) return null;
-  const TabComponent = currentTab.component;
+  const TabComponent = useMemo(() => <currentTab.component />, [fsm, section]);
 
   return (
     <Layout appbarMode='PROGRAM'>
@@ -175,7 +175,7 @@ const FSMManagement: FC<EventPropsType> = ({
         </Grid>
         <Grid item sm={9} xs={12}>
           <Paper elevation={3}>
-            {TabComponent ? <TabComponent {...currentTab} /> : null}
+            {TabComponent}
           </Paper>
         </Grid>
       </Grid>
