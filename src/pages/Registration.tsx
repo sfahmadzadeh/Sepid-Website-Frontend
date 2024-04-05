@@ -11,10 +11,13 @@ import {
 import Layout from 'components/template/Layout';
 import { ProgramType, RegistrationFormType } from 'types/models';
 import useRegistrationSteps from 'components/hooks/useRegistrationSteps';
+import { UserInfoType } from 'types/profile';
+import isUserPersonalProfileComplete from 'utils/validators/profileValidator/isUserPersonalProfileComplete';
+import isUserSchoolStudentshipProfileComplete from 'utils/validators/profileValidator/isUserSchoolStudentshipProfileComplete';
 
 type RegistrationProcessPropsType = {
   registrationForm: RegistrationFormType;
-  userInfo: any;
+  userInfo: UserInfoType;
   program: ProgramType;
   getOneRegistrationForm: any;
   getOneEventInfo: any;
@@ -47,7 +50,11 @@ const RegistrationProcess: FC<RegistrationProcessPropsType> = ({
 
   if (!program || !registrationForm || !userInfo) return null;
 
-  if (program.is_user_participating) {
+  console.log(currentStepNameIndex,
+    lastActiveStepIndex,
+    steps,)
+
+  if (currentStepNameIndex === steps.length) {
     navigate(`/program/${programId}/`);
     return null;
   }

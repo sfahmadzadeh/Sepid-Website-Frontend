@@ -46,7 +46,33 @@ export type RegistrationReceipt = any
 export type Widget = any
 export type Team = any
 export type Request = any
-export type RegistrationFormType = any
+
+type PaperType = 'RegistrationForm';
+type AcceptingStatus = 'AutoAccept' | 'Manual';
+type AudienceType = 'Student' | 'Academic' | 'All';
+
+export type FSMType = any;
+
+export type RegistrationFormType = {
+  accepting_status: AcceptingStatus;
+  audience_type: AudienceType;
+  certificate_templates: any;
+  certificates_ready: boolean;
+  conditions: any;
+  creator: string;
+  duration: string;
+  event: number;
+  fsm: FSMType;
+  has_certificate: boolean;
+  id: number;
+  is_exam: boolean;
+  max_grade: number;
+  min_grade: number;
+  paper_type: PaperType;
+  since: string;
+  till: string;
+  widgets: Widget;
+}
 export type Merchandise = any
 export type Article = any
 export type Problem = any

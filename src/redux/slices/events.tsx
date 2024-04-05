@@ -96,9 +96,11 @@ export const submitRegistrationFormAction = createAsyncThunkApi(
   Apis.POST,
   submitRegistrationFormUrl,
   {
-    bodyCreator: ({ answers }) => ({
+    bodyCreator: ({ answers, onSuccess, onFailure }) => ({
       answer_sheet_type: 'RegistrationReceipt',
       answers,
+      onSuccess,
+      onFailure,
     }),
     defaultNotification: {
       success: 'فرم ثبت‌نام با موفقیت ثبت شد!',
@@ -539,10 +541,7 @@ const eventSlice = createSlice({
     [getOneMerchandiseAction.rejected.toString()]: isNotFetching,
 
     [submitRegistrationFormAction.pending.toString()]: isFetching,
-    [submitRegistrationFormAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      window.location.reload()
-      state.isFetching = false;
-    },
+    [submitRegistrationFormAction.fulfilled.toString()]: isNotFetching,
     [submitRegistrationFormAction.rejected.toString()]: isNotFetching,
 
     [purchaseEventAction.pending.toString()]: isFetching,

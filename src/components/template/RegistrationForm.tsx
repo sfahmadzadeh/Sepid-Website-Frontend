@@ -32,6 +32,8 @@ type RegistrationFormPropsType = {
   program: ProgramType;
   registrationForm: RegistrationFormType;
   submitRegistrationForm: any;
+  onSuccess?: any;
+  onFailure?: any;
 }
 
 const RegistrationForm: FC<RegistrationFormPropsType> = ({
@@ -39,6 +41,8 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   program,
   registrationForm,
   submitRegistrationForm,
+  onSuccess,
+  onFailure,
 }) => {
   const { programId } = useParams();
   const [isDialogOpen, setDialogStatus] = useState(false);
@@ -49,6 +53,8 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
       id: registrationForm.id,
       answers,
       programId,
+      onSuccess,
+      onFailure,
     });
   };
 

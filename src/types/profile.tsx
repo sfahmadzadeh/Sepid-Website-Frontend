@@ -1,5 +1,7 @@
+type StudentshipType = 'Academic' | 'School';
+
 export type UserInfoType = {
-  academic_studentship: AcademicStudentship;
+  academic_studentship: AcademicStudentshipType;
   address: string | null;
   bio: string | null;
   birth_date: string | null;
@@ -21,7 +23,7 @@ export type UserInfoType = {
   postal_code: string;
   profile_picture: string;
   province: string;
-  school_studentship: SchoolStudentship;
+  school_studentship: SchoolStudentshipType;
   userPermissions: UserPermissions[];
   username: string;
 }
@@ -30,6 +32,26 @@ type GroupType = any;
 
 type UserPermissions = any;
 
-type AcademicStudentship = any;
+export type AcademicStudentshipType = {
+  degree: string;
+  document: string;
+  start_date: string;
+  end_date: string;
+  id: string;
+  is_document_verified: boolean;
+  studentship_type: StudentshipType
+  university: number;
+  university_major: string;
+};
 
-type SchoolStudentship = any;
+export type SchoolStudentshipType = {
+  document: string;
+  start_date: string;
+  end_date: string;
+  grade: number;
+  id: number;
+  is_document_verified: boolean;
+  major: string;
+  school: number;
+  studentship_type: StudentshipType;
+};

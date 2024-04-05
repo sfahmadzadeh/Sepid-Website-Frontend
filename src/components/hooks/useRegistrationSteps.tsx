@@ -41,6 +41,13 @@ const useRegistrationSteps = ({
     const steps: RegistrationStepType[] = [];
 
     steps.push({
+      name: 'form',
+      label: 'ثبت‌نام در دوره',
+      component: <Form onSuccess={() => goToNextStep()} />,
+      onClick: () => goToStep(getStepIndex('form'))
+    })
+
+    steps.push({
       name: 'personal-profile',
       label: 'تکمیل مشخصات شخصی',
       component: <Profiles type='personal' onSuccess={() => goToNextStep()} />,
@@ -64,13 +71,6 @@ const useRegistrationSteps = ({
         onClick: () => goToStep(getStepIndex('academic-profile'))
       })
     }
-
-    steps.push({
-      name: 'form',
-      label: 'تکمیل فرم ثبت‌نام',
-      component: <Form />,
-      onClick: () => goToStep(getStepIndex('form'))
-    })
 
     if (registrationForm.accepting_status == 'Manual') {
       steps.push({
