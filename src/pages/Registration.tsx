@@ -50,13 +50,10 @@ const RegistrationProcess: FC<RegistrationProcessPropsType> = ({
 
   if (!program || !registrationForm || !userInfo) return null;
 
-  console.log(currentStepNameIndex,
-    lastActiveStepIndex,
-    steps,)
-
-  if (currentStepNameIndex === steps.length) {
+  if (currentStepNameIndex === steps.length - 1) {
     navigate(`/program/${programId}/`);
-    return null;
+    window.location.reload();
+    // todo: invalidate event fetched info
   }
 
   return (
