@@ -29,12 +29,12 @@ const useRegistrationSteps = ({
       }
     }
 
-    const getStepIndex = (stepName: RegistrationStepNameType) => {
-      return steps.indexOf(steps.find(step => step.name === stepName));
-    }
-
     const goToNextStep = () => {
       goToStep(currentStepNameIndex + 1);
+    }
+
+    const getStepIndex = (stepName: RegistrationStepNameType) => {
+      return steps.indexOf(steps.find(step => step.name === stepName));
     }
 
     if (!program || !registrationForm) return;
@@ -97,6 +97,9 @@ const useRegistrationSteps = ({
     })
 
     if (isFirstRender) {
+      if (program.is_user_participating) {
+        goToStep(getStepIndex('form') + 1);
+      }
       if (['Waiting', 'Rejected'].includes(program?.user_registration_status)) {
         goToStep(getStepIndex('status'));
       }
