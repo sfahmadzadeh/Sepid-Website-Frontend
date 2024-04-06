@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import { IntlProvider } from 'react-redux-multilingual';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
+import { socket } from 'socket.io';
 
 import createEmotionCache from './configs/CreateEmotionCache'
 import selectTheme from './configs/themes';
@@ -31,6 +32,10 @@ const App = ({
   loading,
 }) => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    socket.on('connection', (e) => { console.log(e) });
+  }, [])
 
   const { data: party } = useGetPartyQuery();
   const { data: websiteMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
