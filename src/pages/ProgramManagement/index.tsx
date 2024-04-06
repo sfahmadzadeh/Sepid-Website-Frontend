@@ -8,7 +8,7 @@ import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import InfoIcon from '@mui/icons-material/Info';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
-import React, { useEffect, useState, FC } from 'react';
+import React, { useEffect, FC } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -25,6 +25,7 @@ import RegistrationReceipts from './RegistrationReceipts';
 import Teams from './Teams';
 import FSMs from './FSMs';
 import Statistics from './Statistics';
+import { ProgramType } from 'types/models';
 
 const tabs: { name: string, label: string, icon: any, component: any }[] = [
   {
@@ -74,17 +75,16 @@ const tabs: { name: string, label: string, icon: any, component: any }[] = [
 type EventType = {
   getOneEventInfo: Function,
   getEventTeams: Function,
-  event: any
+  program: ProgramType;
 }
 
-const Event: FC<EventType> = ({
+const ProgramManagement: FC<EventType> = ({
   getOneEventInfo,
   getEventTeams,
-  event
+  program,
 }) => {
   const t = useTranslate();
   const { programId, section } = useParams();
-  const [tabIndex, setTabIndex] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -98,13 +98,15 @@ const Event: FC<EventType> = ({
   }, []);
 
   useEffect(() => {
-    if (event?.registration_form) {
-      getEventTeams({ registrationFormId: event?.registration_form });
+    if (program?.registration_form) {
+      getEventTeams({ registrationFormId: program.registration_form });
     }
-  }, [event?.registration_form]);
+  }, [program]);
 
-  if (!section) return null;
-  const TabComponent = tabs.find(tab => tab.name == section).component;
+
+  const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
+  if (!currentTab || !program) return null;
+  const TabComponent = <currentTab.component registrationFormId={program.registration_form} />;
 
   return (
     <Layout appbarMode='PROGRAM'>
@@ -122,10 +124,9 @@ const Event: FC<EventType> = ({
                 <Button
                   key={index}
                   onClick={() => {
-                    setTabIndex(index)
-                    navigate(`/program/${programId}/manage/${tabs[index].name}`)
+                    navigate(`/program/${programId}/manage/${tabs[index].name}/`)
                   }}
-                  variant={tabIndex == index ? 'contained' : 'outlined'}
+                  variant={tab.name === section ? 'contained' : 'outlined'}
                   startIcon={tab.icon && <tab.icon />}>
                   {tab.label}
                 </Button>
@@ -139,7 +140,7 @@ const Event: FC<EventType> = ({
                 variant='outlined'
                 color="primary"
                 component={Link}
-                to={`/program/${event?.id}`}
+                to={`/program/${program?.id}`}
                 startIcon={<ExitToAppIcon />}>
                 {t('back')}
               </Button>
@@ -148,9 +149,7 @@ const Event: FC<EventType> = ({
         </Grid>
         <Grid item sm={9} xs={12} >
           <Paper elevation={3} sx={{ padding: '10px 20px' }}>
-            {event?.registration_form &&
-              <TabComponent registrationFormId={event.registration_form} />
-            }
+            {TabComponent}
           </Paper>
         </Grid>
       </Grid>
@@ -159,13 +158,10 @@ const Event: FC<EventType> = ({
 };
 
 const mapStateToProps = (state) => ({
-  event: state.events.event,
+  program: state.events.event,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    getOneEventInfo: getOneEventInfoAction,
-    getEventTeams: getEventTeamsAction,
-  }
-)(Event);
+export default connect(mapStateToProps, {
+  getOneEventInfo: getOneEventInfoAction,
+  getEventTeams: getEventTeamsAction,
+})(ProgramManagement);
