@@ -14,6 +14,7 @@ import {
 } from 'redux/slices/events';
 import { addMentorToWorkshopAction } from 'redux/slices/events';
 import { toPersianNumber } from 'utils/translateNumber';
+import MetabaseDashboard from 'components/template/MetabaseDashboard';
 
 function Statics({
   getEventWorkshops,
@@ -78,7 +79,8 @@ function Statics({
           onChange={(e, value) => setPageNumber(value)}
         />
       </Stack>
-
+      
+      <MetabaseDashboard dashboard_id={5} params={{ "program_id": programId }} />
     </Stack>
   );
 }
