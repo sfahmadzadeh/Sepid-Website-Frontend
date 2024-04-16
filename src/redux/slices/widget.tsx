@@ -149,18 +149,18 @@ export const updateAudioWidgetAction = (props) =>
     widget_type: 'Audio',
   });
 
-export const createMiniGameWidgetAction = ({ paper, link, onSuccess }) =>
+export const createIframeWidgetAction = ({ paper, link, onSuccess }) =>
   _createWidgetAction({
     paper,
-    widget_type: 'Game',
+    widget_type: 'Iframe',
     link,
     onSuccess,
   });
 
-export const updateMiniGameWidgetAction = ({ paper, link, widgetId, onSuccess }) =>
+export const updateIframeWidgetAction = ({ paper, link, widgetId, onSuccess }) =>
   _updateWidgetAction({
     paper,
-    widget_type: 'Game',
+    widget_type: 'Iframe',
     link,
     widgetId,
     onSuccess,

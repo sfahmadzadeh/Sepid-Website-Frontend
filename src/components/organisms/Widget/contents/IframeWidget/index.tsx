@@ -1,12 +1,12 @@
 import { Button, Stack } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import MiniGameEditWidget from './edit';
+import IframeEditWidget from './edit';
 import { useWindowSize } from 'utils/useWindowSIze';
 
-export { MiniGameEditWidget };
+export { IframeEditWidget };
 
-const GameWidget = ({ link = '' }) => {
+const IframeWidget = ({ link = '' }) => {
   const [windowWidth, _] = useWindowSize();
   const t = useTranslate();
   const iframeRef = useRef(null);
@@ -51,4 +51,4 @@ const GameWidget = ({ link = '' }) => {
   );
 };
 
-export default GameWidget;
+export default IframeWidget;

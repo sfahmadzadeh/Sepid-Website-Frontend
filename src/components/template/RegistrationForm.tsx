@@ -23,7 +23,7 @@ const ANSWER_TYPES = {
   TextWidget: 'TextWidget',
   Image: 'Image',
   Video: 'Video',
-  Game: 'Game',
+  Iframe: 'Iframe',
   InviteeUsernameQuestion: 'InviteeUsernameResponse',
 };
 

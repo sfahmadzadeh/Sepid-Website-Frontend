@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 
 
-function MiniGameEditWidget({
+function IframeEditWidget({
   handleClose,
   onEdit,
 
@@ -56,4 +56,4 @@ function MiniGameEditWidget({
   );
 }
 
-export default MiniGameEditWidget;
+export default IframeEditWidget;

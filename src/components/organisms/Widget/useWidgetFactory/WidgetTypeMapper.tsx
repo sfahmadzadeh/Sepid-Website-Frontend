@@ -1,6 +1,6 @@
 import BigAnswerProblemWidget, { BigAnswerQuestionEditWidget } from '../questions/BigAnswerProblemWidget';
 import ImageWidget, { ImageEditWidget } from '../contents/ImageWidget';
-import MiniGameWidget, { MiniGameEditWidget } from '../contents/MiniGameWidget';
+import IframeWidget, { IframeEditWidget } from '../contents/IframeWidget';
 import MultiChoiceQuestionWidget, { MultiChoiceQuestionEditWidget } from '../questions/MultiChoiceQuestion';
 import SmallAnswerProblemWidget, { SmallAnswerProblemEditWidget } from '../questions/SmallAnswerProblemWidget';
 import TextWidget, { TextEditWidget } from '../contents/TextWidget';
@@ -19,8 +19,8 @@ import {
   createImageWidgetAction,
   updateImageWidgetAction,
 
-  createMiniGameWidgetAction,
-  updateMiniGameWidgetAction,
+  createIframeWidgetAction,
+  updateIframeWidgetAction,
 
   createAudioWidgetAction,
   updateAudioWidgetAction,
@@ -140,13 +140,13 @@ const WIDGET_TYPE_MAPPER = {
     createAction: createAudioWidgetAction,
     updateAction: updateAudioWidgetAction,
   },
-  Game: {
-    WidgetComponent: MiniGameWidget,
-    EditWidgetDialog: MiniGameEditWidget,
+  Iframe: {
+    WidgetComponent: IframeWidget,
+    EditWidgetDialog: IframeEditWidget,
     label: 'بازی',
-    backendType: 'Game',
-    createAction: createMiniGameWidgetAction,
-    updateAction: updateMiniGameWidgetAction,
+    backendType: 'Iframe',
+    createAction: createIframeWidgetAction,
+    updateAction: updateIframeWidgetAction,
   },
 };
 export default WIDGET_TYPE_MAPPER;

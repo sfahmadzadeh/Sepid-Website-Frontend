@@ -17,7 +17,7 @@ export type WidgetTypes =
   'Image' |
   'Video' |
   'Aparat' |
-  'Game' |
+  'Iframe' |
   'SmallAnswerProblem' |
   'BigAnswerProblem' |
   'MultiChoiceProblem' |

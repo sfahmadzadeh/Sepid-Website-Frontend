@@ -27,7 +27,7 @@ export enum WidgetTypes {
   DetailBoxWidget = 'DetailBoxWidget',
   Image = 'Image',
   Video = 'Video',
-  Game = 'Game',
+  Iframe = 'Iframe',
 }
 
 enum AnswerType2WidgetType {
@@ -39,7 +39,7 @@ enum AnswerType2WidgetType {
   DetailBoxWidget = WidgetTypes.DetailBoxWidget,
   Image = WidgetTypes.Image,
   Video = WidgetTypes.Video,
-  Game = WidgetTypes.Game,
+  Iframe = WidgetTypes.Iframe,
 }
 
 type WidgetPropsType = {
