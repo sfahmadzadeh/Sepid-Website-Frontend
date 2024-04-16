@@ -37,21 +37,21 @@
       document.getElementsByTagName('head')[0].appendChild(ogImage);
 
     }
-    fetch('https://mps.sepid.org/api/party/get-og_metadata/')
-      .then(response => response.json())
-      .then(data => {
-        setOpenGraphMetaData(data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        setOpenGraphMetaData({
-          title: 'پلتفرم سپید',
-          type: 'website',
-          image: '%PUBLIC_URL%/logo.png',
-          description: 'نسل بعدی تولید و عرضه‌ی محتوا',
-          url: 'https://sepid.org/',
-        })
-      });
+    // fetch('https://mps.sepid.org/api/party/get-og_metadata/')
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     setOpenGraphMetaData(data);
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error:', error);
+    //     setOpenGraphMetaData({
+    //       title: 'پلتفرم سپید',
+    //       type: 'website',
+    //       image: '%PUBLIC_URL%/logo.png',
+    //       description: 'نسل بعدی تولید و عرضه‌ی محتوا',
+    //       url: 'https://sepid.org/',
+    //     })
+    //   });
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.1.2/es5/tex-svg.min.js"
