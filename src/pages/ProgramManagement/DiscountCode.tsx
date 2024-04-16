@@ -20,13 +20,10 @@ import {
   deleteDiscountCodeAction,
   getAllMerchandiseDiscountCodesAction,
 } from 'redux/slices/account';
-import {
-  addNotificationAction,
-} from 'redux/slices/notifications';
 import { toEnglishNumber, toPersianNumber } from 'utils/translateNumber';
+import { toast } from 'react-toastify';
 
 function Index({
-  addNotification,
   createDiscountCode,
   deleteDiscountCode,
   getAllMerchandiseDiscountCodes,
@@ -45,24 +42,15 @@ function Index({
 
   const handleCreateDiscountCode = () => {
     if (!username) {
-      addNotification({
-        message: 'شماره تلفن کاربر مورد نظر را وارد کنید.',
-        type: 'error',
-      });
+      toast.error('نام کاربری کاربر مورد نظر را وارد کنید.');
       return;
     }
     if (!value) {
-      addNotification({
-        message: 'لطفاً عددی را وارد کنید',
-        type: 'error',
-      });
+      toast.error('لطفاً مقدار تخفیف را وارد کنید.');
       return;
     }
     if (value && value > 100 || value < 0 || value.toString().includes('.')) {
-      addNotification({
-        message: 'لطفاً عددی طبیعی بین ۰ تا ۱۰۰ وارد کنید.',
-        type: 'error',
-      });
+      toast.error('لطفاً عددی طبیعی بین ۰ تا ۱۰۰ وارد کنید.');
       return;
     }
     createDiscountCode({ value: (value / 100), merchandise: event?.merchandise?.id, username });
@@ -166,7 +154,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  addNotification: addNotificationAction,
   createDiscountCode: createDiscountCodeAction,
   deleteDiscountCode: deleteDiscountCodeAction,
   getAllMerchandiseDiscountCodes: getAllMerchandiseDiscountCodesAction,

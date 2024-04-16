@@ -30,7 +30,6 @@ import { WorkshopEdge, State } from 'types/models';
 import CustomJoyrideButton from 'components/atoms/CustomJoyrideButton';
 
 type IndexPropsType = {
-  addNotification: Function,
   getAllWorkshopEdges: Function,
   getAllWorkshopStatesInfo: Function,
   addEdge: Function,

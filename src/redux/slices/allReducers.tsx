@@ -1,7 +1,6 @@
 import { accountReducer } from './account';
 import { currentStateReducer } from './currentState';
 import { eventsReducer } from './events';
-import { notificationReducer } from './notifications';
 import { redirectReducer } from './redirect';
 import { translatorReducer } from './translator';
 import { whiteboardReducer } from './whiteboard';
@@ -21,7 +20,6 @@ const allReducers = {
   currentState: currentStateReducer,
   WebSiteAppearance: WebSiteAppearanceReducer,
   Roadmap: RoadmapReducer,
-  notifications: notificationReducer,
   whiteboard: whiteboardReducer,
   widget: widgetReducer,
   redirect: redirectReducer,

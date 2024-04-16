@@ -5,7 +5,6 @@ import { Slide, ToastContainer } from 'react-toastify';
 import React, { Fragment, useEffect } from 'react';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
-import { SnackbarProvider } from 'notistack';
 import { CacheProvider } from "@emotion/react";
 import { connect } from 'react-redux';
 import { IntlProvider } from 'react-redux-multilingual';
@@ -14,7 +13,6 @@ import { Helmet } from "react-helmet";
 
 import createEmotionCache from './configs/CreateEmotionCache'
 import selectTheme from './configs/themes';
-import Notifier from './components/molecules/Notifications';
 import { initParseServer } from './parse/init';
 import { resetRedirectAction } from './redux/slices/redirect';
 import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
@@ -84,25 +82,22 @@ const App = ({
       <IntlProvider translations={translations}>
         <CacheProvider value={createEmotionCache(dir)}>
           <ThemeProvider theme={selectTheme(dir)}>
-            <SnackbarProvider>
-              <ToastContainer
-                rtl
-                position="top-right"
-                autoClose={3000}
-                transition={Slide}
-                newestOnTop
-                hideProgressBar={false}
-                pauseOnHover={false}
-                pauseOnFocusLoss={false}
-                closeOnClick
-                limit={3}
-                draggable={false}
-              />
-              <LinearLoading loading={loading} />
-              <Notifier />
-              <CssBaseline />
-              <Root />
-            </SnackbarProvider>
+            <ToastContainer
+              rtl
+              position="top-right"
+              autoClose={3000}
+              transition={Slide}
+              newestOnTop
+              hideProgressBar={false}
+              pauseOnHover={false}
+              pauseOnFocusLoss={false}
+              closeOnClick
+              limit={3}
+              draggable={false}
+            />
+            <LinearLoading loading={loading} />
+            <CssBaseline />
+            <Root />
           </ThemeProvider>
         </CacheProvider>
       </IntlProvider>

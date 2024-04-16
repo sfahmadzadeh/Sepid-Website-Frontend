@@ -12,9 +12,6 @@ import {
   changeOpenChatRoomAction,
 } from 'redux/slices/currentState';
 import {
-  addNotificationAction,
-} from 'redux/slices/notifications';
-import {
   getOneWorkshopAction,
 } from 'redux/slices/workshop';
 import { addMentorToRoom, updateMentorTime } from 'parse/mentorsInRoom';
@@ -36,7 +33,6 @@ const FSM = ({
   enterWorkshop,
   getOneEventInfo,
   mentorGetCurrentState,
-  addNotification,
   // todo:
   teamRoom,
   openChatRoom,
@@ -76,7 +72,6 @@ const FSM = ({
   //     updateMentorTime(teamId, mentorId.toString())
   //     updateInterval = setInterval(() => { updateMentorTime(teamId, mentorId.toString()) }, 10000)
   //   }
-
   //   return (
   //     () => {
   //       if (updateInterval) {
@@ -124,16 +119,10 @@ const FSM = ({
   //   if (!currentState?.id || !parseTeamState) return;
   //   if (+parseTeamState !== +currentState.id) {
   //     if (isMentor) {
-  //       addNotification({
-  //         type: 'info',
-  //         message: 'یکی از دانش‌آموزان مکان گروه رو جا‌به‌جا کرد!',
-  //       });
+  //       toast.info('یکی از دانش‌آموزان مکان گروه رو جا‌به‌جا کرد!');
   //       mentorGetCurrentState({ id: playerId });
   //     } else {
-  //       addNotification({
-  //         type: 'info',
-  //         message: 'جابه‌جا شدید!',
-  //       });
+  //       toast.info('جابه‌جا شدید!');
   //       enterWorkshop({  programId, fsmId });
   //     }
   //   }
@@ -201,7 +190,6 @@ export default connect(mapStateToProps, {
   getOneWorkshop: getOneWorkshopAction,
   enterWorkshop: enterWorkshopAction,
   mentorGetCurrentState: mentorGetCurrentStateAction,
-  addNotification: addNotificationAction,
   changeOpenChatRoom: changeOpenChatRoomAction,
   getOneEventInfo: getOneEventInfoAction,
 })(FSM);

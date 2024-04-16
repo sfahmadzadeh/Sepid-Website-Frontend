@@ -1,18 +1,17 @@
 import { Button, Grid, Paper, Stack, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import {
   applyDiscountCodeAction,
   getOneRegistrationFormAction,
   purchaseEventAction,
   submitRegistrationFormAction,
 } from 'redux/slices/events';
-import { addNotificationAction } from 'redux/slices/notifications';
 import { toPersianNumber } from 'utils/translateNumber';
 
 const Payment = ({
   purchaseEvent,
-  addNotification,
   applyDiscountCode,
 
   discountedPrice,
@@ -37,10 +36,7 @@ const Payment = ({
 
   const submitDiscount = () => {
     if (!discountCode) {
-      addNotification({
-        message: 'کد تخفیفت را وارد کن!',
-        type: 'error',
-      });
+      toast.error('کد تخفیفت را وارد کن!');
       return;
     }
     applyDiscountCode({
@@ -122,6 +118,5 @@ export default connect(mapStateToProps, {
   getOneRegistrationForm: getOneRegistrationFormAction,
   purchaseEvent: purchaseEventAction,
   submitRegistrationForm: submitRegistrationFormAction,
-  addNotification: addNotificationAction,
   applyDiscountCode: applyDiscountCodeAction,
 })(Payment);

@@ -35,10 +35,10 @@ import {
   getTeamInvitationsAction,
   inviteSomeoneAction,
 } from 'redux/slices/events';
-import { addNotificationAction } from 'redux/slices/notifications';
 import Layout from 'components/template/Layout';
 import { Team, ProgramType } from 'types/models';
 import RespondInvitation from 'components/molecules/RespondInvitation';
+import { toast } from 'react-toastify';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
@@ -52,7 +52,6 @@ type TeamSelectionPropsType = {
   getMyInvitations: any;
   deleteTeam: any;
   deleteInvitation: any;
-  addNotification: any;
   getOneEventInfo: any;
   getTeam: any;
   getTeamInvitations: any;
@@ -72,7 +71,6 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
   getMyInvitations,
   deleteTeam,
   deleteInvitation,
-  addNotification,
   getOneEventInfo,
   getTeam,
   getTeamInvitations,
@@ -122,10 +120,7 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
 
   const submitCreateTeam = () => {
     if (!newTeamName) {
-      addNotification({
-        message: 'لطفاً نام گروه را وارد کنید.',
-        type: 'error',
-      });
+      toast.error('لطفاً نام گروه را وارد کنید.');
       return;
     }
     createTeamAndJoin({
@@ -378,18 +373,14 @@ const mapStateToProps = (state) => ({
   isFetching: state.events.isFetching,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    getMyInvitations: getMyInvitationsAction,
-    deleteTeam: deleteTeamAction,
-    deleteInvitation: deleteInvitationAction,
-    createTeamAndJoin: createTeamAndJoinAction,
-    inviteSomeone: inviteSomeoneAction,
-    getTeamInvitations: getTeamInvitationsAction,
-    getOneEventInfo: getOneEventInfoAction,
-    addNotification: addNotificationAction,
-    getOneRegistrationReceipt: getOneRegistrationReceiptAction,
-    getTeam: getTeamAction,
-  }
-)(TeamSelection);
+export default connect(mapStateToProps, {
+  getMyInvitations: getMyInvitationsAction,
+  deleteTeam: deleteTeamAction,
+  deleteInvitation: deleteInvitationAction,
+  createTeamAndJoin: createTeamAndJoinAction,
+  inviteSomeone: inviteSomeoneAction,
+  getTeamInvitations: getTeamInvitationsAction,
+  getOneEventInfo: getOneEventInfoAction,
+  getOneRegistrationReceipt: getOneRegistrationReceiptAction,
+  getTeam: getTeamAction,
+})(TeamSelection);
