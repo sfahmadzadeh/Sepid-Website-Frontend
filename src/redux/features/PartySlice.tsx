@@ -15,11 +15,6 @@ export const PartySlice = ManagePartyServiceApi.injectEndpoints({
   })
 })
 
-export const selectPartyUUID = createSelector(
-  PartySlice.endpoints.getParty.select(),
-  reponse => reponse.data?.uuid,
-)
-
 export const {
   useGetPartyQuery,
   useGetPageMetadataQuery,

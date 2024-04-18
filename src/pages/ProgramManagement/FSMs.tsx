@@ -8,7 +8,7 @@ import React, { useEffect, useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MentorFSMCard from 'components/organisms/cards/MentorFSMCard';
-import CreateWorkshopDialog from 'components/organisms/dialogs/CreateWorkshopDialog';
+import CreateFSMDialog from 'components/organisms/dialogs/CreateWorkshopDialog';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import {
   getEventWorkshopsAction,
@@ -83,7 +83,7 @@ function Index({
           </Grid>
         </Grid>
       </Grid>
-      <CreateWorkshopDialog
+      <CreateFSMDialog
         open={openCreateWorkshopDialog}
         handleClose={() => setOpenCreateWorkshopDialog(false)}
       />
