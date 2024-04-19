@@ -16,11 +16,13 @@ import { FSMType } from 'types/models';
 type FSMInfoFormPropsType = {
   data: FSMType;
   setData: any;
+  showCoverImage?: boolean;
 }
 
 const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
   data,
   setData,
+  showCoverImage = false,
 }) => {
 
   const putData = (event) => {
@@ -39,7 +41,7 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <TextField
           value={data.name}
           fullWidth
@@ -50,10 +52,21 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
           onChange={putData}
         />
       </Grid>
-      <Grid item xs={6} alignItems={'stretch'} justifyContent={'stretch'}>
-        <UploadImage file={data.cover_page} setFile={(file) => setData(properties => ({ ...properties, cover_page: file }))} />
+      <Grid item xs={12} md={6} alignItems={'stretch'} justifyContent={'stretch'}>
+        <UploadImage showImageSelf={showCoverImage} file={data.cover_page} setFile={(file) => setData(properties => ({ ...properties, cover_page: file }))} />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          autoFocus
+          value={data.description}
+          variant='outlined'
+          label={'توضیحات کارگاه'}
+          name='description'
+          onChange={putData}
+        />
+      </Grid>
+      <Grid item xs={12} md={6}>
         <FormControl fullWidth variant="outlined">
           <InputLabel>نوع آموزش</InputLabel>
           <Select
@@ -66,7 +79,7 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <FormControl fullWidth variant="outlined">
           <InputLabel>وضعیت گروه</InputLabel>
           <Select
@@ -79,17 +92,6 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
             {/* <MenuItem value={'Hybrid'}>{'هیبرید'}</MenuItem> */}
           </Select>
         </FormControl>
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
-          fullWidth
-          autoFocus
-          value={data.description}
-          variant='outlined'
-          label={'توضیحات کارگاه'}
-          name='description'
-          onChange={putData}
-        />
       </Grid>
       <Grid item xs={12} sm={6}>
         <FormControlLabel

@@ -1,5 +1,6 @@
 import {
   Button,
+  Stack,
   Typography,
 } from '@mui/material';
 import React, { FC, Fragment, useEffect } from 'react';
@@ -9,11 +10,13 @@ import { useCreateFileMutation } from 'redux/features/FileSlice';
 type UploadImagePropsType = {
   file?: any;
   setFile?: any;
+  showImageSelf?: boolean;
 }
 
 const UploadImage: FC<UploadImagePropsType> = ({
   setFile,
   file,
+  showImageSelf = false,
 }) => {
 
   const validateFile = (file) => {
@@ -44,12 +47,17 @@ const UploadImage: FC<UploadImagePropsType> = ({
 
   return (
     <Fragment>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => document.getElementById('userProfilePicture').click()}>
-        انتخاب تصویر
-      </Button>
+      <Stack alignItems={'start'} spacing={1} justifyContent={'stretch'}>
+        {showImageSelf &&
+          <img src={file} width={100} style={{ borderRadius: 8 }} />
+        }
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => document.getElementById('userProfilePicture').click()}>
+          انتخاب تصویر
+        </Button>
+      </Stack>
       <input
         accept="image/*"
         id="userProfilePicture"

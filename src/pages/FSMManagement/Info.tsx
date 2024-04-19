@@ -22,7 +22,7 @@ const Info: FC<InfoPropsType> = ({
   const [properties, setProperties] = useState<FSMType>();
   const { fsmId } = useParams();
   const [updateFSM, result] = useUpdateFSMMutation();
-  
+
   useEffect(() => {
     if (fsm) {
       setProperties(fsm);
@@ -56,7 +56,7 @@ const Info: FC<InfoPropsType> = ({
         {'مشخصات کارگاه'}
       </Typography>
       <Stack>
-        <FSMInfoForm data={properties} setData={setProperties} />
+        <FSMInfoForm showCoverImage={true} data={properties} setData={setProperties} />
       </Stack>
       <Stack direction={'row'} justifyContent={'end'}>
         <Button
