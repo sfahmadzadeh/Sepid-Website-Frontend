@@ -31,9 +31,6 @@ const Info: FC<InfoPropsType> = ({
 
   if (!properties) return null;
 
-
-  console.log(result)
-
   const handeUpdateFSM = () => {
     if (!properties.name) {
       toast.error('لطفاً نام کارگاه را انتخاب کنید.');
