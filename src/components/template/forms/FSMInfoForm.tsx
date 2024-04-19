@@ -14,7 +14,7 @@ import React, { FC } from 'react';
 import { FSMType } from 'types/models';
 
 type FSMInfoFormPropsType = {
-  data: FSMType;
+  data: Partial<FSMType>;
   setData: any;
   showCoverImage?: boolean;
 }

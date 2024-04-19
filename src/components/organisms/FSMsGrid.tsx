@@ -1,11 +1,20 @@
 import { Box, Grid } from '@mui/material';
-import React from 'react';
+import React, { FC } from 'react';
 
 import FSMCard from 'components/organisms/cards/FSMCard';
 import useWidth from 'utils/UseWidth';
 import NoDataFound from 'components/molecules/NoDataFound';
+import { FSMType } from 'types/models';
 
-function FSMsGrid({ fsms, isLoading }) {
+type FSMsGridPropsType = {
+  fsms: FSMType[];
+  isLoading: boolean;
+}
+
+const FSMsGrid: FC<FSMsGridPropsType> = ({
+  fsms,
+  isLoading,
+}) => {
   const width = useWidth();
 
   const numberOfSkeleton = width === 'sm' || width === 'md' ? 4 : 3;
@@ -23,7 +32,7 @@ function FSMsGrid({ fsms, isLoading }) {
   }
 
   if (fsms.length > 0) {
-    let tmpArr = [...fsms].sort((fsm1, fsm2) => fsm2.order_in_program - fsm1.order_in_program)
+    let tmpArr = [...fsms].filter(fsm => fsm.is_visible).sort((fsm1, fsm2) => fsm2.order_in_program - fsm1.order_in_program)
     return (
       <Grid container spacing={2}>
         {tmpArr.map((workshop) => (

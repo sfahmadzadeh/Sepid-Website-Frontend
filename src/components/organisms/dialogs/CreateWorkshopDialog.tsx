@@ -32,7 +32,7 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
 }) => {
   const t = useTranslate();
   const { programId } = useParams();
-  const [properties, setProperties] = useState<FSMType>({
+  const [properties, setProperties] = useState<Partial<FSMType>>({
     name: '',
     description: '',
     fsm_learning_type: '',

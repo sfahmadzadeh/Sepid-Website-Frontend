@@ -54,6 +54,7 @@ type FSMLearningType = 'Supervised' | 'Unsupervised';
 type FSMPType = 'Individual' | 'Team' | 'Hybrid';
 
 export type FSMType = {
+  id: number;
   name: string;
   description: string;
   fsm_learning_type: FSMLearningType | '';
@@ -63,6 +64,7 @@ export type FSMType = {
   lock: string;
   is_active: boolean;
   is_visible: boolean;
+  order_in_program: number;
 };
 
 export type RegistrationFormType = {
