@@ -3,18 +3,10 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
-  FormControl,
-  FormControlLabel,
   Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Switch,
-  TextField,
+  Typography,
 } from '@mui/material';
-import UploadImage from 'components/molecules/UploadImage';
 import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
@@ -23,21 +15,24 @@ import { useParams } from 'react-router';
 import { createWorkshopAction } from 'redux/slices/events';
 import FSMCard from '../cards/FSMCard';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
+import { toast } from 'react-toastify';
+import FSMInfoForm from 'components/template/forms/FSMInfoForm';
+import { FSMType } from 'types/models';
 
 type CreateFSMDialog = {
-  createWorkshop: any;
+  createFSM: any;
   open: boolean;
   handleClose: any;
 }
 
 const CreateFSMDialog: FC<CreateFSMDialog> = ({
-  createWorkshop,
+  createFSM,
   open,
   handleClose,
 }) => {
   const t = useTranslate();
   const { programId } = useParams();
-  const [properties, setProperties] = useState({
+  const [properties, setProperties] = useState<FSMType>({
     name: '',
     description: '',
     fsm_learning_type: '',
@@ -49,121 +44,47 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
     is_visible: true,
   });
 
-  const putData = (event) => {
-    setProperties({
-      ...properties,
-      [event.target.name]: event.target.value,
-    })
-  }
-
   const handeCreateFSM = () => {
-    createWorkshop({ ...removeBlankAttributes(properties), onSuccess: handleClose });
-  }
-
-  const toggleValue = (name: string) => {
-    setProperties(properties => ({
-      ...properties,
-      [name]: !properties[name],
-    }));
+    if (!properties.name) {
+      toast.error('لطفاً نام کارگاه را انتخاب کنید.');
+      return;
+    }
+    if (!properties.fsm_learning_type) {
+      toast.error('لطفاً نوع آموزش کارگاه را انتخاب کنید.');
+      return;
+    }
+    if (!properties.fsm_p_type) {
+      toast.error('لطفاً وضعیت گروه کارگاه را انتخاب کنید.');
+      return;
+    }
+    createFSM({ ...removeBlankAttributes(properties), onSuccess: handleClose });
   }
 
   return (
     <Dialog disableScrollLock open={open} maxWidth="md">
       <DialogTitle>{'ایجاد کارگاه جدید'}</DialogTitle>
       <DialogContent>
-        <DialogContentText gutterBottom>
-          {'مشخصات کارگاه را وارد کنید:'}
-        </DialogContentText>
         <Grid container spacing={4} alignItems={'start'}>
           <Grid item container xs={12} md={8} spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                autoFocus
-                variant='outlined'
-                label={'نام'}
-                name='name'
-                onChange={putData}
-              />
+            <Grid item>
+              <Typography gutterBottom>
+                {'مشخصات کارگاه را وارد کنید:'}
+              </Typography>
             </Grid>
-            <Grid item xs={6} alignItems={'stretch'} justifyContent={'stretch'}>
-              <UploadImage file={properties.cover_page} setFile={(file) => setProperties(properties => ({ ...properties, cover_page: file }))} />
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel>نوع آموزش</InputLabel>
-                <Select
-                  value={properties.fsm_learning_type}
-                  onChange={putData}
-                  name='fsm_learning_type'
-                  label='نوع آموزش'>
-                  <MenuItem value={'Supervised'}>{'با همیار'}</MenuItem>
-                  <MenuItem value={'Unsupervised'}>{'بدون همیار'}</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel>وضعیت گروه</InputLabel>
-                <Select
-                  value={properties.fsm_p_type}
-                  onChange={putData}
-                  name='fsm_p_type'
-                  label='وضعیت گروه'>
-                  <MenuItem value={'Individual'}>{'فردی'}</MenuItem>
-                  <MenuItem value={'Team'}>{'گروهی'}</MenuItem>
-                  {/* <MenuItem value={'Hybrid'}>{'هیبرید'}</MenuItem> */}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                autoFocus
-                variant='outlined'
-                label={'توضیحات کارگاه'}
-                name='description'
-                onChange={putData}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControlLabel
-                name='is_active'
-                checked={properties.is_active}
-                onChange={() => toggleValue('is_active')}
-                control={<Switch color="primary" />}
-                label="فعال بودن ورود به کارگاه:"
-                labelPlacement='start'
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControlLabel
-                name='is_visible'
-                checked={properties.is_visible}
-                onChange={() => toggleValue('is_visible')}
-                control={<Switch color="primary" />}
-                label="قابل مشاهده برای دانش‌آموزان:"
-                labelPlacement='start'
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                autoFocus
-                variant='outlined'
-                label={'رمز ورود'}
-                name='lock'
-                onChange={putData}
-              />
+            <Grid item>
+              <FSMInfoForm data={properties} setData={setProperties} />
             </Grid>
           </Grid>
-          <Grid item container
-            xs={12} md={4}
-            sx={{
+          <Grid item container xs={12} md={4} spacing={2}>
+            <Grid item xs={12}>
+              <Typography gutterBottom>{'خروجی کار:'}</Typography>
+            </Grid>
+            <Grid item xs={12} sx={{
               display: { xs: 'none', md: 'inline' },
               opacity: properties.is_visible ? 1 : 0.2
             }}>
-            <FSMCard fsm={properties} />
+              <FSMCard fsm={properties} />
+            </Grid>
           </Grid>
         </Grid>
       </DialogContent>
@@ -186,5 +107,5 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
 }
 
 export default connect(null, {
-  createWorkshop: createWorkshopAction
+  createFSM: createWorkshopAction
 })(CreateFSMDialog);

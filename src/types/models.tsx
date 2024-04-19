@@ -50,8 +50,20 @@ export type Request = any
 type PaperType = 'RegistrationForm';
 type AcceptingStatus = 'AutoAccept' | 'Manual';
 type AudienceType = 'Student' | 'Academic' | 'All';
+type FSMLearningType = 'Supervised' | 'Unsupervised';
+type FSMPType = 'Individual' | 'Team' | 'Hybrid';
 
-export type FSMType = any;
+export type FSMType = {
+  name: string;
+  description: string;
+  fsm_learning_type: FSMLearningType | '';
+  fsm_p_type: FSMPType | '';
+  event: string;
+  cover_page: string;
+  lock: string;
+  is_active: boolean;
+  is_visible: boolean;
+};
 
 export type RegistrationFormType = {
   accepting_status: AcceptingStatus;
