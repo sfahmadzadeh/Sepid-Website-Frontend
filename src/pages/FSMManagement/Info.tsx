@@ -29,6 +29,12 @@ const Info: FC<InfoPropsType> = ({
     }
   }, [fsm]);
 
+  useEffect(() => {
+    if (result.isSuccess) {
+      toast.success('مشخصات کارگاه با موفقیت به‌روز شد.')
+    }
+  }, [result])
+
   if (!properties) return null;
 
   const handeUpdateFSM = () => {

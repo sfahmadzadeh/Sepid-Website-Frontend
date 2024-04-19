@@ -45,7 +45,6 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
         <TextField
           value={data.name}
           fullWidth
-          autoFocus
           variant='outlined'
           label={'نام'}
           name='name'
@@ -58,7 +57,6 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
       <Grid item xs={12}>
         <TextField
           fullWidth
-          autoFocus
           value={data.description}
           variant='outlined'
           label={'توضیحات کارگاه'}
@@ -116,8 +114,7 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
-          autoFocus
-          value={data.lock}
+          value={data.lock || ''}
           variant='outlined'
           label={'رمز ورود'}
           name='lock'
