@@ -64,7 +64,7 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
     <Dialog disableScrollLock open={open} maxWidth="md">
       <DialogTitle>{'ایجاد کارگاه جدید'}</DialogTitle>
       <DialogContent>
-        <Grid container spacing={4} alignItems={'start'}>
+        <Grid container spacing={6} alignItems={'start'}>
           <Grid item container xs={12} md={8} spacing={2}>
             <Grid item>
               <Typography gutterBottom>
