@@ -1,27 +1,34 @@
 import {
-  Button,
   Grid,
   Typography,
 } from '@mui/material';
 import { Pagination } from '@mui/material';
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState, Fragment, FC } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MentorFSMCard from 'components/organisms/cards/MentorFSMCard';
-import CreateFSMDialog from 'components/organisms/dialogs/CreateWorkshopDialog';
+import CreateFSMDialog from 'components/organisms/dialogs/CreateFSMDialog';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import {
   getEventWorkshopsAction,
 } from 'redux/slices/events';
 import { addMentorToWorkshopAction } from 'redux/slices/events';
+import AddNewThingButton from 'components/atoms/AddNewThingButton';
+import { FSMType } from 'types/models';
 
-function Index({
+type ProgramManagementFsmTabPropsType = {
+  getEventWorkshops: any;
+  fsmsCount: number;
+  allProgramFsms: FSMType[];
+}
+
+const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
   getEventWorkshops,
-  workshopsCount,
-  allEventWorkshops,
-}) {
+  fsmsCount,
+  allProgramFsms,
+}) => {
   const { programId } = useParams();
-  const [openCreateWorkshopDialog, setOpenCreateWorkshopDialog] = useState(false);
+  const [openCreateFSMDialog, setOpenCreateFSMDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
 
   useEffect(() => {
@@ -45,9 +52,7 @@ function Index({
             </Typography>
           </Grid>
           <Grid item>
-            <Button variant='outlined' onClick={() => setOpenCreateWorkshopDialog(true)}>
-              {'افزودن کارگاه جدید'}
-            </Button>
+            <AddNewThingButton label={'افزودن کارگاه جدید'} onClick={() => setOpenCreateFSMDialog(true)} />
           </Grid>
         </Grid>
 
@@ -63,7 +68,7 @@ function Index({
               marginRight: "0px",
             },
           })}>
-          {allEventWorkshops?.map((workshop) => (
+          {allProgramFsms?.map((workshop) => (
             <Grid container item xs={12} sm={6} md={4} key={workshop.id} alignItems='center' justifyContent='center'>
               <MentorFSMCard {...workshop} />
             </Grid>
@@ -76,7 +81,7 @@ function Index({
               variant="outlined"
               color="primary"
               shape='rounded'
-              count={Math.ceil(workshopsCount / ITEMS_PER_PAGE_NUMBER)}
+              count={Math.ceil(fsmsCount / ITEMS_PER_PAGE_NUMBER)}
               page={pageNumber}
               onChange={(e, value) => setPageNumber(value)}
             />
@@ -84,18 +89,18 @@ function Index({
         </Grid>
       </Grid>
       <CreateFSMDialog
-        open={openCreateWorkshopDialog}
-        handleClose={() => setOpenCreateWorkshopDialog(false)}
+        open={openCreateFSMDialog}
+        handleClose={() => setOpenCreateFSMDialog(false)}
       />
     </Fragment>
   );
 }
 const mapStateToProps = (state) => ({
-  workshopsCount: state.events.workshopsCount,
-  allEventWorkshops: state.events.workshops,
+  fsmsCount: state.events.workshopsCount,
+  allProgramFsms: state.events.workshops,
 });
 
 export default connect(mapStateToProps, {
   addMentorToWorkshop: addMentorToWorkshopAction,
   getEventWorkshops: getEventWorkshopsAction,
-})(Index);
+})(ProgramManagementFsmTab);
