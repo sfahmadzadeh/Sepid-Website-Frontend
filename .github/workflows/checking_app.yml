@@ -1,20 +1,24 @@
-name: test all package installation
+name: Test All Package Installation
 
-run-name: ${{ github.actor }} is learning GitHub Actions
-
-
-on: [push]
-
-
-
+on:
+  push:
 
 jobs:
-
   check-package-manager:
     runs-on: ubuntu-latest
+    name: Package Installation and Linting
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '20'
-      - run: yarn install
-      - run: npm run lint
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Run ESLint
+        run: npm run lint
