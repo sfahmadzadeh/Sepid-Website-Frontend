@@ -15,7 +15,7 @@ import createEmotionCache from './configs/CreateEmotionCache'
 import selectTheme from './configs/themes';
 import { initParseServer } from './parse/init';
 import { resetRedirectAction } from './redux/slices/redirect';
-import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import Root from './routes';
 import translations from './translations';
 import LinearLoading from 'components/atoms/LinearLoading';
@@ -30,9 +30,9 @@ const App = ({
 }) => {
   const navigate = useNavigate();
 
-  const { data: party } = useGetPartyQuery();
-  const { data: websiteMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
-  const { data: thridPartiesTokens } = useGetThirdPartiesQuery({ partyUuid: party?.uuid }, { skip: !Boolean(party) })
+  const { data: website } = useGetWebsiteQuery();
+  const { data: websiteMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
+  const { data: thridPartiesTokens } = useGetThirdPartiesQuery({ partyName: website?.name }, { skip: !Boolean(website) })
 
   useEffect(() => {
     if (thridPartiesTokens) {

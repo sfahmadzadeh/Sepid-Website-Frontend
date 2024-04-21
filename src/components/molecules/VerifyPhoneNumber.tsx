@@ -6,7 +6,7 @@ import {
 import React, { FC, Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import {
   getVerificationCodeAction,
 } from 'redux/slices/account';
@@ -32,22 +32,22 @@ const VerifyPhoneNumber: FC<VerifyPhoneNumberPropsType> = ({
   verifyType,
 }) => {
   const [isButtonDisabled, setIsButtonDisable] = useState(false);
-  const { data: party } = useGetPartyQuery();
+  const { data: website } = useGetWebsiteQuery();
 
   const handleGettingVerificationCode = () => {
     if (!isPhoneNumber(data.phoneNumber)) {
       toast.error('شماره تلفن وارد‌شده معتبر نیست');
       return;
     }
-    if (!party) {
-      toast.error('نام شخص یا شرکت معتبر نیست.');
+    if (!website) {
+      toast.error('نام آکادمی معتبر نیست.');
       return;
     }
     setIsButtonDisable(true);
     getVerificationCode({
       phoneNumber: data.phoneNumber,
       codeType: verifyType === 'on-create-user-account' ? 'create-user-account' : 'change-user-phone-number',
-      partyDisplayName: party.display_name,
+      partyDisplayName: website.display_name,
     }).then(() => {
       setTimeout(() => {
         setIsButtonDisable(false);

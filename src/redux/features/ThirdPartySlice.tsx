@@ -1,10 +1,10 @@
 import { ProgramType } from 'types/models';
-import { ManagePartyServiceApi } from './ManagePartyServiceApiSlice';
+import { ManageWebsiteServiceApi } from './ManageWebsiteServiceApiSlice';
 
-export const ThirdPartySlice = ManagePartyServiceApi.injectEndpoints({
+export const ThirdPartySlice = ManageWebsiteServiceApi.injectEndpoints({
   endpoints: builder => ({
-    getThirdParties: builder.query<ProgramType[], { partyUuid: string | undefined }>({
-      query: ({ partyUuid }) => `third-party/get-third-party/?party=${partyUuid}`,
+    getThirdParties: builder.query<ProgramType[], { partyName: string | undefined }>({
+      query: ({ partyName }) => `third-party/get-third-party/?website=${partyName}`,
     })
   })
 });

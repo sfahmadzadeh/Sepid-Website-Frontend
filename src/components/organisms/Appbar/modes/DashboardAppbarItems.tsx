@@ -1,15 +1,15 @@
 import React from 'react';
 
 import DashboardButton from '../components/DashboardButton';
-import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import Brand from '../components/Brand';
 import DefaultAppbarItems from './DefaultAppbarItems';
 import UserInfo from '../components/UserInfo';
 
 const DashboardAppbarItems = ({ }) => {
 
-  const { data: party } = useGetPartyQuery();
-  const { data: pageMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+  const { data: website } = useGetWebsiteQuery();
+  const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
   if (!pageMetadata?.appbar?.body) {
     return DefaultAppbarItems({})
