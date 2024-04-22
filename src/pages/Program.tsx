@@ -14,7 +14,7 @@ import Layout from 'components/template/Layout';
 import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import Banner from 'components/molecules/Banner';
-import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 type ProgramPropsType = {
   getEventWorkshops: any;
@@ -41,8 +41,8 @@ const Program: FC<ProgramPropsType> = ({
   const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { data: party } = useGetPartyQuery();
-  const { data: pageMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+  const { data: website } = useGetWebsiteQuery();
+  const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
   const banners = pageMetadata?.banners || [];
 

@@ -1,13 +1,13 @@
 import React from "react";
 import { Skeleton, Stack, Typography } from "@mui/material";
-import { useGetPartyQuery } from "redux/features/PartySlice";
+import { useGetWebsiteQuery } from "redux/features/WebsiteSlice";
 
 const Brand = () => {
 
   const {
-    data: party,
+    data: website,
     isSuccess,
-  } = useGetPartyQuery();
+  } = useGetWebsiteQuery();
 
   if (!isSuccess) {
     return (
@@ -20,9 +20,9 @@ const Brand = () => {
 
   return (
     <Stack direction='row' alignItems={'center'} justifyContent={'center'} sx={{ userSelect: 'none' }} spacing={1}>
-      <img alt="academy-logo" src={party.logo.desktop_image} width={50} />
+      <img alt="academy-logo" src={website.logo.desktop_image} width={50} />
       <Typography fontFamily={"Lalezar"} sx={{ color: "#3498DB", fontSize: { xs: 36, md: 40 }, fontWeight: 500 }}>
-        {party.display_name}
+        {website.display_name}
       </Typography>
     </Stack>
   );

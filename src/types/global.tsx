@@ -48,6 +48,13 @@ export type RegistrationStepNameType =
   'payment' |
   'program'
 
+export type WebsiteType = {
+  website_type: 'academy';
+  name: string;
+  display_name: string;
+  logo: LogoType;
+}
+
 export type PartyType = {
   party_type: 'individual' | 'company';
   uuid: string;

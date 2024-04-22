@@ -1,9 +1,7 @@
 import React, { FC, Fragment } from 'react';
-import { useParams } from 'react-router-dom';
 import { Container } from '@mui/material';
 
 import AppBar from 'components/organisms/Appbar';
-import { useGetPartyQuery } from 'redux/features/PartySlice';
 import { AppbarModes } from 'types/global';
 
 type LayoutPropsType = {

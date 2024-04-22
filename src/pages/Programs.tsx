@@ -6,13 +6,13 @@ import { ProgramType } from 'types/models';
 import ProgramSkeletonCard from 'components/organisms/cards/EventSkeletonCard';
 import Banner from 'components/molecules/Banner';
 import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
-import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import NoDataFound from 'components/molecules/NoDataFound';
 
 
 const Programs = ({ }) => {
-  const { data: party } = useGetPartyQuery();
-  const { data: pageMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+  const { data: website } = useGetWebsiteQuery();
+  const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
   const banners = pageMetadata?.banners || [];
 
@@ -20,7 +20,7 @@ const Programs = ({ }) => {
     data: programs = [],
     isLoading,
     isSuccess,
-  } = useGetProgramsQuery({ partyUuid: party?.uuid }, { skip: !Boolean(party) });
+  } = useGetProgramsQuery({ websiteName: website?.name }, { skip: !Boolean(website) });
 
   const activePrograms: ProgramType[] = programs.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
   const inactivePrograms: ProgramType[] = programs.filter((program: ProgramType) => !program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)

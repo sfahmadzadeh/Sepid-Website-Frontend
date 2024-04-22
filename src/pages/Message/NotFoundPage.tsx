@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
 import appendPreviousParams from 'utils/AppendPreviousParams';
-import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
 
-  const { data: party } = useGetPartyQuery();
-  const { data: websiteMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+  const { data: website } = useGetWebsiteQuery();
+  const { data: websiteMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
   return (
     <Fragment>
