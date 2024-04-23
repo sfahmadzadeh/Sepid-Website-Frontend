@@ -32,7 +32,7 @@ import Statistics from './Statistics';
 import IndividualRequests from './IndividualRequests';
 import Info from './Info';
 import TeamRequests from './TeamRequests';
-import { Workshop, ProgramType } from 'types/models';
+import { ProgramType, FSMType } from 'types/models';
 import Mentors from './Mentors';
 import GoToAnswer from './GoToAnswer';
 
@@ -79,7 +79,7 @@ type EventPropsType = {
   getEventTeams: Function,
   getOneEventInfo: Function,
   getOneWorkshopsInfo: Function,
-  fsm: Workshop,
+  fsm: FSMType,
   program: ProgramType,
 }
 
@@ -100,7 +100,7 @@ const FSMManagement: FC<EventPropsType> = ({
     }
   }, [section])
 
-  const tabs: any[] = (fsm && fsm.id == fsmId && fsm.fsm_learning_type == 'Supervised') ?
+  const tabs: any[] = (fsm && fsm.id == parseInt(fsmId) && fsm.fsm_learning_type == 'Supervised') ?
     (fsm.fsm_p_type == 'Team') ?
       [
         ...initialTabs,

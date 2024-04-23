@@ -2,13 +2,12 @@ import {
     State,
     WorkshopEdge,
     Team,
-    Workshop,
     Widget,
     Answer,
     Player,
-    Mentor
-} 
-from '../models'
+    Mentor,
+    FSMType
+} from '../models'
 
 export type InitialStateType = {
     currentState: CurrentState,
@@ -18,13 +17,13 @@ export type InitialStateType = {
     fetchedTeamsObjects: Team[],
     requestedTeams: Team[],
     getWorkshopsLoading: boolean,
-    registrableWorkshops: Workshop[],
-    workshop: Workshop,
+    registrableWorkshops: FSMType[],
+    workshop: FSMType,
     answers: Answer[],
-    allWorkshops: Workshop[],
+    allWorkshops: FSMType[],
     players: Player,
     allWorkshopMentors: Mentor[],
-  };
+};
 
 type CurrentState = {
     widgets: Widget[]

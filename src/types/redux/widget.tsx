@@ -1,16 +1,16 @@
 import {
-  Workshop,
   Team,
   Article,
   Problem,
   Submission,
   Widget,
+  FSMType,
 } from '../models'
 
 export type InitialStateType = {
   hints: object;
   isFetching: boolean,
-  workshops: Workshop[],
+  workshops: FSMType[],
   articles: Article[],
   teams: Team[],
   problems: Problem[],

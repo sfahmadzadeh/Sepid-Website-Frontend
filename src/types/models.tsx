@@ -3,9 +3,6 @@ type EventTypeType = "Team" | "Individual";
 
 export type WebsiteType = any;
 
-// todo: remove:
-export type Workshop = any
-
 export type ProgramType = {
   accessible_after_closure: boolean;
   audience_type: AudienceTypeType;
