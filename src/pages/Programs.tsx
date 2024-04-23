@@ -17,10 +17,13 @@ const Programs = ({ }) => {
   const banners = pageMetadata?.banners || [];
 
   const {
-    data: programs = [],
+    data,
     isLoading,
     isSuccess,
-  } = useGetProgramsQuery({ websiteName: website?.name }, { skip: !Boolean(website) });
+  } = useGetProgramsQuery({ websiteName: website?.name, isPrivate: false }, { skip: !Boolean(website) });
+  const programs = data?.programs || [];
+  const count = data?.count || 0;
+
 
   const activePrograms: ProgramType[] = programs.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
   const inactivePrograms: ProgramType[] = programs.filter((program: ProgramType) => !program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)

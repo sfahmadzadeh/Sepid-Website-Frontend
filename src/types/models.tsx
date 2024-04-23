@@ -1,6 +1,9 @@
 type AudienceTypeType = "All" | "Student" | "Academic";
 type EventTypeType = "Team" | "Individual";
 
+export type WebsiteType = any;
+
+// todo: remove:
 export type Workshop = any
 
 export type ProgramType = {
