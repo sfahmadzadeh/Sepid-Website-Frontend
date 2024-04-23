@@ -48,7 +48,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
   program
 }) => {
   const t = useTranslate();
-  const [eventButtonObj, setEventButtonObj] = useState(program ? <EventButton to={`/program/${program.id}/registration/`} text={t('register')} /> : null);
+  const [eventButtonObj, setEventButtonObj] = useState(program ? <EventButton to={`/program/${program.id}/`} text={t('register')} /> : null);
 
   useEffect(() => {
     if (!program) return;
