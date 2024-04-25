@@ -1,11 +1,13 @@
 import { Avatar, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from '@mui/material';
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { stringToColor } from 'utils/stringToColor';
 import { logoutAction } from 'redux/slices/account';
 import LogoutIcon from '@mui/icons-material/Logout';
+import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 type AvatarComponentPropsType = {
   name: string;
@@ -24,6 +26,8 @@ function AvatarComponent({ name = 'بی‌نام', logout }: AvatarComponentProp
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const { data: website } = useGetWebsiteQuery();
 
   return (
     <Fragment>
@@ -56,6 +60,16 @@ function AvatarComponent({ name = 'بی‌نام', logout }: AvatarComponentProp
             </Typography>
           </Stack>
         </MenuItem>
+        {website?.is_admin &&
+          <MenuItem onClick={() => navigate(`/website/${website.name}/manage/`)}>
+            <Stack direction='row' spacing={1} alignItems={'center'}>
+              <SettingsIcon />
+              <Typography>
+                {'تنظیمات آکادمی'}
+              </Typography>
+            </Stack>
+          </MenuItem>
+        }
         <MenuItem onClick={logout}>
           <Stack direction='row' spacing={1} alignItems={'center'}>
             <LogoutIcon />

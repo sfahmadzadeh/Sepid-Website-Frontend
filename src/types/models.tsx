@@ -1,7 +1,7 @@
 type AudienceTypeType = "All" | "Student" | "Academic";
 type EventTypeType = "Team" | "Individual";
 
-export type Workshop = any
+export type WebsiteType = any;
 
 export type ProgramType = {
   accessible_after_closure: boolean;

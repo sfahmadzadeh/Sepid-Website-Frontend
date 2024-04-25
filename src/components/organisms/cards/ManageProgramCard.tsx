@@ -40,33 +40,14 @@ const EventButton: FC<EventButtonPropsType> = ({
     </Button>)
 }
 
-type ProgramCardPropsType = {
+type ManageProgramCardPropsType = {
   program: ProgramType;
 }
 
-const ProgramCard: FC<ProgramCardPropsType> = ({
+const ManageProgramCard: FC<ManageProgramCardPropsType> = ({
   program
 }) => {
   const t = useTranslate();
-  const [eventButtonObj, setEventButtonObj] = useState(program ? <EventButton to={`/program/${program.id}/`} text={t('register')} /> : null);
-
-  useEffect(() => {
-    if (!program) return;
-    if (program.user_registration_status === 'NotStarted') {
-      setEventButtonObj(<EventButton text={'ثبت‌نام شروع نشده'} disabled />);
-    }
-    if (program.user_registration_status === 'DeadlineMissed') {
-      setEventButtonObj(<EventButton text={'ثبت‌نام تمام شده'} disabled />);
-    }
-    if (['Waiting', 'Rejected', 'Accepted'].includes(program.user_registration_status)) {
-      setEventButtonObj(<EventButton to={`/program/${program.id}/registration/`} text={'مشاهده وضعیت ثبت‌نام'} />);
-    }
-    if (program.is_user_participating) {
-      setEventButtonObj(<EventButton to={`/program/${program.id}/`} text={'ورود'} />);
-    }
-  }, [program]);
-
-  if (!program) return null;
 
   return (
     <Card
@@ -114,45 +95,8 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
                 sx={{ color: '#4d4a70' }}>
                 {program.name}
               </Typography>
-              <Tooltip title='تعداد کسانی که در این برنامه ثبت‌نام کرده‌اند' arrow>
-                <Chip
-                  size='small'
-                  sx={{ userSelect: 'none' }}
-                  icon={<PeopleAltIcon fontSize='small' />}
-                  label={toPersianNumber(program.participants_count)}
-                />
-              </Tooltip>
             </Stack>
-            <Typography variant="body2" color="textSecondary">
-              {program.description}
-            </Typography>
-            <Stack spacing={1}>
-              <Grid container direction={'row'} spacing={1}>
-                <Grid item>
-                  <Chip
-                    color='info'
-                    sx={{ userSelect: 'none' }}
-                    icon={<PeopleAltIcon />}
-                    label={
-                      program.event_type === 'Individual'
-                        ? 'انفرادی'
-                        : `${toPersianNumber(program.team_size)} ${t('person')}`
-                    }
-                  />
-                </Grid>
-                {(!program.merchandise || program.merchandise.price === 0) &&
-                  <Grid item>
-                    <Chip
-                      color='success'
-                      sx={{ userSelect: 'none' }}
-                      icon={<InsertEmoticonIcon />}
-                      label={'رایگان'}
-                    />
-                  </Grid>
-                }
-              </Grid>
-              {eventButtonObj}
-            </Stack>
+            <EventButton to={`/program/${program?.id}/manage/`} text={'ویرایش دوره'} />
           </Stack>
         </Grid>
       </Grid>
@@ -160,4 +104,4 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
   );
 };
 
-export default ProgramCard;
+export default ManageProgramCard;

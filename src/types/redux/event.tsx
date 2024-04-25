@@ -1,5 +1,4 @@
 import {
-  Workshop, 
   ProgramType, 
   Invitation, 
   RegistrationReceipt, 
@@ -9,13 +8,14 @@ import {
   RegistrationFormType,
   Merchandise, 
   UploadedFile,
-  Mentor
+  Mentor,
+  FSMType
 } from '../models'
 
 export type InitialState = {
   isFetching: boolean,
   getWorkshopsLoading: boolean,
-  workshops: Workshop[],
+  workshops: FSMType[],
   workshopsCount: number,
   programs: ProgramType[],
   event: Event,
@@ -28,7 +28,7 @@ export type InitialState = {
   widgets: Widget,
   allEventTeams: Team[],
   teamsRequests: object,
-  myWorkshops: Workshop[],
+  myWorkshops: FSMType[],
   registrationForm: RegistrationFormType,
   merchandise: Merchandise,
   discountedPrice: Number,

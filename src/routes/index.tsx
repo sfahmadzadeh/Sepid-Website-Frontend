@@ -22,6 +22,7 @@ import PrivateRoute from './PrivateRoute';
 import FSMManagement from 'pages/FSMManagement';
 import Correction from 'pages/Correction';
 import EditArticle from 'pages/EditArticle';
+import WebsiteManagement from 'pages/WebsiteManagement';
 
 const Root = () => {
 
@@ -62,6 +63,9 @@ const Root = () => {
           element={<TeamSelection />}
         />
         <Route path="/program/:programId/" element={<Program />} />
+
+        {/* only website admins can visit: */}
+        <Route path="/website/:websiteName/manage/:section?/" element={<WebsiteManagement />} />
 
         {/* only mentors can visit: */}
         <Route path="/program/:programId/manage/:section?/" element={<ProgramManagement />} />
