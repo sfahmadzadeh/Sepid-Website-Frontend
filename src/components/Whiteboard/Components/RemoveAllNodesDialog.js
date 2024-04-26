@@ -3,18 +3,18 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
-} from '@mui/material';
-import React, { useContext } from 'react';
+  DialogContentText
+} from '@mui/material'
+import React, { useContext } from 'react'
 
-import { StatePageContext } from 'pages/FSM';
+import { StatePageContext } from 'pages/FSM'
 
-export default function RemoveAllNodesDialog({
+export default function RemoveAllNodesDialog ({
   open,
   handleClose,
-  removeAllNodes,
+  removeAllNodes
 }) {
-  const { teamId } = useContext(StatePageContext);
+  const { teamId } = useContext(StatePageContext)
 
   return (
     <Dialog disableScrollLock open={open} onClose={handleClose}>
@@ -29,8 +29,8 @@ export default function RemoveAllNodesDialog({
         </Button>
         <Button
           onClick={() => {
-            removeAllNodes({ uuid: teamId });
-            handleClose();
+            removeAllNodes({ uuid: teamId })
+            handleClose()
           }}
           color="primary"
           variant="contained">
@@ -38,5 +38,5 @@ export default function RemoveAllNodesDialog({
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

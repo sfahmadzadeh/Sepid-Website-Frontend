@@ -1,9 +1,9 @@
-export default function timeoutLoop(count, delay, cb) {
-  for (var i = 0; i < count; i++) {
+export default function timeoutLoop (count, delay, cb) {
+  for (let i = 0; i < count; i++) {
     (function (ind) {
       setTimeout(function () {
-        cb(ind);
-      }, delay * ind);
-    })(i);
+        cb(ind)
+      }, delay * ind)
+    })(i)
   }
 }

@@ -1,65 +1,65 @@
-import React, { useCallback, useEffect, useRef, Fragment } from 'react';
-import { Circle, Image, Line, Rect, Transformer } from 'react-konva';
+import React, { useCallback, useEffect, useRef, Fragment } from 'react'
+import { Circle, Image, Line, Rect, Transformer } from 'react-konva'
 
-import KonvaTextNode from './Components/KonvaTextNode';
-import DrawingModes from './DrawingModes';
+import KonvaTextNode from './Components/KonvaTextNode'
+import DrawingModes from './DrawingModes'
 
 const nodeComponents = {
   RECT: Rect,
   CIRCLE: Circle,
   LINE: Line,
   IMAGE: Image,
-  TEXT: KonvaTextNode,
-};
+  TEXT: KonvaTextNode
+}
 
-export default function KonvaNode({
+export default function KonvaNode ({
   isSelected,
   drawingMode,
   type,
   shape,
   onSelect,
   onChange,
-  onTouchMove,
+  onTouchMove
 }) {
-  const nodeEl = useRef();
+  const nodeEl = useRef()
 
   const transformerProps =
     type === 'TEXT'
       ? {
-        enabledAnchors: ['middle-left', 'middle-right'],
-        boundBoxFunc: function (oldBox, newBox) {
-          newBox.width = Math.max(30, newBox.width);
-          return newBox;
-        },
-      }
-      : {};
+          enabledAnchors: ['middle-left', 'middle-right'],
+          boundBoxFunc: function (oldBox, newBox) {
+            newBox.width = Math.max(30, newBox.width)
+            return newBox
+          }
+        }
+      : {}
 
   const setNode = useCallback(
     (node) => {
       if (node) {
         if (drawingMode === DrawingModes.MOVE) {
-          node.draggable(true);
+          node.draggable(true)
         } else {
-          node.draggable(false);
+          node.draggable(false)
         }
       }
-      nodeEl.current = node;
+      nodeEl.current = node
     },
     [drawingMode]
-  );
+  )
 
   useEffect(() => {
     if (isSelected) {
-      transformerEl.current.nodes([nodeEl.current]);
-      transformerEl.current.getLayer().batchDraw();
+      transformerEl.current.nodes([nodeEl.current])
+      transformerEl.current.getLayer().batchDraw()
     } else {
-      transformerEl.current.nodes([]);
-      transformerEl.current.getLayer().batchDraw();
+      transformerEl.current.nodes([])
+      transformerEl.current.getLayer().batchDraw()
     }
-  }, [isSelected]);
+  }, [isSelected])
 
-  const transformerEl = useRef();
-  const Node = nodeComponents[type];
+  const transformerEl = useRef()
+  const Node = nodeComponents[type]
 
   return (
     <Fragment>
@@ -74,7 +74,7 @@ export default function KonvaNode({
           onChange({
             ...shape,
             x: e.target.x(),
-            y: e.target.y(),
+            y: e.target.y()
           })
         }
         onTransformEnd={() =>
@@ -85,18 +85,18 @@ export default function KonvaNode({
             width: nodeEl.current.width(),
             scaleX: nodeEl.current.scaleX(),
             scaleY: nodeEl.current.scaleY(),
-            rotation: nodeEl.current.rotation(),
+            rotation: nodeEl.current.rotation()
           })
         }
         onTextChange={(text) =>
           onChange({
             ...shape,
-            text,
+            text
           })
         }
         transformer={transformerEl.current}
       />
       <Transformer ref={transformerEl} {...transformerProps} />
     </Fragment>
-  );
+  )
 }

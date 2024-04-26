@@ -1,83 +1,83 @@
-import jsonpack from 'jsonpack';
+import jsonpack from 'jsonpack'
 
 const translate = [
   {
     from: '"points"',
-    to: '"p":',
+    to: '"p":'
   },
   {
     from: '"type"',
-    to: '"t"',
+    to: '"t"'
   },
   {
     from: '"CIRCLE"',
-    to: '"C"',
+    to: '"C"'
   },
   {
     from: '"RECT"',
-    to: '"R"',
+    to: '"R"'
   },
   {
     from: '"LINE"',
-    to: '"L"',
+    to: '"L"'
   },
   {
     from: '"TEXT"',
-    to: '"T"',
+    to: '"T"'
   },
   {
     from: '"shadowBlur"',
-    to: '"sb"',
+    to: '"sb"'
   },
   {
     from: '"shape"',
-    to: '"sh"',
+    to: '"sh"'
   },
   {
     from: '"stroke"',
-    to: '"st"',
+    to: '"st"'
   },
   {
     from: '"width"',
-    to: '"w"',
+    to: '"w"'
   },
   {
     from: '"height"',
-    to: '"h"',
-  },
-];
+    to: '"h"'
+  }
+]
 
 const compressNode = (node) => {
   try {
-    let strNode = JSON.stringify(node);
+    let strNode = JSON.stringify(node)
     translate.forEach((t) => {
-      strNode = strNode.replaceAll(`${t.from}`, `${t.to}`);
-    });
-    const jsonNode = JSON.parse(strNode);
-    delete jsonNode['isSelected'];
-    return jsonNode;
+      strNode = strNode.replaceAll(`${t.from}`, `${t.to}`)
+    })
+    const jsonNode = JSON.parse(strNode)
+    delete jsonNode.isSelected
+    return jsonNode
   } catch {
-    return node;
+    return node
   }
-};
+}
 
 const decompressNode = (node) => {
   try {
-    let strNode = JSON.stringify(node);
+    let strNode = JSON.stringify(node)
     translate.forEach((t) => {
-      strNode = strNode.replaceAll(`${t.to}`, `${t.from}`);
-    });
-    return JSON.parse(strNode);
+      strNode = strNode.replaceAll(`${t.to}`, `${t.from}`)
+    })
+    return JSON.parse(strNode)
   } catch {
-    return node;
+    return node
   }
-};
-
-export function compressNodes({ nodes, version }) {
-  return jsonpack.pack({ n: nodes.map(compressNode), v: version });
 }
 
-export function decompressNodes(gzippedString) {
-  const { n, v } = jsonpack.unpack(gzippedString);
-  return { nodes: n ? n.map(decompressNode) : {}, version: v || 0 };
+export function compressNodes ({ nodes, version }) {
+  return jsonpack.pack({ n: nodes.map(compressNode), v: version })
+}
+
+export function decompressNodes (gzippedString) {
+  const { n, v } = jsonpack.unpack(gzippedString)
+  return { nodes: n ? n.map(decompressNode) : {}, version: v || 0 }
 }

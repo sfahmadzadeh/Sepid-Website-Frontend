@@ -1,11 +1,11 @@
-import React, { useCallback, useContext, useRef, useState } from 'react';
-import { Layer, Line, Rect, Stage } from 'react-konva';
+import React, { useCallback, useContext, useRef, useState } from 'react'
+import { Layer, Line, Rect, Stage } from 'react-konva'
 
-import { StatePageContext } from 'pages/FSM';
-import DrawingModes from './DrawingModes';
-import KonvaNode from './KonvaNode';
+import { StatePageContext } from 'pages/FSM'
+import DrawingModes from './DrawingModes'
+import KonvaNode from './KonvaNode'
 
-function Drawing({
+function Drawing ({
   width,
   height,
   drawingMode,
@@ -16,39 +16,39 @@ function Drawing({
   addNewLineNode,
   paintingConfig,
   removeNode,
-  onSetStage,
+  onSetStage
 }) {
-  const stageEl = useRef();
+  const stageEl = useRef()
   const setStage = useCallback(
     (node) => {
       if (node) {
-        onSetStage(node);
+        onSetStage(node)
       }
-      stageEl.current = node;
+      stageEl.current = node
     },
     [onSetStage]
-  );
+  )
 
-  const backgroundEl = useRef();
-  const [isRemoving, setIsRemoving] = useState(false);
-  const [activeLine, setActiveLine] = useState();
+  const backgroundEl = useRef()
+  const [isRemoving, setIsRemoving] = useState(false)
+  const [activeLine, setActiveLine] = useState()
 
   const onTouchStageStart = (e) => {
     if (e.target === backgroundEl.current) {
-      onDeselectNodes();
+      onDeselectNodes()
     }
     if (drawingMode === DrawingModes.DELETE) {
-      setIsRemoving(true);
+      setIsRemoving(true)
     } else {
-      setIsRemoving(false);
+      setIsRemoving(false)
     }
     if (
       drawingMode !== DrawingModes.ERASING &&
       drawingMode !== DrawingModes.PAINTING
     ) {
-      return;
+      return
     }
-    let { x, y } = stageEl.current.getPointerPosition();
+    const { x, y } = stageEl.current.getPointerPosition()
     setActiveLine({
       lastUpdate: Date.now(),
       points: [x, y],
@@ -57,38 +57,38 @@ function Drawing({
         globalCompositeOperation:
           drawingMode === DrawingModes.ERASING
             ? 'destination-out'
-            : 'source-over',
-      },
-    });
-  };
+            : 'source-over'
+      }
+    })
+  }
 
   const updateActiveLine = () => {
-    let { x, y } = stageEl.current.getPointerPosition();
-    const len = activeLine.points.length;
+    const { x, y } = stageEl.current.getPointerPosition()
+    const len = activeLine.points.length
     if (activeLine.points[len - 2] !== x || activeLine.points[len - 1] !== y) {
       setActiveLine({
         ...activeLine,
         lastUpdate: Date.now(),
-        points: [...activeLine.points, x, y],
-      });
+        points: [...activeLine.points, x, y]
+      })
     }
-  };
+  }
 
   const onTouchStageMove = () => {
     if (activeLine && Date.now() - activeLine.lastUpdate > 30) {
-      updateActiveLine();
+      updateActiveLine()
     }
-  };
+  }
 
-  const { teamId } = useContext(StatePageContext);
+  const { teamId } = useContext(StatePageContext)
 
   const onTouchStageEnd = () => {
     if (activeLine) {
-      addNewLineNode({ uuid: teamId, line: activeLine });
+      addNewLineNode({ uuid: teamId, line: activeLine })
     }
-    setIsRemoving(false);
-    setActiveLine(null);
-  };
+    setIsRemoving(false)
+    setActiveLine(null)
+  }
 
   return (
     <div
@@ -98,7 +98,7 @@ function Drawing({
         direction: 'ltr',
         overflowX: 'scroll',
         maxWidth: '100vw',
-        maxHeight: '100vh',
+        maxHeight: '100vh'
       }}>
       <Stage
         width={width}
@@ -128,20 +128,20 @@ function Drawing({
                 updateShapeProps({
                   uuid: teamId,
                   nodeId: node.id,
-                  shape: newAttrs,
+                  shape: newAttrs
                 })
               }
               onSelect={() => {
-                onDeselectNodes();
+                onDeselectNodes()
                 if (drawingMode === DrawingModes.DELETE) {
-                  removeNode({ uuid: teamId, nodeId: node.id });
+                  removeNode({ uuid: teamId, nodeId: node.id })
                 } else {
-                  onSelectNode({ nodeId: node.id });
+                  onSelectNode({ nodeId: node.id })
                 }
               }}
               onTouchMove={() => {
                 if (drawingMode === DrawingModes.DELETE && isRemoving) {
-                  removeNode({ uuid: teamId, nodeId: node.id });
+                  removeNode({ uuid: teamId, nodeId: node.id })
                 }
               }}
             />
@@ -152,7 +152,7 @@ function Drawing({
         </Layer>
       </Stage>
     </div>
-  );
+  )
 }
 
-export default Drawing;
+export default Drawing
