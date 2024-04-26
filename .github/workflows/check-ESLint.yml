@@ -17,5 +17,8 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install Dependencies
+        run: yarn install
+
       - name: Run ESLint
         run: yarn lint
