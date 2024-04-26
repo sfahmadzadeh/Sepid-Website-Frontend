@@ -20,7 +20,7 @@ const initSentry = () => {
     // If the entire session is not sampled, use the below sample rate to sample
     // sessions when an error occurs.
     replaysOnErrorSampleRate: 1.0,
-  });  
+  });
 }
 
 const initGoogleAnalytics = () => {
@@ -44,25 +44,16 @@ const initClarity = () => {
 const initGoftino = (token: string) => {
   if (!token) return;
   (function () {
-    var i = token,
-      a = window,
-      d = document;
+    var t = token, w = window, d = document;
     function g() {
-      var g = d.createElement('script'),
-        s = 'https://www.goftino.com/widget/' + i,
-        l = localStorage.getItem('goftino_' + i);
-      (g.async = !0),
-        (
-          g.src = l ?
-            s + '?o=' + l :
-            s);
-      d
-        .getElementsByTagName('head')[0]
-        .appendChild(g);
+      const g = d.createElement('script');
+      const s = 'https://www.goftino.com/widget/' + t;
+      const l = localStorage.getItem('goftino_' + t);
+      g.async = !0;
+      g.src = l ? s + '?o=' + l : s;
+      d.getElementsByTagName('head')[0].appendChild(g);
     }
-    'complete' === d.readyState ?
-      g() :
-      a.addEventListener('load', g, !1);
+    'complete' === d.readyState ? g() : w.addEventListener('load', g, !1);
   })();
 }
 
