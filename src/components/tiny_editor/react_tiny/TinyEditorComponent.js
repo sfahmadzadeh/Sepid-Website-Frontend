@@ -1,15 +1,15 @@
-import 'tinymce/tinymce';
+import 'tinymce/tinymce'
 import './Tiny.css'
 
-import { Editor } from '@tinymce/tinymce-react';
-import React from 'react';
+import { Editor } from '@tinymce/tinymce-react'
+import React from 'react'
 
-import config from '../config';
+import config from '../config'
 
 const TinyEditor = ({ content, onChange }) => {
   return (
     <Editor init={{ ...config }} value={content} onEditorChange={onChange} />
-  );
-};
+  )
+}
 
-export default TinyEditor;
+export default TinyEditor

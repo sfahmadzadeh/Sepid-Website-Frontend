@@ -2,7 +2,7 @@ const DrawingModes = {
   ERASING: 'ERASING',
   PAINTING: 'PAINTING',
   DELETE: 'DELETE',
-  MOVE: 'MOVE',
-};
+  MOVE: 'MOVE'
+}
 
-export default DrawingModes;
+export default DrawingModes

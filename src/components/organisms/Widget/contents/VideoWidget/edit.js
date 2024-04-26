@@ -7,14 +7,13 @@ import {
   DialogContentText,
   DialogTitle,
   TextField,
-  Stack,
-} from '@mui/material';
-import React, { useState } from 'react';
-import { useTranslate } from 'react-redux-multilingual/lib/context';
-import UploadFile from 'components/molecules/UploadFile';
+  Stack
+} from '@mui/material'
+import React, { useState } from 'react'
+import { useTranslate } from 'react-redux-multilingual/lib/context'
+import UploadFile from 'components/molecules/UploadFile'
 
-
-function VideoEditWidget({
+function VideoEditWidget ({
   onEdit,
 
   paperId,
@@ -22,34 +21,34 @@ function VideoEditWidget({
   link: oldLink,
   handleClose,
   id: widgetId,
-  file: previousFile,
+  file: previousFile
 }) {
-  const t = useTranslate();
-  const [link, setLink] = useState(oldLink);
-  const [file, setFile] = useState(null);
+  const t = useTranslate()
+  const [link, setLink] = useState(oldLink)
+  const [file, setFile] = useState(null)
 
   const handleClick = () => {
     let payload = {
-      paper: paperId,
-    };
+      paper: paperId
+    }
     if (file) {
       payload = {
         ...payload,
-        file,
+        file
       }
     }
     if (link) {
       payload = {
         ...payload,
-        link,
+        link
       }
     }
     onEdit({
       ...payload,
       widgetId,
-      onSuccess: handleClose,
-    });
-  };
+      onSuccess: handleClose
+    })
+  }
 
   return (
     <Dialog disableScrollLock open={open} onClose={handleClose}>
@@ -65,7 +64,7 @@ function VideoEditWidget({
             value={link}
             inputProps={{ className: 'ltr-input' }}
             placeholder="http://example.com/example.mp4"
-            onChange={(e) => setLink(e.target.value)}
+            onChange={(e) => { setLink(e.target.value) }}
           />
         </Stack>
       </DialogContent>
@@ -75,7 +74,7 @@ function VideoEditWidget({
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }
 
-export default VideoEditWidget;
+export default VideoEditWidget

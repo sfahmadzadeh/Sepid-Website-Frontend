@@ -1,4 +1,4 @@
-import { Grid, Hidden, IconButton, SvgIcon } from '@mui/material';
+import { Grid, Hidden, IconButton, SvgIcon } from '@mui/material'
 import {
   Clear,
   Delete as DeleteIcon,
@@ -9,12 +9,12 @@ import {
   Redo as RedoIcon,
   Save as SaveIcon,
   TextFields as TextFieldsIcon,
-  Undo as UndoIcon,
-} from '@mui/icons-material';
-import React, { useContext, useState } from 'react';
-import { connect } from 'react-redux';
+  Undo as UndoIcon
+} from '@mui/icons-material'
+import React, { useContext, useState } from 'react'
+import { connect } from 'react-redux'
 
-import { StatePageContext } from 'pages/FSM';
+import { StatePageContext } from 'pages/FSM'
 import {
   addNewTextNodeAction,
   changeWhiteboardModeAction,
@@ -22,17 +22,15 @@ import {
   redo,
   removeAllWhiteboardNodesAction,
   removeSelectedWhiteboardNodeAction,
-  undo,
-} from 'redux/slices/whiteboard';
-import downloadFromURL from 'utils/downloadFromURL';
-import DrawingModes from './Drawing/DrawingModes';
-import CircleMenu from './Components/CircleMenu';
-import RectangleMenu from './Components/RectangleMenu';
-import RemoveAllNodesDialog from './Components/RemoveAllNodesDialog';
+  undo
+} from 'redux/slices/whiteboard'
+import downloadFromURL from 'utils/downloadFromURL'
+import DrawingModes from './Drawing/DrawingModes'
+import CircleMenu from './Components/CircleMenu'
+import RectangleMenu from './Components/RectangleMenu'
+import RemoveAllNodesDialog from './Components/RemoveAllNodesDialog'
 
-
-
-function WhiteboardNavbar({
+function WhiteboardNavbar ({
   drawingMode,
   addNewTextNode,
   changeMode,
@@ -44,11 +42,11 @@ function WhiteboardNavbar({
   getDataURL,
   handleClose,
   isFullScreen,
-  setIsFullScreen,
+  setIsFullScreen
 }) {
-  const [openRemoveNodes, setOpenRemoveNodes] = useState(false);
+  const [openRemoveNodes, setOpenRemoveNodes] = useState(false)
 
-  const { teamId } = useContext(StatePageContext);
+  const { teamId } = useContext(StatePageContext)
 
   return (
     <Grid
@@ -63,8 +61,8 @@ function WhiteboardNavbar({
         zIndex: 3,
         '& .MuiIconButton-root': {
           position: 'relative',
-          pointerEvents: 'auto',
-        },
+          pointerEvents: 'auto'
+        }
       }}>
       <Grid item>
         <IconButton onClick={handleClose} size="large">
@@ -77,17 +75,17 @@ function WhiteboardNavbar({
         </Hidden>
         <IconButton
           onClick={() => {
-            downloadFromURL(getDataURL(), 'stage.png');
+            downloadFromURL(getDataURL(), 'stage.png')
           }}
           size="large">
           <SaveIcon />
         </IconButton>
-        <IconButton onClick={() => setOpenRemoveNodes(true)} size="large">
+        <IconButton onClick={() => { setOpenRemoveNodes(true) }} size="large">
           <DeleteIcon />
         </IconButton>
         <RemoveAllNodesDialog
           open={openRemoveNodes}
-          handleClose={() => setOpenRemoveNodes(false)}
+          handleClose={() => { setOpenRemoveNodes(false) }}
           removeAllNodes={removeAllNodes}
         />
       </Grid>
@@ -95,8 +93,8 @@ function WhiteboardNavbar({
         <IconButton
           color={drawingMode === DrawingModes.DELETE ? 'primary' : 'default'}
           onClick={() => {
-            changeMode({ mode: DrawingModes.DELETE });
-            removeSelectedNodes({ uuid: teamId });
+            changeMode({ mode: DrawingModes.DELETE })
+            removeSelectedNodes({ uuid: teamId })
           }}
           size="large">
           <SvgIcon>
@@ -113,8 +111,8 @@ function WhiteboardNavbar({
         <IconButton
           color={drawingMode === DrawingModes.PAINTING ? 'primary' : 'default'}
           onClick={() => {
-            deselectNodes();
-            changeMode({ mode: DrawingModes.PAINTING });
+            deselectNodes()
+            changeMode({ mode: DrawingModes.PAINTING })
           }}
           size="large">
           <GestureIcon />
@@ -123,8 +121,8 @@ function WhiteboardNavbar({
         <RectangleMenu />
         <IconButton
           onClick={() => {
-            changeMode({ mode: DrawingModes.MOVE });
-            addNewTextNode({ uuid: teamId });
+            changeMode({ mode: DrawingModes.MOVE })
+            addNewTextNode({ uuid: teamId })
           }}
           size="large">
           <TextFieldsIcon />
@@ -137,14 +135,14 @@ function WhiteboardNavbar({
         </IconButton>
       </Grid>
     </Grid>
-  );
+  )
 }
 
 const mapStateToProps = (state) => ({
   drawingMode: state.whiteboard.present.mode,
   canUndo: state.whiteboard.past.length > 0,
-  canRedo: state.whiteboard.future.length > 0,
-});
+  canRedo: state.whiteboard.future.length > 0
+})
 
 export default connect(mapStateToProps, {
   addNewTextNode: addNewTextNodeAction,
@@ -153,5 +151,5 @@ export default connect(mapStateToProps, {
   deselectNodes: deselectWhiteboardNodesAction,
   removeAllNodes: removeAllWhiteboardNodesAction,
   undo,
-  redo,
-})(WhiteboardNavbar);
+  redo
+})(WhiteboardNavbar)

@@ -1,33 +1,30 @@
-import 'tinymce/icons/default/icons';
-import 'tinymce/plugins/advlist';
-import 'tinymce/plugins/wordcount';
-import 'tinymce/plugins/table';
-import 'tinymce/plugins/autolink';
-import 'tinymce/plugins/lists';
-import 'tinymce/plugins/link';
-import 'tinymce/plugins/image';
-import 'tinymce/plugins/charmap';
-import 'tinymce/plugins/preview';
-import 'tinymce/plugins/anchor';
-import 'tinymce/plugins/searchreplace';
-import 'tinymce/plugins/visualblocks';
-import 'tinymce/plugins/code';
-import 'tinymce/plugins/fullscreen';
-import 'tinymce/plugins/insertdatetime';
-import 'tinymce/plugins/media';
-import 'tinymce/plugins/table';
-import 'tinymce/plugins/print';
-import 'tinymce/plugins/imagetools';
-import 'tinymce/plugins/contextmenu';
-import 'tinymce/plugins/paste';
-import 'tinymce/plugins/code';
-import 'tinymce/plugins/help';
-import 'tinymce/plugins/wordcount';
-import 'tinymce/plugins/directionality';
-import './additional_plugins/latex';
-import 'tinymce/skins/ui/oxide/skin.min.css';
+import 'tinymce/icons/default/icons'
+import 'tinymce/plugins/advlist'
+import 'tinymce/plugins/wordcount'
+import 'tinymce/plugins/table'
+import 'tinymce/plugins/autolink'
+import 'tinymce/plugins/lists'
+import 'tinymce/plugins/link'
+import 'tinymce/plugins/image'
+import 'tinymce/plugins/charmap'
+import 'tinymce/plugins/preview'
+import 'tinymce/plugins/anchor'
+import 'tinymce/plugins/searchreplace'
+import 'tinymce/plugins/visualblocks'
+import 'tinymce/plugins/code'
+import 'tinymce/plugins/fullscreen'
+import 'tinymce/plugins/insertdatetime'
+import 'tinymce/plugins/media'
+import 'tinymce/plugins/print'
+import 'tinymce/plugins/imagetools'
+import 'tinymce/plugins/contextmenu'
+import 'tinymce/plugins/paste'
+import 'tinymce/plugins/help'
+import 'tinymce/plugins/directionality'
+import './additional_plugins/latex'
+import 'tinymce/skins/ui/oxide/skin.min.css'
 
-let config = {
+const config = {
   height: 300,
   width: '100%',
   branding: false,
@@ -74,7 +71,7 @@ let config = {
   plugins: [
     'advlist autolink lists link image imagetools charmap print preview anchor',
     'searchreplace visualblocks code fullscreen latex contextmenu',
-    'insertdatetime media table paste code help wordcount directionality',
+    'insertdatetime media table paste code help wordcount directionality'
   ],
   toolbar:
     'undo redo | styleselect | formatgroup | bullist numlist align paragraphgroup | latex link image emoticons table | charmap hr | ',
@@ -83,24 +80,24 @@ let config = {
       icon: 'format',
       tooltip: 'Formatting',
       items:
-        'bold italic underline strikethrough | forecolor backcolor | superscript subscript | removeformat',
+        'bold italic underline strikethrough | forecolor backcolor | superscript subscript | removeformat'
     },
     paragraphgroup: {
       icon: 'paragraph',
       tooltip: 'حالت پاراگراف',
-      items: 'rtl ltr | indent outdent',
+      items: 'rtl ltr | indent outdent'
     },
     mobile_paragraphgroup: {
       icon: 'paragraph',
       tooltip: 'حالت پاراگراف',
       items:
-        'bullist numlist | alignleft aligncenter alignright | rtl ltr | indent outdent',
+        'bullist numlist | alignleft aligncenter alignright | rtl ltr | indent outdent'
     },
     insertgroup: {
       icon: 'plus',
       tooltip: 'درج',
-      items: 'link image emoticons table charmap hr',
-    },
+      items: 'link image emoticons table charmap hr'
+    }
   },
   contextmenu:
     'link image imagetools table latex spellchecker | bold italic underline strikethrough | forecolor backcolor | removeformat',
@@ -111,19 +108,19 @@ let config = {
         icon: 'format',
         tooltip: 'Formatting',
         items:
-          'bold italic underline strikethrough | forecolor backcolor | superscript subscript | removeformat',
+          'bold italic underline strikethrough | forecolor backcolor | superscript subscript | removeformat'
       },
       mobile_paragraphgroup: {
         icon: 'paragraph',
         tooltip: 'حالت پاراگراف',
         items:
-          'bullist numlist | alignleft aligncenter alignright | rtl ltr | indent outdent',
-      },
+          'bullist numlist | alignleft aligncenter alignright | rtl ltr | indent outdent'
+      }
     },
     menubar: false,
     toolbar:
-      'undo redo | styleselect | formatgroup mobile_paragraphgroup | latex link image emoticons table | charmap hr | ',
-  },
-};
+      'undo redo | styleselect | formatgroup mobile_paragraphgroup | latex link image emoticons table | charmap hr | '
+  }
+}
 
-export default config;
+export default config

@@ -1,10 +1,10 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import moment from 'moment';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import moment from 'moment'
 
-import { requestMentor } from 'parse/mentor';
-import { changeTeamState } from 'parse/team';
-import { Apis } from 'redux/apis';
-import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
+import { requestMentor } from 'parse/mentor'
+import { changeTeamState } from 'parse/team'
+import { Apis } from 'redux/apis'
+import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk'
 import {
   enterWorkshopUrl,
   getScoresUrl,
@@ -12,8 +12,8 @@ import {
   goForwardUrl,
   mentorGetCurrentStateUrl,
   mentorMoveBackwardUrl,
-  mentorMoveForwardUrl,
-} from '../constants/urls';
+  mentorMoveForwardUrl
+} from '../constants/urls'
 
 const changeTeamStateBroadcastAction = createAsyncThunk(
   'currentState/changeTeamStateBroadcast',
@@ -23,9 +23,9 @@ const changeTeamStateBroadcastAction = createAsyncThunk(
       uuid: teamId,
       currentStateName: current_state.name,
       teamEnterTimeToState: moment().format('HH:mm:ss')
-    });
+    })
   }
-);
+)
 
 export const goForwardAction = createAsyncThunkApi(
   'currentState/goForward',
@@ -33,14 +33,14 @@ export const goForwardAction = createAsyncThunkApi(
   goForwardUrl,
   {
     bodyCreator: ({ password }) => ({
-      key: password,
+      key: password
     }),
     defaultNotification: {
-      showHttpError: true,
+      showHttpError: true
     },
-    onSuccessAction: changeTeamStateBroadcastAction,
+    onSuccessAction: changeTeamStateBroadcastAction
   }
-);
+)
 
 export const goBackwardAction = createAsyncThunkApi(
   'currentState/goBackward',
@@ -48,11 +48,11 @@ export const goBackwardAction = createAsyncThunkApi(
   goBackwardUrl,
   {
     defaultNotification: {
-      showHttpError: true,
+      showHttpError: true
     },
-    onSuccessAction: changeTeamStateBroadcastAction,
+    onSuccessAction: changeTeamStateBroadcastAction
   }
-);
+)
 
 export const mentorMoveForwardAction = createAsyncThunkApi(
   'currentState/mentorMoveForward',
@@ -60,14 +60,14 @@ export const mentorMoveForwardAction = createAsyncThunkApi(
   mentorMoveForwardUrl,
   {
     bodyCreator: ({ teamId }) => ({
-      team: teamId,
+      team: teamId
     }),
     defaultNotification: {
-      showHttpError: true,
+      showHttpError: true
     },
-    onSuccessAction: changeTeamStateBroadcastAction,
+    onSuccessAction: changeTeamStateBroadcastAction
   }
-);
+)
 
 export const mentorMoveBackwardAction = createAsyncThunkApi(
   'currentState/mentorMoveBackward',
@@ -75,20 +75,20 @@ export const mentorMoveBackwardAction = createAsyncThunkApi(
   mentorMoveBackwardUrl,
   {
     bodyCreator: ({ teamId }) => ({
-      team: teamId,
+      team: teamId
     }),
     defaultNotification: {
-      showHttpError: true,
+      showHttpError: true
     },
-    onSuccessAction: changeTeamStateBroadcastAction,
+    onSuccessAction: changeTeamStateBroadcastAction
   }
-);
+)
 
 export const mentorGetCurrentStateAction = createAsyncThunkApi(
   'currentState/mentorGetCurrentState',
   Apis.GET,
   mentorGetCurrentStateUrl
-);
+)
 
 export const enterWorkshopAction = createAsyncThunkApi(
   'currentState/enterWorkshop',
@@ -97,67 +97,66 @@ export const enterWorkshopAction = createAsyncThunkApi(
   {
     bodyCreator: ({ programId, fsmId, password }) => ({ event: programId, fsm: fsmId, key: password }),
     defaultNotification: {
-      showHttpError: true,
-    },
+      showHttpError: true
+    }
   }
-);
+)
 
 export const requestMentorAction = createAsyncThunk(
   'requestMentor',
   async ({ playerId, teamId, fsmId }, { rejectWithValue }) => {
     try {
-      await requestMentor({ playerId, teamId, fsmId });
+      await requestMentor({ playerId, teamId, fsmId })
       return {
-        message: 'درخواست شما ارسال شد.',
-      };
+        message: 'درخواست شما ارسال شد.'
+      }
     } catch (err) {
       return rejectWithValue({
-        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!',
-      });
+        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!'
+      })
     }
   }
-);
+)
 
 export const getScoresAction = createAsyncThunkApi(
   'player/getScore',
   Apis.POST,
   getScoresUrl,
   {
-    bodyCreator: ({ fsmId, playerId }) => ({ fsm: fsmId, player: playerId }),
+    bodyCreator: ({ fsmId, playerId }) => ({ fsm: fsmId, player: playerId })
   }
-);
+)
 
 const stateNeedUpdate = (state) => {
-  state.needUpdateState = true;
-  state.isFetching = false;
-};
+  state.needUpdateState = true
+  state.isFetching = false
+}
 
 const getNewState = (state, { payload: { response } }) => {
-  state.needUpdateState = false;
-  state.fsmState = response.current_state;
-  state.isFetching = false;
-};
+  state.needUpdateState = false
+  state.fsmState = response.current_state
+  state.isFetching = false
+}
 
 const getPlayer = (state, { payload: { response } }) => {
-  state.needUpdateState = false;
-  state.fsmId = response.fsm;
-  state.playerId = response.id;
-  state.teamRoom = response.team?.chat_room;
+  state.needUpdateState = false
+  state.fsmId = response.fsm
+  state.playerId = response.id
+  state.teamRoom = response.team?.chat_room
   // todo: here I put playerId as teamId
-  state.teamId = response.team?.id ? response.team?.id : String(response.id);
-  state.fsmState = response.current_state;
-  state.myTeam = response.team;
-  state.isFetching = false;
-};
-
+  state.teamId = response.team?.id ? response.team?.id : String(response.id)
+  state.fsmState = response.current_state
+  state.myTeam = response.team
+  state.isFetching = false
+}
 
 const isFetching = (state) => {
-  state.isFetching = true;
-};
+  state.isFetching = true
+}
 
 const isNotFetching = (state) => {
-  state.isFetching = false;
-};
+  state.isFetching = false
+}
 
 const currentStateSlice = createSlice({
   name: 'currentState',
@@ -166,15 +165,15 @@ const currentStateSlice = createSlice({
     isFetching: false,
     state: {
       widgets: [],
-      hints: [],
+      hints: []
     },
     scores: [],
-    totalScore: 0,
+    totalScore: 0
   },
   reducers: {
     changeOpenChatRoom: (state, actions) => {
-      state.openChatRoom = !state.openChatRoom;
-    },
+      state.openChatRoom = !state.openChatRoom
+    }
   },
   extraReducers: {
     [goForwardAction.pending.toString()]: isFetching,
@@ -202,13 +201,13 @@ const currentStateSlice = createSlice({
     [enterWorkshopAction.rejected.toString()]: isNotFetching,
 
     [getScoresAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.scores = response.score_transactions;
-      state.totalScore = response.scores_sum;
-    },
-  },
-});
+      state.scores = response.score_transactions
+      state.totalScore = response.scores_sum
+    }
+  }
+})
 
 export const { changeOpenChatRoom: changeOpenChatRoomAction } =
-  currentStateSlice.actions;
+  currentStateSlice.actions
 
-export const { reducer: currentStateReducer } = currentStateSlice;
+export const { reducer: currentStateReducer } = currentStateSlice
