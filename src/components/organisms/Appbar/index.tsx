@@ -46,6 +46,7 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 30 });
   const width = useWidth();
+  const appbarItems = useAppbarItems({ mode, fsm: workshop, program: event, mentorId });
 
   useEffect(() => {
     if (!event && programId) {
@@ -61,7 +62,7 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
     mobileLeftItems,
     mobileRightItems,
     mobileMenuListItems,
-  } = useAppbarItems({ mode, fsm: workshop, program: event, mentorId });
+  } = appbarItems;
 
   const rightItems = width === 'xs' ? mobileRightItems : desktopRightItems;
   const leftItems = width === 'xs' ? mobileLeftItems : desktopLeftItems;

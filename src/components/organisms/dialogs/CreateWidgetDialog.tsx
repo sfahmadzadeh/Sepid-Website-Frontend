@@ -34,26 +34,28 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
   showContent = true,
   showProblems = false,
 }) => {
-  const [type, setType] = useState('');
+  const [widgetType, setWidgetType] = useState('');
   const t = useTranslate();
+  const widgeProperties = useWidgetFactory({
+    paperId,
+    widgetType,
+    mode: WidgetModes.Create,
+    collectWidgetDataToolkit,
+  });
 
-  if (type) {
+  if (widgetType) {
     const {
       onEdit,
       EditWidgetDialog,
-    } = useWidgetFactory({
-      paperId,
-      widgetType: type,
-      mode: WidgetModes.Create,
-      collectWidgetDataToolkit,
-    });
+    } = widgeProperties;
+
     return (
       <EditWidgetDialog
         paperId={paperId}
         open={open}
         onEdit={onEdit}
         handleClose={() => {
-          setType('');
+          setWidgetType('');
           handleClose();
         }}
       />
@@ -67,9 +69,9 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
         <FormControl size='small' fullWidth style={{ width: '200px' }} variant="outlined">
           <InputLabel>{t('widgetType')}</InputLabel>
           <Select
-            onChange={(e) => setType(e.target.value)}
+            onChange={(e) => setWidgetType(e.target.value)}
             name='fsmId'
-            value={type}
+            value={widgetType}
             label={t('widgetType')}>
             {Object.keys(WIDGET_TYPE_MAPPER)
               .filter((option, index) => (!option.includes('Problem') && showContent) || (option.includes('Problem') && showProblems))

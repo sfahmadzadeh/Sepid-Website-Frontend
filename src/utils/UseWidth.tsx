@@ -12,6 +12,7 @@ function useWidth() {
   const keys: Breakpoint[] = [...theme.breakpoints.keys].reverse();
   return (
     keys.reduce((output: BreakpointOrNull, key: Breakpoint) => {
+      /* eslint-disable */
       const matches = useMediaQuery(theme.breakpoints.up(key));
       return !output && matches ? key : output;
     }, null) || 'xs'

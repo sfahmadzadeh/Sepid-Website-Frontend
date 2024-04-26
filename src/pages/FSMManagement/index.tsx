@@ -134,7 +134,7 @@ const FSMManagement: FC<EventPropsType> = ({
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab) return null;
-  const TabComponent = useMemo(() => <currentTab.component />, [fsm, section]);
+  const TabComponent = <currentTab.component />;
 
   return (
     <Layout appbarMode='PROGRAM'>
