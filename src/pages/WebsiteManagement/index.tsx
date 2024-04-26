@@ -4,42 +4,56 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import ClassIcon from '@mui/icons-material/Class';
 import InfoIcon from '@mui/icons-material/Info';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import { connect } from 'react-redux';
+import ExtensionIcon from '@mui/icons-material/Extension';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import Layout from 'components/template/Layout';
-import Info from './Info';
-import Programs from './Programs';
-import { WebsiteType, ProgramType } from 'types/models';
-import Statistics from './Statistics';
-import Articles from './Articles';
+import WebsiteInfoTab from './Info';
+import ProgramsTab from './Programs';
+import StatisticsTab from './Statistics';
+import ArticlesTab from './Articles';
+import ThirdPartiesTab from './ThirdParties';
+import AppearanceTab from './Appearance';
 
 const tabs: { name: string, label: string, icon: any, component: any }[] = [
   {
     name: 'info',
     label: 'اطلاعات کلی',
     icon: InfoIcon,
-    component: Info,
+    component: WebsiteInfoTab,
   },
   {
     name: 'programs',
     label: 'دوره‌ها',
     icon: ClassIcon,
-    component: Programs,
+    component: ProgramsTab,
   },
   {
     name: 'articles',
     label: 'مقاله‌ها',
     icon: ClassIcon,
-    component: Articles,
+    component: ArticlesTab,
+  },
+  {
+    name: 'third-parties',
+    label: 'افزونه‌ها',
+    icon: ExtensionIcon,
+    component: ThirdPartiesTab,
+  },
+  {
+    name: 'appearance',
+    label: 'تنظیمات ظاهری',
+    icon: VisibilityIcon,
+    component: AppearanceTab,
   },
   {
     name: 'statistics',
     label: 'آمارها',
     icon: BarChartIcon,
-    component: Statistics,
+    component: StatisticsTab,
   },
 ];
 

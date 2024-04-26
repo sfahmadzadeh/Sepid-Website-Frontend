@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  ButtonGroup,
   Card,
   CardActions,
   CardContent,
@@ -11,11 +12,17 @@ import {
 import React, { FC } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link } from 'react-router-dom';
-
 import { ArticleType } from 'types/redux/article';
 
+type ArticleCardPropsType = {
+  article: Partial<ArticleType>
+  mode: 'view' | 'edit';
+}
 
-const ArticleCard: FC<ArticleType> = ({ id, name = '', description = '', cover_page = '' }) => {
+const ArticleCard: FC<ArticleCardPropsType> = ({
+  article,
+  mode,
+}) => {
   const t = useTranslate();
 
   return (
@@ -24,48 +31,38 @@ const ArticleCard: FC<ArticleType> = ({ id, name = '', description = '', cover_p
       flexDirection: 'column',
       height: '100%',
       justifyContent: 'space-between',
-      // maxWidth: 300,
     }}>
       <Box>
-        <Stack
-          direction="row"
-          sx={{
-            padding: "10px",
-            background: '#eee',
-            height: "40px",
-            display: 'flex',
-            justifyContent: "space-between",
-            alignItems: 'center'
-          }}>
-          {/* <Tooltip title='ویرایش' arrow>
-            <IconButton component={Link} to={`/edit-article/${id}`} >
-              <ModeEditTwoToneIcon />
-            </IconButton>
-          </Tooltip> */}
-        </Stack>
         <CardMedia
           sx={{ height: 200 }}
-          image={cover_page ? cover_page : `${process.env.PUBLIC_URL}/logo.png`}
-          title={name}
+          image={article.cover_page ? article.cover_page : `${process.env.PUBLIC_URL}/logo.png`}
+          title={article.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {name}
+            {article.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {description}
+            {article.description}
           </Typography>
         </CardContent>
       </Box>
       <CardActions>
-        <Button
-          variant="outlined"
-          fullWidth
-          color="primary"
-          component={Link}
-          to={`/article/${id}`}>
-          {'مشاهده'}
-        </Button>
+        <ButtonGroup fullWidth >
+          {mode === 'edit' &&
+            <Button
+              component={Link}
+              to={`/edit-article/${article.id}/`}>
+              {'ویرایش'}
+            </Button>
+          }
+          <Button
+            variant="contained"
+            component={Link}
+            to={`/article/${article.id}/`}>
+            {'مشاهده'}
+          </Button>
+        </ButtonGroup>
       </CardActions>
     </Card>
   );

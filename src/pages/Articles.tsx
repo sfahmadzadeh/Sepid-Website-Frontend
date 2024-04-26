@@ -34,7 +34,7 @@ const Articles: FC<ArticlesPropsType> = ({
         <Grid item container spacing={2} xs={12}>
           {articles?.map((article, index) => (
             <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
-              <ArticleCard {...article} />
+              <ArticleCard article={article} mode='view'/>
             </Grid>
           ))}
           {(isSuccess && articles.length === 0) &&
