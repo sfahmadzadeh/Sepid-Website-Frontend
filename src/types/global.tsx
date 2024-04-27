@@ -2,7 +2,15 @@ import { BannerType } from "./redux/WebSiteAppearance";
 
 export type directionType = 'rtl' | 'ltr';
 
-export type AppbarModes = 'DASHBOARD' | 'FSM' | 'MENTOR_FSM' | 'PROGRAM' | 'GENERAL' | 'ARTICLE' | 'None';
+export type AppbarModes =
+  'DASHBOARD' |
+  'FSM' |
+  'MENTOR_FSM' |
+  'PROGRAM' |
+  'GENERAL' |
+  'ARTICLE' |
+  'WEBSITE' |
+  'None';
 
 export type AppbarItemsType = {
   desktopLeftItems: any[];
@@ -10,6 +18,7 @@ export type AppbarItemsType = {
   mobileLeftItems: any[];
   mobileRightItems: any[];
   mobileMenuListItems: any[];
+  toolbarItems?:any[];
 }
 
 export type WidgetTypes =

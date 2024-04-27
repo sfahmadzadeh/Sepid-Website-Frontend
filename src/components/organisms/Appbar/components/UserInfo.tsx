@@ -2,7 +2,7 @@ import { Stack } from '@mui/material';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import NotificationButton from './NotificationButton';
-import Avatar from './Avatar';
+import Avatar from './UserAvatar';
 import DashboardButton from './DashboardButton';
 
 type UserInfoPropsType = {

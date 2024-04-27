@@ -80,7 +80,7 @@ const WebsiteManagement: FC<WebsiteManagementPropsType> = ({
   const TabComponent = <currentTab.component />;
 
   return (
-    <Layout appbarMode='PROGRAM'>
+    <Layout appbarMode='WEBSITE'>
       <Grid container spacing={2} direction="row" justifyContent="center">
         <Grid
           container

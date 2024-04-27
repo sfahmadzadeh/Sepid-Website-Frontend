@@ -14,7 +14,7 @@ import React, { Fragment, useContext } from 'react';
 import { StatePageContext } from 'pages/FSM';
 import { stringToColor } from 'utils/stringToColor';
 
-const UsersAvatar = () => {
+const TeamAvatar = () => {
   const { myTeam } = useContext(StatePageContext);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -85,4 +85,4 @@ const UsersAvatar = () => {
   );
 };
 
-export default UsersAvatar;
+export default TeamAvatar;

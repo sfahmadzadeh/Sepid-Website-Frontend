@@ -26,8 +26,11 @@ function ProgramLogoButton({ event }) {
           />
         </IconButton>
       </Tooltip>
-      <Button sx={{ display: { xs: 'none', sm: 'inline' }, paddingLeft: 0 }} component={Link} to={`/program/${programId}/`}>
-        <Typography fontSize={20} fontWeight={440} color={'black'} align='center'>
+      <Button component={Link} to={`/program/${programId}/`}>
+        <Typography
+          fontSize={20} color={'black'}
+          maxWidth={{ xs: 100, sm: 200, md: 300 }} whiteSpace={'nowrap'}
+          overflow={'hidden'} textOverflow={'ellipsis'}>
           {event?.name}
         </Typography>
       </Button>

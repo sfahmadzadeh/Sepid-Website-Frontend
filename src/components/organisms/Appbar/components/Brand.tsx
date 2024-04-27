@@ -1,6 +1,7 @@
 import React from "react";
-import { Skeleton, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { useGetWebsiteQuery } from "redux/features/WebsiteSlice";
+import LogoSkeleton from "./LogoSkeleton";
 
 const Brand = () => {
 
@@ -10,12 +11,7 @@ const Brand = () => {
   } = useGetWebsiteQuery();
 
   if (!isSuccess) {
-    return (
-      <Stack direction='row' alignItems={'center'} justifyContent={'center'} sx={{ userSelect: 'none' }} spacing={1}>
-        <Skeleton variant="circular" width={50} height={50} />
-        <Skeleton variant="rounded" width={150} height={50} />
-      </Stack>
-    );
+    return <LogoSkeleton />
   }
 
   return (

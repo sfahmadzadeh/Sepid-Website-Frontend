@@ -1,9 +1,9 @@
 import { Slide, useScrollTrigger } from '@mui/material';
 import React, { Fragment } from 'react';
 
-export default function HideOnScroll({ children, disable = false }) {
+const HideOnScroll = ({ children, disable = false }) => {
   const trigger = useScrollTrigger({});
-  
+
   if (disable) {
     return (
       <Fragment>
@@ -18,3 +18,5 @@ export default function HideOnScroll({ children, disable = false }) {
     </Slide>
   );
 }
+
+export default HideOnScroll;

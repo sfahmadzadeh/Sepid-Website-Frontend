@@ -15,11 +15,11 @@ function MentorButton({ callMentor }) {
 
   return (
     <Button
-      size={width == 'xs' ? 'small' : 'medium'}
+      size={'small'}
       variant="contained"
       color="primary"
       disabled={!isEnable}
-      sx={{ marginLeft: 1, fontSize: width == 'xs' ? 12 : 18 }}
+      sx={{ fontSize: width == 'xs' ? 12 : 14 }}
       onClick={() => {
         callMentor({ playerId, teamId, fsmId: +fsmId })
         setEnable(false);

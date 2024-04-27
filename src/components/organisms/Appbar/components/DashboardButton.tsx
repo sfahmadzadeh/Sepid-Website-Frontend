@@ -24,7 +24,7 @@ const DashboardButton: FC<DashboardButtonPropsType> = ({
 
   const onClickWrapper = (event) => {
     if (to) {
-      if (to.startsWith('http')) {
+      if (to.toString().startsWith('http')) {
         window.location.href = to;
       } else {
         navigate(to);
