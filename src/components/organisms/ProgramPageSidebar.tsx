@@ -1,6 +1,7 @@
 import {
   Button,
   Stack,
+  Typography,
 } from '@mui/material';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -30,6 +31,13 @@ const ProgramPageSidebar = ({
 
   return (
     <Stack justifyContent={'space-between'} spacing={3}>
+      <Stack spacing={1} sx={{ userSelect: 'none' }}>
+        <img src={program.cover_page} alt='program-cover-page' style={{ borderRadius: 8 }} />
+        <Typography textAlign={'center'} variant='h1'>
+          {program.name}
+        </Typography>
+      </Stack>
+      <ProgramContactInfo programContactInfo={program.program_contact_info} />
       <Stack spacing={2} justifyContent={'space-between'}>
         {program.event_type === 'Team' &&
           <Button
@@ -67,15 +75,7 @@ const ProgramPageSidebar = ({
             {'مدیریت دوره'}
           </Button>
         }
-        <ProgramContactInfo programContactInfo={program.program_contact_info} />
       </Stack>
-      <Button
-        variant="outlined"
-        color='warning'
-        fullWidth
-        onClick={() => navigate('/programs/')}>
-        {'بازگشت به دوره‌ها'}
-      </Button>
     </Stack>
   );
 }

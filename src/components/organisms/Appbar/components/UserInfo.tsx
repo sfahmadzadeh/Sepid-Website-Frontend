@@ -12,7 +12,7 @@ type UserInfoPropsType = {
 function UserInfo({ isUserAuthenticated }: UserInfoPropsType) {
 
   return (
-    <Stack direction={'row'} alignItems={'center'} justifyContent={'center'} spacing={1}>
+    <Stack direction={'row'} alignItems={'center'} justifyContent={'center'}>
       {isUserAuthenticated ?
         <Fragment>
           <NotificationButton />
