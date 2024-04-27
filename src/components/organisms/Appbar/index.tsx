@@ -75,24 +75,6 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
   const rightItems = width === 'xs' ? mobileRightItems : desktopRightItems;
   const leftItems = width === 'xs' ? mobileLeftItems : desktopLeftItems;
 
-  const breadcrumbs = [
-    <Link underline="hover" key="1" color="inherit" href="/" onClick={() => { }}>
-      MUI
-    </Link>,
-    <Link
-      underline="hover"
-      key="2"
-      color="inherit"
-      href="/material-ui/getting-started/installation/"
-      onClick={() => { }}
-    >
-      Core
-    </Link>,
-    <Typography key="3" color="text.primary">
-      Breadcrumb
-    </Typography>,
-  ];
-
   return (
     <Fragment>
       <HideOnScroll disable={!hideOnScroll}>
@@ -117,16 +99,14 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
             <Toolbar disableGutters>
               <Stack width={'100%'} direction={'row'} justifyContent={'space-between'} spacing={1}>
                 <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={1}>
-                  {mobileMenuListItems.length > 0 && (
-                    <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
-                      <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={() => setDrawerOpen(!drawerOpen)}>
-                        <MenuIcon fontSize='large' />
-                      </IconButton>
-                    </Box>
+                  {width === 'xs' && mobileMenuListItems.length > 0 && (
+                    <IconButton
+                      edge="start"
+                      color="inherit"
+                      aria-label="open drawer"
+                      onClick={() => setDrawerOpen(!drawerOpen)}>
+                      <MenuIcon fontSize='large' />
+                    </IconButton>
                   )}
                   {rightItems.map((item, index) => (
                     <Fragment key={index}>
