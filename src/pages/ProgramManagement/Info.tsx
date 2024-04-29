@@ -1,5 +1,6 @@
 import {
   Button,
+  Divider,
   Stack,
   Typography,
 } from '@mui/material';
@@ -55,6 +56,7 @@ const InfoTab: FC<InfoTabPropsType> = ({
         </Typography>
         <ProgramInfoForm showCoverImage={true} data={properties} setData={setProperties} />
       </Stack>
+      <Divider />
       <Stack>
         <Typography variant='h2' gutterBottom>
           {'راه‌های ارتباطی'}
@@ -67,6 +69,14 @@ const InfoTab: FC<InfoTabPropsType> = ({
               program_contact_info: programContactInfo,
             }));
           }} />
+      </Stack>
+      <Divider />
+      <Stack>
+        <Typography variant='h2' gutterBottom>
+          {'تنظیمات ظاهری'}
+        </Typography>
+        {/* دکمه‌های سوالات متداول + راهنمای سایت */}
+        {'todo'}
       </Stack>
       <Stack direction={'row'} justifyContent={'end'}>
         <Button

@@ -7,6 +7,7 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import ArticleIcon from '@mui/icons-material/Article';
 import InfoIcon from '@mui/icons-material/Info';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 import React, { useEffect, FC } from 'react';
 import { connect } from 'react-redux';
@@ -18,13 +19,14 @@ import {
 } from 'redux/slices/events';
 
 import Layout from 'components/template/Layout';
-import DiscountCode from './DiscountCode';
+import Financial from './Financial';
 import Info from './Info';
 import RegistrationForm from './RegistrationForm';
 import RegistrationReceipts from './RegistrationReceipts';
 import Teams from './Teams';
 import FSMs from './FSMs';
 import Statistics from './Statistics';
+import Certificates from './Certificates';
 import { ProgramType } from 'types/models';
 import { DashboardTabType } from 'types/global';
 
@@ -51,7 +53,14 @@ const tabs: DashboardTabType[] = [
     name: 'merchandise',
     label: 'اطلاعات مالی',
     icon: AttachMoneyIcon,
-    component: DiscountCode,
+    component: Financial,
+  },
+  {
+    name: 'certificates',
+    label: 'گواهی‌ها',
+    icon: WorkspacePremiumIcon,
+    component: Certificates,
+    isActive: false,
   },
   {
     name: 'teams',
@@ -104,7 +113,6 @@ const ProgramManagement: FC<EventType> = ({
     }
   }, [program]);
 
-
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab || !program) return null;
   const TabComponent = <currentTab.component registrationFormId={program.registration_form} />;
@@ -123,6 +131,7 @@ const ProgramManagement: FC<EventType> = ({
             <ButtonGroup variant="outlined" orientation="vertical" color="primary" fullWidth>
               {tabs.map((tab, index) => (
                 <Button
+                  disabled={tab.isActive === false}
                   key={index}
                   onClick={() => {
                     navigate(`/program/${programId}/manage/${tabs[index].name}/`)

@@ -126,7 +126,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           checked={data.is_active}
           onChange={() => toggleValue('is_active')}
           control={<Switch color="primary" />}
-          label="فعال بودن ورود به کارگاه:"
+          label="فعال بودن ورود به دوره:"
           labelPlacement='start'
         />
       </Grid>
@@ -136,7 +136,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           checked={data.accessible_after_closure}
           onChange={() => toggleValue('accessible_after_closure')}
           control={<Switch color="primary" />}
-          label="قابل مشاهده بودن بعد از اتمام دوره:"
+          label="قابل مشاهده بودن محتواها بعد از اتمام دوره:"
           labelPlacement='start'
         />
       </Grid>
@@ -146,7 +146,17 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           checked={data.is_visible}
           onChange={() => toggleValue('is_visible')}
           control={<Switch color="primary" />}
-          label="قابل مشاهده برای کاربران:"
+          label="قابل مشاهده بودن دوره برای کاربران:"
+          labelPlacement='start'
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <FormControlLabel
+          name='show_scores'
+          checked={data.show_scores}
+          onChange={() => toggleValue('show_scores')}
+          control={<Switch color="primary" />}
+          label="در دوره امتیاز رد و بدل می‌شود؟"
           labelPlacement='start'
         />
       </Grid>
