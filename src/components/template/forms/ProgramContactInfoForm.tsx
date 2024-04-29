@@ -14,7 +14,7 @@ import React, { FC } from 'react';
 import { ProgramContactInfoType } from 'types/models';
 
 type ProgramContactInfoFormPropsType = {
-  data: ProgramContactInfoType;
+  data: ProgramContactInfoType | null;
   setData: any;
 }
 
@@ -34,7 +34,7 @@ const ProgramContactInfoForm: FC<ProgramContactInfoFormPropsType> = ({
     <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
         <TextField
-          value={data.phone_number}
+          value={data?.phone_number}
           fullWidth
           variant='outlined'
           label={'شماره تلفن ارتباطی'}
@@ -53,7 +53,7 @@ const ProgramContactInfoForm: FC<ProgramContactInfoFormPropsType> = ({
               </InputAdornment>
             ),
           }}
-          value={data.eitaa_link}
+          value={data?.eitaa_link}
           fullWidth
           variant='outlined'
           label={'ایتا'}
@@ -72,7 +72,7 @@ const ProgramContactInfoForm: FC<ProgramContactInfoFormPropsType> = ({
               </InputAdornment>
             ),
           }}
-          value={data.bale_link}
+          value={data?.bale_link}
           fullWidth
           variant='outlined'
           label={'بله'}
@@ -91,7 +91,7 @@ const ProgramContactInfoForm: FC<ProgramContactInfoFormPropsType> = ({
               </InputAdornment>
             ),
           }}
-          value={data.instagram_link}
+          value={data?.instagram_link}
           fullWidth
           variant='outlined'
           label={'اینستاگرام'}
@@ -110,7 +110,7 @@ const ProgramContactInfoForm: FC<ProgramContactInfoFormPropsType> = ({
               </InputAdornment>
             ),
           }}
-          value={data.shad_link}
+          value={data?.shad_link}
           fullWidth
           variant='outlined'
           label={'شاد'}
@@ -129,7 +129,7 @@ const ProgramContactInfoForm: FC<ProgramContactInfoFormPropsType> = ({
               </InputAdornment>
             ),
           }}
-          value={data.telegram_link}
+          value={data?.telegram_link}
           fullWidth
           variant='outlined'
           label={'تلگرام'}

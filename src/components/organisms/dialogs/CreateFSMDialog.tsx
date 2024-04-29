@@ -44,7 +44,7 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
     is_visible: true,
   });
 
-  const handeCreateFSM = () => {
+  const handleCreateFSM = () => {
     if (!properties.name) {
       toast.error('لطفاً نام کارگاه را انتخاب کنید.');
       return;
@@ -98,7 +98,7 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
         <Button
           variant="contained"
           color="primary"
-          onClick={handeCreateFSM}>
+          onClick={handleCreateFSM}>
           {t('create')}
         </Button>
       </DialogActions>

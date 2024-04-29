@@ -14,6 +14,7 @@ import { addMentorToWorkshopAction } from 'redux/slices/events';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
 import ManageProgramCard from 'components/organisms/cards/ManageProgramCard';
+import CreateProgramDialog from 'components/organisms/dialogs/CreateProgramDialog';
 
 type ProgramsTabPropsType = {
 }
@@ -83,6 +84,9 @@ const ProgramsTab: FC<ProgramsTabPropsType> = ({
           </Grid>
         </Grid>
       </Grid>
+      <CreateProgramDialog
+        open={openCreateProgramDialog}
+        handleClose={() => setOpenCreateProgramDialog(!openCreateProgramDialog)} />
     </Fragment>
   );
 }

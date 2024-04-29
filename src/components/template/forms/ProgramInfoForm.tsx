@@ -39,8 +39,6 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
     }));
   }
 
-  console.log(data)
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={6}>
@@ -85,7 +83,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={6} display={{ xs: data.event_type !== 'Team' && 'none', md: 'inline' }}>
         {data.event_type === 'Team' &&
           <TextField
             value={data.team_size}
@@ -98,20 +96,6 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
         }
       </Grid>
       <Grid item xs={12} md={6}>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>وضعیت گروه</InputLabel>
-          <Select
-            value={data.audience_type}
-            onChange={putData}
-            name='audience_type'
-            label='وضعیت مخاطبین'>
-            <MenuItem value={'IndiviAllAlldual'}>{'همگانی'}</MenuItem>
-            <MenuItem value={'Student'}>{'دانش‌آموزی'}</MenuItem>
-            <MenuItem value={'Academic'}>{'دانش‌جویی'}</MenuItem>
-          </Select>
-        </FormControl>
-      </Grid>
-      <Grid item xs={12} md={6}>
         <TextField
           value={data.maximum_participant}
           fullWidth
@@ -120,6 +104,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           name='maximum_participant'
           onChange={putData} />
       </Grid>
+      <Grid item md={6} display={{ xs: 'none', md: 'inline' }} />
       <Grid item xs={12} sm={6}>
         <FormControlLabel
           name='is_active'
@@ -156,7 +141,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           checked={data.show_scores}
           onChange={() => toggleValue('show_scores')}
           control={<Switch color="primary" />}
-          label="در دوره امتیاز رد و بدل می‌شود؟"
+          label="نمایش امتیازات به کاربران"
           labelPlacement='start'
         />
       </Grid>

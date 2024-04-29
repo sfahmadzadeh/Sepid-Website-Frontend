@@ -19,9 +19,10 @@ import { Link, useParams } from 'react-router-dom';
 
 import { enterWorkshopAction } from 'redux/slices/currentState';
 import PasswordDialog from 'components/organisms/dialogs/PasswordDialog';
+import { FSMType } from 'types/models';
 
 type FSMCardPropsType = {
-  fsm: any;
+  fsm: Partial<FSMType>;
   enterFSM: any;
   isLoading?: boolean;
 }

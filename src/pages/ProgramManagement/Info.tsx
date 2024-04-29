@@ -35,12 +35,14 @@ const InfoTab: FC<InfoTabPropsType> = ({
   useEffect(() => {
     if (result.isSuccess) {
       toast.success('مشخصات دوره با موفقیت به‌روز شد.')
+    } else if (result.isError) {
+      toast.error('مشکلی در به‌روز‌رسانی مشخصات دوره وجود داشت.')
     }
   }, [result])
 
   if (!properties) return null;
 
-  const handeUpdateFSM = () => {
+  const handleUpdateProgram = () => {
     if (!properties.name) {
       toast.error('لطفاً نام دوره را انتخاب کنید.');
       return;
@@ -82,8 +84,8 @@ const InfoTab: FC<InfoTabPropsType> = ({
         <Button
           variant="contained"
           color="primary"
-          onClick={handeUpdateFSM}>
-          {'به‌روز رسانی'}
+          onClick={handleUpdateProgram}>
+          {'به‌روز‌رسانی'}
         </Button>
       </Stack>
     </Stack>
