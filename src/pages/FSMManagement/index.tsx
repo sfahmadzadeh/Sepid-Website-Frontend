@@ -35,8 +35,9 @@ import TeamRequests from './TeamRequests';
 import { ProgramType, FSMType } from 'types/models';
 import Mentors from './Mentors';
 import GoToAnswer from './GoToAnswer';
+import { DashboardTabType } from 'types/global';
 
-const initialTabs = [
+const initialTabs: DashboardTabType[] = [
   {
     name: 'info',
     label: 'اطلاعات کلی',
@@ -100,7 +101,7 @@ const FSMManagement: FC<EventPropsType> = ({
     }
   }, [section])
 
-  const tabs: any[] = (fsm && fsm.id == parseInt(fsmId) && fsm.fsm_learning_type == 'Supervised') ?
+  const tabs: DashboardTabType[] = (fsm && fsm.id == parseInt(fsmId) && fsm.fsm_learning_type == 'Supervised') ?
     (fsm.fsm_p_type == 'Team') ?
       [
         ...initialTabs,

@@ -12,8 +12,29 @@ type GetProgramsOutputType = {
   count: number;
 }
 
+type UpdateProgramInputType = {
+  programId: string;
+};
+
+type UpdateProgramOutputType = {
+
+}
+
+
 export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
+
+    updateProgram: builder.mutation<UpdateProgramOutputType, UpdateProgramInputType>({
+      query: ({ programId, ...body }) => ({
+        url: `/fsm/event/${programId}/`,
+        method: 'PATCH',
+        body,
+      }),
+      transformResponse: (response: any): UpdateProgramOutputType => {
+        return response;
+      },
+    }),
+
     getPrograms: builder.query<GetProgramsOutputType, GetProgramsInputType>({
       providesTags: ['programs'],
       query: ({ websiteName, pageNumber = 1, isPrivate }) => `fsm/event/?website=${websiteName}&page=${pageNumber}${isPrivate != null ? `&is_private=${isPrivate}` : ''}`,
@@ -27,4 +48,4 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
   })
 });
 
-export const { useGetProgramsQuery } = ProgramSlice;
+export const { useGetProgramsQuery, useUpdateProgramMutation } = ProgramSlice;

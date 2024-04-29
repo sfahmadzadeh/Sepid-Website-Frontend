@@ -2,9 +2,9 @@ import { Box, Button, ButtonGroup, Grid, Paper } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import GroupIcon from '@mui/icons-material/Group';
 import ClassIcon from '@mui/icons-material/Class';
-import DiscountIcon from '@mui/icons-material/Discount';
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import ArticleIcon from '@mui/icons-material/Article';
 import InfoIcon from '@mui/icons-material/Info';
 import BarChartIcon from '@mui/icons-material/BarChart';
 
@@ -26,8 +26,9 @@ import Teams from './Teams';
 import FSMs from './FSMs';
 import Statistics from './Statistics';
 import { ProgramType } from 'types/models';
+import { DashboardTabType } from 'types/global';
 
-const tabs: { name: string, label: string, icon: any, component: any }[] = [
+const tabs: DashboardTabType[] = [
   {
     name: 'info',
     label: 'اطلاعات کلی',
@@ -37,19 +38,19 @@ const tabs: { name: string, label: string, icon: any, component: any }[] = [
   {
     name: 'registration-form',
     label: 'فرم ثبت‌نام',
-    icon: HistoryEduIcon,
+    icon: ArticleIcon,
     component: RegistrationForm,
   },
   {
     name: 'registration-receipts',
     label: 'رسیدهای ثبت‌نام',
-    icon: ConfirmationNumberIcon,
+    icon: ReceiptLongIcon,
     component: RegistrationReceipts,
   },
   {
-    name: 'discount-codes',
-    label: 'کد تخفیف',
-    icon: DiscountIcon,
+    name: 'merchandise',
+    label: 'اطلاعات مالی',
+    icon: AttachMoneyIcon,
     component: DiscountCode,
   },
   {

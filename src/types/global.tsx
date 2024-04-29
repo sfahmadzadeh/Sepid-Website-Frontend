@@ -1,5 +1,13 @@
 import { BannerType } from "./redux/WebSiteAppearance";
 
+export type DashboardTabType = {
+  name: string;
+  label: string;
+  icon: any;
+  component: any;
+  is_visible?: boolean;
+}
+
 export type directionType = 'rtl' | 'ltr';
 
 export type AppbarModes =
@@ -18,7 +26,7 @@ export type AppbarItemsType = {
   mobileLeftItems: any[];
   mobileRightItems: any[];
   mobileMenuListItems: any[];
-  toolbarItems?:any[];
+  toolbarItems?: any[];
 }
 
 export type WidgetTypes =
