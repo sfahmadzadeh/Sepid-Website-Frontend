@@ -7,26 +7,23 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import React, { FC, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router';
 
-import { createWorkshopAction } from 'redux/slices/events';
 import FSMCard from '../cards/FSMCard';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 import { toast } from 'react-toastify';
 import FSMInfoForm from 'components/template/forms/FSMInfoForm';
 import { FSMType } from 'types/models';
+import { useCreateFSMMutation } from 'redux/features/FSMSlice';
 
 type CreateFSMDialog = {
-  createFSM: any;
   open: boolean;
   handleClose: any;
 }
 
 const CreateFSMDialog: FC<CreateFSMDialog> = ({
-  createFSM,
   open,
   handleClose,
 }) => {
@@ -43,6 +40,7 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
     is_active: true,
     is_visible: true,
   });
+  const [createFSM, result] = useCreateFSMMutation();
 
   const handleCreateFSM = () => {
     if (!properties.name) {
@@ -59,6 +57,15 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
     }
     createFSM({ ...removeBlankAttributes(properties), onSuccess: handleClose });
   }
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      toast.success('کارگاه با موفقیت ساخته شد.');
+      handleClose(false);
+    } else if (result.isError) {
+      toast.error('مشکلی در ساخت کارگاه وجود داشت.')
+    }
+  }, [result])
 
   return (
     <Dialog disableScrollLock open={open} maxWidth="md">
@@ -106,6 +113,4 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
   );
 }
 
-export default connect(null, {
-  createFSM: createWorkshopAction
-})(CreateFSMDialog);
+export default CreateFSMDialog;

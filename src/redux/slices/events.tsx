@@ -67,12 +67,6 @@ const initialState: InitialState = {
   teamCurrentState: null,
 };
 
-export const getEventWorkshopsAction = createAsyncThunkApi(
-  'events/getEventWorkshopsAction',
-  Apis.GET,
-  getWorkshopsUrl
-);
-
 export const getProgramsAction = createAsyncThunkApi(
   'events/getProgramsAction',
   Apis.GET,
@@ -501,18 +495,6 @@ const eventSlice = createSlice({
     },
   },
   extraReducers: {
-    [getEventWorkshopsAction.pending.toString()]: (state) => {
-      state.getWorkshopsLoading = true;
-    },
-    [getEventWorkshopsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.getWorkshopsLoading = false;
-      state.workshops = response.results;
-      state.workshopsCount = response.count;
-    },
-    [getEventWorkshopsAction.rejected.toString()]: (state) => {
-      state.getWorkshopsLoading = false;
-    },
-
     [getProgramsAction.pending.toString()]: isFetching,
     [getProgramsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.programs = response;

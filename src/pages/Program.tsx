@@ -7,7 +7,6 @@ import { Helmet } from "react-helmet";
 
 import FSMsGrid from 'components/organisms/FSMsGrid';
 import {
-  getEventWorkshopsAction,
   getOneEventInfoAction,
 } from 'redux/slices/events';
 import Layout from 'components/template/Layout';
@@ -15,6 +14,7 @@ import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import Banner from 'components/molecules/Banner';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
+import { useGetFSMsQuery } from 'redux/features/FSMSlice';
 
 type ProgramPropsType = {
   getEventWorkshops: any;
@@ -29,17 +29,17 @@ type ProgramPropsType = {
 }
 
 const Program: FC<ProgramPropsType> = ({
-  getEventWorkshops,
   getOneEventInfo,
 
   program,
   isLoading,
-  fsms,
-  fsmsCount,
 }) => {
   const { programId } = useParams();
   const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(1);
+  const {
+    data: fsmsData,
+  } = useGetFSMsQuery({ programId, pageNumber })
 
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
@@ -56,14 +56,10 @@ const Program: FC<ProgramPropsType> = ({
     }
   }, [program])
 
-  useEffect(() => {
-    getEventWorkshops({ programId, pageNumber });
-  }, [pageNumber]);
-
   // todo: handle event not found
   // todo: handle in a better way  
   if (program?.is_user_participating == undefined) {
-    return null;
+    return;
   }
 
   return (
@@ -85,16 +81,16 @@ const Program: FC<ProgramPropsType> = ({
             </Typography>
             <Stack>
               <FSMsGrid
-                fsms={fsms}
+                fsms={fsmsData?.fsms}
                 isLoading={isLoading}
               />
             </Stack>
-            {(!isLoading && fsms.length > 0) &&
+            {(!isLoading && fsmsData?.fsms.length > 0) &&
               <Pagination
                 variant="outlined"
                 color="primary"
                 shape='rounded'
-                count={Math.ceil(fsmsCount / ITEMS_PER_PAGE_NUMBER)}
+                count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
                 page={pageNumber}
                 onChange={(e, value) => setPageNumber(value)}
               />
@@ -114,6 +110,5 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 export default connect(mapStateToProps, {
-  getEventWorkshops: getEventWorkshopsAction,
   getOneEventInfo: getOneEventInfoAction,
 })(Program);

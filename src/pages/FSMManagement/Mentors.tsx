@@ -18,9 +18,6 @@ import React, { useEffect, useState, FC, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
-import {
-  getEventWorkshopsAction,
-} from 'redux/slices/events';
 import { addMentorToWorkshopAction } from 'redux/slices/events';
 import { getAllWorkshopMentorsAction, removeMentorFromWorkshopAction } from 'redux/slices/workshop';
 import { Mentor } from 'types/models';
@@ -28,7 +25,6 @@ import { toEnglishNumber } from 'utils/translateNumber';
 
 type MentorsPropsType = {
   addMentorToWorkshop: Function,
-  getEventWorkshops: Function,
   getAllWorkshopMentors: Function,
   removeMentorFromWorkshop: Function,
   fsmId: number,
@@ -37,7 +33,6 @@ type MentorsPropsType = {
 
 const Mentors: FC<MentorsPropsType> = ({
   addMentorToWorkshop,
-  getEventWorkshops,
   getAllWorkshopMentors,
   removeMentorFromWorkshop,
   fsmId,
@@ -49,16 +44,11 @@ const Mentors: FC<MentorsPropsType> = ({
     username: '',
     fsmId: fsmId,
   });
-
   useEffect(() => {
     if (fsmId) {
       getAllWorkshopMentors({ fsmId })
     }
   }, [fsmId])
-
-  useEffect(() => {
-    getEventWorkshops({ programId, pageNumber });
-  }, [pageNumber]);
 
   const putData = (e) => {
     setProperties({
@@ -179,7 +169,6 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   addMentorToWorkshop: addMentorToWorkshopAction,
-  getEventWorkshops: getEventWorkshopsAction,
   getAllWorkshopMentors: getAllWorkshopMentorsAction,
   removeMentorFromWorkshop: removeMentorFromWorkshopAction,
 })(Mentors);

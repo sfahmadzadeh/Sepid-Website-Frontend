@@ -9,28 +9,23 @@ import { useParams } from 'react-router-dom';
 import MentorFSMCard from 'components/organisms/cards/MentorFSMCard';
 import CreateFSMDialog from 'components/organisms/dialogs/CreateFSMDialog';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import {
-  getEventWorkshopsAction,
-} from 'redux/slices/events';
 import { addMentorToWorkshopAction } from 'redux/slices/events';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
-import { FSMType } from 'types/models';
+import { useGetFSMsQuery } from 'redux/features/FSMSlice';
 
 type ProgramManagementFsmTabPropsType = {
   getEventWorkshops: any;
-  fsmsCount: number;
-  allProgramFsms: FSMType[];
 }
 
 const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
   getEventWorkshops,
-  fsmsCount,
-  allProgramFsms,
 }) => {
   const { programId } = useParams();
   const [openCreateFSMDialog, setOpenCreateFSMDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-
+  const {
+    data: fsmsData
+  } = useGetFSMsQuery({ programId, pageNumber });
   useEffect(() => {
     getEventWorkshops({ programId, pageNumber });
   }, [pageNumber]);
@@ -68,9 +63,9 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
               marginRight: "0px",
             },
           })}>
-          {allProgramFsms?.map((workshop) => (
-            <Grid container item xs={12} sm={6} md={4} key={workshop.id} alignItems='center' justifyContent='center'>
-              <MentorFSMCard {...workshop} />
+          {fsmsData?.fsms?.map((fsm) => (
+            <Grid container item xs={12} sm={6} md={4} key={fsm.id} alignItems='center' justifyContent='center'>
+              <MentorFSMCard {...fsm} />
             </Grid>
           ))}
         </Grid>
@@ -81,7 +76,7 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
               variant="outlined"
               color="primary"
               shape='rounded'
-              count={Math.ceil(fsmsCount / ITEMS_PER_PAGE_NUMBER)}
+              count={Math.ceil(fsmsData.count / ITEMS_PER_PAGE_NUMBER)}
               page={pageNumber}
               onChange={(e, value) => setPageNumber(value)}
             />
@@ -95,12 +90,7 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
     </Fragment>
   );
 }
-const mapStateToProps = (state) => ({
-  fsmsCount: state.events.workshopsCount,
-  allProgramFsms: state.events.workshops,
-});
 
-export default connect(mapStateToProps, {
+export default connect(null, {
   addMentorToWorkshop: addMentorToWorkshopAction,
-  getEventWorkshops: getEventWorkshopsAction,
 })(ProgramManagementFsmTab);

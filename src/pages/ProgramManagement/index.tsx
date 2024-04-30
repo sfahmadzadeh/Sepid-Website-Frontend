@@ -25,7 +25,7 @@ import RegistrationForm from './RegistrationForm';
 import RegistrationReceipts from './RegistrationReceipts';
 import Teams from './Teams';
 import FSMs from './FSMs';
-import Statistics from './Statistics';
+import StatisticsTab from './Statistics';
 import Certificates from './Certificates';
 import { ProgramType } from 'types/models';
 import { DashboardTabType } from 'types/global';
@@ -78,7 +78,7 @@ const tabs: DashboardTabType[] = [
     name: 'statistics',
     label: 'آمارها',
     icon: BarChartIcon,
-    component: Statistics,
+    component: StatisticsTab,
   },
 ];
 

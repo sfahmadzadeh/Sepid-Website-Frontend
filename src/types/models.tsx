@@ -66,6 +66,7 @@ type FSMLearningType = 'Supervised' | 'Unsupervised';
 type FSMPType = 'Individual' | 'Team' | 'Hybrid';
 
 export type FSMType = {
+  players_count: number;
   is_mentor: boolean;
   id: number;
   name: string;

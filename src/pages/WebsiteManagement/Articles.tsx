@@ -7,9 +7,6 @@ import React, { useState, Fragment, FC } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import {
-  getEventWorkshopsAction,
-} from 'redux/slices/events';
 import { addMentorToWorkshopAction } from 'redux/slices/events';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetArticlesQuery } from 'redux/features/ArticleSlice';

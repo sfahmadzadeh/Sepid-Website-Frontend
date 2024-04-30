@@ -7,9 +7,6 @@ import React, { useState, Fragment, FC } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import {
-  getEventWorkshopsAction,
-} from 'redux/slices/events';
 import { addMentorToWorkshopAction } from 'redux/slices/events';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
@@ -97,5 +94,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   addMentorToWorkshop: addMentorToWorkshopAction,
-  getEventWorkshops: getEventWorkshopsAction,
 })(ProgramsTab);
