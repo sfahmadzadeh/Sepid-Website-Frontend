@@ -9,19 +9,17 @@ import {
 import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginAction } from 'redux/slices/account';
 import appendPreviousParams from 'utils/AppendPreviousParams';
 import GoogleLogin from 'components/molecules/GoogleLogin';
+import { useLoginMutation } from 'redux/features/UserSlice';
 
 type LoginPagePropsType = {
   isFetching: boolean;
-  login: any;
   accessToken: string;
 };
 
 const LoginPage: FC<LoginPagePropsType> = ({
   isFetching,
-  login,
   accessToken,
 }) => {
   const navigate = useNavigate();
@@ -31,6 +29,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
   });
   const urlParams = new URLSearchParams(window.location.search);
   const programId = urlParams.get('private_program_id');
+  const [login, result] = useLoginMutation();
 
   useEffect(() => {
     if (accessToken) {
@@ -139,5 +138,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  login: loginAction,
 })(LoginPage);

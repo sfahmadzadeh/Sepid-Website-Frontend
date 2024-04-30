@@ -1,5 +1,4 @@
 // account
-export const loginUrl = 'auth/accounts/login/';
 export const logoutUrl = 'auth/accounts/logout/';
 export const refreshTokenUrl = 'auth/accounts/refresh/';
 export const changePasswordUrl = 'auth/accounts/change_pass/';
