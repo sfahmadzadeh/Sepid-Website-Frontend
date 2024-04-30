@@ -31,7 +31,6 @@ type FSMPagePropsType = {
   myTeam: any;
   getOneWorkshop: any;
   enterWorkshop: any;
-  getOneEventInfo: any;
   mentorGetCurrentState: any;
   // todo:
   teamRoom: any;
@@ -50,7 +49,6 @@ const FSM: FC<FSMPagePropsType> = ({
   myTeam,
   getOneWorkshop,
   enterWorkshop,
-  getOneEventInfo,
   mentorGetCurrentState,
   // todo:
   teamRoom,
@@ -102,7 +100,6 @@ const FSM: FC<FSMPagePropsType> = ({
 
   useEffect(() => {
     getOneWorkshop({ fsmId });
-    getOneEventInfo({ programId });
   }, [])
 
   useEffect(() => {

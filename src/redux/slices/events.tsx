@@ -10,7 +10,6 @@ import {
   getCertificateUrl,
   getEventRegistrationInfoUrl,
   getMyInvitationsUrl,
-  getOneEventInfoUrl,
   getOneRegistrationFormUrl,
   getTeamInvitationsUrl,
   getTeamUrl,
