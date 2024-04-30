@@ -15,7 +15,6 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   getEventTeamsAction,
-  getOneEventInfoAction,
 } from 'redux/slices/events';
 
 import Layout from 'components/template/Layout';
@@ -27,8 +26,8 @@ import Teams from './Teams';
 import FSMs from './FSMs';
 import StatisticsTab from './Statistics';
 import Certificates from './Certificates';
-import { ProgramType } from 'types/models';
 import { DashboardTabType } from 'types/global';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
 const tabs: DashboardTabType[] = [
   {
@@ -82,19 +81,16 @@ const tabs: DashboardTabType[] = [
   },
 ];
 
-type EventType = {
-  getOneEventInfo: Function,
+type ProgramManagementPropsType = {
   getEventTeams: Function,
-  program: ProgramType;
 }
 
-const ProgramManagement: FC<EventType> = ({
-  getOneEventInfo,
+const ProgramManagement: FC<ProgramManagementPropsType> = ({
   getEventTeams,
-  program,
 }) => {
   const t = useTranslate();
   const { programId, section } = useParams();
+  const { data: program } = useGetProgramQuery({ programId });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -102,10 +98,6 @@ const ProgramManagement: FC<EventType> = ({
       navigate(`/program/${programId}/manage/info/`);
     }
   }, [section])
-
-  useEffect(() => {
-    getOneEventInfo({ programId });
-  }, []);
 
   useEffect(() => {
     if (program?.registration_form) {
@@ -167,11 +159,6 @@ const ProgramManagement: FC<EventType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  program: state.events.event,
-});
-
-export default connect(mapStateToProps, {
-  getOneEventInfo: getOneEventInfoAction,
+export default connect(null, {
   getEventTeams: getEventTeamsAction,
 })(ProgramManagement);

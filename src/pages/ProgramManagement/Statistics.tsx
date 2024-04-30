@@ -5,27 +5,25 @@ import {
 } from '@mui/material';
 import { Pagination } from '@mui/material';
 import React, { FC, useState } from 'react';
-import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MentorStaticsFSMCard from 'components/organisms/cards/MentorStaticsFSMCard';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import { toPersianNumber } from 'utils/translateNumber';
 import MetabaseDashboard from 'components/template/MetabaseDashboard';
 import { useGetFSMsQuery } from 'redux/features/FSMSlice';
-import { ProgramType } from 'types/models';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
 type StatisticsTabPropsType = {
-  program: ProgramType;
+
 }
 
 const StatisticsTab: FC<StatisticsTabPropsType> = ({
-  program,
+
 }) => {
   const { programId } = useParams();
   const [pageNumber, setPageNumber] = useState(1);
-  const {
-    data: fsmsData,
-  } = useGetFSMsQuery({ programId, pageNumber })
+  const { data: program } = useGetProgramQuery({ programId });
+  const { data: fsmsData } = useGetFSMsQuery({ programId, pageNumber })
 
   const getTotalParticipantsCountOfAllProgramFSMs = (allEventWorkshops) => {
     let totalParticipantsCount = 0;
@@ -84,10 +82,4 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
   );
 }
 
-const mapStateToProps = (state) => ({
-  program: state.events.event,
-});
-
-export default connect(mapStateToProps)(StatisticsTab);
-
-
+export default StatisticsTab;

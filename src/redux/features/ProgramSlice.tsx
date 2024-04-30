@@ -12,6 +12,12 @@ type GetProgramsOutputType = {
   count: number;
 }
 
+type GetProgramInputType = {
+  programId: string;
+}
+
+type GetProgramOutputType = ProgramType;
+
 type UpdateProgramInputType = {
   programId: string;
   body: any;
@@ -71,11 +77,20 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
           count: respons.count,
         };
       },
+    }),
+
+    getProgram: builder.query<GetProgramOutputType, GetProgramInputType>({
+      providesTags: ['program'],
+      query: ({ programId }) => `fsm/event/${programId}/`,
+      transformResponse: (respons: any): GetProgramOutputType => {
+        return respons;
+      },
     })
   })
 });
 
 export const {
+  useGetProgramQuery,
   useGetProgramsQuery,
   useUpdateProgramMutation,
   useCreateProgramMutation,

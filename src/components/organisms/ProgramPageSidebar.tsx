@@ -3,21 +3,27 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import downloadFile from 'utils/downloadFile';
 import {
   getCertificateAction,
 } from 'redux/slices/events';
 import ProgramPageDashboardButton from 'components/molecules/ProgramPageDashboardButton';
 import ProgramContactInfo from 'components/molecules/ProgramContactInfo';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
-const ProgramPageSidebar = ({
+type ProgramPageSidebarPropsType = {
+  getCertificate: any;
+}
+
+const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
   getCertificate,
-  program,
 }) => {
+  const { programId } = useParams();
   const navigate = useNavigate();
+  const { data: program } = useGetProgramQuery({ programId });
 
   if (!program) return null;
 
@@ -80,10 +86,6 @@ const ProgramPageSidebar = ({
   );
 }
 
-const mapStateToProps = (state) => ({
-  program: state.events.event,
-});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   getCertificate: getCertificateAction,
 })(ProgramPageSidebar);

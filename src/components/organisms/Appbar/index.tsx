@@ -1,65 +1,51 @@
 import {
   AppBar,
-  Box,
   Collapse,
   Container,
   Drawer,
   IconButton,
-  Link,
   List,
   ListItem,
   Stack,
   Toolbar,
   Tooltip,
-  Typography,
   useScrollTrigger,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
-import React, { FC, Fragment, useEffect, useState } from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import { connect } from 'react-redux'
 import HideOnScroll from './components/HideOnScroll';
 import useWidth from 'utils/UseWidth';
 import { useParams } from 'react-router-dom';
-import { getOneEventInfoAction } from 'redux/slices/events';
 import useAppbarItems from './useAppbarModes';
 import { AppbarModes } from 'types/global';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
 type AppbarPropsType = {
-  isMentor: boolean;
-  workshop: any;
-  event: any;
+  fsm: any;
   mode: AppbarModes;
   showBackOnScroll?: boolean;
   hideOnScroll?: boolean;
   position: "fixed" | "absolute" | "sticky" | "static" | "relative";
   mentorId: string;
-  getOneEventInfo: any;
 }
 
 const ResponsiveAppBar: FC<AppbarPropsType> = ({
-  isMentor,
-  workshop,
-  event,
+  fsm,
   mode,
   showBackOnScroll = false,
   hideOnScroll = false,
   position = 'fixed',
   mentorId,
-  getOneEventInfo,
 }) => {
   const { programId } = useParams();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [openToolbar, setOpenToolbar] = useState(true);
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 30 });
   const width = useWidth();
-  const appbarItems = useAppbarItems({ mode, fsm: workshop, program: event, mentorId });
-
-  useEffect(() => {
-    if (!event && programId) {
-      getOneEventInfo({ programId });
-    }
-  }, [event, programId]);
+  const { data: program } = useGetProgramQuery({ programId }, { skip: !Boolean(programId) });
+  const appbarItems = useAppbarItems({ mode, fsm, program, mentorId });
 
   if (mode === 'None') return null;
 
@@ -169,12 +155,8 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  isMentor: state.account.userInfo?.isMentor,
-  event: state.events.event,
-  workshop: state.workshop.workshop,
+  fsm: state.workshop.workshop,
   mentorId: state.account.userInfo?.id,
 })
 
-export default connect(mapStateToProps, {
-  getOneEventInfo: getOneEventInfoAction,
-})(ResponsiveAppBar);
+export default connect(mapStateToProps)(ResponsiveAppBar);

@@ -29,7 +29,7 @@ const _manageContentServiceBaseQuery = async (args, api, extraOptions) => {
 
 export const ManageContentServiceApi = createApi({
   reducerPath: 'manage-content-service',
-  tagTypes: ['programs', 'fsms'],
+  tagTypes: ['program', 'programs', 'fsm', 'fsms'],
   baseQuery: _manageContentServiceBaseQuery,
   endpoints: build => ({
   })

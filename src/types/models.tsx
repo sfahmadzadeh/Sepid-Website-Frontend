@@ -13,6 +13,9 @@ export type ProgramContactInfoType = {
 }
 
 export type ProgramType = {
+  site_help_paper_id: number;
+  FAQs_paper_id: number;
+  is_manager: boolean;
   show_scores: boolean;
   program_contact_info: ProgramContactInfoType;
   is_visible: boolean;

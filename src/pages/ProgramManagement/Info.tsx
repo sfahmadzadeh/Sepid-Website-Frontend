@@ -7,24 +7,24 @@ import {
 import ProgramContactInfoForm from 'components/template/forms/ProgramContactInfoForm';
 import ProgramInfoForm from 'components/template/forms/ProgramInfoForm';
 import React, { FC, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useUpdateProgramMutation } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery, useUpdateProgramMutation } from 'redux/features/ProgramSlice';
 
 import { ProgramType } from 'types/models';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 
 type InfoTabPropsType = {
-  program: ProgramType
+
 }
 
 const InfoTab: FC<InfoTabPropsType> = ({
-  program,
+
 }) => {
   const { programId } = useParams();
   const [properties, setProperties] = useState<ProgramType>();
   const [updateProgram, result] = useUpdateProgramMutation();
+  const { data: program } = useGetProgramQuery({ programId });
 
   useEffect(() => {
     if (program) {
@@ -92,8 +92,4 @@ const InfoTab: FC<InfoTabPropsType> = ({
   );
 }
 
-const mapStateToProps = (state) => ({
-  program: state.events.event,
-});
-
-export default connect(mapStateToProps)(InfoTab);
+export default InfoTab;

@@ -20,7 +20,6 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import {
   getEventTeamsAction,
-  getOneEventInfoAction,
 } from 'redux/slices/events';
 import {
   getOneWorkshopsInfoAction,
@@ -36,6 +35,7 @@ import { ProgramType, FSMType } from 'types/models';
 import Mentors from './Mentors';
 import GoToAnswer from './GoToAnswer';
 import { DashboardTabType } from 'types/global';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
 const initialTabs: DashboardTabType[] = [
   {
@@ -78,22 +78,19 @@ const initialTabs: DashboardTabType[] = [
 
 type EventPropsType = {
   getEventTeams: Function,
-  getOneEventInfo: Function,
   getOneWorkshopsInfo: Function,
   fsm: FSMType,
-  program: ProgramType,
 }
 
 const FSMManagement: FC<EventPropsType> = ({
   getEventTeams,
-  getOneEventInfo,
   getOneWorkshopsInfo,
   fsm,
-  program,
 }) => {
   const t = useTranslate();
   const navigate = useNavigate();
   const { fsmId, programId, section } = useParams();
+  const { data: program } = useGetProgramQuery({ programId });
 
   useEffect(() => {
     if (!section) {
@@ -123,7 +120,6 @@ const FSMManagement: FC<EventPropsType> = ({
         ] : initialTabs : initialTabs
 
   useEffect(() => {
-    getOneEventInfo({ programId });
     getOneWorkshopsInfo({ fsmId });
   }, []);
 
@@ -185,12 +181,10 @@ const FSMManagement: FC<EventPropsType> = ({
 };
 
 const mapStateToProps = (state) => ({
-  program: state.events.event,
   fsm: state.workshop.workshop,
 });
 
 export default connect(mapStateToProps, {
   getEventTeams: getEventTeamsAction,
-  getOneEventInfo: getOneEventInfoAction,
   getOneWorkshopsInfo: getOneWorkshopsInfoAction,
 })(FSMManagement);

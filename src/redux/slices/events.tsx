@@ -73,12 +73,6 @@ export const getProgramsAction = createAsyncThunkApi(
   getProgramsUrl
 );
 
-export const getOneEventInfoAction = createAsyncThunkApi(
-  'events/getOneEventInfoAction',
-  Apis.GET,
-  getOneEventInfoUrl
-);
-
 export const getOneRegistrationFormAction = createAsyncThunkApi(
   'events/getOneRegistrationFormAction',
   Apis.GET,
@@ -501,13 +495,6 @@ const eventSlice = createSlice({
       state.isFetching = false;
     },
     [getProgramsAction.rejected.toString()]: isNotFetching,
-
-    [getOneEventInfoAction.pending.toString()]: isFetching,
-    [getOneEventInfoAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.event = response;
-      state.isFetching = false;
-    },
-    [getOneEventInfoAction.rejected.toString()]: isNotFetching,
 
     [getOneRegistrationFormAction.pending.toString()]: isFetching,
     [getOneRegistrationFormAction.fulfilled.toString()]: (state, { payload: { response } }) => {
