@@ -17,8 +17,9 @@ import StatisticsTab from './Statistics';
 import ArticlesTab from './Articles';
 import ThirdPartiesTab from './ThirdParties';
 import AppearanceTab from './Appearance';
+import { DashboardTabType } from 'types/global';
 
-const tabs: { name: string, label: string, icon: any, component: any }[] = [
+const tabs: DashboardTabType[] = [
   {
     name: 'info',
     label: 'اطلاعات کلی',
@@ -42,18 +43,21 @@ const tabs: { name: string, label: string, icon: any, component: any }[] = [
     label: 'افزونه‌ها',
     icon: ExtensionIcon,
     component: ThirdPartiesTab,
+    isActive: false,
   },
   {
     name: 'appearance',
     label: 'تنظیمات ظاهری',
     icon: VisibilityIcon,
     component: AppearanceTab,
+    isActive: false,
   },
   {
     name: 'statistics',
     label: 'آمارها',
     icon: BarChartIcon,
     component: StatisticsTab,
+    isActive: false,
   },
 ];
 
@@ -97,6 +101,7 @@ const WebsiteManagement: FC<WebsiteManagementPropsType> = ({
                   onClick={() => {
                     navigate(`/website/${websiteName}/manage/${tabs[index].name}/`)
                   }}
+                  disabled={tab.isActive === false}
                   variant={tab.name === section ? 'contained' : 'outlined'}
                   startIcon={tab.icon && <tab.icon />}>
                   {tab.label}
