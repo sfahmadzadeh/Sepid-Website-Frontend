@@ -3,7 +3,7 @@ import {
   Typography,
 } from '@mui/material';
 import { Pagination } from '@mui/material';
-import React, { useEffect, useState, Fragment, FC } from 'react';
+import React, { useState, Fragment, FC } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MentorFSMCard from 'components/organisms/cards/MentorFSMCard';
@@ -14,11 +14,11 @@ import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetFSMsQuery } from 'redux/features/FSMSlice';
 
 type ProgramManagementFsmTabPropsType = {
-  getEventWorkshops: any;
+
 }
 
 const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
-  getEventWorkshops,
+
 }) => {
   const { programId } = useParams();
   const [openCreateFSMDialog, setOpenCreateFSMDialog] = useState(false);
@@ -26,9 +26,6 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
   const {
     data: fsmsData
   } = useGetFSMsQuery({ programId, pageNumber });
-  useEffect(() => {
-    getEventWorkshops({ programId, pageNumber });
-  }, [pageNumber]);
 
   return (
     <Fragment>
@@ -76,7 +73,7 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
               variant="outlined"
               color="primary"
               shape='rounded'
-              count={Math.ceil(fsmsData.count / ITEMS_PER_PAGE_NUMBER)}
+              count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
               page={pageNumber}
               onChange={(e, value) => setPageNumber(value)}
             />

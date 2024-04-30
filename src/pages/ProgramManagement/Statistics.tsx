@@ -73,7 +73,7 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
           variant="outlined"
           color="primary"
           shape='rounded'
-          count={Math.ceil(fsmsData.count / ITEMS_PER_PAGE_NUMBER)}
+          count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
           page={pageNumber}
           onChange={(e, value) => setPageNumber(value)}
         />
