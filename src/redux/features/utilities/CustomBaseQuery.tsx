@@ -1,7 +1,9 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import handleError from './ErrorHandler';
 
 const CustomBaseQuery = ({ baseUrl }) =>
   async (args, api, extraOptions) => {
+
     const result = await fetchBaseQuery({
       baseUrl,
       prepareHeaders: (headers, { getState, endpoint }) => {
@@ -15,14 +17,11 @@ const CustomBaseQuery = ({ baseUrl }) =>
       },
     })(args, api, extraOptions);
 
+    args.body?.onSuccess?.();
+
     if (result.error) {
-      console.log(result.error)
-      if (result.error.status === 401 || result.error.status === 403) {
-        // Handle 403 error
-        // For example, you can dispatch a logout action
-        api.dispatch('account/logout');
-      }
-      // Handle other types of errors
+      args.body?.onFailure?.();
+      handleError({ error: result.error, dispatch: api.dispatch })
     }
     return result;
   };

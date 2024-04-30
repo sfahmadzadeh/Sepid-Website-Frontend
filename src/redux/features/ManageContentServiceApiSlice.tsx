@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
-import CustomBaseQuery from './CustomBaseQuery';
+import CustomBaseQuery from './utilities/CustomBaseQuery';
 import { MCS_URL } from 'configs/Constants';
 
 export const ManageContentServiceApi = createApi({

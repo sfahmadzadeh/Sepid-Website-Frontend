@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
 import { MPS_URL } from 'configs/Constants'
-import CustomBaseQuery from './CustomBaseQuery';
+import CustomBaseQuery from './utilities/CustomBaseQuery';
 
 export const ManagePartyServiceApi = createApi({
   reducerPath: 'mangage-party-service',
