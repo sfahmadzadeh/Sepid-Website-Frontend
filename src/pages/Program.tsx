@@ -81,7 +81,7 @@ const Program: FC<ProgramPropsType> = ({
             </Typography>
             <Stack>
               <FSMsGrid
-                fsms={fsmsData?.fsms}
+                fsms={fsmsData?.fsms || []}
                 isLoading={isLoading}
               />
             </Stack>
