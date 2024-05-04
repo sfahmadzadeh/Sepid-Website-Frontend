@@ -12,10 +12,10 @@ describe('BackButton component', () => {
         playerId={1}
       />
     );
-    expect(wrapper).toMatchSnapshot(); // Use Jest's toMatchSnapshot() function
+    expect(wrapper).toMatchSnapshot(); 
   });
 
-  it('renders nothing when inwardEdges is empty', () => {
+  it('is empty', () => {
     const wrapper = shallow(
       <BackButton
         inwardEdges={[]}
@@ -24,10 +24,10 @@ describe('BackButton component', () => {
         playerId={1}
       />
     );
-    expect(wrapper.isEmptyRender()).toBe(true); // Check if the component renders nothing
+    expect(wrapper.isEmptyRender()).toBe(true);
   });
 
-  it('calls mentorMoveBackward when isMentor is true', () => {
+  it('true', () => {
     const mentorMoveBackwardMock = jest.fn();
     const wrapper = shallow(
       <BackButton
@@ -37,11 +37,11 @@ describe('BackButton component', () => {
         playerId={1}
       />
     );
-    wrapper.find('Button').simulate('click'); // Simulate a click event on the Button
-    expect(mentorMoveBackwardMock).toHaveBeenCalled(); // Check if mentorMoveBackward was called
+    wrapper.find('Button').simulate('click'); 
+    expect(mentorMoveBackwardMock).toHaveBeenCalled();
   });
 
-  it('calls goBackward when isMentor is false and backEdge.is_back_enabled is true', () => {
+  it('true', () => {
     const goBackwardMock = jest.fn();
     const wrapper = shallow(
       <BackButton
@@ -55,7 +55,7 @@ describe('BackButton component', () => {
     expect(goBackwardMock).toHaveBeenCalled();
   });
 
-  it('does not call goBackward when isMentor is false and backEdge.is_back_enabled is false', () => {
+  it('false', () => {
     const goBackwardMock = jest.fn();
     const wrapper = shallow(
       <BackButton
