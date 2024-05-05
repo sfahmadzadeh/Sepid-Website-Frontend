@@ -7,8 +7,7 @@ import TeamAvatar from '../components/TeamAvatar';
 import WhiteboardButton from '../components/WhiteboardButton';
 import ScoresDialogButton from '../components/ScoresDialogButton';
 import DashboardButton from '../components/DashboardButton';
-import FSMLogoButton from '../components/FSMLogoButton';
-import UserInfo from '../components/UserInfo';
+import FSMLogo from '../components/FSMLogo';
 import UserAvatar from '../components/UserAvatar';
 import { useParams } from 'react-router-dom';
 
@@ -21,14 +20,14 @@ const FSMAppbarItems = ({ program, fsm }) => {
   const mentorButton = <MentorButton />;
   const userAvatar = <UserAvatar />
   const teamAvatar = <TeamAvatar />;
-  const fsmLogoButton = <FSMLogoButton />;
+  const fsmLogo = <FSMLogo />;
   const scoresDialogButton = <ScoresDialogButton />
   const backToProgram = <DashboardButton label={'بازگشت به دوره'} to={`/program/${programId}/`} />;
 
   const desktopLeftItems = [];
-  const desktopRightItems = [fsmLogoButton];
+  const desktopRightItems = [fsmLogo];
   const mobileLeftItems = [];
-  const mobileRightItems = [fsmLogoButton];
+  const mobileRightItems = [fsmLogo];
   const mobileMenuListItems = [];
   const toolbarItems = [];
 

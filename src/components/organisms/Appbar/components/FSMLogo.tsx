@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { FSMType } from 'types/models';
 import LogoSkeleton from './LogoSkeleton';
 
-type FSMLogoButtonPropsType = {
+type FSMLogoPropsType = {
   fsm: FSMType;
 }
 
-const FSMLogoButton: FC<FSMLogoButtonPropsType> = ({ fsm }) => {
+const FSMLogo: FC<FSMLogoPropsType> = ({ fsm }) => {
   const width = useWidth();
 
   if (!fsm) {
@@ -47,4 +47,4 @@ const mapStateToProps = (state) => ({
   fsm: state.workshop.workshop,
 })
 
-export default connect(mapStateToProps)(FSMLogoButton);
+export default connect(mapStateToProps)(FSMLogo);
