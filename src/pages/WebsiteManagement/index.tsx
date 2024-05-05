@@ -9,7 +9,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import Layout from 'components/template/Layout';
 import WebsiteInfoTab from './Info';
 import ProgramsTab from './Programs';
@@ -71,7 +70,6 @@ const WebsiteManagement: FC<WebsiteManagementPropsType> = ({
   const t = useTranslate();
   const { websiteName, section } = useParams();
   const navigate = useNavigate();
-  const { data: website } = useGetWebsiteQuery();
 
   useEffect(() => {
     if (!section) {

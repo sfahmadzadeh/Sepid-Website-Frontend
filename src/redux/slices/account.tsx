@@ -293,8 +293,6 @@ const accountSlice = createSlice({
         state.accessToken = payload.access;
         state.refreshToken = payload.refresh;
         state.isFetching = false;
-        // todo: این ریلود رو برای این زدیم که وقتی اطلاعات وب‌سایت رو می‌گرفتیم، ایز_منیجر از فالس تبدیل به ترو بشه
-        window.location.reload();
       }
     );
 
