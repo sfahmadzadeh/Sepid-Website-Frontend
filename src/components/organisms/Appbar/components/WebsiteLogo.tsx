@@ -4,7 +4,7 @@ import { useGetWebsiteQuery } from "redux/features/WebsiteSlice";
 import LogoSkeleton from "./LogoSkeleton";
 import { Link } from "react-router-dom";
 
-const Brand = () => {
+const WebsiteLogo = () => {
 
   const {
     data: website,
@@ -28,4 +28,4 @@ const Brand = () => {
   );
 }
 
-export default Brand;
+export default WebsiteLogo;

@@ -2,7 +2,7 @@ import React from 'react';
 
 import DashboardButton from '../components/DashboardButton';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
-import Brand from '../components/Brand';
+import WebsiteLogo from '../components/WebsiteLogo';
 import DefaultAppbarItems from './DefaultAppbarItems';
 import UserInfo from '../components/UserInfo';
 
@@ -27,12 +27,12 @@ const DashboardAppbarItems = ({ }) => {
       <DashboardButton key={index} label={item.label} to={item.to} items={item.items} />
     );
   })
-  const brand = <Brand />;
+  const websiteLogo = <WebsiteLogo />;
   const userInfo = <UserInfo />
 
   return {
     desktopLeftItems: [...desktopLeftItems, userInfo],
-    desktopRightItems: [brand, ...desktopRightItems],
+    desktopRightItems: [websiteLogo, ...desktopRightItems],
     mobileLeftItems: [userInfo],
     mobileRightItems: [],
     mobileMenuListItems: [...desktopLeftItems, ...desktopRightItems],
