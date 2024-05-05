@@ -5,7 +5,7 @@ import useWidth from 'utils/UseWidth';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-function ProgramLogoButton({ event }) {
+function ProgramLogo({ event }) {
   const { programId } = useParams();
   const width = useWidth();
 
@@ -42,4 +42,4 @@ const mapStateToProps = (state) => ({
   event: state.events.event,
 })
 
-export default connect(mapStateToProps)(ProgramLogoButton);
+export default connect(mapStateToProps)(ProgramLogo);
