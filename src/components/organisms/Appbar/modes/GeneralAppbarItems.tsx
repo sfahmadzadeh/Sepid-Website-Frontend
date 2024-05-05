@@ -1,6 +1,6 @@
 import React from 'react';
 import DashboardButton from '../components/DashboardButton';
-import WebsiteLogo from '../components/WebsiteLogo';
+import WebsiteLogo from '../components/logos/WebsiteLogo';
 
 const GeneralAppbarItems = ({}) => {
   const backToLanding = <DashboardButton label={'بازگشت'} to={-1} />;

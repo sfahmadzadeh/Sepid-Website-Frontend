@@ -1,6 +1,6 @@
 import React from 'react';
 import UserInfo from '../components/UserInfo';
-import WebsiteLogo from '../components/WebsiteLogo';
+import WebsiteLogo from '../components/logos/WebsiteLogo';
 import DashboardButton from '../components/DashboardButton';
 
 const ProgramAppbarItems = ({ program }) => {

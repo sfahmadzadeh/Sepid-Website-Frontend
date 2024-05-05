@@ -1,5 +1,5 @@
 import React from 'react';
-import WebsiteLogo from '../components/WebsiteLogo';
+import WebsiteLogo from '../components/logos/WebsiteLogo';
 
 const DefaultAppbarItems = ({ }) => {
 
