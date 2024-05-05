@@ -32,22 +32,15 @@ const handleError = ({
 
   switch (error.status) {
     case 401: {
-      if (error.config.url === 'auth/token/obtain/') {
-        break;
-      }
-      try {
-        dispatch('account/logout');
-        toast.error('نشست شما به پایان رسیده. لطفاً دوباره وارد سامانه شوید.');
-        return;
-      }
-      catch (error) {
+      if (error?.data?.code === 'token_not_valid') {
         dispatch({ type: 'account/logout' });
         toast.error('نشست شما به پایان رسیده. لطفاً دوباره وارد سامانه شوید.');
-        return;
       }
+      return;
     }
     case 500:
       toast.error('ایراد سروری پیش آمده! لطفاً ما را در جریان بگذارید.');
+      return;
   }
 
   if (errorMessage) {
