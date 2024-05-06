@@ -71,6 +71,10 @@ export type WebsiteType = {
   is_admin: boolean;
   display_name: string;
   logo: LogoType;
+  appbar: { body: BackendAppbarType };
+  header: HeaderMetaData;
+  og_metadata: OpenGraphMetaData;
+  has_login_with_google: boolean;
 }
 
 export type PartyType = {
@@ -83,7 +87,7 @@ export type PartyType = {
 
 export type PageMetadataType = {
   address_pattern: string;
-  header_data: HeaderData;
+  header_data: HeaderMetaData;
   og_metadata: OpenGraphMetaData;
   banners: BannerType[];
   appbar: { body: BackendAppbarType };
@@ -99,7 +103,7 @@ export type LogoType = {
   mobile_image: string;
 }
 
-export type HeaderData = {
+export type HeaderMetaData = {
   title: string;
   description: string;
   theme_color: string;

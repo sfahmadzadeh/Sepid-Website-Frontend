@@ -12,6 +12,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import appendPreviousParams from 'utils/AppendPreviousParams';
 import GoogleLogin from 'components/molecules/GoogleLogin';
 import { useLoginMutation } from 'redux/features/UserSlice';
+import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 type LoginPagePropsType = {
   isFetching: boolean;
@@ -27,6 +28,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
     password: '',
     username: '',
   });
+  const { data: website } = useGetWebsiteQuery();
   const urlParams = new URLSearchParams(window.location.search);
   const programId = urlParams.get('private_program_id');
   const [login, result] = useLoginMutation();
@@ -112,7 +114,9 @@ const LoginPage: FC<LoginPagePropsType> = ({
             fullWidth>
             بزن بریم
           </Button>
-          <GoogleLogin />
+          {website?.has_login_with_google &&
+            <GoogleLogin />
+          }
         </Stack>
         <Stack>
           <Typography gutterBottom align='center'>
