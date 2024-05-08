@@ -95,7 +95,7 @@ function Index({
                   </Button>
                 </TableCell>
                 <TableCell align='center'>
-                  {faSeri(registrationReceipt?.school_studentship?.grade)}
+                  {registrationReceipt?.school_studentship?.grade ? faSeri(registrationReceipt?.school_studentship?.grade) : '-'}
                 </TableCell>
                 <TableCell align='center'>
                   {registrationReceipt?.is_participating ? 'قطعی' : STATUS[registrationReceipt?.status]}
