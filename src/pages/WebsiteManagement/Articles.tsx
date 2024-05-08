@@ -23,9 +23,7 @@ const ArticlesTab: FC<ArticlesTabPropsType> = ({
   const { websiteName } = useParams();
   const [openCreateArticleDialog, setOpenCreateArticleDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const {
-    data,
-  } = useGetArticlesQuery({ websiteName, pageNumber: 1 });
+  const { data, isLoading } = useGetArticlesQuery({ websiteName, pageNumber: 1 });
 
   const articles = data?.articles || [];
   const count = data?.count || 0;
@@ -66,7 +64,7 @@ const ArticlesTab: FC<ArticlesTabPropsType> = ({
               marginRight: "0px",
             },
           })}>
-          {(!articles || articles.length == 0) &&
+          {(!isLoading && articles.length == 0) &&
             <Stack width={'100%'}>
               <NoDataFound variant={1} />
             </Stack>

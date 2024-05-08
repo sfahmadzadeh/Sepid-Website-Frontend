@@ -15,17 +15,14 @@ import ManageProgramCard from 'components/organisms/cards/ManageProgramCard';
 import CreateProgramDialog from 'components/organisms/dialogs/CreateProgramDialog';
 import NoDataFound from 'components/molecules/NoDataFound';
 
-type ProgramsTabPropsType = {
-}
+type ProgramsTabPropsType = {}
 
 const ProgramsTab: FC<ProgramsTabPropsType> = ({
 }) => {
   const { websiteName } = useParams();
   const [openCreateProgramDialog, setOpenCreateProgramDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const {
-    data,
-  } = useGetProgramsQuery({ websiteName });
+  const { data, isLoading } = useGetProgramsQuery({ websiteName });
 
   const programs = data?.programs;
   const count = data?.count || 0;
@@ -63,7 +60,7 @@ const ProgramsTab: FC<ProgramsTabPropsType> = ({
               marginRight: "0px",
             },
           })}>
-          {(!programs || programs.length == 0) &&
+          {(!isLoading && programs.length == 0) &&
             <Stack width={'100%'}>
               <NoDataFound variant={2} />
             </Stack>
