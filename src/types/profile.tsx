@@ -1,7 +1,6 @@
 type StudentshipType = 'Academic' | 'School';
 
 export type UserInfoType = {
-  academic_studentship: AcademicStudentshipType;
   address: string | null;
   bio: string | null;
   birth_date: string | null;
@@ -23,7 +22,6 @@ export type UserInfoType = {
   postal_code: string;
   profile_picture: string;
   province: string;
-  school_studentship: SchoolStudentshipType;
   userPermissions: UserPermissions[];
   username: string;
 }

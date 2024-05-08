@@ -1,9 +1,6 @@
 import {
   Button,
-  Grid,
-  Link,
   Divider,
-  makeStyles,
   Stack,
   Table,
   TableBody,
@@ -13,7 +10,7 @@ import {
   TableRow,
   Pagination,
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import RegisterUsersViaCSV from './RegisterUsersViaCSV';
 import RegisterOneUser from './RegisterOneUser';
@@ -21,6 +18,7 @@ import {
   getAllRegistrationReceiptsAction,
 } from 'redux/slices/events';
 import { faSeri, toPersianNumber } from 'utils/translateNumber';
+import { RegistrationReceiptType } from 'types/models';
 
 const STATUS = {
   Waiting: 'منتظر',
@@ -28,11 +26,20 @@ const STATUS = {
   Rejected: 'رد‌شده',
 }
 
-function Index({
+type RegistrationReceiptsPropsType = {
+  getAllRegistrationReceipts: any;
+  allRegistrationReceipts: {
+    count: number;
+    results: RegistrationReceiptType[];
+  }
+  registrationFormId: number;
+}
+
+const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
   getAllRegistrationReceipts,
   allRegistrationReceipts,
   registrationFormId,
-}) {
+}) => {
   const itemsPerPage = 100;
   const [page, setPage] = React.useState(1);
 
@@ -57,7 +64,7 @@ function Index({
           padding: "10px",
           justifySelf: 'center',
         }}
-        count={Math.ceil(allRegistrationReceipts?.count / itemsPerPage) || 1}
+        count={Math.ceil(allRegistrationReceipts.count / itemsPerPage) || 1}
         page={page}
         onChange={handleChange}
         defaultPage={1}
@@ -78,52 +85,41 @@ function Index({
             </TableRow>
           </TableHead>
           <TableBody>
-
             {allRegistrationReceipts?.results?.slice().sort((a, b) => { return a.id > b.id ? -1 : 1 }).map((registrationReceipt, index) =>
               <TableRow key={index}>
                 <TableCell align='center'>
                   {toPersianNumber(index + 1)}
                 </TableCell>
                 <TableCell align='center'>
-                  {toPersianNumber(registrationReceipt?.id)}
+                  {toPersianNumber(registrationReceipt.id)}
                 </TableCell>
                 <TableCell align='center'>
                   <Button
-                    href={`/registration-receipt/${registrationReceipt?.id}/`}
+                    href={`/registration-receipt/${registrationReceipt.id}/`}
                     component="a" target="_blank">
-                    {(registrationReceipt?.first_name && registrationReceipt?.last_name) ? `${registrationReceipt?.first_name} ${registrationReceipt?.last_name}` : 'بی‌نام'}
+                    {(registrationReceipt.user.first_name && registrationReceipt.user.last_name) ? `${registrationReceipt.user.first_name} ${registrationReceipt.user.last_name}` : 'بی‌نام'}
                   </Button>
                 </TableCell>
                 <TableCell align='center'>
-                  {registrationReceipt?.school_studentship?.grade ? faSeri(registrationReceipt?.school_studentship?.grade) : '-'}
+                  {registrationReceipt.school_studentship.grade ? faSeri(registrationReceipt.school_studentship.grade) : '-'}
                 </TableCell>
                 <TableCell align='center'>
-                  {registrationReceipt?.is_participating ? 'قطعی' : STATUS[registrationReceipt?.status]}
+                  {registrationReceipt.is_participating ? 'قطعی' : STATUS[registrationReceipt.status]}
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
       </TableContainer>
-      {/* <Grid item>
-            <Pagination
-              count={totalNumberOfPages}
-              page={currentPage}
-              onChange={handlePaginationChange}
-              hidePrevButton hideNextButton
-            />
-          </Grid> */}
     </Stack>
   );
 }
+
 const mapStateToProps = (state, ownProps) => ({
   registrationFormId: ownProps.registrationFormId,
   allRegistrationReceipts: state.events.allRegistrationReceipts || [],
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    getAllRegistrationReceipts: getAllRegistrationReceiptsAction,
-  }
-)(Index);
+export default connect(mapStateToProps, {
+  getAllRegistrationReceipts: getAllRegistrationReceiptsAction,
+})(RegistrationReceipts);

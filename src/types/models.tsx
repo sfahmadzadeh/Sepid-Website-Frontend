@@ -1,3 +1,5 @@
+import { SchoolStudentshipType, UserInfoType } from "./profile";
+
 type AudienceTypeType = "All" | "Student" | "Academic";
 type EventTypeType = "Team" | "Individual";
 
@@ -56,8 +58,26 @@ export type ProgramType = {
   'StudentshipDataIncomplete';
 }
 
+export type RegistrationStatusType = 'Accepted' | 'Rejected' | 'Waiting';
+export type AnswerSheetType = 'RegistrationReceipt' | 'StateAnswerSheet';
+
 export type Invitation = any
-export type RegistrationReceipt = any
+export type CertificateType = any;
+export type TeamType = any;
+export type AnswerType = any;
+
+export type RegistrationReceiptType = {
+  id: string;
+  user: UserInfoType;
+  school_studentship: SchoolStudentshipType;
+  is_participating: boolean;
+  status: RegistrationStatusType;
+  answer_sheet_type: AnswerSheetType;
+  certificate: CertificateType;
+  team: TeamType;
+  answers: AnswerType[];
+}
+
 export type Widget = any
 export type Team = any
 export type Request = any
