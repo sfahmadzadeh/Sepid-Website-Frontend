@@ -1,6 +1,7 @@
 import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
 
 import errorHandler from './errorHandler';
+import { toast } from 'react-toastify';
 
 type CreateAsyncThunkApiType =
   (
@@ -29,15 +30,12 @@ export const createAsyncThunkApi: CreateAsyncThunkApiType = (typePrefix, api, ur
 
       // function self onSuccess action
       if (options?.onSuccessAction) {
-        dispatch(options?.onSuccessAction({ response, arg, options }));
+        dispatch(options.onSuccessAction({ response, arg, options }));
       }
 
-      return {
-        response,
-        ...(options?.defaultNotification?.success
-          ? { message: options.defaultNotification.success }
-          : {})
-      };
+      if(options?.defaultNotification?.success){
+        toast.success(options.defaultNotification.success)
+      }
     } catch (error) {
       // component self onFailure action
       arg?.onFailure?.();
