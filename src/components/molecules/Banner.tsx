@@ -1,3 +1,5 @@
+// https://swiperjs.com/react
+
 import React, { FC } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Virtual, Autoplay } from 'swiper/modules';
@@ -8,6 +10,7 @@ import 'swiper/css/virtual';
 import 'swiper/css/autoplay';
 import { BannerType } from 'types/redux/WebSiteAppearance';
 import useWidth from 'utils/UseWidth';
+import { Skeleton } from '@mui/material';
 
 type BannerPropsType = {
   banners: BannerType[]
@@ -16,10 +19,8 @@ type BannerPropsType = {
 const Banner: FC<BannerPropsType> = ({ banners }) => {
   const width = useWidth();
 
-  // https://swiperjs.com/react
-
   if (banners.length === 0) {
-    return null;
+    return <Skeleton variant="rounded" width={'100%'} sx={{ height: { xs: 300, sm: 300 } }} />
   }
 
   return (
