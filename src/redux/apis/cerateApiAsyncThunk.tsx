@@ -33,13 +33,17 @@ export const createAsyncThunkApi: CreateAsyncThunkApiType = (typePrefix, api, ur
         dispatch(options.onSuccessAction({ response, arg, options }));
       }
 
-      if(options?.defaultNotification?.success){
+      if (options?.defaultNotification?.success) {
         toast.success(options.defaultNotification.success)
       }
+
+      return {
+        response,
+      };
     } catch (error) {
       // component self onFailure action
       arg?.onFailure?.();
-      
+
       if ((getState() as any).Intl.locale == 'fa') {
         return errorHandler(
           error,
