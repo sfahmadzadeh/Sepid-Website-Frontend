@@ -25,7 +25,7 @@ import {
   getOneWorkshopsInfoAction,
 } from 'redux/slices/workshop';
 import Layout from 'components/template/Layout';
-import Design from './Design';
+import DesignStates from './DesignStates';
 import Edges from './Edges';
 import Statistics from './Statistics';
 import IndividualRequests from './IndividualRequests';
@@ -45,10 +45,10 @@ const initialTabs: DashboardTabType[] = [
     component: Info,
   },
   {
-    name: 'design',
-    label: 'طراحی',
+    name: 'states',
+    label: 'گام‌ها',
     icon: DesignServicesIcon,
-    component: Design,
+    component: DesignStates,
   },
   {
     name: 'edges',

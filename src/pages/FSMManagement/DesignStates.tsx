@@ -18,14 +18,14 @@ import { State } from 'types/models';
 import EditState from 'components/template/EditState';
 
 
-type DesignWorkshopPropsType = {
+type DesignStatesPropsType = {
   getAllWorkshopStatesInfo: Function;
   getOneState: Function;
   papers: {};
   allStates: State[];
 }
 
-const DesignWorkshop: FC<DesignWorkshopPropsType> = ({
+const DesignStates: FC<DesignStatesPropsType> = ({
   getAllWorkshopStatesInfo,
   getOneState,
   allStates = [],
@@ -76,4 +76,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getOneState: getOneStateAction,
   getAllWorkshopStatesInfo: getAllWorkshopStatesInfoAction,
-})(DesignWorkshop);
+})(DesignStates);
