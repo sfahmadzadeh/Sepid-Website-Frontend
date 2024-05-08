@@ -18,10 +18,10 @@ function UserInfo({ isUserAuthenticated }: UserInfoPropsType) {
           <NotificationButton />
           <Avatar />
         </Fragment> :
-        <Fragment>
+        <Stack direction={'row'} spacing={1}>
           <DashboardButton variant='outlined' label='ورود' to={'/login/'} onClick={null} />
           <DashboardButton variant='contained' label='عضویت' to={'/create-account/'} onClick={null} />
-        </Fragment>
+        </Stack>
       }
     </Stack>
   )
