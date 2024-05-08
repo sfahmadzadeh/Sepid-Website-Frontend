@@ -1,11 +1,7 @@
-import { Apis } from '.';
-import {
-  refreshTokenUrl,
-} from '../constants/urls';
+import { toast } from 'react-toastify';
 import { persianMessages } from './messages';
 
 const errorHandler = async (
-  state,
   error,
   dispatch,
   rejectWithValue,
@@ -14,21 +10,18 @@ const errorHandler = async (
 ) => {
 
   if (!error.response) {
-    return rejectWithValue({
-      message: 'ارتباط با سرور دچار مشکل شده است.',
-    });
+    toast.error('ارتباط با سرور دچار مشکل شده است.');
+    return rejectWithValue();
   }
 
   if (persianMessages?.[error.response.data?.code]) {
-    return rejectWithValue({
-      message: persianMessages[error.response.data.code],
-    });
+    toast.error(persianMessages[error.response.data.code]);
+    return rejectWithValue();
   }
 
   if (error.response.detail) {
-    return rejectWithValue({
-      message: error.response.detail,
-    });
+    toast.error(error.response.detail);
+    return rejectWithValue();
   }
 
   switch (error.response.status) {
@@ -38,36 +31,28 @@ const errorHandler = async (
       }
       try {
         dispatch({ type: 'account/logout' });
-        return rejectWithValue({
-          message: 'نشست شما به پایان رسیده. لطفاً دوباره وارد سامانه شوید.',
-        });
-        // const response = await Apis.POST(refreshTokenUrl, { refresh: state?.account?.refresh });
-        // dispatch({ type: 'account/refreshToken', payload: { access: response.access, refresh: response.refresh } });
-        // return rejectWithValue();
+        toast.error('نشست شما به پایان رسیده. لطفاً دوباره وارد سامانه شوید.');
+        return rejectWithValue();
       }
       catch (error) {
         dispatch({ type: 'account/logout' });
-        return rejectWithValue({
-          message: 'نشست شما به پایان رسیده. لطفاً دوباره وارد سامانه شوید.',
-        });
+        toast.error('نشست شما به پایان رسیده. لطفاً دوباره وارد سامانه شوید.');
+        return rejectWithValue();
       }
     }
-    // case 404:
-    //   return rejectWithValue({
-    //     message: 'موردی یافت نشد.',
-    //   });
     case 500:
-      return rejectWithValue({
-        message: 'ایراد سروری پیش آمده! لطفاً ما را در جریان بگذارید.',
-      });
+      toast.error('ایراد سروری پیش آمده! لطفاً ما را در جریان بگذارید.');
+      return rejectWithValue();
   }
 
   if (errorMessage) {
-    return rejectWithValue({ message: errorMessage });
+    toast.error(errorMessage);
+    return rejectWithValue();
   }
 
   if (showHttpError && error.response.data?.error) {
-    return rejectWithValue({ message: error.response.data.error });
+    toast.error(error.response.data.error);
+    return rejectWithValue();
   }
 
   return rejectWithValue();

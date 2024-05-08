@@ -8,12 +8,12 @@ import Widget from 'components/organisms/Widget';
 import {
   getOneRegistrationFormAction,
   submitRegistrationFormAction,
-  getOneEventInfoAction,
 } from 'redux/slices/events';
 import { WidgetModes } from 'components/organisms/Widget';
 import ProgramInfo from 'components/organisms/ProgramInfo';
 import { ProgramType, RegistrationFormType } from 'types/models';
 import useCollectWidgetsAnswers from 'components/hooks/useCollectWidgetsAnswers';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
 const ANSWER_TYPES = {
   SmallAnswerProblem: 'SmallAnswer',
@@ -28,8 +28,6 @@ const ANSWER_TYPES = {
 };
 
 type RegistrationFormPropsType = {
-  getOneEventInfo: any;
-  program: ProgramType;
   registrationForm: RegistrationFormType;
   submitRegistrationForm: any;
   onSuccess?: any;
@@ -37,8 +35,6 @@ type RegistrationFormPropsType = {
 }
 
 const RegistrationForm: FC<RegistrationFormPropsType> = ({
-  getOneEventInfo,
-  program,
   registrationForm,
   submitRegistrationForm,
   onSuccess,
@@ -47,6 +43,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   const { programId } = useParams();
   const [isDialogOpen, setDialogStatus] = useState(false);
   const { answers, setAnswers, collectAnswers } = useCollectWidgetsAnswers([]);
+  const { data: program } = useGetProgramQuery({ programId });
 
   const submit = () => {
     submitRegistrationForm({
@@ -57,13 +54,6 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
       onFailure,
     });
   };
-
-  // TODO: this redundant fetching should exist
-  // (because the user-registrationt-status is in
-  // the event fetched data, and should be updated)
-  useEffect(() => {
-    getOneEventInfo({ programId });
-  }, []);
 
   const isSubmitButtonDisabled = (): { isDisabled: boolean; message: string; } => {
     return {
@@ -124,13 +114,11 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
 
 const mapStateToProps = (state) => ({
   userInfo: state.account.userInfo,
-  program: state.events.event,
   registrationForm: state.events.registrationForm,
   isFetching: state.events.isFetching,
 });
 
 export default connect(mapStateToProps, {
-  getOneEventInfo: getOneEventInfoAction,
   getOneRegistrationForm: getOneRegistrationFormAction,
   submitRegistrationForm: submitRegistrationFormAction,
 })(RegistrationForm);

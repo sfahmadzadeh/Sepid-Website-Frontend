@@ -9,19 +9,18 @@ import {
 import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { loginAction } from 'redux/slices/account';
 import appendPreviousParams from 'utils/AppendPreviousParams';
 import GoogleLogin from 'components/molecules/GoogleLogin';
+import { useLoginMutation } from 'redux/features/UserSlice';
+import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 type LoginPagePropsType = {
   isFetching: boolean;
-  login: any;
   accessToken: string;
 };
 
 const LoginPage: FC<LoginPagePropsType> = ({
   isFetching,
-  login,
   accessToken,
 }) => {
   const navigate = useNavigate();
@@ -29,8 +28,10 @@ const LoginPage: FC<LoginPagePropsType> = ({
     password: '',
     username: '',
   });
+  const { data: website } = useGetWebsiteQuery();
   const urlParams = new URLSearchParams(window.location.search);
   const programId = urlParams.get('private_program_id');
+  const [login, result] = useLoginMutation();
 
   useEffect(() => {
     if (accessToken) {
@@ -113,7 +114,9 @@ const LoginPage: FC<LoginPagePropsType> = ({
             fullWidth>
             بزن بریم
           </Button>
-          <GoogleLogin />
+          {website?.has_login_with_google &&
+            <GoogleLogin />
+          }
         </Stack>
         <Stack>
           <Typography gutterBottom align='center'>
@@ -139,5 +142,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  login: loginAction,
 })(LoginPage);

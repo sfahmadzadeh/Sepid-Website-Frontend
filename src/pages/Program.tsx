@@ -6,49 +6,30 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
 import FSMsGrid from 'components/organisms/FSMsGrid';
-import {
-  getEventWorkshopsAction,
-  getOneEventInfoAction,
-} from 'redux/slices/events';
 import Layout from 'components/template/Layout';
 import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import Banner from 'components/molecules/Banner';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
+import { useGetFSMsQuery } from 'redux/features/FSMSlice';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
 type ProgramPropsType = {
-  getEventWorkshops: any;
-  getOneEventInfo: any;
-  getBanners: any;
-
-  program: any;
   isLoading: any;
-  fsms: any;
-  fsmsCount: number;
-  banners: any;
 }
 
 const Program: FC<ProgramPropsType> = ({
-  getEventWorkshops,
-  getOneEventInfo,
-
-  program,
   isLoading,
-  fsms,
-  fsmsCount,
 }) => {
   const { programId } = useParams();
   const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(1);
-
+  const { data: fsmsData } = useGetFSMsQuery({ programId, pageNumber })
+  const { data: program } = useGetProgramQuery({ programId });
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
   const banners = pageMetadata?.banners || [];
-
-  useEffect(() => {
-    getOneEventInfo({ programId });
-  }, []);
 
   useEffect(() => {
     if (program?.is_user_participating != undefined && !program?.is_user_participating) {
@@ -56,14 +37,10 @@ const Program: FC<ProgramPropsType> = ({
     }
   }, [program])
 
-  useEffect(() => {
-    getEventWorkshops({ programId, pageNumber });
-  }, [pageNumber]);
-
-  // todo: handle event not found
+  // todo: handle program not found
   // todo: handle in a better way  
   if (program?.is_user_participating == undefined) {
-    return null;
+    return;
   }
 
   return (
@@ -85,16 +62,16 @@ const Program: FC<ProgramPropsType> = ({
             </Typography>
             <Stack>
               <FSMsGrid
-                fsms={fsms}
+                fsms={fsmsData?.fsms || []}
                 isLoading={isLoading}
               />
             </Stack>
-            {(!isLoading && fsms.length > 0) &&
+            {(!isLoading && fsmsData?.fsms.length > 0) &&
               <Pagination
                 variant="outlined"
                 color="primary"
                 shape='rounded'
-                count={Math.ceil(fsmsCount / ITEMS_PER_PAGE_NUMBER)}
+                count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
                 page={pageNumber}
                 onChange={(e, value) => setPageNumber(value)}
               />
@@ -106,14 +83,8 @@ const Program: FC<ProgramPropsType> = ({
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  fsms: state.events.workshops,
+const mapStateToProps = (state) => ({
   isLoading: state.events.getWorkshopsLoading,
-  program: state.events.event,
-  fsmsCount: state.events.workshopsCount,
 });
 
-export default connect(mapStateToProps, {
-  getEventWorkshops: getEventWorkshopsAction,
-  getOneEventInfo: getOneEventInfoAction,
-})(Program);
+export default connect(mapStateToProps)(Program);

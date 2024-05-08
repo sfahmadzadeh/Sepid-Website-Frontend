@@ -5,11 +5,11 @@ import {
 import React, { FC, Fragment } from 'react';
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
-type WebsiteInfoPropsType = {
+type WebsiteInfoTabPropsType = {
 
 }
 
-const WebsiteInfo: FC<WebsiteInfoPropsType> = ({
+const WebsiteInfoTab: FC<WebsiteInfoTabPropsType> = ({
 
 }) => {
   const { data: website } = useGetWebsiteQuery();
@@ -30,4 +30,4 @@ const WebsiteInfo: FC<WebsiteInfoPropsType> = ({
   );
 }
 
-export default WebsiteInfo;
+export default WebsiteInfoTab;

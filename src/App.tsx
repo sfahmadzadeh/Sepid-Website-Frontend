@@ -27,12 +27,17 @@ const App = ({
   redirectTo,
   resetRedirect,
   loading,
+  accessToken,
 }) => {
   const navigate = useNavigate();
 
-  const { data: website } = useGetWebsiteQuery();
+  const { data: website, refetch } = useGetWebsiteQuery();
   const { data: websiteMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
   const { data: thridPartiesTokens } = useGetThirdPartiesQuery({ partyName: website?.name }, { skip: !Boolean(website) })
+
+  useEffect(() => {
+    refetch();
+  }, [accessToken])
 
   useEffect(() => {
     if (thridPartiesTokens) {
@@ -114,6 +119,7 @@ const mapStateToProps = (state) => ({
     state.events.isFetching ||
     state.currentState.isFetching ||
     state.paper.isFetching,
+  accessToken: state.account?.accessToken,
 });
 
 export default connect(mapStateToProps, {

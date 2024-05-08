@@ -3,37 +3,29 @@ import {
   Typography,
 } from '@mui/material';
 import { Pagination } from '@mui/material';
-import React, { useEffect, useState, Fragment, FC } from 'react';
+import React, { useState, Fragment, FC } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import MentorFSMCard from 'components/organisms/cards/MentorFSMCard';
-import CreateFSMDialog from 'components/organisms/dialogs/CreateFSMDialog';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import {
-  getEventWorkshopsAction,
-} from 'redux/slices/events';
 import { addMentorToWorkshopAction } from 'redux/slices/events';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
-import { FSMType } from 'types/models';
+import { useGetArticlesQuery } from 'redux/features/ArticleSlice';
+import ArticleCard from 'components/organisms/cards/ArticleCard';
 
-type ProgramManagementFsmTabPropsType = {
-  getEventWorkshops: any;
-  fsmsCount: number;
-  allProgramFsms: FSMType[];
+type ArticlesTabPropsType = {
 }
 
-const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
-  getEventWorkshops,
-  fsmsCount,
-  allProgramFsms,
+const ArticlesTab: FC<ArticlesTabPropsType> = ({
 }) => {
-  const { programId } = useParams();
-  const [openCreateFSMDialog, setOpenCreateFSMDialog] = useState(false);
+  const { websiteName } = useParams();
+  const [openCreateArticleDialog, setOpenCreateArticleDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  const {
+    data,
+  } = useGetArticlesQuery({ websiteName, pageNumber: 1 });
 
-  useEffect(() => {
-    getEventWorkshops({ programId, pageNumber });
-  }, [pageNumber]);
+  const articles = data?.articles || [];
+  const count = data?.count || 0;
 
   return (
     <Fragment>
@@ -48,11 +40,11 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
         <Grid item container justifyContent='space-between' xs={12} spacing={2} style={{ marginTop: 2 }}>
           <Grid item>
             <Typography variant='h2'>
-              {'کارگاه‌ها'}
+              {'مقاله‌ها'}
             </Typography>
           </Grid>
           <Grid item>
-            <AddNewThingButton label={'افزودن کارگاه جدید'} onClick={() => setOpenCreateFSMDialog(true)} />
+            <AddNewThingButton label={'افزودن مقاله جدید'} onClick={() => setOpenCreateArticleDialog(true)} />
           </Grid>
         </Grid>
 
@@ -68,9 +60,9 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
               marginRight: "0px",
             },
           })}>
-          {allProgramFsms?.map((workshop) => (
-            <Grid container item xs={12} sm={6} md={4} key={workshop.id} alignItems='center' justifyContent='center'>
-              <MentorFSMCard {...workshop} />
+          {articles.map((article) => (
+            <Grid container item xs={12} sm={6} md={4} key={article.id} alignItems='center' justifyContent='center'>
+              <ArticleCard article={article} mode='edit' />
             </Grid>
           ))}
         </Grid>
@@ -81,26 +73,15 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
               variant="outlined"
               color="primary"
               shape='rounded'
-              count={Math.ceil(fsmsCount / ITEMS_PER_PAGE_NUMBER)}
+              count={Math.ceil(count / ITEMS_PER_PAGE_NUMBER)}
               page={pageNumber}
               onChange={(e, value) => setPageNumber(value)}
             />
           </Grid>
         </Grid>
       </Grid>
-      <CreateFSMDialog
-        open={openCreateFSMDialog}
-        handleClose={() => setOpenCreateFSMDialog(false)}
-      />
     </Fragment>
   );
 }
-const mapStateToProps = (state) => ({
-  fsmsCount: state.events.workshopsCount,
-  allProgramFsms: state.events.workshops,
-});
 
-export default connect(mapStateToProps, {
-  addMentorToWorkshop: addMentorToWorkshopAction,
-  getEventWorkshops: getEventWorkshopsAction,
-})(ProgramManagementFsmTab);
+export default ArticlesTab;

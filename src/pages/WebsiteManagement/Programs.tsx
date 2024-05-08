@@ -7,29 +7,23 @@ import React, { useState, Fragment, FC } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import {
-  getEventWorkshopsAction,
-} from 'redux/slices/events';
 import { addMentorToWorkshopAction } from 'redux/slices/events';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
-import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
 import ManageProgramCard from 'components/organisms/cards/ManageProgramCard';
+import CreateProgramDialog from 'components/organisms/dialogs/CreateProgramDialog';
 
-type ProgramManagementFsmTabPropsType = {
+type ProgramsTabPropsType = {
 }
 
-const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
+const ProgramsTab: FC<ProgramsTabPropsType> = ({
 }) => {
   const { websiteName } = useParams();
   const [openCreateProgramDialog, setOpenCreateProgramDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const { data: website } = useGetWebsiteQuery();
   const {
     data,
-    isLoading,
-    isSuccess,
-  } = useGetProgramsQuery({ websiteName: website?.name }, { skip: !Boolean(website) });
+  } = useGetProgramsQuery({ websiteName });
 
   const programs = data?.programs || [];
   const count = data?.count || 0;
@@ -87,6 +81,9 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
           </Grid>
         </Grid>
       </Grid>
+      <CreateProgramDialog
+        open={openCreateProgramDialog}
+        handleClose={() => setOpenCreateProgramDialog(!openCreateProgramDialog)} />
     </Fragment>
   );
 }
@@ -97,5 +94,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   addMentorToWorkshop: addMentorToWorkshopAction,
-  getEventWorkshops: getEventWorkshopsAction,
-})(ProgramManagementFsmTab);
+})(ProgramsTab);

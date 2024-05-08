@@ -20,7 +20,6 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import {
   getEventTeamsAction,
-  getOneEventInfoAction,
 } from 'redux/slices/events';
 import {
   getOneWorkshopsInfoAction,
@@ -35,8 +34,10 @@ import TeamRequests from './TeamRequests';
 import { ProgramType, FSMType } from 'types/models';
 import Mentors from './Mentors';
 import GoToAnswer from './GoToAnswer';
+import { DashboardTabType } from 'types/global';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
-const initialTabs = [
+const initialTabs: DashboardTabType[] = [
   {
     name: 'info',
     label: 'اطلاعات کلی',
@@ -77,22 +78,19 @@ const initialTabs = [
 
 type EventPropsType = {
   getEventTeams: Function,
-  getOneEventInfo: Function,
   getOneWorkshopsInfo: Function,
   fsm: FSMType,
-  program: ProgramType,
 }
 
 const FSMManagement: FC<EventPropsType> = ({
   getEventTeams,
-  getOneEventInfo,
   getOneWorkshopsInfo,
   fsm,
-  program,
 }) => {
   const t = useTranslate();
   const navigate = useNavigate();
   const { fsmId, programId, section } = useParams();
+  const { data: program } = useGetProgramQuery({ programId });
 
   useEffect(() => {
     if (!section) {
@@ -100,7 +98,7 @@ const FSMManagement: FC<EventPropsType> = ({
     }
   }, [section])
 
-  const tabs: any[] = (fsm && fsm.id == parseInt(fsmId) && fsm.fsm_learning_type == 'Supervised') ?
+  const tabs: DashboardTabType[] = (fsm && fsm.id == parseInt(fsmId) && fsm.fsm_learning_type == 'Supervised') ?
     (fsm.fsm_p_type == 'Team') ?
       [
         ...initialTabs,
@@ -122,7 +120,6 @@ const FSMManagement: FC<EventPropsType> = ({
         ] : initialTabs : initialTabs
 
   useEffect(() => {
-    getOneEventInfo({ programId });
     getOneWorkshopsInfo({ fsmId });
   }, []);
 
@@ -134,7 +131,7 @@ const FSMManagement: FC<EventPropsType> = ({
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab) return null;
-  const TabComponent = useMemo(() => <currentTab.component />, [fsm, section]);
+  const TabComponent = <currentTab.component />;
 
   return (
     <Layout appbarMode='PROGRAM'>
@@ -184,12 +181,10 @@ const FSMManagement: FC<EventPropsType> = ({
 };
 
 const mapStateToProps = (state) => ({
-  program: state.events.event,
   fsm: state.workshop.workshop,
 });
 
 export default connect(mapStateToProps, {
   getEventTeams: getEventTeamsAction,
-  getOneEventInfo: getOneEventInfoAction,
   getOneWorkshopsInfo: getOneWorkshopsInfoAction,
 })(FSMManagement);

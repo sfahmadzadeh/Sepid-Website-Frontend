@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams, useLocation } from 'react-router-dom'
 
-import UserAvatar from '../components/Avatar';
+import UserAvatar from '../components/UserAvatar';
 import DashboardButton from '../components/DashboardButton';
 import ChatRoomButton from '../components/ChatRoomButton';
-import TeamAvatar from '../components/UsersAvatar';
+import TeamAvatar from '../components/TeamAvatar';
 import WhiteboardButton from '../components/WhiteboardButton';
 import { announceMentorDeparture } from 'parse/mentorsInRoom';
 

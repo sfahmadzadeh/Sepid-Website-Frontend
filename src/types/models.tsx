@@ -3,7 +3,22 @@ type EventTypeType = "Team" | "Individual";
 
 export type WebsiteType = any;
 
+export type ProgramContactInfoType = {
+  phone_number: string;
+  eitaa_link: string;
+  bale_link: string;
+  instagram_link: string;
+  shad_link: string;
+  telegram_link: string;
+}
+
 export type ProgramType = {
+  site_help_paper_id: number;
+  FAQs_paper_id: number;
+  is_manager: boolean;
+  show_scores: boolean;
+  program_contact_info: ProgramContactInfoType;
+  is_visible: boolean;
   accessible_after_closure: boolean;
   audience_type: AudienceTypeType;
   certificates_ready: boolean
@@ -54,6 +69,8 @@ type FSMLearningType = 'Supervised' | 'Unsupervised';
 type FSMPType = 'Individual' | 'Team' | 'Hybrid';
 
 export type FSMType = {
+  players_count: number;
+  is_mentor: boolean;
   id: number;
   name: string;
   description: string;

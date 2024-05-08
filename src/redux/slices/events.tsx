@@ -10,7 +10,6 @@ import {
   getCertificateUrl,
   getEventRegistrationInfoUrl,
   getMyInvitationsUrl,
-  getOneEventInfoUrl,
   getOneRegistrationFormUrl,
   getTeamInvitationsUrl,
   getTeamUrl,
@@ -67,22 +66,10 @@ const initialState: InitialState = {
   teamCurrentState: null,
 };
 
-export const getEventWorkshopsAction = createAsyncThunkApi(
-  'events/getEventWorkshopsAction',
-  Apis.GET,
-  getWorkshopsUrl
-);
-
 export const getProgramsAction = createAsyncThunkApi(
   'events/getProgramsAction',
   Apis.GET,
   getProgramsUrl
-);
-
-export const getOneEventInfoAction = createAsyncThunkApi(
-  'events/getOneEventInfoAction',
-  Apis.GET,
-  getOneEventInfoUrl
 );
 
 export const getOneRegistrationFormAction = createAsyncThunkApi(
@@ -501,31 +488,12 @@ const eventSlice = createSlice({
     },
   },
   extraReducers: {
-    [getEventWorkshopsAction.pending.toString()]: (state) => {
-      state.getWorkshopsLoading = true;
-    },
-    [getEventWorkshopsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.getWorkshopsLoading = false;
-      state.workshops = response.results;
-      state.workshopsCount = response.count;
-    },
-    [getEventWorkshopsAction.rejected.toString()]: (state) => {
-      state.getWorkshopsLoading = false;
-    },
-
     [getProgramsAction.pending.toString()]: isFetching,
     [getProgramsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.programs = response;
       state.isFetching = false;
     },
     [getProgramsAction.rejected.toString()]: isNotFetching,
-
-    [getOneEventInfoAction.pending.toString()]: isFetching,
-    [getOneEventInfoAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.event = response;
-      state.isFetching = false;
-    },
-    [getOneEventInfoAction.rejected.toString()]: isNotFetching,
 
     [getOneRegistrationFormAction.pending.toString()]: isFetching,
     [getOneRegistrationFormAction.fulfilled.toString()]: (state, { payload: { response } }) => {

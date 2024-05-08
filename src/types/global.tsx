@@ -1,8 +1,24 @@
 import { BannerType } from "./redux/WebSiteAppearance";
 
+export type DashboardTabType = {
+  name: string;
+  label: string;
+  icon: any;
+  component: any;
+  isActive?: boolean;
+}
+
 export type directionType = 'rtl' | 'ltr';
 
-export type AppbarModes = 'DASHBOARD' | 'FSM' | 'MENTOR_FSM' | 'PROGRAM' | 'GENERAL' | 'ARTICLE' | 'None';
+export type AppbarModes =
+  'DASHBOARD' |
+  'FSM' |
+  'MENTOR_FSM' |
+  'PROGRAM' |
+  'GENERAL' |
+  'ARTICLE' |
+  'WEBSITE' |
+  'None';
 
 export type AppbarItemsType = {
   desktopLeftItems: any[];
@@ -10,6 +26,7 @@ export type AppbarItemsType = {
   mobileLeftItems: any[];
   mobileRightItems: any[];
   mobileMenuListItems: any[];
+  toolbarItems?: any[];
 }
 
 export type WidgetTypes =
@@ -54,6 +71,10 @@ export type WebsiteType = {
   is_admin: boolean;
   display_name: string;
   logo: LogoType;
+  appbar: { body: BackendAppbarType };
+  header: HeaderMetaData;
+  og_metadata: OpenGraphMetaData;
+  has_login_with_google: boolean;
 }
 
 export type PartyType = {
@@ -66,7 +87,7 @@ export type PartyType = {
 
 export type PageMetadataType = {
   address_pattern: string;
-  header_data: HeaderData;
+  header_data: HeaderMetaData;
   og_metadata: OpenGraphMetaData;
   banners: BannerType[];
   appbar: { body: BackendAppbarType };
@@ -82,7 +103,7 @@ export type LogoType = {
   mobile_image: string;
 }
 
-export type HeaderData = {
+export type HeaderMetaData = {
   title: string;
   description: string;
   theme_color: string;

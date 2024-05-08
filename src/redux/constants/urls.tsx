@@ -1,5 +1,4 @@
 // account
-export const loginUrl = 'auth/accounts/login/';
 export const logoutUrl = 'auth/accounts/logout/';
 export const refreshTokenUrl = 'auth/accounts/refresh/';
 export const changePasswordUrl = 'auth/accounts/change_pass/';
@@ -34,7 +33,6 @@ export const getRegistrableWorkshopsUrl = 'fsm/fsm/?registrable=true';
 export const reviewAnswersUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/review/`;
 
 export const getProgramsUrl = 'fsm/event/';
-export const getOneEventInfoUrl = ({ programId }) => `fsm/event/${programId}/`;
 export const getOneRegistrationFormUrl = ({ id }) => `fsm/registration/${id}/`;
 export const submitRegistrationFormUrl = ({ id }) =>
   `fsm/registration/${id}/register/`;

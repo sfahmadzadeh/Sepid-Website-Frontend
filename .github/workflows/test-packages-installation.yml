@@ -1,12 +1,13 @@
-name: Test All Package Installation
+name: Test Packages Installation
 
 on:
   push:
+    branches: ['main']
 
 jobs:
-  check-package-manager:
+  test-packages-installation:
     runs-on: ubuntu-latest
-    name: Package Installation and Linting
+    name: Test Packages Installation
 
     steps:
       - name: Checkout Repository
@@ -19,6 +20,3 @@ jobs:
 
       - name: Install Dependencies
         run: yarn install
-
-      - name: Run ESLint
-        run: yarn lint

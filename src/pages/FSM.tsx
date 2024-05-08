@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { FC, Fragment, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
 import { Helmet } from "react-helmet";
@@ -16,14 +16,32 @@ import {
 } from 'redux/slices/workshop';
 import { addMentorToRoom, updateMentorTime } from 'parse/mentorsInRoom';
 import DraggableChatRoom from 'components/organisms/DraggableMeeting';
-import { getOneEventInfoAction } from 'redux/slices/events';
 import Layout from 'components/template/Layout';
+import { FSMType } from 'types/models';
 
 var moment = require('moment');
 
 export const StatePageContext = React.createContext<any>({});
 
-const FSM = ({
+type FSMPagePropsType = {
+  currentState: any;
+  needUpdateState: any;
+  paperId: any;
+  studentPlayerId: any;
+  myTeam: any;
+  getOneWorkshop: any;
+  enterWorkshop: any;
+  mentorGetCurrentState: any;
+  // todo:
+  teamRoom: any;
+  openChatRoom: any;
+  changeOpenChatRoom: any;
+  personsName: string;
+  mentorId: string;
+  fsm: FSMType;
+  teamId: string;
+}
+const FSM: FC<FSMPagePropsType> = ({
   currentState,
   needUpdateState,
   paperId,
@@ -31,7 +49,6 @@ const FSM = ({
   myTeam,
   getOneWorkshop,
   enterWorkshop,
-  getOneEventInfo,
   mentorGetCurrentState,
   // todo:
   teamRoom,
@@ -39,7 +56,7 @@ const FSM = ({
   changeOpenChatRoom,
   personsName,
   mentorId,
-  workshop,
+  fsm,
   teamId,
 }) => {
   const { fsmId, programId } = useParams();
@@ -83,7 +100,6 @@ const FSM = ({
 
   useEffect(() => {
     getOneWorkshop({ fsmId });
-    getOneEventInfo({ programId });
   }, [])
 
   useEffect(() => {
@@ -152,20 +168,20 @@ const FSM = ({
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }, [currentState])
 
-  if (!currentState || !workshop) return null;
+  if (!currentState || !fsm) return null;
 
   return (
     <Fragment>
-      {workshop &&
+      {fsm &&
         <Helmet>
-          <title>{workshop.name}</title>
+          <title>{fsm.name}</title>
         </Helmet>
       }
       <StatePageContext.Provider value={{ fsmId, paperId, playerId, teamId, isMentor, myTeam, teamRoom }}>
         <Layout appbarMode={isMentor ? 'MENTOR_FSM' : 'FSM'}>
           <FSMStateTemplate state={currentState} playerId={parseInt(playerId)} />
         </Layout>
-        {(workshop.fsm_p_type == 'Team' || workshop.fsm_learning_type == 'Supervised') &&
+        {(fsm.fsm_p_type == 'Team' || fsm.fsm_learning_type == 'Supervised') &&
           <DraggableChatRoom open={openChatRoom} handleClose={() => changeOpenChatRoom()} />
         }
       </StatePageContext.Provider>
@@ -183,7 +199,7 @@ const mapStateToProps = (state, ownProps) => ({
   teamId: state.currentState.teamId,
   personsName: `${state.account.userInfo?.first_name} ${state.account.userInfo?.last_name}`,
   mentorId: state.account.userInfo?.id,
-  workshop: state.workshop.workshop,
+  fsm: state.workshop.workshop,
 });
 
 export default connect(mapStateToProps, {
@@ -191,5 +207,4 @@ export default connect(mapStateToProps, {
   enterWorkshop: enterWorkshopAction,
   mentorGetCurrentState: mentorGetCurrentStateAction,
   changeOpenChatRoom: changeOpenChatRoomAction,
-  getOneEventInfo: getOneEventInfoAction,
 })(FSM);

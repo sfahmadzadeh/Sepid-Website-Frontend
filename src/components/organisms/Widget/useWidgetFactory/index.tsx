@@ -6,7 +6,7 @@ import { deleteWidgetAction } from 'redux/slices/widget';
 type WidgetFactoryType = {
   widgetId?: number;
   paperId?: number;
-  widgetType: string;
+  widgetType?: string;
   mode: WidgetModes;
   collectWidgetDataToolkit?: any;
   collectAnswerData?: any;
@@ -22,6 +22,11 @@ const useWidgetFactory = ({
 }: WidgetFactoryType) => {
   const dispatcher = useDispatch();
   let onDelete, onEdit, onAnswerChange, onViwe, onAnswerSubmit;
+
+  if (!widgetType) {
+    return null;
+  }
+
   const {
     WidgetComponent,
     EditWidgetDialog,

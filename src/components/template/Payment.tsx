@@ -1,7 +1,9 @@
 import { Button, Grid, Paper, Stack, TextField, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 import {
   applyDiscountCodeAction,
   getOneRegistrationFormAction,
@@ -10,15 +12,22 @@ import {
 } from 'redux/slices/events';
 import { toPersianNumber } from 'utils/translateNumber';
 
-const Payment = ({
+type PaymentPropsType = {
+  purchaseEvent: any;
+  applyDiscountCode: any;
+  discountedPrice: any;
+}
+
+const Payment: FC<PaymentPropsType> = ({
   purchaseEvent,
   applyDiscountCode,
 
   discountedPrice,
-  program,
 }) => {
+  const { programId } = useParams();
   const [discountCode, setDiscountCode] = useState(null);
   const [price, setPrice] = useState(0);
+  const { data: program } = useGetProgramQuery({ programId });
 
   useEffect(() => {
     setPrice(program.merchandise.price);
@@ -110,7 +119,6 @@ const Payment = ({
 };
 
 const mapStateToProps = (state) => ({
-  program: state.events.event,
   discountedPrice: state.events.discountedPrice,
 });
 

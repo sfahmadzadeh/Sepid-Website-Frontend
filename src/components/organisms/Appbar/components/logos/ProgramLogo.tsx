@@ -5,7 +5,7 @@ import useWidth from 'utils/UseWidth';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-function ProgramLogoButton({ event }) {
+function ProgramLogo({ event }) {
   const { programId } = useParams();
   const width = useWidth();
 
@@ -26,8 +26,11 @@ function ProgramLogoButton({ event }) {
           />
         </IconButton>
       </Tooltip>
-      <Button sx={{ display: { xs: 'none', sm: 'inline' }, paddingLeft: 0 }} component={Link} to={`/program/${programId}/`}>
-        <Typography fontSize={20} fontWeight={440} color={'black'} align='center'>
+      <Button component={Link} to={`/program/${programId}/`}>
+        <Typography
+          fontSize={20} color={'black'}
+          maxWidth={{ xs: 100, sm: 200, md: 300 }} whiteSpace={'nowrap'}
+          overflow={'hidden'} textOverflow={'ellipsis'}>
           {event?.name}
         </Typography>
       </Button>
@@ -39,4 +42,4 @@ const mapStateToProps = (state) => ({
   event: state.events.event,
 })
 
-export default connect(mapStateToProps)(ProgramLogoButton);
+export default connect(mapStateToProps)(ProgramLogo);

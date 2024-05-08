@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Form from 'components/template/RegistrationForm';
-import Status from 'components/template/RegistrationStatus';
+import RegistrationStatus from 'components/template/RegistrationStatus';
 import Payment from 'components/template/Payment';
 import { RegistrationStepNameType, RegistrationStepType } from 'types/global';
 import Profiles from 'components/template/Profile';
@@ -76,7 +76,7 @@ const useRegistrationSteps = ({
       steps.push({
         name: 'status',
         label: 'وضعیت ثبت‌نام',
-        component: <Status />,
+        component: <RegistrationStatus />,
         onClick: () => goToStep(getStepIndex('status')),
       })
     }

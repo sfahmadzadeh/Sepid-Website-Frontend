@@ -41,7 +41,7 @@ const EventButton: FC<EventButtonPropsType> = ({
 }
 
 type ProgramCardPropsType = {
-  program: ProgramType;
+  program: Partial<ProgramType>;
 }
 
 const ProgramCard: FC<ProgramCardPropsType> = ({

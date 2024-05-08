@@ -9,12 +9,12 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
-type AvatarComponentPropsType = {
+type UserAvatarPropsType = {
   name: string;
   logout: any;
 }
 
-function AvatarComponent({ name = 'بی‌نام', logout }: AvatarComponentPropsType) {
+const UserAvatar = ({ name = 'بی‌نام', logout }: UserAvatarPropsType) => {
   const navigate = useNavigate();
   const { programId } = useParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -91,4 +91,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   logout: logoutAction,
-})(AvatarComponent);
+})(UserAvatar);

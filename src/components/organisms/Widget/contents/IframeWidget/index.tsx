@@ -1,8 +1,9 @@
-import { Button, Stack } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import IframeEditWidget from './edit';
 import { useWindowSize } from 'utils/useWindowSIze';
+import FullscreenIcon from '@mui/icons-material/Fullscreen';
 
 export { IframeEditWidget };
 
@@ -30,7 +31,7 @@ const IframeWidget = ({ link = '' }) => {
   }
 
   return (
-    <Stack alignItems={'start'}>
+    <Box position={'relative'}>
       <iframe
         loading='eager'
         title={t('game')}
@@ -39,15 +40,17 @@ const IframeWidget = ({ link = '' }) => {
         height={iFrameHeight}
         allowFullScreen
         style={{
+          zIndex: 0,
           width: '100%',
           border: 'none',
-          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.25)',
         }}
       />
-      <Button sx={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }} variant='outlined' onClick={handleFullScreen}>
-        {'حالت تمام صفحه'}
-      </Button>
-    </Stack>
+      <Tooltip arrow title={'حالت تمام صفحه'}>
+        <IconButton onClick={handleFullScreen} sx={{ position: 'absolute', left: 0, bottom: 2, zIndex: 1 }}>
+          <FullscreenIcon fontSize='large' />
+        </IconButton>
+      </Tooltip>
+    </Box>
   );
 };
 

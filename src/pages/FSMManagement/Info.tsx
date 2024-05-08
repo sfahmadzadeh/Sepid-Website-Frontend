@@ -32,12 +32,14 @@ const Info: FC<InfoPropsType> = ({
   useEffect(() => {
     if (result.isSuccess) {
       toast.success('مشخصات کارگاه با موفقیت به‌روز شد.')
+    }else if (result.isError){
+      toast.error('مشکلی در به‌روز‌رسانی کارگاه وجود داشت.')
     }
   }, [result])
 
   if (!properties) return null;
 
-  const handeUpdateFSM = () => {
+  const handleUpdateFSM = () => {
     if (!properties.name) {
       toast.error('لطفاً نام کارگاه را انتخاب کنید.');
       return;
@@ -65,7 +67,7 @@ const Info: FC<InfoPropsType> = ({
         <Button
           variant="contained"
           color="primary"
-          onClick={handeUpdateFSM}>
+          onClick={handleUpdateFSM}>
           {'به‌روز رسانی'}
         </Button>
       </Stack>

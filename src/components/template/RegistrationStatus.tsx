@@ -1,15 +1,18 @@
 import { Paper, Stack, Typography } from '@mui/material';
 import React, { FC } from 'react';
-import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 import { ProgramType } from 'types/models';
 
-type StatusPropsType = {
-  program: ProgramType;
+type RegistrationStatusPropsType = {
+
 }
 
-const Status: FC<StatusPropsType> = ({
-  program
+const RegistrationStatus: FC<RegistrationStatusPropsType> = ({
+
 }) => {
+  const { programId } = useParams();
+  const { data: program } = useGetProgramQuery({ programId });
 
   return (
     <Stack spacing={4}>
@@ -37,8 +40,6 @@ const Status: FC<StatusPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  program: state.events.event
-});
 
-export default connect(mapStateToProps)(Status);
+
+export default RegistrationStatus;

@@ -4,31 +4,26 @@ import {
   Typography,
 } from '@mui/material';
 import { Pagination } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MentorStaticsFSMCard from 'components/organisms/cards/MentorStaticsFSMCard';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import {
-  getEventWorkshopsAction,
-} from 'redux/slices/events';
-import { addMentorToWorkshopAction } from 'redux/slices/events';
 import { toPersianNumber } from 'utils/translateNumber';
 import MetabaseDashboard from 'components/template/MetabaseDashboard';
+import { useGetFSMsQuery } from 'redux/features/FSMSlice';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
-function Statics({
-  getEventWorkshops,
-  workshopsCount,
-  allEventWorkshops,
+type StatisticsTabPropsType = {
 
-  program,
-}) {
+}
+
+const StatisticsTab: FC<StatisticsTabPropsType> = ({
+
+}) => {
   const { programId } = useParams();
   const [pageNumber, setPageNumber] = useState(1);
-
-  useEffect(() => {
-    getEventWorkshops({ programId, pageNumber });
-  }, [pageNumber]);
+  const { data: program } = useGetProgramQuery({ programId });
+  const { data: fsmsData } = useGetFSMsQuery({ programId, pageNumber })
 
   const getTotalParticipantsCountOfAllProgramFSMs = (allEventWorkshops) => {
     let totalParticipantsCount = 0;
@@ -37,6 +32,8 @@ function Statics({
     }
     return totalParticipantsCount;
   }
+
+  if (!fsmsData) return;
 
   return (
     <Stack spacing={3} alignItems={'start'} justifyContent={'center'} paddingTop={2}>
@@ -59,13 +56,13 @@ function Statics({
           {'آمار کارگاه‌ها'}
         </Typography>
         <Typography variant='h5'>
-          {`مجموع تعداد ورود به کارگاه‌ها : ${toPersianNumber(getTotalParticipantsCountOfAllProgramFSMs(allEventWorkshops))} نفر`}
+          {`مجموع تعداد ورود به کارگاه‌ها : ${toPersianNumber(getTotalParticipantsCountOfAllProgramFSMs(fsmsData.fsms))} نفر`}
         </Typography>
         <Stack>
           <Grid container spacing={2} alignItems='center' justifyContent='start'>
-            {allEventWorkshops?.map((workshop) => (
-              <Grid item xs={12} sm={6} md={4} key={workshop.id} alignItems='center' justifyContent='center'>
-                <MentorStaticsFSMCard {...workshop} />
+            {fsmsData.fsms?.map((fsm) => (
+              <Grid item xs={12} sm={6} md={4} key={fsm.id} alignItems='center' justifyContent='center'>
+                <MentorStaticsFSMCard {...fsm} />
               </Grid>
             ))}
           </Grid>
@@ -74,23 +71,15 @@ function Statics({
           variant="outlined"
           color="primary"
           shape='rounded'
-          count={Math.ceil(workshopsCount / ITEMS_PER_PAGE_NUMBER)}
+          count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
           page={pageNumber}
           onChange={(e, value) => setPageNumber(value)}
         />
       </Stack>
-      
+
       <MetabaseDashboard dashboard_id={5} params={{ "program_id": programId }} />
     </Stack>
   );
 }
-const mapStateToProps = (state) => ({
-  workshopsCount: state.events.workshopsCount,
-  allEventWorkshops: state.events.workshops,
-  program: state.events.event,
-});
 
-export default connect(mapStateToProps, {
-  addMentorToWorkshop: addMentorToWorkshopAction,
-  getEventWorkshops: getEventWorkshopsAction,
-})(Statics);
+export default StatisticsTab;

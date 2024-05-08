@@ -1,22 +1,29 @@
 import {
   Button,
   Stack,
+  Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { FC } from 'react';
 import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import downloadFile from 'utils/downloadFile';
 import {
   getCertificateAction,
 } from 'redux/slices/events';
 import ProgramPageDashboardButton from 'components/molecules/ProgramPageDashboardButton';
 import ProgramContactInfo from 'components/molecules/ProgramContactInfo';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
-const ProgramPageSidebar = ({
+type ProgramPageSidebarPropsType = {
+  getCertificate: any;
+}
+
+const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
   getCertificate,
-  program,
 }) => {
+  const { programId } = useParams();
   const navigate = useNavigate();
+  const { data: program } = useGetProgramQuery({ programId });
 
   if (!program) return null;
 
@@ -30,6 +37,13 @@ const ProgramPageSidebar = ({
 
   return (
     <Stack justifyContent={'space-between'} spacing={3}>
+      <Stack spacing={1} sx={{ userSelect: 'none' }}>
+        <img src={program.cover_page} alt='program-cover-page' style={{ borderRadius: 8 }} />
+        <Typography textAlign={'center'} variant='h1'>
+          {program.name}
+        </Typography>
+      </Stack>
+      <ProgramContactInfo programContactInfo={program.program_contact_info} />
       <Stack spacing={2} justifyContent={'space-between'}>
         {program.event_type === 'Team' &&
           <Button
@@ -67,23 +81,11 @@ const ProgramPageSidebar = ({
             {'مدیریت دوره'}
           </Button>
         }
-        <ProgramContactInfo programContactInfo={program.program_contact_info} />
       </Stack>
-      <Button
-        variant="outlined"
-        color='warning'
-        fullWidth
-        onClick={() => navigate('/programs/')}>
-        {'بازگشت به دوره‌ها'}
-      </Button>
     </Stack>
   );
 }
 
-const mapStateToProps = (state) => ({
-  program: state.events.event,
-});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   getCertificate: getCertificateAction,
 })(ProgramPageSidebar);

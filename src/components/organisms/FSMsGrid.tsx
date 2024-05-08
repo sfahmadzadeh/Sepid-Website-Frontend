@@ -35,9 +35,9 @@ const FSMsGrid: FC<FSMsGridPropsType> = ({
     let tmpArr = [...fsms].filter(fsm => fsm.is_visible).sort((fsm1, fsm2) => fsm2.order_in_program - fsm1.order_in_program)
     return (
       <Grid container spacing={2}>
-        {tmpArr.map((workshop) => (
-          <Grid item key={workshop.id} xs={12} sm={6} lg={4}>
-            <FSMCard fsm={workshop} />
+        {tmpArr.map((fsm) => (
+          <Grid item key={fsm.id} xs={12} sm={6} lg={4}>
+            <FSMCard fsm={fsm} />
           </Grid>
         ))}
       </Grid>

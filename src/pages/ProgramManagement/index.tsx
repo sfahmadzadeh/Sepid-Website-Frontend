@@ -2,11 +2,12 @@ import { Box, Button, ButtonGroup, Grid, Paper } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import GroupIcon from '@mui/icons-material/Group';
 import ClassIcon from '@mui/icons-material/Class';
-import DiscountIcon from '@mui/icons-material/Discount';
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import ArticleIcon from '@mui/icons-material/Article';
 import InfoIcon from '@mui/icons-material/Info';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 
 import React, { useEffect, FC } from 'react';
 import { connect } from 'react-redux';
@@ -14,20 +15,21 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   getEventTeamsAction,
-  getOneEventInfoAction,
 } from 'redux/slices/events';
 
 import Layout from 'components/template/Layout';
-import DiscountCode from './DiscountCode';
+import Financial from './Financial';
 import Info from './Info';
 import RegistrationForm from './RegistrationForm';
 import RegistrationReceipts from './RegistrationReceipts';
 import Teams from './Teams';
 import FSMs from './FSMs';
-import Statistics from './Statistics';
-import { ProgramType } from 'types/models';
+import StatisticsTab from './Statistics';
+import Certificates from './Certificates';
+import { DashboardTabType } from 'types/global';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
-const tabs: { name: string, label: string, icon: any, component: any }[] = [
+const tabs: DashboardTabType[] = [
   {
     name: 'info',
     label: 'اطلاعات کلی',
@@ -37,20 +39,27 @@ const tabs: { name: string, label: string, icon: any, component: any }[] = [
   {
     name: 'registration-form',
     label: 'فرم ثبت‌نام',
-    icon: HistoryEduIcon,
+    icon: ArticleIcon,
     component: RegistrationForm,
   },
   {
     name: 'registration-receipts',
     label: 'رسیدهای ثبت‌نام',
-    icon: ConfirmationNumberIcon,
+    icon: ReceiptLongIcon,
     component: RegistrationReceipts,
   },
   {
-    name: 'discount-codes',
-    label: 'کد تخفیف',
-    icon: DiscountIcon,
-    component: DiscountCode,
+    name: 'merchandise',
+    label: 'اطلاعات مالی',
+    icon: AttachMoneyIcon,
+    component: Financial,
+  },
+  {
+    name: 'certificates',
+    label: 'گواهی‌ها',
+    icon: WorkspacePremiumIcon,
+    component: Certificates,
+    isActive: false,
   },
   {
     name: 'teams',
@@ -68,23 +77,20 @@ const tabs: { name: string, label: string, icon: any, component: any }[] = [
     name: 'statistics',
     label: 'آمارها',
     icon: BarChartIcon,
-    component: Statistics,
+    component: StatisticsTab,
   },
 ];
 
-type EventType = {
-  getOneEventInfo: Function,
+type ProgramManagementPropsType = {
   getEventTeams: Function,
-  program: ProgramType;
 }
 
-const ProgramManagement: FC<EventType> = ({
-  getOneEventInfo,
+const ProgramManagement: FC<ProgramManagementPropsType> = ({
   getEventTeams,
-  program,
 }) => {
   const t = useTranslate();
   const { programId, section } = useParams();
+  const { data: program } = useGetProgramQuery({ programId });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -94,15 +100,10 @@ const ProgramManagement: FC<EventType> = ({
   }, [section])
 
   useEffect(() => {
-    getOneEventInfo({ programId });
-  }, []);
-
-  useEffect(() => {
     if (program?.registration_form) {
       getEventTeams({ registrationFormId: program.registration_form });
     }
   }, [program]);
-
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab || !program) return null;
@@ -122,6 +123,7 @@ const ProgramManagement: FC<EventType> = ({
             <ButtonGroup variant="outlined" orientation="vertical" color="primary" fullWidth>
               {tabs.map((tab, index) => (
                 <Button
+                  disabled={tab.isActive === false}
                   key={index}
                   onClick={() => {
                     navigate(`/program/${programId}/manage/${tabs[index].name}/`)
@@ -157,11 +159,6 @@ const ProgramManagement: FC<EventType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  program: state.events.event,
-});
-
-export default connect(mapStateToProps, {
-  getOneEventInfo: getOneEventInfoAction,
+export default connect(null, {
   getEventTeams: getEventTeamsAction,
 })(ProgramManagement);
