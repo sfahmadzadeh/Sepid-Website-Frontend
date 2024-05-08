@@ -53,16 +53,7 @@ const RegistrationProcess: FC<RegistrationProcessPropsType> = ({
         alignItems={{ xs: 'center', md: 'start' }}
         justifyContent={{ xs: 'center', md: 'flex-start' }}>
         <Grid item xs={12} md={3} position={{ xs: null, md: 'sticky' }} top={0}>
-          <Stack width={'100%'} spacing={2}>
-            <Stepper steps={steps} activeStepIndex={lastActiveStepIndex} />
-            <Button
-              variant="outlined"
-              color='warning'
-              fullWidth
-              onClick={() => navigate('/programs/')}>
-              {'بازگشت به دوره‌ها'}
-            </Button>
-          </Stack>
+          <Stepper steps={steps} activeStepIndex={lastActiveStepIndex} />
         </Grid>
         <Grid item xs={12} md={9}>
           <Stack>
