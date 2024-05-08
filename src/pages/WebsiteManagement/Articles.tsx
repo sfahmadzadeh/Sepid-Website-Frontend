@@ -11,6 +11,7 @@ import { addMentorToWorkshopAction } from 'redux/slices/events';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetArticlesQuery } from 'redux/features/ArticleSlice';
 import ArticleCard from 'components/organisms/cards/ArticleCard';
+import { toast } from 'react-toastify';
 
 type ArticlesTabPropsType = {
 }
@@ -44,7 +45,10 @@ const ArticlesTab: FC<ArticlesTabPropsType> = ({
             </Typography>
           </Grid>
           <Grid item>
-            <AddNewThingButton label={'افزودن مقاله جدید'} onClick={() => setOpenCreateArticleDialog(true)} />
+            <AddNewThingButton label={'افزودن مقاله جدید'} onClick={() => {
+              toast.warn('هنوز آماده نشده! ایشالا به‌زودی می‌زنیمش :)')
+              setOpenCreateArticleDialog(true);
+            }} />
           </Grid>
         </Grid>
 
