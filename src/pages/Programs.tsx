@@ -14,7 +14,7 @@ const Programs = ({ }) => {
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
-  const banners = pageMetadata?.banners || [];
+  const banners = pageMetadata?.banners;
 
   const {
     data,

@@ -13,14 +13,18 @@ import useWidth from 'utils/UseWidth';
 import { Skeleton } from '@mui/material';
 
 type BannerPropsType = {
-  banners: BannerType[]
+  banners: BannerType[] | undefined;
 }
 
 const Banner: FC<BannerPropsType> = ({ banners }) => {
   const width = useWidth();
 
-  if (banners.length === 0) {
+  if (!banners) {
     return <Skeleton variant="rounded" width={'100%'} sx={{ height: { xs: 300, sm: 300 } }} />
+  }
+
+  if (banners.length === 0) {
+    return null;
   }
 
   return (

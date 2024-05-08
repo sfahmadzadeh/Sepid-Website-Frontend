@@ -29,7 +29,7 @@ const Program: FC<ProgramPropsType> = ({
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
-  const banners = pageMetadata?.banners || [];
+  const banners = pageMetadata?.banners;
 
   useEffect(() => {
     if (program?.is_user_participating != undefined && !program?.is_user_participating) {
