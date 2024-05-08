@@ -1,5 +1,6 @@
 import {
   Grid,
+  Stack,
   Typography,
 } from '@mui/material';
 import { Pagination } from '@mui/material';
@@ -12,6 +13,7 @@ import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetArticlesQuery } from 'redux/features/ArticleSlice';
 import ArticleCard from 'components/organisms/cards/ArticleCard';
 import { toast } from 'react-toastify';
+import NoDataFound from 'components/molecules/NoDataFound';
 
 type ArticlesTabPropsType = {
 }
@@ -64,7 +66,12 @@ const ArticlesTab: FC<ArticlesTabPropsType> = ({
               marginRight: "0px",
             },
           })}>
-          {articles.map((article) => (
+          {(!articles || articles.length == 0) &&
+            <Stack width={'100%'}>
+              <NoDataFound variant={1} />
+            </Stack>
+          }
+          {articles?.map((article) => (
             <Grid container item xs={12} sm={6} md={4} key={article.id} alignItems='center' justifyContent='center'>
               <ArticleCard article={article} mode='edit' />
             </Grid>

@@ -1,5 +1,6 @@
 import {
   Grid,
+  Stack,
   Typography,
 } from '@mui/material';
 import { Pagination } from '@mui/material';
@@ -12,6 +13,7 @@ import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
 import ManageProgramCard from 'components/organisms/cards/ManageProgramCard';
 import CreateProgramDialog from 'components/organisms/dialogs/CreateProgramDialog';
+import NoDataFound from 'components/molecules/NoDataFound';
 
 type ProgramsTabPropsType = {
 }
@@ -25,7 +27,7 @@ const ProgramsTab: FC<ProgramsTabPropsType> = ({
     data,
   } = useGetProgramsQuery({ websiteName });
 
-  const programs = data?.programs || [];
+  const programs = data?.programs;
   const count = data?.count || 0;
 
   return (
@@ -61,7 +63,12 @@ const ProgramsTab: FC<ProgramsTabPropsType> = ({
               marginRight: "0px",
             },
           })}>
-          {programs.map((program) => (
+          {(!programs || programs.length == 0) &&
+            <Stack width={'100%'}>
+              <NoDataFound variant={2} />
+            </Stack>
+          }
+          {programs?.map((program) => (
             <Grid container item xs={12} sm={6} md={4} key={program.id} alignItems='center' justifyContent='center'>
               <ManageProgramCard program={program} />
             </Grid>
