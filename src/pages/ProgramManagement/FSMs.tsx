@@ -1,5 +1,6 @@
 import {
   Grid,
+  Stack,
   Typography,
 } from '@mui/material';
 import { Pagination } from '@mui/material';
@@ -12,6 +13,7 @@ import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import { addMentorToWorkshopAction } from 'redux/slices/events';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetFSMsQuery } from 'redux/features/FSMSlice';
+import NoDataFound from 'components/molecules/NoDataFound';
 
 type ProgramManagementFsmTabPropsType = {
 
@@ -23,9 +25,7 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
   const { programId } = useParams();
   const [openCreateFSMDialog, setOpenCreateFSMDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const {
-    data: fsmsData
-  } = useGetFSMsQuery({ programId, pageNumber });
+  const { data: fsmsData, isLoading } = useGetFSMsQuery({ programId, pageNumber });
 
   return (
     <Fragment>
@@ -65,6 +65,11 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
               <MentorFSMCard {...fsm} />
             </Grid>
           ))}
+          {(!isLoading && fsmsData.fsms.length == 0) &&
+            <Stack width={'100%'}>
+              <NoDataFound variant={1} />
+            </Stack>
+          }
         </Grid>
 
         <Grid item container>
