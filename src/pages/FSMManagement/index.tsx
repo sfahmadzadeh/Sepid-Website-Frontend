@@ -165,7 +165,7 @@ const FSMManagement: FC<EventPropsType> = ({
                 component={Link}
                 to={`/program/${programId}/`}
                 startIcon={<ExitToAppIcon />}>
-                {t('back')}
+                {'بازگشت به دوره'}
               </Button>
             </ButtonGroup>
           </Stack>

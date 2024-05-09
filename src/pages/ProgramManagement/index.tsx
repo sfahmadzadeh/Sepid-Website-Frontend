@@ -144,7 +144,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
                 component={Link}
                 to={`/program/${program?.id}`}
                 startIcon={<ExitToAppIcon />}>
-                {t('back')}
+                {'بازگشت به دوره'}
               </Button>
             </Grid>
           </Box>

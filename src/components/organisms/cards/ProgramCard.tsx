@@ -6,6 +6,7 @@ import {
   Stack,
   Typography,
   Tooltip,
+  IconButton,
 } from '@mui/material';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import React, { FC, useEffect, useState } from 'react';
@@ -14,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { toPersianNumber } from 'utils/translateNumber';
 import { ProgramType } from 'types/models';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 type EventButtonPropsType = {
   to?: string;
@@ -48,6 +50,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
   program
 }) => {
   const t = useTranslate();
+  const navigate = useNavigate();
   const [eventButtonObj, setEventButtonObj] = useState(program ? <EventButton to={`/program/${program.id}/`} text={t('register')} /> : null);
 
   useEffect(() => {
@@ -95,7 +98,16 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
             justifyContent: 'center',
           },
         })}>
-        <Grid sx={{ padding: 0 }} item container justifyContent="center" alignItems="center" xs={12} md={5}>
+        <Grid sx={{ padding: 0 }} position={'relative'} item container justifyContent="center" alignItems="center" xs={12} md={5}>
+          {program.is_manager &&
+            <Tooltip title='مدیریت دوره' arrow>
+              <IconButton
+                sx={{ position: 'absolute', top: 0, left: 0 }}
+                onClick={() => navigate(`/program/${program.id}/manage/`)}>
+                <SettingsIcon fontSize='large' />
+              </IconButton>
+            </Tooltip>
+          }
           <img src={program.cover_page} alt=""
             style={{
               height: '100%',
