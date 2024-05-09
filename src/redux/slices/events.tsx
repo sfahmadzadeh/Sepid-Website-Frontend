@@ -42,7 +42,6 @@ import { InitialState } from 'types/redux/event'
 
 const initialState: InitialState = {
   isFetching: false,
-  getWorkshopsLoading: false,
   workshops: [],
   workshopsCount: 0,
   programs: [],

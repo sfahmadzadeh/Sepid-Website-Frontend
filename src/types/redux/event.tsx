@@ -14,7 +14,6 @@ import {
 
 export type InitialState = {
   isFetching: boolean,
-  getWorkshopsLoading: boolean,
   workshops: FSMType[],
   workshopsCount: number,
   programs: ProgramType[],

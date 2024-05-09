@@ -16,7 +16,6 @@ export type InitialStateType = {
     allWorkshopEdges: WorkshopEdge[],
     fetchedTeamsObjects: Team[],
     requestedTeams: Team[],
-    getWorkshopsLoading: boolean,
     registrableWorkshops: FSMType[],
     workshop: FSMType,
     answers: Answer[],

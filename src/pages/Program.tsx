@@ -14,17 +14,15 @@ import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/Webs
 import { useGetFSMsQuery } from 'redux/features/FSMSlice';
 import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
-type ProgramPropsType = {
-  isLoading: any;
-}
+type ProgramPropsType = {}
 
 const Program: FC<ProgramPropsType> = ({
-  isLoading,
+
 }) => {
   const { programId } = useParams();
   const navigate = useNavigate();
   const [pageNumber, setPageNumber] = useState(1);
-  const { data: fsmsData } = useGetFSMsQuery({ programId, pageNumber })
+  const { data: fsmsData, isLoading } = useGetFSMsQuery({ programId, pageNumber })
   const { data: program } = useGetProgramQuery({ programId });
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
@@ -83,8 +81,4 @@ const Program: FC<ProgramPropsType> = ({
   );
 }
 
-const mapStateToProps = (state) => ({
-  isLoading: state.events.getWorkshopsLoading,
-});
-
-export default connect(mapStateToProps)(Program);
+export default Program;
