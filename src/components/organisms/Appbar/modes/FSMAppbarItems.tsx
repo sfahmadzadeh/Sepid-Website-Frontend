@@ -10,9 +10,12 @@ import DashboardButton from '../components/DashboardButton';
 import FSMLogo from '../components/logos/FSMLogo';
 import UserAvatar from '../components/UserAvatar';
 import { useParams } from 'react-router-dom';
+import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 
-const FSMAppbarItems = ({ program, fsm }) => {
+const FSMAppbarItems = ({ fsm }) => {
   const { programId } = useParams();
+  // todo: refactor: fetch program minimal info (not whole program info!)
+  // const { data: program } = useGetProgramQuery({ programId });
 
   const reviewAnswers = <ReviewAnswersButton />
   const chatRoomButton = <ChatRoomButton />;
@@ -35,9 +38,9 @@ const FSMAppbarItems = ({ program, fsm }) => {
     toolbarItems.push(reviewAnswers);
   }
 
-  if (program?.show_scores) {
-    toolbarItems.push(scoresDialogButton);
-  }
+  // if (program?.show_scores) {
+  //   toolbarItems.push(scoresDialogButton);
+  // }
 
   if (fsm?.fsm_learning_type == 'Supervised') {
     toolbarItems.push(mentorButton)

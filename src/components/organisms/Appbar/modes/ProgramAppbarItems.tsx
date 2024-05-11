@@ -3,7 +3,7 @@ import UserInfo from '../components/UserInfo';
 import WebsiteLogo from '../components/logos/WebsiteLogo';
 import DashboardButton from '../components/DashboardButton';
 
-const ProgramAppbarItems = ({ program }) => {
+const ProgramAppbarItems = ({ }) => {
   const websiteLogo = <WebsiteLogo />
   const userInfo = <UserInfo />
   const backButton = <DashboardButton label={'بازگشت به دوره‌ها'} to={'/programs/'} />

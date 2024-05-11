@@ -44,8 +44,7 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
   const [openToolbar, setOpenToolbar] = useState(true);
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 30 });
   const width = useWidth();
-  const { data: program } = useGetProgramQuery({ programId }, { skip: !Boolean(programId) });
-  const appbarItems = useAppbarItems({ mode, fsm, program, mentorId });
+  const appbarItems = useAppbarItems({ mode, fsm, mentorId });
 
   if (mode === 'None') return null;
 
