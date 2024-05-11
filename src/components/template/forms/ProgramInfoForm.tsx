@@ -105,7 +105,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           onChange={putData} />
       </Grid>
       <Grid item md={6} display={{ xs: 'none', md: 'inline' }} />
-      <Grid item xs={12} sm={6}>
+      {/* <Grid item xs={12} sm={6}>
         <FormControlLabel
           name='is_active'
           checked={data.is_active}
@@ -114,7 +114,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           label="فعال بودن ورود به دوره:"
           labelPlacement='start'
         />
-      </Grid>
+      </Grid> */}
       <Grid item xs={12} sm={6}>
         <FormControlLabel
           name='accessible_after_closure'
@@ -135,7 +135,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           labelPlacement='start'
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      {/* <Grid item xs={12} sm={6}>
         <FormControlLabel
           name='show_scores'
           checked={data.show_scores}
@@ -144,7 +144,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           label="نمایش امتیازات به کاربران"
           labelPlacement='start'
         />
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }

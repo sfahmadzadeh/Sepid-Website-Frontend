@@ -17,13 +17,13 @@ import { ProgramType } from 'types/models';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import SettingsIcon from '@mui/icons-material/Settings';
 
-type EventButtonPropsType = {
+type ProgramButtonPropsType = {
   to?: string;
   text: string;
   disabled?: boolean;
 }
 
-const EventButton: FC<EventButtonPropsType> = ({
+const ProgramButton: FC<ProgramButtonPropsType> = ({
   to,
   text,
   disabled = false,
@@ -51,21 +51,21 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
 }) => {
   const t = useTranslate();
   const navigate = useNavigate();
-  const [eventButtonObj, setEventButtonObj] = useState(program ? <EventButton to={`/program/${program.id}/`} text={t('register')} /> : null);
+  const [eventButtonObj, setEventButtonObj] = useState(program ? <ProgramButton to={`/program/${program.id}/`} text={t('register')} /> : null);
 
   useEffect(() => {
     if (!program) return;
     if (program.user_registration_status === 'NotStarted') {
-      setEventButtonObj(<EventButton text={'ثبت‌نام شروع نشده'} disabled />);
+      setEventButtonObj(<ProgramButton text={'ثبت‌نام شروع نشده'} disabled />);
     }
     if (program.user_registration_status === 'DeadlineMissed') {
-      setEventButtonObj(<EventButton text={'ثبت‌نام تمام شده'} disabled />);
+      setEventButtonObj(<ProgramButton text={'ثبت‌نام تمام شده'} disabled />);
     }
     if (['Waiting', 'Rejected', 'Accepted'].includes(program.user_registration_status)) {
-      setEventButtonObj(<EventButton to={`/program/${program.id}/registration/`} text={'مشاهده وضعیت ثبت‌نام'} />);
+      setEventButtonObj(<ProgramButton to={`/program/${program.id}/registration/`} text={'مشاهده وضعیت ثبت‌نام'} />);
     }
     if (program.is_user_participating) {
-      setEventButtonObj(<EventButton to={`/program/${program.id}/`} text={'ورود'} />);
+      setEventButtonObj(<ProgramButton to={`/program/${program.id}/`} text={'ورود'} />);
     }
   }, [program]);
 
