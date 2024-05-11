@@ -1,8 +1,5 @@
-import { Box, Chip } from '@mui/material';
-import { Help as HelpIcon } from '@mui/icons-material';
 import React, { FC, Fragment, useState } from 'react';
-import { Button, Fab, IconButton, Tooltip, Typography } from '@mui/material';
-
+import { IconButton, Tooltip, Box } from '@mui/material';
 
 import HelpDialog from 'components/organisms/dialogs/FSMStateHelpDialog';
 
@@ -16,7 +13,7 @@ const WidgetHint: FC<WidgetHintPropsType> = ({ hints }) => {
 
   return (
     <Fragment>
-      <Box sx={{ position: 'absolute', right: -10, top: -18, rotate: '-24deg' }}>
+      <Box sx={{ position: 'absolute', right: -10, top: -18, rotate: '-24deg', zIndex: 1 }}>
         <Tooltip arrow title='راهنمایی'>
           <IconButton
             sx={{
@@ -37,7 +34,6 @@ const WidgetHint: FC<WidgetHintPropsType> = ({ hints }) => {
         helps={hints}
       />
     </Fragment >
-
   );
 };
 
