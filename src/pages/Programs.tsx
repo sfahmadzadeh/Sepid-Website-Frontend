@@ -21,9 +21,8 @@ const Programs = ({ }) => {
     isLoading,
     isSuccess,
   } = useGetProgramsQuery({ websiteName: website?.name, isPrivate: false }, { skip: !Boolean(website) });
-  const programs = data?.programs || [];
+  const programs = data?.programs.filter(program => program.is_visible) || [];
   const count = data?.count || 0;
-
 
   const activePrograms: ProgramType[] = programs.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
   const inactivePrograms: ProgramType[] = programs.filter((program: ProgramType) => !program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
