@@ -54,7 +54,7 @@ const Program: FC<ProgramPropsType> = ({
             <ProgramPageSidebar />
           </Box>
           <Stack width={{ xs: '100%', sm: '75%', md: '80%' }} spacing={2}>
-            <Banner banners={banners} />
+            {/* <Banner banners={banners} /> */}
             <Typography component="h1" fontWeight={700} fontSize={32} gutterBottom>
               {'کارگاه‌ها'}
             </Typography>
