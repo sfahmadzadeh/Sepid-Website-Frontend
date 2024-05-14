@@ -29,7 +29,7 @@ const SuccessfulPayment = () => {
           </Grid>
           <Grid item>
             <Button
-              onClick={() => navigate('/events/')}
+              onClick={() => navigate('/')}
               variant="contained"
               color="primary">
               حله
