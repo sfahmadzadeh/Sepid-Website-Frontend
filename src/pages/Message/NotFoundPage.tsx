@@ -2,8 +2,6 @@ import { Button, ButtonGroup, Container, Grid, Typography } from '@mui/material'
 import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
-
-import appendPreviousParams from 'utils/AppendPreviousParams';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 const NotFoundPage = () => {
@@ -48,7 +46,7 @@ const NotFoundPage = () => {
             </Grid>
             <Grid item>
               <ButtonGroup size="large" variant="contained" color="primary">
-                <Button onClick={() => navigate(appendPreviousParams("/"))}>
+                <Button onClick={() => navigate('/')}>
                   صفحه اصلی
                 </Button>
               </ButtonGroup>

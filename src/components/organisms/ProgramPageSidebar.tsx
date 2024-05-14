@@ -13,6 +13,7 @@ import {
 import ProgramPageDashboardButton from 'components/molecules/ProgramPageDashboardButton';
 import ProgramContactInfo from 'components/molecules/ProgramContactInfo';
 import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import ShareProgramButton from 'components/atoms/ShareProgramButton';
 
 type ProgramPageSidebarPropsType = {
   getCertificate: any;
@@ -36,9 +37,9 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
   };
 
   return (
-    <Stack justifyContent={'space-between'} spacing={3}>
+    <Stack justifyContent={'space-between'} spacing={2}>
       <Stack spacing={1} sx={{ userSelect: 'none' }}>
-        <img src={program.cover_page} alt='program-cover-page' style={{ borderRadius: 8 }} />
+        <img src={program.cover_page} alt='program-cover-page' width={'100%'} style={{ borderRadius: 8 }} />
         <Typography textAlign={'center'} variant='h1'>
           {program.name}
         </Typography>
@@ -81,6 +82,9 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
             {'مدیریت دوره'}
           </Button>
         }
+      </Stack>
+      <Stack alignItems={'center'}>
+        <ShareProgramButton />
       </Stack>
     </Stack>
   );

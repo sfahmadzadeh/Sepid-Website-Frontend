@@ -9,7 +9,6 @@ import {
 import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import appendPreviousParams from 'utils/AppendPreviousParams';
 import GoogleLogin from 'components/molecules/GoogleLogin';
 import { useLoginMutation } from 'redux/features/UserSlice';
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
@@ -30,7 +29,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
   });
   const { data: website } = useGetWebsiteQuery();
   const urlParams = new URLSearchParams(window.location.search);
-  const programId = urlParams.get('private_program_id');
+  const programId = urlParams.get('program');
   const [login, result] = useLoginMutation();
 
   useEffect(() => {
@@ -41,7 +40,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
         navigate('/programs/');
       }
     }
-  }, [programId, navigate, accessToken])
+  }, [accessToken])
 
   const putData = (event) => {
     setData({
@@ -120,12 +119,12 @@ const LoginPage: FC<LoginPagePropsType> = ({
         </Stack>
         <Stack>
           <Typography gutterBottom align='center'>
-            <Link style={{ textDecoration: 'none' }} to={appendPreviousParams('/reset-password')}>
+            <Link style={{ textDecoration: 'none' }} to={'/reset-password'}>
               {'گذروازه‌ام را فراموش کرده‌ام :('}
             </Link>
           </Typography>
           <Typography align='center'>
-            <Link style={{ textDecoration: 'none' }} to={appendPreviousParams('/create-account')}>
+            <Link style={{ textDecoration: 'none' }} to={'/create-account'}>
               {'می‌خواهم یک حساب کاربری جدید بسازم...'}
             </Link>
           </Typography>

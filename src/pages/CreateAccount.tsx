@@ -12,7 +12,6 @@ import {
 } from 'redux/slices/account';
 import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import appendPreviousParams from 'utils/AppendPreviousParams';
 import { toast } from 'react-toastify';
 import VerifyPhoneNumber from 'components/molecules/VerifyPhoneNumber';
 
@@ -38,7 +37,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
   });
 
   const urlParams = new URLSearchParams(window.location.search);
-  const programId = urlParams.get('private_program_id');
+  const programId = urlParams.get('program');
 
   useEffect(() => {
     if (accessToken) {
@@ -152,7 +151,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
         </Button>
 
         <Typography align="center">
-          <Link style={{ textDecoration: 'none' }} to={appendPreviousParams("/login")}>
+          <Link style={{ textDecoration: 'none' }} to={'/login'}>
             {'از قبل حساب کاربری داشتم...'}
           </Link>
         </Typography>

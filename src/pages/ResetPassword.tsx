@@ -1,4 +1,4 @@
-import { Button, TextField, Container, Grid, Paper, Typography, Stack } from '@mui/material';
+import { Button, TextField, Container, Paper, Typography, Stack } from '@mui/material';
 import React, { useState, FC } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,6 @@ import {
   changePasswordAction,
   getVerificationCodeAction,
 } from 'redux/slices/account';
-import appendPreviousParams from 'utils/AppendPreviousParams';
 import isNumber from 'utils/validators/isNumber';
 
 type ResetPasswordPropsType = {
@@ -193,7 +192,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
         </Button>
 
         <Typography align="center">
-          <Link style={{ textDecoration: 'none' }} to={appendPreviousParams("/login")}>
+          <Link style={{ textDecoration: 'none' }} to={'/login'}>
             {'می‌خواهم وارد حسابم شوم...'}
           </Link>
         </Typography>
