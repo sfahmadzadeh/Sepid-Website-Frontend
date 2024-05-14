@@ -10,6 +10,7 @@ import {
   purchaseEventAction,
   submitRegistrationFormAction,
 } from 'redux/slices/events';
+import removeBlankAttributes from 'utils/removeBlankAttributes';
 import { toPersianNumber } from 'utils/translateNumber';
 
 type PaymentPropsType = {
@@ -40,7 +41,7 @@ const Payment: FC<PaymentPropsType> = ({
   }, [discountedPrice]);
 
   const goForPurchase = () => {
-    purchaseEvent({ merchandise: program.merchandise.id, code: discountCode });
+    purchaseEvent(removeBlankAttributes({ merchandise: program.merchandise.id, code: discountCode }));
   };
 
   const submitDiscount = () => {
