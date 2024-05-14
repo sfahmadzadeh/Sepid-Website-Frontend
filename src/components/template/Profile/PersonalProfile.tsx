@@ -229,7 +229,8 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
           </FormControl>
         </Grid>
 
-        <Grid item xs={12} sm={6}>
+        {/* todo: hide email temporarily */}
+        {/* <Grid item xs={12} sm={6}>
           <TextField
             disabled={true}
             fullWidth
@@ -239,7 +240,7 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
             inputProps={{ className: 'ltr-input' }}
             label="ایمیل"
           />
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12}>
           <FormControl>
