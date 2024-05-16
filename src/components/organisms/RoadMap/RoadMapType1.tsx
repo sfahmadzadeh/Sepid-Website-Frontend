@@ -71,6 +71,7 @@ const GraphType1: FC<GraphType1PropsType> = ({
     const links = [];
     handleAddingNode(firstStateName, 0, nodes);
 
+    // todo: probably with the PlayerTransaction model, we can refactor this piece of code:
     let counter = 10_000;
     while (inputLinks.length > 0 && counter--) {
       const link = inputLinks[0];
