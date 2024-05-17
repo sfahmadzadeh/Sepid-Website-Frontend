@@ -32,8 +32,6 @@ const Info: FC<InfoPropsType> = ({
   useEffect(() => {
     if (result.isSuccess) {
       toast.success('مشخصات کارگاه با موفقیت به‌روز شد.')
-    }else if (result.isError){
-      toast.error('مشکلی در به‌روز‌رسانی کارگاه وجود داشت.')
     }
   }, [result])
 

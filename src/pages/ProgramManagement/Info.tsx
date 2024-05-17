@@ -35,8 +35,6 @@ const InfoTab: FC<InfoTabPropsType> = ({
   useEffect(() => {
     if (result.isSuccess) {
       toast.success('مشخصات دوره با موفقیت به‌روز شد.')
-    } else if (result.isError) {
-      toast.error('مشکلی در به‌روز‌رسانی مشخصات دوره وجود داشت.')
     }
   }, [result])
 

@@ -74,7 +74,7 @@ export const persianMessages = { //todo: handle english
   '4071': 'نمی‌توانید در یک دوره‌ی انفرادی، کارگاه گروهی بسازید.',
   '4072': 'team size must be the same as event team size',
   '4073': 'creator must be a modifier of event in order to add fsm to event',
-  '4074': 'team based event must have team_size > 0 and vise versa',
+  '4074': 'در دوره‌ی گروهی، تعداد افراد هر گروه باید بیشتر از صفر باشد',
   '4075': 'you are not this fsm\'s mentor, only mentors can add or edit states, edges & widgets ',
   '4076': 'tail & head of an edge must be from same fsms',
   '4077': 'fsm can\'t have registration form when its event has registration form too',
