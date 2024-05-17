@@ -49,13 +49,11 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
 
   useEffect(() => {
     if (currentNodeId !== lastTakenNode) {
-      const lastTakenLink = _playerTakenPath[_playerTakenPath.length - 1];
-      if (!lastTakenLink) {
+      if (_playerTakenPath.length === 0) {
         set_PlayerTakenPath([{ source: lastTakenNode, target: currentNodeId }]);
       } else {
-        if (currentNodeId === lastTakenLink.source) {
-          set_PlayerTakenPath([..._playerTakenPath].slice(0, -1));
-        } else {
+        const lastTakenLink = _playerTakenPath[_playerTakenPath.length - 1];
+        if (currentNodeId === lastTakenLink.target) {
           set_PlayerTakenPath([..._playerTakenPath, ({ source: lastTakenLink.target, target: currentNodeId })]);
         }
       }

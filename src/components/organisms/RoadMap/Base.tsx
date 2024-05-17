@@ -44,7 +44,7 @@ const GraphMapBase: FC<GraphMapBasePropsType> = ({
     }
   }
 
-  // make previous path highlighted:
+  // make transited path highlighted:
   highlighedPath.forEach(pathLink => {
     const linkSourceNode = nodes.find(node => node.id === pathLink.source);
     if (linkSourceNode) linkSourceNode['color'] = highlightGreenColor;
