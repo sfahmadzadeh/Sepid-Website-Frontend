@@ -71,7 +71,7 @@ export const persianMessages = { //todo: handle english
   '4068': 'only admin can export data',
   '4069': 'fsms inside events can\'t have merchandise or registration forms',
   '4070': 'fsm holder should be the same as event holder',
-  '4071': 'fsm_p_type must be the same as event type (hybrid & team are the same)',
+  '4071': 'نمی‌توانید در یک دوره‌ی انفرادی، کارگاه گروهی بسازید.',
   '4072': 'team size must be the same as event team size',
   '4073': 'creator must be a modifier of event in order to add fsm to event',
   '4074': 'team based event must have team_size > 0 and vise versa',

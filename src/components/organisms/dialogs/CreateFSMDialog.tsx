@@ -62,8 +62,6 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
     if (result.isSuccess) {
       toast.success('کارگاه با موفقیت ساخته شد.');
       handleClose(false);
-    } else if (result.isError) {
-      toast.error('مشکلی در ساخت کارگاه وجود داشت.')
     }
   }, [result])
 
