@@ -18,7 +18,7 @@ const WebsiteLogo = () => {
   return (
     // todo: change /programs/ to /dashboard/
     <IconButton sx={{ padding: 0, paddingX: 1, userSelect: 'none' }} disableRipple component={Link} to='/programs/'>
-      <img alt="website-logo" src={website.logo.desktop_image} style={{ maxWidth: 200, maxHeight: 50 }} />
+      <img alt="website-logo" unselectable="on" src={website.logo.desktop_image} style={{ maxWidth: 200, maxHeight: 50 }} />
     </IconButton>
   );
 }
