@@ -60,6 +60,7 @@ const GraphMapBase: FC<GraphMapBasePropsType> = ({
       return {
         ...node,
         color: highlightGreenColor,
+        strokeColor: '#0072ff',
       }
     }
     return node;
