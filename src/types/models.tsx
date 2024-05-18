@@ -63,11 +63,18 @@ export type AnswerSheetType = 'RegistrationReceipt' | 'StateAnswerSheet';
 
 export type Invitation = any
 export type CertificateType = any;
-export type TeamType = any;
+export type TeamType = {
+  chat_room: string;
+  id: string;
+  members: RegistrationReceiptType[]
+  name: string;
+  registration_form: number;
+  team_head: number;
+};
 export type AnswerType = any;
 
 export type RegistrationReceiptType = {
-  id: string;
+  id: number;
   user: UserInfoType;
   school_studentship: SchoolStudentshipType;
   is_participating: boolean;

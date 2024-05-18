@@ -17,7 +17,7 @@ import {
 import { addMentorToRoom, updateMentorTime } from 'parse/mentorsInRoom';
 import DraggableChatRoom from 'components/organisms/DraggableMeeting';
 import Layout from 'components/template/Layout';
-import { FSMType } from 'types/models';
+import { FSMType, TeamType } from 'types/models';
 
 var moment = require('moment');
 
@@ -28,7 +28,7 @@ type FSMPagePropsType = {
   needUpdateState: any;
   paperId: any;
   studentPlayerId: any;
-  myTeam: any;
+  myTeam: TeamType;
   getOneWorkshop: any;
   enterWorkshop: any;
   mentorGetCurrentState: any;

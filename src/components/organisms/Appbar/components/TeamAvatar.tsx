@@ -2,7 +2,6 @@ import {
   Avatar,
   Badge,
   Box,
-  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -13,9 +12,11 @@ import React, { Fragment, useContext } from 'react';
 
 import { StatePageContext } from 'pages/FSM';
 import { stringToColor } from 'utils/stringToColor';
+import { TeamType } from 'types/models';
 
 const TeamAvatar = () => {
-  const { myTeam } = useContext(StatePageContext);
+  const context = useContext(StatePageContext);
+  const myTeam: TeamType = context.myTeam;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -31,8 +32,6 @@ const TeamAvatar = () => {
   return (
     <Fragment>
       <Tooltip
-        // components={Button}
-        // component={Button}
         onClick={handleClick}
         arrow
         title={`گروه ${myTeam?.name}`}>
@@ -68,15 +67,15 @@ const TeamAvatar = () => {
               <Avatar
                 style={{
                   backgroundColor: stringToColor(
-                    `${member.first_name} ${member.last_name}`
+                    `${member.user.first_name} ${member.user.last_name}`
                   ),
                   border: '0.1px solid lightgray',
                 }}>
-                {`${member.first_name ? member.first_name[0] : '؟'}`}
+                {`${member.user.first_name ? member.user.first_name[0] : '؟'}`}
               </Avatar>
             </Badge>
             <Box ml={1}>
-              {`${member.first_name ? member.first_name : 'بی‌نام'} ${member.last_name ? member.last_name : 'بی‌نام‌زاده'}`}
+              {`${member.user.first_name ? member.user.first_name : 'بی‌نام'} ${member.user.last_name ? member.user.last_name : 'بی‌نام‌زاده'}`}
             </Box>
           </MenuItem>
         )}
