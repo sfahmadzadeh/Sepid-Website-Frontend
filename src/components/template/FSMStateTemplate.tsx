@@ -72,7 +72,7 @@ const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state = {}, playerId 
                 </Grid>
               </Stack>
             </Stack>
-            <FSMStateRoadMap playerTransitedPath={[]} currentNodeName={state.name} playerId={playerId} fsmId={state.fsm} />
+            <FSMStateRoadMap currentNodeName={state.name} playerId={playerId} fsmId={state.fsm} />
             {notQuestions.length === 0 &&
               <Stack sx={{ display: { xs: 'inherit', md: 'none' } }} >
                 <Grid container spacing={2}>

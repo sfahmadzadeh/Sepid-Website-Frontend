@@ -38,7 +38,7 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
 }) => {
   const [openRoadMap, setOpenRoadMap] = useState(true);
   const [lastTransitedNode, setLastTransitedNode] = useState<string>(null);
-  const [playerTakenPath, setPlayerTakenPath] = useState<Link[]>([]);
+  const [playerTransitedPath, setPlayerTakenPath] = useState<Link[]>([]);
 
   useEffect(() => {
     getPlayerTransitedPath({ player_id: playerId });
@@ -52,7 +52,7 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
 
   useEffect(() => {
     if (currentNodeName !== lastTransitedNode) {
-      setPlayerTakenPath([...playerTakenPath, ({ source: lastTransitedNode, target: currentNodeName })]);
+      setPlayerTakenPath([...playerTransitedPath, ({ source: lastTransitedNode, target: currentNodeName })]);
       setLastTransitedNode(currentNodeName);
     }
   }, [currentNodeName])
@@ -69,7 +69,7 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
         <Divider />
         {(!FSMRoadmap || !fetchedPlayerTransitedPath)
           ? <Skeleton variant='rectangular' height={200} sx={{ borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }} />
-          : <RoadMapType1 currentNodeId={currentNodeName} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlighedPath={playerTakenPath} />
+          : <RoadMapType1 currentNodeId={currentNodeName} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlighedPath={playerTransitedPath} />
         }
       </Collapse>
     </Box>
@@ -77,7 +77,7 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
 };
 
 const mapStatesToProps = (state) => ({
-  playerTakenPath: state.Roadmap.playerTakenPath,
+  playerTransitedPath: state.Roadmap.playerTransitedPath,
   FSMRoadmap: state.Roadmap.FSMRoadmap,
 });
 

@@ -9,7 +9,7 @@ import {
 import { RoadmapInitialStateType } from 'types/redux/Roadmap'
 
 const initialState: RoadmapInitialStateType = {
-  playerTakenPath: null,
+  playerTransitedPath: null,
   FSMRoadmap: null,
 };
 
@@ -41,7 +41,7 @@ const RoadmapSlice = createSlice({
   extraReducers: {
     [getPlayerTransitedPathAction.pending.toString()]: isFetching,
     [getPlayerTransitedPathAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.playerTakenPath = response;
+      state.playerTransitedPath = response;
     },
     [getPlayerTransitedPathAction.rejected.toString()]: isNotFetching,
 

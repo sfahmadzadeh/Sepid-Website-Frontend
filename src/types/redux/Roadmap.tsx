@@ -1,5 +1,5 @@
 export type RoadmapInitialStateType = {
-  playerTakenPath: Link[];
+  playerTransitedPath: Link[];
   FSMRoadmap: FSMRoadmapType;
 }
 
