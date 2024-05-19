@@ -127,14 +127,14 @@ const FSM: FC<FSMPagePropsType> = ({
 
   useEffect(getCurrentStateIfNeed, [needUpdateState]);
 
-  const [parseTeamState, setParseTeamState] = useState(null);
+  const [parseTeamStateId, setParseTeamStateId] = useState(null);
 
   const onUpdateStateFromParse = (teamState) =>
-    setParseTeamState(teamState.get('stateId'));
+    setParseTeamStateId(teamState.get('stateId'));
 
   useEffect(() => {
-    if (!currentState?.id || !parseTeamState) return;
-    if (+parseTeamState !== +currentState.id) {
+    if (!currentState?.id || !parseTeamStateId) return;
+    if (+parseTeamStateId !== +currentState.id) {
       if (isMentor) {
         toast.info('یکی از دانش‌آموزان مکان گروه رو جا‌به‌جا کرد');
         mentorGetCurrentState({ id: playerId });
@@ -143,7 +143,7 @@ const FSM: FC<FSMPagePropsType> = ({
         enterWorkshop({ programId, fsmId });
       }
     }
-  }, [parseTeamState]);
+  }, [parseTeamStateId]);
 
   useEffect(() => {
     if (!teamId || !currentState) return;
