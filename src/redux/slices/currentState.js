@@ -33,7 +33,7 @@ export const goForwardAction = createAsyncThunkApi(
   goForwardUrl,
   {
     bodyCreator: ({ password }) => ({
-      key: password
+      password
     }),
     defaultNotification: {
       showHttpError: true
@@ -95,7 +95,7 @@ export const enterWorkshopAction = createAsyncThunkApi(
   Apis.POST,
   enterWorkshopUrl,
   {
-    bodyCreator: ({ programId, fsmId, password }) => ({ event: programId, fsm: fsmId, key: password }),
+    bodyCreator: ({ programId, fsmId, password }) => ({ event: programId, fsm: fsmId, password }),
     defaultNotification: {
       showHttpError: true
     }
