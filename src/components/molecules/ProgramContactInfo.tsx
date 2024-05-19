@@ -78,12 +78,14 @@ const ProgramContactInfo: FC<ProgramContactInfoPropsType> = ({
         )}
       </Stack>
       {programContactInfo.phone_number &&
-        <Typography fontSize={15} textAlign={'center'}>
-          {'شماره پشتیبانی:'}
+        <Stack>
+          <Typography fontSize={15} textAlign={'center'}>
+            {'شماره پشتیبانی:'}
+          </Typography>
           <Typography fontSize={20}>
             {toPersianNumber(programContactInfo.phone_number)}
           </Typography>
-        </Typography>
+        </Stack>
       }
     </Stack>
   )
