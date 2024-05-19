@@ -72,7 +72,7 @@ export const widgetHintUrl = ({ hintId }) => hintId ? `fsm/widget-hint/${hintId}
 
 export const goBackwardUrl = ({ id }) => `fsm/player/${id}/go_backward/`;
 
-export const goForwardUrl = ({ id }) => `fsm/edge/${id}/go_forward/`;
+export const goForwardUrl = ({ id }) => `fsm/edge/${id}/transit_player_on_edge/`;
 
 export const mentorMoveBackwardUrl = ({ id }) =>
   `fsm/player/${id}/mentor_move_backward/`;

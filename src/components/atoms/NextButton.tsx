@@ -45,7 +45,10 @@ const NextButton: FC<NextButtonPropsType> = ({
       if (edge.has_lock) {
         setSelectedEdge(edge);
       } else {
-        goForward({ id: edge.id, teamId });
+        goForward({
+          id: edge.id,
+          teamId,
+        });
       }
     }
   };
