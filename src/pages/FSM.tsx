@@ -139,7 +139,8 @@ const FSM: FC<FSMPagePropsType> = ({
         toast.info('یکی از دانش‌آموزان مکان گروه رو جا‌به‌جا کرد');
         mentorGetCurrentState({ id: playerId });
       } else {
-        toast.info('جابه‌جا شدید');
+        // با حرکت خود بازیکن هم، اینجا اجرا میشه!‌ نباید اینطوری باشه
+        // toast.info('جابه‌جا شدید');
         enterWorkshop({ programId, fsmId });
       }
     }
