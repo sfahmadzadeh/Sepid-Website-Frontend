@@ -18,6 +18,7 @@ import { addMentorToRoom, updateMentorTime } from 'parse/mentorsInRoom';
 import DraggableChatRoom from 'components/organisms/DraggableMeeting';
 import Layout from 'components/template/Layout';
 import { FSMType, TeamType } from 'types/models';
+import { toast } from 'react-toastify';
 
 var moment = require('moment');
 
@@ -129,20 +130,20 @@ const FSM: FC<FSMPagePropsType> = ({
   const [parseTeamState, setParseTeamState] = useState(null);
 
   const onUpdateStateFromParse = (teamState) =>
-    setParseTeamState(teamState.get('paperId'));
+    setParseTeamState(teamState.get('stateId'));
 
-  // useEffect(() => {
-  //   if (!currentState?.id || !parseTeamState) return;
-  //   if (+parseTeamState !== +currentState.id) {
-  //     if (isMentor) {
-  //       toast.info('یکی از دانش‌آموزان مکان گروه رو جا‌به‌جا کرد!');
-  //       mentorGetCurrentState({ id: playerId });
-  //     } else {
-  //       toast.info('جابه‌جا شدید!');
-  //       enterWorkshop({  programId, fsmId });
-  //     }
-  //   }
-  // }, [parseTeamState]);
+  useEffect(() => {
+    if (!currentState?.id || !parseTeamState) return;
+    if (+parseTeamState !== +currentState.id) {
+      if (isMentor) {
+        toast.info('یکی از دانش‌آموزان مکان گروه رو جا‌به‌جا کرد');
+        mentorGetCurrentState({ id: playerId });
+      } else {
+        toast.info('جابه‌جا شدید');
+        enterWorkshop({ programId, fsmId });
+      }
+    }
+  }, [parseTeamState]);
 
   useEffect(() => {
     if (!teamId || !currentState) return;
