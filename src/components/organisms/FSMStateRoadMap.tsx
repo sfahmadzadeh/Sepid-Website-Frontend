@@ -10,56 +10,52 @@ import {
 import React, { useEffect, useState, FC } from 'react';
 import RoadMapType1 from 'components/organisms/RoadMap/RoadMapType1';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-import { getPlayerTakenPathAction, getFSMRoadmapAction } from 'redux/slices/Roadmap';
+import {
+  getPlayerTransitedPathAction,
+  getFSMRoadmapAction,
+} from 'redux/slices/Roadmap';
 import { connect } from 'react-redux';
 import { FSMRoadmapType, Link } from 'types/redux/Roadmap';
 
 type FSMStateRoadMapPropsType = {
-  currentNodeId: string;
-  playerTakenPath: Link[];
+  currentNodeName: string;
+  playerTransitedPath: Link[];
   FSMRoadmap: FSMRoadmapType;
   playerId: number;
   fsmId: number;
-  getPlayerTakenPath: any;
+  getPlayerTransitedPath: any;
   getFSMRoadmap: any;
 };
 
 const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
-  currentNodeId,
-  playerTakenPath,
+  currentNodeName,
+  playerTransitedPath: fetchedPlayerTransitedPath,
   FSMRoadmap,
   playerId,
   fsmId,
-  getPlayerTakenPath,
+  getPlayerTransitedPath,
   getFSMRoadmap,
 }) => {
   const [openRoadMap, setOpenRoadMap] = useState(true);
-  const [lastTakenNode, setLastTakenNode] = useState<string>(null);
-  const [_playerTakenPath, set_PlayerTakenPath] = useState<Link[]>([]);
+  const [lastTransitedNode, setLastTransitedNode] = useState<string>(null);
+  const [playerTakenPath, setPlayerTakenPath] = useState<Link[]>([]);
 
   useEffect(() => {
-    getPlayerTakenPath({ player_id: playerId });
+    getPlayerTransitedPath({ player_id: playerId });
     getFSMRoadmap({ fsm_id: fsmId });
   }, [])
 
   useEffect(() => {
-    setLastTakenNode(currentNodeId);
-    set_PlayerTakenPath(playerTakenPath);
-  }, [playerTakenPath])
+    setLastTransitedNode(currentNodeName);
+    setPlayerTakenPath(fetchedPlayerTransitedPath);
+  }, [fetchedPlayerTransitedPath])
 
   useEffect(() => {
-    if (currentNodeId !== lastTakenNode) {
-      if (_playerTakenPath.length === 0) {
-        set_PlayerTakenPath([{ source: lastTakenNode, target: currentNodeId }]);
-      } else {
-        const lastTakenLink = _playerTakenPath[_playerTakenPath.length - 1];
-        if (currentNodeId === lastTakenLink.target) {
-          set_PlayerTakenPath([..._playerTakenPath, ({ source: lastTakenLink.target, target: currentNodeId })]);
-        }
-      }
-      setLastTakenNode(currentNodeId);
+    if (currentNodeName !== lastTransitedNode) {
+      setPlayerTakenPath([...playerTakenPath, ({ source: lastTransitedNode, target: currentNodeName })]);
+      setLastTransitedNode(currentNodeName);
     }
-  }, [currentNodeId])
+  }, [currentNodeName])
 
   return (
     <Box component={Paper}>
@@ -71,9 +67,9 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
       </Typography>
       <Collapse in={openRoadMap}>
         <Divider />
-        {(!FSMRoadmap || !playerTakenPath)
+        {(!FSMRoadmap || !fetchedPlayerTransitedPath)
           ? <Skeleton variant='rectangular' height={200} sx={{ borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }} />
-          : <RoadMapType1 currentNodeId={currentNodeId} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlighedPath={_playerTakenPath} />
+          : <RoadMapType1 currentNodeId={currentNodeName} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlighedPath={playerTakenPath} />
         }
       </Collapse>
     </Box>
@@ -86,6 +82,6 @@ const mapStatesToProps = (state) => ({
 });
 
 export default connect(mapStatesToProps, {
-  getPlayerTakenPath: getPlayerTakenPathAction,
+  getPlayerTransitedPath: getPlayerTransitedPathAction,
   getFSMRoadmap: getFSMRoadmapAction,
 })(FSMStateRoadMap);

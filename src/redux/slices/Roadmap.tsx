@@ -13,8 +13,8 @@ const initialState: RoadmapInitialStateType = {
   FSMRoadmap: null,
 };
 
-export const getPlayerTakenPathAction = createAsyncThunkApi(
-  'Roadmap/getPlayerTakenPathAction',
+export const getPlayerTransitedPathAction = createAsyncThunkApi(
+  'Roadmap/getPlayerTransitedPathAction',
   Apis.POST,
   `${roadmapCRUDUrl}get_player_taken_path/`,
 );
@@ -39,11 +39,11 @@ const RoadmapSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [getPlayerTakenPathAction.pending.toString()]: isFetching,
-    [getPlayerTakenPathAction.fulfilled.toString()]: (state, { payload: { response } }) => {
+    [getPlayerTransitedPathAction.pending.toString()]: isFetching,
+    [getPlayerTransitedPathAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.playerTakenPath = response;
     },
-    [getPlayerTakenPathAction.rejected.toString()]: isNotFetching,
+    [getPlayerTransitedPathAction.rejected.toString()]: isNotFetching,
 
     [getFSMRoadmapAction.pending.toString()]: isFetching,
     [getFSMRoadmapAction.fulfilled.toString()]: (state, { payload: { response } }) => {
