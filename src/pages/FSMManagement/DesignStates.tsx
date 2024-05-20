@@ -7,7 +7,7 @@ import React, { FC, useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router';
 
-import StatesTabbar from 'components/organisms/StatesTabbar';
+import StatesMenu from 'components/organisms/StatesMenu';
 import {
   getAllWorkshopStatesInfoAction,
 } from 'redux/slices/workshop';
@@ -32,28 +32,28 @@ const DesignStates: FC<DesignStatesPropsType> = ({
   papers,
 }) => {
   const { fsmId } = useParams();
-  const [tab, setTab] = useState(0);
-  const currentState = papers[allStates[tab]?.id];
+  const [stateIndex, setStateIndex] = useState(0);
+  const currentState = papers[allStates[stateIndex]?.id];
 
   useEffect(() => {
     getAllWorkshopStatesInfo({ fsmId });
   }, []);
 
   useEffect(() => {
-    if (allStates[tab]) {
-      getOneState({ paperId: allStates[tab].id });
+    if (allStates[stateIndex]) {
+      getOneState({ paperId: allStates[stateIndex].id });
     }
-  }, [allStates, tab]);
+  }, [allStates, stateIndex]);
 
   const widgets = currentState?.widgets;
   const hints = currentState?.hints;
 
   return (
     <Stack >
-      <StatesTabbar
-        value={tab}
-        setValue={setTab}
-        tabs={allStates.map((state) => state.name)}
+      <StatesMenu
+        stateIndex={stateIndex}
+        setStateIndex={setStateIndex}
+        states={allStates}
       />
       <Box padding={2} paddingTop={4}>
         {currentState ?
