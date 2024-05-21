@@ -15,13 +15,13 @@ import { toPersianNumber } from 'utils/translateNumber';
 import { ProgramType } from 'types/models';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 
-type EventButtonPropsType = {
+type ProgramButtonPropsType = {
   to?: string;
   text: string;
   disabled?: boolean;
 }
 
-const EventButton: FC<EventButtonPropsType> = ({
+const ProgramButton: FC<ProgramButtonPropsType> = ({
   to,
   text,
   disabled = false,
@@ -96,7 +96,7 @@ const ManageProgramCard: FC<ManageProgramCardPropsType> = ({
                 {program.name}
               </Typography>
             </Stack>
-            <EventButton to={`/program/${program?.id}/manage/`} text={'ویرایش دوره'} />
+            <ProgramButton to={`/program/${program?.id}/manage/`} text={'ویرایش دوره'} />
           </Stack>
         </Grid>
       </Grid>

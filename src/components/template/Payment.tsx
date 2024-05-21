@@ -7,20 +7,20 @@ import { useGetProgramQuery } from 'redux/features/ProgramSlice';
 import {
   applyDiscountCodeAction,
   getOneRegistrationFormAction,
-  purchaseEventAction,
+  purchaseProgramAction,
   submitRegistrationFormAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 import { toPersianNumber } from 'utils/translateNumber';
 
 type PaymentPropsType = {
-  purchaseEvent: any;
+  purchaseProgram: any;
   applyDiscountCode: any;
   discountedPrice: any;
 }
 
 const Payment: FC<PaymentPropsType> = ({
-  purchaseEvent,
+  purchaseProgram: purchaseProgram,
   applyDiscountCode,
 
   discountedPrice,
@@ -41,7 +41,7 @@ const Payment: FC<PaymentPropsType> = ({
   }, [discountedPrice]);
 
   const goForPurchase = () => {
-    purchaseEvent(removeBlankAttributes({ merchandise: program.merchandise.id, code: discountCode }));
+    purchaseProgram(removeBlankAttributes({ merchandise: program.merchandise.id, code: discountCode }));
   };
 
   const submitDiscount = () => {
@@ -120,12 +120,12 @@ const Payment: FC<PaymentPropsType> = ({
 };
 
 const mapStateToProps = (state) => ({
-  discountedPrice: state.events.discountedPrice,
+  discountedPrice: state.programs.discountedPrice,
 });
 
 export default connect(mapStateToProps, {
   getOneRegistrationForm: getOneRegistrationFormAction,
-  purchaseEvent: purchaseEventAction,
+  purchaseProgram: purchaseProgramAction,
   submitRegistrationForm: submitRegistrationFormAction,
   applyDiscountCode: applyDiscountCodeAction,
 })(Payment);

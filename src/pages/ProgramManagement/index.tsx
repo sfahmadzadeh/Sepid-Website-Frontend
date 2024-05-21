@@ -14,8 +14,8 @@ import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
-  getEventTeamsAction,
-} from 'redux/slices/events';
+  getProgramTeamsAction,
+} from 'redux/slices/programs';
 
 import Layout from 'components/template/Layout';
 import Financial from './Financial';
@@ -82,11 +82,11 @@ const tabs: DashboardTabType[] = [
 ];
 
 type ProgramManagementPropsType = {
-  getEventTeams: Function,
+  getProgramTeams: Function,
 }
 
 const ProgramManagement: FC<ProgramManagementPropsType> = ({
-  getEventTeams,
+  getProgramTeams,
 }) => {
   const t = useTranslate();
   const { programId, section } = useParams();
@@ -101,7 +101,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
 
   useEffect(() => {
     if (program?.registration_form) {
-      getEventTeams({ registrationFormId: program.registration_form });
+      getProgramTeams({ registrationFormId: program.registration_form });
     }
   }, [program]);
 
@@ -160,5 +160,5 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
 };
 
 export default connect(null, {
-  getEventTeams: getEventTeamsAction,
+  getProgramTeams: getProgramTeamsAction,
 })(ProgramManagement);

@@ -44,7 +44,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
     createProgram: builder.mutation<CreateProgramOutputType, CreateProgramInputType>({
       invalidatesTags: ['programs'],
       query: ({ websiteName, ...body }) => ({
-        url: `/fsm/event/`,
+        url: `/fsm/program/`,
         method: 'POST',
         body: {
           ...body,
@@ -59,7 +59,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
     updateProgram: builder.mutation<UpdateProgramOutputType, UpdateProgramInputType>({
       invalidatesTags: ['programs'],
       query: ({ programId, ...body }) => ({
-        url: `/fsm/event/${programId}/`,
+        url: `/fsm/program/${programId}/`,
         method: 'PATCH',
         body,
       }),
@@ -70,7 +70,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
 
     getPrograms: builder.query<GetProgramsOutputType, GetProgramsInputType>({
       providesTags: ['programs'],
-      query: ({ websiteName, pageNumber = 1, isPrivate }) => `fsm/event/?website=${websiteName}&page=${pageNumber}${isPrivate != null ? `&is_private=${isPrivate}` : ''}`,
+      query: ({ websiteName, pageNumber = 1, isPrivate }) => `fsm/program/?website=${websiteName}&page=${pageNumber}${isPrivate != null ? `&is_private=${isPrivate}` : ''}`,
       transformResponse: (respons: any): GetProgramsOutputType => {
         return {
           programs: respons.results,
@@ -81,7 +81,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
 
     getProgram: builder.query<GetProgramOutputType, GetProgramInputType>({
       providesTags: ['program'],
-      query: ({ programId }) => `fsm/event/${programId}/`,
+      query: ({ programId }) => `fsm/program/${programId}/`,
       transformResponse: (respons: any): GetProgramOutputType => {
         return respons;
       },

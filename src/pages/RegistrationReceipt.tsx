@@ -19,7 +19,7 @@ import Widget, { WidgetModes } from 'components/organisms/Widget';
 import {
   getOneRegistrationReceiptAction,
   validateRegistrationReceiptAction,
-} from 'redux/slices/events'
+} from 'redux/slices/programs'
 import { faSeri } from '../utils/translateNumber';
 import Layout from 'components/template/Layout';
 import { toast } from 'react-toastify';
@@ -138,7 +138,7 @@ const RegistrationReceipt: FC<RegistrationReceiptPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  registrationReceipt: state.events.registrationReceipt,
+  registrationReceipt: state.programs.registrationReceipt,
 });
 
 export default connect(mapStateToProps, {

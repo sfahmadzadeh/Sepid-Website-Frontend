@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import MentorFSMCard from 'components/organisms/cards/MentorFSMCard';
 import CreateFSMDialog from 'components/organisms/dialogs/CreateFSMDialog';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import { addMentorToWorkshopAction } from 'redux/slices/events';
+import { addMentorToWorkshopAction } from 'redux/slices/programs';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetFSMsQuery } from 'redux/features/FSMSlice';
 import NoDataFound from 'components/molecules/NoDataFound';

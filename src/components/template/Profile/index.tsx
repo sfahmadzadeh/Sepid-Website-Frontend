@@ -34,7 +34,7 @@ const Profile: FC<ProfilePropsType> = ({
 
 const mapStateToProps = (state) => ({
   userInfo: state.account.userInfo,
-  registrationForm: state.events.registrationForm,
+  registrationForm: state.programs.registrationForm,
 });
 
 export default connect(mapStateToProps, {

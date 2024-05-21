@@ -25,9 +25,9 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
   const { data: program } = useGetProgramQuery({ programId });
   const { data: fsmsData } = useGetFSMsQuery({ programId, pageNumber })
 
-  const getTotalParticipantsCountOfAllProgramFSMs = (allEventWorkshops) => {
+  const getTotalParticipantsCountOfAllProgramFSMs = (allProgramFSMs) => {
     let totalParticipantsCount = 0;
-    for (let fsm of allEventWorkshops) {
+    for (let fsm of allProgramFSMs) {
       totalParticipantsCount += fsm.players_count;
     }
     return totalParticipantsCount;

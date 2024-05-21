@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import downloadFile from 'utils/downloadFile';
 import {
   getCertificateAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import ProgramPageDashboardButton from 'components/molecules/ProgramPageDashboardButton';
 import ProgramContactInfo from 'components/molecules/ProgramContactInfo';
 import { useGetProgramQuery } from 'redux/features/ProgramSlice';
@@ -46,7 +46,7 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
       </Stack>
       <ProgramContactInfo programContactInfo={program.program_contact_info} />
       <Stack spacing={2} justifyContent={'space-between'}>
-        {program.event_type === 'Team' &&
+        {program.program_type === 'Team' &&
           <Button
             size='large'
             variant="contained"

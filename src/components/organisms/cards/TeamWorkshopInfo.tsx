@@ -25,7 +25,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import {
   deleteRequestMentorAction,
   getPlayerFromTeamAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import { useParams } from 'react-router-dom'
 import { Mentor, RegistrationReceiptType } from 'types/models';
 import { stringToColor } from 'utils/stringToColor'
@@ -347,7 +347,7 @@ const TimeChip: FC<TimeChipPropsType> = (props) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  playerIdFromRedux: state.events.playerId[ownProps.teamId],
+  playerIdFromRedux: state.programs.playerId[ownProps.teamId],
 });
 
 export default connect(mapStateToProps, {

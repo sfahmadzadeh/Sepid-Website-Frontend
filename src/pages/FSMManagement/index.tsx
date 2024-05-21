@@ -19,8 +19,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import {
-  getEventTeamsAction,
-} from 'redux/slices/events';
+  getProgramTeamsAction,
+} from 'redux/slices/programs';
 import {
   getOneWorkshopsInfoAction,
 } from 'redux/slices/workshop';
@@ -76,14 +76,14 @@ const initialTabs: DashboardTabType[] = [
   },
 ]
 
-type EventPropsType = {
-  getEventTeams: Function,
+type FSMManagementPropsType = {
+  getProgramTeams: Function,
   getOneWorkshopsInfo: Function,
   fsm: FSMType,
 }
 
-const FSMManagement: FC<EventPropsType> = ({
-  getEventTeams,
+const FSMManagement: FC<FSMManagementPropsType> = ({
+  getProgramTeams: getProgramTeams,
   getOneWorkshopsInfo,
   fsm,
 }) => {
@@ -125,7 +125,7 @@ const FSMManagement: FC<EventPropsType> = ({
 
   useEffect(() => {
     if (program && program.registration_form) {
-      getEventTeams({ registrationFormId: program.registration_form });
+      getProgramTeams({ registrationFormId: program.registration_form });
     }
   }, [program]);
 
@@ -185,6 +185,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  getEventTeams: getEventTeamsAction,
+  getProgramTeams: getProgramTeamsAction,
   getOneWorkshopsInfo: getOneWorkshopsInfoAction,
 })(FSMManagement);

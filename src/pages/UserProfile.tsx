@@ -109,7 +109,7 @@ const Profile: FC<ProfilePropsType> = ({
 
 const mapStateToProps = (state) => ({
   userInfo: state.account.userInfo,
-  event: state.events.event,
+  program: state.programs.program,
 });
 
 export default connect(mapStateToProps, {

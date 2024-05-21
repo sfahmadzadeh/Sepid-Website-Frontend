@@ -1,7 +1,7 @@
 import { Grid, Skeleton } from '@mui/material';
 import React, { FC } from 'react';
 
-const EventSkeletonCard: FC = () => {
+const ProgramCardSkeleton: FC = () => {
   return (
     <Grid
       container
@@ -45,4 +45,4 @@ const EventSkeletonCard: FC = () => {
   );
 };
 
-export default EventSkeletonCard;
+export default ProgramCardSkeleton;

@@ -116,7 +116,7 @@ const mapStateToProps = (state) => ({
   forceRedirect: state.redirect.force,
   loading:
     state.account.isFetching ||
-    state.events.isFetching ||
+    state.programs.isFetching ||
     state.currentState.isFetching ||
     state.paper.isFetching,
   accessToken: state.account?.accessToken,

@@ -9,7 +9,7 @@ import {
 } from '../constants/urls';
 import { InitialStateType } from 'types/redux/Paper';
 import { getArticleAction } from './article';
-import { getRegistrationFormAction } from './events';
+import { getRegistrationFormAction } from './programs';
 import {
   _createWidgetAction,
   deleteWidgetAction,

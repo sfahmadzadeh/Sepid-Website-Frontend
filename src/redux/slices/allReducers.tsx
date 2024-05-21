@@ -1,6 +1,6 @@
 import { accountReducer } from './account';
 import { currentStateReducer } from './currentState';
-import { eventsReducer } from './events';
+import { programsReducer } from './programs';
 import { redirectReducer } from './redirect';
 import { translatorReducer } from './translator';
 import { whiteboardReducer } from './whiteboard';
@@ -23,7 +23,7 @@ const allReducers = {
   whiteboard: whiteboardReducer,
   widget: widgetReducer,
   redirect: redirectReducer,
-  events: eventsReducer,
+  programs: programsReducer,
   workshop: workshopReducer,
   article: articleReducer,
   Intl: translatorReducer,

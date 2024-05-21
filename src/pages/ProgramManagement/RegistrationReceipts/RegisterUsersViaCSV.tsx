@@ -11,23 +11,23 @@ import React, { FC, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   registerUsersViaCSVAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import { ProgramType } from 'types/models';
 
 type RegisterUsersViaCSVPropsType = {
   registerUsersViaCSV: any;
-  event: ProgramType;
+  program: ProgramType;
 }
 
 const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
   registerUsersViaCSV,
-  event,
+  program,
 }) => {
   const [file, setFile] = useState(null);
   const fileRef = useRef(null);
 
   const submit = () => {
-    registerUsersViaCSV({ registrationFormId: event?.registration_form, file })
+    registerUsersViaCSV({ registrationFormId: program?.registration_form, file })
   }
 
   const changeFile = (e) => {
@@ -104,7 +104,7 @@ const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  event: state.events.event,
+  program: state.programs.program,
 });
 
 export default connect(mapStateToProps, {

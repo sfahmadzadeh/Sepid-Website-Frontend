@@ -3,7 +3,7 @@ import React from 'react';
 import ProgramCard from 'components/organisms/cards/ProgramCard';
 import Layout from 'components/template/Layout';
 import { ProgramType } from 'types/models';
-import ProgramSkeletonCard from 'components/organisms/cards/EventSkeletonCard';
+import ProgramCardSkeleton from 'components/organisms/cards/ProgramCardSkeleton';
 import Banner from 'components/molecules/Banner';
 import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
@@ -61,7 +61,7 @@ const Programs = ({ }) => {
     <Grid item container spacing={2} xs={12}>
       {[...Array(6)].map((_, index) => (
         <Grid key={index} container item xs={12} sm={6} md={4} justifyContent='center' alignItems='flex-start' >
-          <ProgramSkeletonCard />
+          <ProgramCardSkeleton />
         </Grid>
       ))}
     </Grid>

@@ -18,7 +18,7 @@ import React, { useEffect, useState, FC, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
-import { addMentorToWorkshopAction } from 'redux/slices/events';
+import { addMentorToWorkshopAction } from 'redux/slices/programs';
 import { getAllWorkshopMentorsAction, removeMentorFromWorkshopAction } from 'redux/slices/workshop';
 import { Mentor } from 'types/models';
 import { toEnglishNumber } from 'utils/translateNumber';

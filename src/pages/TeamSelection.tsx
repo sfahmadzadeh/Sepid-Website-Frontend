@@ -33,7 +33,7 @@ import {
   getTeamAction,
   getTeamInvitationsAction,
   inviteSomeoneAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import Layout from 'components/template/Layout';
 import { Team, ProgramType } from 'types/models';
 import RespondInvitation from 'components/molecules/RespondInvitation';
@@ -353,14 +353,14 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
 };
 
 const mapStateToProps = (state) => ({
-  registrationReceipt: state.events.registrationReceipt,
-  team: state.events.team,
+  registrationReceipt: state.programs.registrationReceipt,
+  team: state.programs.team,
   //todo: handle not showing self invitation, in back:
-  myInvitations: state.events.myInvitations.filter(
+  myInvitations: state.programs.myInvitations.filter(
     (invitation) => invitation.head_phone_number !== invitation.phone_number
   ),
-  teamInvitations: state.events.teamInvitations,
-  isFetching: state.events.isFetching,
+  teamInvitations: state.programs.teamInvitations,
+  isFetching: state.programs.isFetching,
 });
 
 export default connect(mapStateToProps, {

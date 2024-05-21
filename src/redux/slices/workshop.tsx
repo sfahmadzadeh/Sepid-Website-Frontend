@@ -166,7 +166,7 @@ export const getAllWorkshopMentorsAction = createAsyncThunkApi(
 );
 
 export const removeMentorFromWorkshopAction = createAsyncThunkApi(
-  'events/removeMentorFromWorkshopAction',
+  'programs/removeMentorFromWorkshopAction',
   Apis.POST,
   removeMentorURL,
   {

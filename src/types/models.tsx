@@ -1,7 +1,7 @@
 import { SchoolStudentshipType, UserInfoType } from "./profile";
 
 type AudienceTypeType = "All" | "Student" | "Academic";
-type EventTypeType = "Team" | "Individual";
+type ProgramTypeType = "Team" | "Individual";
 
 export type WebsiteType = any;
 
@@ -28,7 +28,7 @@ export type ProgramType = {
   creator: string;
   description: string;
   end_date: string | null;
-  event_type: EventTypeType;
+  program_type: ProgramTypeType;
   has_certificate: boolean
   holder: number;
   id: number;
@@ -103,7 +103,7 @@ export type FSMType = {
   description: string;
   fsm_learning_type: FSMLearningType | '';
   fsm_p_type: FSMPType | '';
-  event: string;
+  program: string;
   cover_page: string;
   lock: string;
   is_active: boolean;
@@ -119,7 +119,7 @@ export type RegistrationFormType = {
   conditions: any;
   creator: string;
   duration: string;
-  event: number;
+  program: number;
   fsm: FSMType;
   has_certificate: boolean;
   id: number;

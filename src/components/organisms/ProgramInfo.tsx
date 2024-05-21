@@ -46,10 +46,10 @@ const ProgramInfo: FC<ProgramInfoPropsType> = ({
           <Typography gutterBottom align="center" variant="h1">{program.name}</Typography>
         )}
         <Typography align="center">{program.description}</Typography>
-        {program.event_type == 'Team' && (
+        {program.program_type == 'Team' && (
           <Typography align="center">{`شرکت در این دوره در قالب گروه‌های ${toPersianNumber(program.team_size)} نفره امکان‌پذیر است.`}</Typography>
         )}
-        {program.event_type == 'Individual' && (
+        {program.program_type == 'Individual' && (
           <Typography align="center">{'شرکت در این دوره به صورت فردی است.'}</Typography>
         )}
         {program.merchandise?.price > 0 ? (

@@ -51,21 +51,21 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
 }) => {
   const t = useTranslate();
   const navigate = useNavigate();
-  const [eventButtonObj, setEventButtonObj] = useState(program ? <ProgramButton to={`/program/${program.id}/`} text={t('register')} /> : null);
+  const [programButtonObj, setProgramButtonObj] = useState(program ? <ProgramButton to={`/program/${program.id}/`} text={t('register')} /> : null);
 
   useEffect(() => {
     if (!program) return;
     if (program.user_registration_status === 'NotStarted') {
-      setEventButtonObj(<ProgramButton text={'ثبت‌نام شروع نشده'} disabled />);
+      setProgramButtonObj(<ProgramButton text={'ثبت‌نام شروع نشده'} disabled />);
     }
     if (program.user_registration_status === 'DeadlineMissed') {
-      setEventButtonObj(<ProgramButton text={'ثبت‌نام تمام شده'} disabled />);
+      setProgramButtonObj(<ProgramButton text={'ثبت‌نام تمام شده'} disabled />);
     }
     if (['Waiting', 'Rejected', 'Accepted'].includes(program.user_registration_status)) {
-      setEventButtonObj(<ProgramButton to={`/program/${program.id}/registration/`} text={'مشاهده وضعیت ثبت‌نام'} />);
+      setProgramButtonObj(<ProgramButton to={`/program/${program.id}/registration/`} text={'مشاهده وضعیت ثبت‌نام'} />);
     }
     if (program.is_user_participating) {
-      setEventButtonObj(<ProgramButton to={`/program/${program.id}/`} text={'ورود'} />);
+      setProgramButtonObj(<ProgramButton to={`/program/${program.id}/`} text={'ورود'} />);
     }
   }, [program]);
 
@@ -146,7 +146,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
                     sx={{ userSelect: 'none' }}
                     icon={<PeopleAltIcon />}
                     label={
-                      program.event_type === 'Individual'
+                      program.program_type === 'Individual'
                         ? 'انفرادی'
                         : `${toPersianNumber(program.team_size)} ${t('person')}`
                     }
@@ -163,7 +163,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
                   </Grid>
                 }
               </Grid>
-              {eventButtonObj}
+              {programButtonObj}
             </Stack>
           </Stack>
         </Grid>

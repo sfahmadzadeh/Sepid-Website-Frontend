@@ -8,7 +8,7 @@ import Widget from 'components/organisms/Widget';
 import {
   getOneRegistrationFormAction,
   submitRegistrationFormAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import { WidgetModes } from 'components/organisms/Widget';
 import ProgramInfo from 'components/organisms/ProgramInfo';
 import { ProgramType, RegistrationFormType } from 'types/models';
@@ -114,8 +114,8 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
 
 const mapStateToProps = (state) => ({
   userInfo: state.account.userInfo,
-  registrationForm: state.events.registrationForm,
-  isFetching: state.events.isFetching,
+  registrationForm: state.programs.registrationForm,
+  isFetching: state.programs.isFetching,
 });
 
 export default connect(mapStateToProps, {

@@ -22,14 +22,14 @@ import {
   createTeamAction,
   getRequestMentorAction,
   removeRequestMentorAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 
 function Teams({
   addUserToTeam,
   createTeam,
-  event,
+  program,
 
-  allEventTeams,
+  allProgramTeams: allProgramTeams,
 }) {
   const { fsmId } = useParams();
   const [newTeamName, setNewTeamName] = useState('');
@@ -41,7 +41,7 @@ function Teams({
   const itemsPerPage = 12;
   const [page, setPage] = React.useState(1);
   const [noOfPages, setNoOfPages] = React.useState(
-    Math.ceil(allEventTeams.length / itemsPerPage)
+    Math.ceil(allProgramTeams.length / itemsPerPage)
   );
 
   useEffect(() => {
@@ -61,24 +61,24 @@ function Teams({
     )
   }, [page, teams])
 
-  const handleChange = (event, value) => {
+  const handleChange = (_, value) => {
     setPage(value);
   };
 
   useMemo(() => {
-    setNoOfPages(Math.ceil(allEventTeams.length / itemsPerPage))
+    setNoOfPages(Math.ceil(allProgramTeams.length / itemsPerPage))
     setTeams(
-      allEventTeams?.slice().sort((a, b) => {
+      allProgramTeams?.slice().sort((a, b) => {
         if (!isNaN(parseInt(a.name)) && !isNaN(parseInt(b.name)) && parseInt(b.name) !== parseInt(a.name)) {
           return parseInt(a.name) - parseInt(b.name)
         }
         return (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0)
       })
     )
-  }, [allEventTeams])
+  }, [allProgramTeams])
 
   const doCreateTeam = () => {
-    createTeam({ name: newTeamName, registration_form: event?.registration_form })
+    createTeam({ name: newTeamName, registration_form: program?.registration_form })
   }
 
   const doAddUserToTeam = () => {
@@ -140,7 +140,7 @@ function Teams({
           <FormControl size="small" fullWidth variant="outlined">
             <InputLabel>گروه</InputLabel>
             <Select defaultValue="" onChange={(e) => setSelectedTeamId(e.target.value)} label="گروه">
-              {allEventTeams?.map((team) => (
+              {allProgramTeams?.map((team) => (
                 <MenuItem key={team.id} value={team.id || ''}>
                   {team.name}
                 </MenuItem>
@@ -205,10 +205,10 @@ function Teams({
 }
 
 const mapStateToProps = (state) => ({
-  allWorkshops: state.events.myWorkshops || [],
-  allEventTeams: state.events.allEventTeams || [],
-  requestTeams: state.events.requestTeams || {},
-  event: state.events.event,
+  allWorkshops: state.programs.myWorkshops || [],
+  allProgramTeams: state.programs.allProgramTeams || [],
+  requestTeams: state.programs.requestTeams || {},
+  program: state.programs.program,
 });
 
 export default connect(mapStateToProps, {

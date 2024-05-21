@@ -16,12 +16,12 @@ import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   registerOneUserAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import { ProgramType } from 'types/models';
 
 type AddOneUserDialogPropsType = {
   registerOneUser: any;
-  event: ProgramType;
+  program: ProgramType;
   open: boolean;
   handleClose: any;
   isFetching: boolean;
@@ -29,7 +29,7 @@ type AddOneUserDialogPropsType = {
 
 const RegisterOneUserDialog: FC<AddOneUserDialogPropsType> = ({
   registerOneUser,
-  event,
+  program,
   handleClose,
   open,
   isFetching,
@@ -49,7 +49,7 @@ const RegisterOneUserDialog: FC<AddOneUserDialogPropsType> = ({
     if (!data.first_name || !data.last_name || !data.gender || !data.grade || !data.username || !data.national_code || !data.phone_number || !data.password) {
       return;
     }
-    registerOneUser({ ...data, registrationFormId: event?.registration_form }).then((response) => {
+    registerOneUser({ ...data, registrationFormId: program?.registration_form }).then((response) => {
       if (response.type?.endsWith('fulfilled')) {
         handleClose();
       }
@@ -181,8 +181,8 @@ const RegisterOneUserDialog: FC<AddOneUserDialogPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  isFetching: state.events.isFetching,
-  event: state.events.event,
+  isFetching: state.programs.isFetching,
+  program: state.programs.program,
 });
 
 export default connect(mapStateToProps, {

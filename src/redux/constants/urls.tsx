@@ -14,7 +14,7 @@ export const institutesUrl = ({ cityTitle }) => cityTitle ? `auth/institutes?cit
 
 // payment
 export const getAllUserMerchandisesUrl = ({ id }) => `auth/payment/${id}/`;
-export const purchaseEventUrl = 'auth/payment/purchase/';
+export const purchaseProgramUrl = 'auth/payment/purchase/';
 export const submitDiscountCodeUrl = 'auth/payment/verify_discount/';
 
 // workshop
@@ -22,7 +22,7 @@ export const getOneWorkshopUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/`;
 export const getWorkshopsUrl = ({ programId, pageNumber }) => {
   let url = 'fsm/fsm/';
   if (programId) {
-    url += `?event=${programId}`;
+    url += `?program=${programId}`;
   }
   if (pageNumber) {
     url += `&page=${pageNumber}`;
@@ -32,7 +32,7 @@ export const getWorkshopsUrl = ({ programId, pageNumber }) => {
 export const getRegistrableWorkshopsUrl = 'fsm/fsm/?registrable=true';
 export const reviewAnswersUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/review/`;
 
-export const getProgramsUrl = 'fsm/event/';
+export const getProgramsUrl = 'fsm/program/';
 export const getOneRegistrationFormUrl = ({ id }) => `fsm/registration/${id}/`;
 export const submitRegistrationFormUrl = ({ id }) =>
   `fsm/registration/${id}/register/`;
@@ -88,7 +88,7 @@ export const enterWorkshopUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/enter/`;
 
 export const requestMentorUrl = 'fsm/requestmentor/';
 
-export const getEventRegistrationInfoUrl = 'auth/registration-info/';
+export const getProgramRegistrationInfoUrl = 'auth/registration-info/';
 
 export const paymentRequestUrl = 'auth/pay/';
 
@@ -96,7 +96,7 @@ export const paymentRequestUrl = 'auth/pay/';
 // landing
 export const getLandingDataUrl = '?';
 
-//event
+//program
 export const getCertificateUrl = ({ registrationReceiptId }) => `/fsm/receipts/${registrationReceiptId}/get_certificate/`;
 export const applyDiscountUrl = 'auth/verify-discount/';
 
@@ -123,7 +123,7 @@ export const createTeamUrl = 'fsm/team/';
 export const registerUsersViaCSVUrl = ({ registrationFormId }) => `fsm/registration_form_admin/${registrationFormId}/register_participants_via_list/`;
 export const registerOneUserUrl = ({ registrationFormId }) => `fsm/registration_form_admin/${registrationFormId}/register_individual_participant/`;
 
-// event:
+// program:
 export const teamCRUDUrl = ({ teamId }) => teamId ? `fsm/team/${teamId}/` : 'fsm/team/';
 export const addMentorToWorkshopUrl = ({ fsmId }) => `/fsm/fsm/${fsmId}/add_mentor/`;
 export const registrationFormCRUDUrl = ({ registrationFormId }) => registrationFormId ? `fsm/registration/${registrationFormId}/` : 'fsm/registration/';
@@ -142,7 +142,7 @@ export const stateCRUDUrl = ({ paperId }) => paperId ? `/fsm/state/${paperId}/` 
 export const edgeUrl = ({ edgeId }) => edgeId ? `/fsm/edge/${edgeId}/` : '/fsm/edge/';
 
 // fsm:
-export const eventInfoUrl = ({ pageNumber, programId }) => programId ? `fsm/event/${programId}/` : `fsm/event/?page=${pageNumber}`;
+export const programInfoUrl = ({ pageNumber, programId }) => programId ? `fsm/program/${programId}/` : `fsm/program/?page=${pageNumber}`;
 export const allRegistrationReceiptsUrl = ({ registrationFormId, pageNumber }) => `fsm/registration/${registrationFormId}/receipts/?page=${pageNumber}`;
 export const validateRegistrationReceiptUrl = ({ registrationReceiptId }) => `/fsm/receipts/${registrationReceiptId}/validate/`;
 export const getPlayerFromTeamUrl = ({ id }) => `/fsm/fsm/${id}/get_player_from_team/`;

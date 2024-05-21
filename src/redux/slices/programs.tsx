@@ -8,7 +8,7 @@ import {
   getProgramsUrl,
   getAllUserMerchandisesUrl,
   getCertificateUrl,
-  getEventRegistrationInfoUrl,
+  getProgramRegistrationInfoUrl,
   getMyInvitationsUrl,
   getOneRegistrationFormUrl,
   getTeamInvitationsUrl,
@@ -17,7 +17,7 @@ import {
   getWorkshopsUrl,
   inviteSomeoneUrl,
   paymentRequestUrl,
-  purchaseEventUrl,
+  purchaseProgramUrl,
   registrationReceiptUrl,
   respondInvitationUrl,
   submitDiscountCodeUrl,
@@ -27,7 +27,7 @@ import {
   registerUsersViaCSVUrl,
   addUserToTeamUrl,
   allRegistrationReceiptsUrl,
-  eventInfoUrl,
+  programInfoUrl,
   getPlayerFromTeamUrl,
   getTeamsUrl,
   makeTeamHeadUrl,
@@ -38,22 +38,21 @@ import {
   createTeamAndJoinActionUrl,
 } from '../constants/urls';
 import { getRequests, deleteRequest } from 'parse/mentor'
-import { InitialState } from 'types/redux/event'
+import { InitialState } from 'types/redux/program'
 
 const initialState: InitialState = {
   isFetching: false,
   workshops: [],
   workshopsCount: 0,
   programs: [],
-  event: null,
-  registeredEvents: [],
+  program: null,
   uploadedFile: { link: '', name: '', id: '' },
   myInvitations: [],
   teamInvitations: [],
   allRegistrationReceipts: [],
   registrationReceipt: null,
   widgets: [],
-  allEventTeams: [],
+  allProgramTeams: [],
   teamsRequests: null,
   myWorkshops: [],
   registrationForm: null,
@@ -66,19 +65,19 @@ const initialState: InitialState = {
 };
 
 export const getProgramsAction = createAsyncThunkApi(
-  'events/getProgramsAction',
+  'programs/getProgramsAction',
   Apis.GET,
   getProgramsUrl
 );
 
 export const getOneRegistrationFormAction = createAsyncThunkApi(
-  'events/getOneRegistrationFormAction',
+  'programs/getOneRegistrationFormAction',
   Apis.GET,
   getOneRegistrationFormUrl
 );
 
 export const submitRegistrationFormAction = createAsyncThunkApi(
-  'events/submitRegistrationFormAction',
+  'programs/submitRegistrationFormAction',
   Apis.POST,
   submitRegistrationFormUrl,
   {
@@ -95,7 +94,7 @@ export const submitRegistrationFormAction = createAsyncThunkApi(
 );
 
 export const applyDiscountCodeAction = createAsyncThunkApi(
-  'events/applyDiscountCodeAction',
+  'programs/applyDiscountCodeAction',
   Apis.POST,
   submitDiscountCodeUrl,
   {
@@ -106,15 +105,15 @@ export const applyDiscountCodeAction = createAsyncThunkApi(
 );
 
 export const getOneMerchandiseAction = createAsyncThunkApi(
-  'events/getOneMerchandiseAction',
+  'programs/getOneMerchandiseAction',
   Apis.GET,
   getAllUserMerchandisesUrl
 );
 
-export const purchaseEventAction = createAsyncThunkApi(
-  'events/purchaseEventAction',
+export const purchaseProgramAction = createAsyncThunkApi(
+  'programs/purchaseProgramAction',
   Apis.POST,
-  purchaseEventUrl,
+  purchaseProgramUrl,
   {
     defaultNotification: {
       success: 'در حال انتقال به صفحه‌ی پرداخت...',
@@ -125,32 +124,32 @@ export const purchaseEventAction = createAsyncThunkApi(
 );
 
 export const getOneRegistrationReceiptAction = createAsyncThunkApi(
-  'events/getOneRegistrationReceiptAction',
+  'programs/getOneRegistrationReceiptAction',
   Apis.GET,
   registrationReceiptUrl
 );
 
 
 export const getTeamAction = createAsyncThunkApi(
-  'events/getTeamAction',
+  'programs/getTeamAction',
   Apis.GET,
   getTeamUrl
 );
 
 export const getTeamInvitationsAction = createAsyncThunkApi(
-  'events/getTeamInvitationsAction',
+  'programs/getTeamInvitationsAction',
   Apis.GET,
   getTeamInvitationsUrl
 );
 
 export const getMyInvitationsAction = createAsyncThunkApi(
-  'events/getMyInvitationsAction',
+  'programs/getMyInvitationsAction',
   Apis.GET,
   getMyInvitationsUrl
 );
 
 export const inviteSomeoneAction = createAsyncThunkApi(
-  'events/inviteSomeoneAction',
+  'programs/inviteSomeoneAction',
   Apis.POST,
   inviteSomeoneUrl,
   {
@@ -162,7 +161,7 @@ export const inviteSomeoneAction = createAsyncThunkApi(
 );
 
 export const deleteInvitationAction = createAsyncThunkApi(
-  'events/deleteInvitationAction',
+  'programs/deleteInvitationAction',
   Apis.DELETE,
   deleteInvitationUrl,
   {
@@ -174,7 +173,7 @@ export const deleteInvitationAction = createAsyncThunkApi(
 );
 
 export const respondInvitationAction = createAsyncThunkApi(
-  'events/respondInvitationAction',
+  'programs/respondInvitationAction',
   Apis.POST,
   respondInvitationUrl,
   {
@@ -187,7 +186,7 @@ export const respondInvitationAction = createAsyncThunkApi(
 
 
 export const createTeamAction = createAsyncThunkApi(
-  'events/createTeamAction',
+  'programs/createTeamAction',
   Apis.POST,
   TeamCRUDUrl,
   {
@@ -199,7 +198,7 @@ export const createTeamAction = createAsyncThunkApi(
 );
 
 export const createTeamAndJoinAction = createAsyncThunkApi(
-  'events/createTeamAndJoinAction',
+  'programs/createTeamAndJoinAction',
   Apis.POST,
   createTeamAndJoinActionUrl,
   {
@@ -211,7 +210,7 @@ export const createTeamAndJoinAction = createAsyncThunkApi(
 );
 
 export const updateTeamChatRoomLinkAction = createAsyncThunkApi(
-  'events/updateTeamChatRoomLinkAction',
+  'programs/updateTeamChatRoomLinkAction',
   Apis.PATCH,
   TeamCRUDUrl,
   {
@@ -224,7 +223,7 @@ export const updateTeamChatRoomLinkAction = createAsyncThunkApi(
 
 
 export const deleteTeamAction = createAsyncThunkApi(
-  'events/deleteTeamAction',
+  'programs/deleteTeamAction',
   Apis.DELETE,
   TeamCRUDUrl,
   {
@@ -235,20 +234,20 @@ export const deleteTeamAction = createAsyncThunkApi(
   }
 );
 
-export const getEventRegistrationInfoAction = createAsyncThunkApi(
-  'events/getEventRegistrationInfo',
+export const getProgramRegistrationInfoAction = createAsyncThunkApi(
+  'programs/getProgramRegistrationInfo',
   Apis.POST,
-  getEventRegistrationInfoUrl,
+  getProgramRegistrationInfoUrl,
   {
     bodyCreator: ({ programId, memberUuid }) => ({
-      event_id: programId,
+      program_id: programId,
       member_uuid: memberUuid,
     }),
   }
 );
 
 export const paymentRequestAction = createAsyncThunkApi(
-  'events/paymentRequest',
+  'programs/paymentRequest',
   Apis.POST,
   paymentRequestUrl,
   {
@@ -263,7 +262,7 @@ export const paymentRequestAction = createAsyncThunkApi(
 );
 
 export const applyDiscountAction = createAsyncThunkApi(
-  'events/applyDiscount',
+  'programs/applyDiscount',
   Apis.POST,
   applyDiscountUrl,
   {
@@ -275,7 +274,7 @@ export const applyDiscountAction = createAsyncThunkApi(
 );
 
 export const getCertificateAction = createAsyncThunkApi(
-  'events/getCertificate',
+  'programs/getCertificate',
   Apis.GET,
   getCertificateUrl,
   {
@@ -285,9 +284,9 @@ export const getCertificateAction = createAsyncThunkApi(
   }
 );
 
-// mentor events:
+// mentor programs:
 export const getRegistrationFormAction = createAsyncThunkApi(
-  'events/getRegistrationFormAction',
+  'programs/getRegistrationFormAction',
   Apis.GET,
   registrationFormCRUDUrl,
   {
@@ -299,7 +298,7 @@ export const getRegistrationFormAction = createAsyncThunkApi(
 
 
 export const registerUsersViaCSVAction = createAsyncThunkApi(
-  'events/registerUsersViaCSVAction',
+  'programs/registerUsersViaCSVAction',
   Apis.POST_FORM_DATA,
   registerUsersViaCSVUrl,
   {
@@ -311,7 +310,7 @@ export const registerUsersViaCSVAction = createAsyncThunkApi(
 );
 
 export const registerOneUserAction = createAsyncThunkApi(
-  'events/registerOneUserAction',
+  'programs/registerOneUserAction',
   Apis.POST,
   registerOneUserUrl,
   {
@@ -323,7 +322,7 @@ export const registerOneUserAction = createAsyncThunkApi(
 );
 
 export const addUserToTeamAction = createAsyncThunkApi(
-  'events/addUserToTeamAction',
+  'programs/addUserToTeamAction',
   Apis.POST,
   addUserToTeamUrl,
   {
@@ -334,10 +333,10 @@ export const addUserToTeamAction = createAsyncThunkApi(
   }
 );
 
-export const editOneEventInfoAction = createAsyncThunkApi(
-  'events/editOneEventInfoAction',
+export const editOneProgramInfoAction = createAsyncThunkApi(
+  'programs/editOneProgramInfoAction',
   Apis.PATCH,
-  eventInfoUrl,
+  programInfoUrl,
   {
     bodyCreator: ({ workshopPlayerId }) => ({
       player_workshop: workshopPlayerId,
@@ -346,13 +345,13 @@ export const editOneEventInfoAction = createAsyncThunkApi(
 );
 
 export const getAllRegistrationReceiptsAction = createAsyncThunkApi(
-  'events/getAllRegistrationReceiptsAction',
+  'programs/getAllRegistrationReceiptsAction',
   Apis.GET,
   allRegistrationReceiptsUrl
 );
 
 export const validateRegistrationReceiptAction = createAsyncThunkApi(
-  'events/validateRegistrationReceiptAction',
+  'programs/validateRegistrationReceiptAction',
   Apis.POST,
   validateRegistrationReceiptUrl,
   {
@@ -362,20 +361,20 @@ export const validateRegistrationReceiptAction = createAsyncThunkApi(
   }
 );
 
-export const getEventTeamsAction = createAsyncThunkApi(
-  'events/getEventTeamsAction',
+export const getProgramTeamsAction = createAsyncThunkApi(
+  'programs/getProgramTeamsAction',
   Apis.GET,
   getTeamsUrl
 );
 
 export const createWorkshopAction = createAsyncThunkApi(
-  'events/createWorkshopAction',
+  'programs/createWorkshopAction',
   Apis.POST,
   workshopCRUDUrl
 );
 
 export const addMentorToWorkshopAction = createAsyncThunkApi(
-  'events/addMentorToWorkshopAction',
+  'programs/addMentorToWorkshopAction',
   Apis.POST,
   addMentorToWorkshopUrl,
   {
@@ -387,7 +386,7 @@ export const addMentorToWorkshopAction = createAsyncThunkApi(
 );
 
 export const getPlayerFromTeamAction = createAsyncThunkApi(
-  'events/removeEdgeAction',
+  'programs/removeEdgeAction',
   Apis.POST,
   getPlayerFromTeamUrl,
   {
@@ -398,7 +397,7 @@ export const getPlayerFromTeamAction = createAsyncThunkApi(
 );
 
 export const makeTeamHeadAction = createAsyncThunkApi(
-  'events/makeTeamHeadAction',
+  'programs/makeTeamHeadAction',
   Apis.POST,
   makeTeamHeadUrl,
   {
@@ -412,7 +411,7 @@ export const makeTeamHeadAction = createAsyncThunkApi(
 );
 
 export const removeFromTeamAction = createAsyncThunkApi(
-  'events/removeFromTeamAction',
+  'programs/removeFromTeamAction',
   Apis.POST,
   removeFromTeamUrl,
   {
@@ -459,7 +458,7 @@ export const deleteRequestMentorAction = createAsyncThunk<any, { teamId: string,
   }
 );
 
-// end of mentor events
+// end of mentor programs
 
 const isFetching = (state) => {
   state.isFetching = true;
@@ -469,8 +468,8 @@ const isNotFetching = (state) => {
   state.isFetching = false;
 };
 
-const eventSlice = createSlice({
-  name: 'events',
+const programSlice = createSlice({
+  name: 'programs',
   initialState,
   reducers: {
     createRequestMentor: (state, { payload: { playerId, teamId, fsmId } }) => {
@@ -511,12 +510,12 @@ const eventSlice = createSlice({
     [submitRegistrationFormAction.fulfilled.toString()]: isNotFetching,
     [submitRegistrationFormAction.rejected.toString()]: isNotFetching,
 
-    [purchaseEventAction.pending.toString()]: isFetching,
-    [purchaseEventAction.fulfilled.toString()]: (state, { payload: { response } }) => {
+    [purchaseProgramAction.pending.toString()]: isFetching,
+    [purchaseProgramAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.isFetching = false;
       window.location.href = response.payment_link; //todo
     },
-    [purchaseEventAction.rejected.toString()]: isNotFetching,
+    [purchaseProgramAction.rejected.toString()]: isNotFetching,
 
     [applyDiscountCodeAction.pending.toString()]: isFetching,
     [applyDiscountCodeAction.fulfilled.toString()]: (state, { payload: { response } }) => {
@@ -595,20 +594,20 @@ const eventSlice = createSlice({
     [createTeamAction.pending.toString()]: isFetching,
     [createTeamAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.isFetching = false;
-      state.allEventTeams = [response, ...state.allEventTeams];
+      state.allProgramTeams = [response, ...state.allProgramTeams];
     },
     [createTeamAction.rejected.toString()]: isNotFetching,
 
     [updateTeamChatRoomLinkAction.pending.toString()]: isFetching,
     [updateTeamChatRoomLinkAction.fulfilled.toString()]: (state, { meta: { arg: { teamId } }, payload: { response: returnedTeam } }) => {
-      state.allEventTeams = [...state.allEventTeams].map(team => team.id !== teamId ? team : { ...returnedTeam })
+      state.allProgramTeams = [...state.allProgramTeams].map(team => team.id !== teamId ? team : { ...returnedTeam })
       state.isFetching = false;
     },
     [updateTeamChatRoomLinkAction.rejected.toString()]: isNotFetching,
 
     [deleteTeamAction.pending.toString()]: isFetching,
     [deleteTeamAction.fulfilled.toString()]: (state, { meta: { arg: { teamId } } }) => {
-      state.allEventTeams = [...state.allEventTeams].filter(team => team.id != teamId)
+      state.allProgramTeams = [...state.allProgramTeams].filter(team => team.id != teamId)
       state.isFetching = false;
     },
     [deleteTeamAction.rejected.toString()]: isNotFetching,
@@ -646,12 +645,12 @@ const eventSlice = createSlice({
     },
     [getAllRegistrationReceiptsAction.rejected.toString()]: isNotFetching,
 
-    [getEventTeamsAction.pending.toString()]: isFetching,
-    [getEventTeamsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.allEventTeams = response;
+    [getProgramTeamsAction.pending.toString()]: isFetching,
+    [getProgramTeamsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
+      state.allProgramTeams = response;
       state.isFetching = false;
     },
-    [getEventTeamsAction.rejected.toString()]: isNotFetching,
+    [getProgramTeamsAction.rejected.toString()]: isNotFetching,
 
     [createWorkshopAction.pending.toString()]: isFetching,
     [createWorkshopAction.fulfilled.toString()]: (state, { payload: { response } }) => {
@@ -663,26 +662,26 @@ const eventSlice = createSlice({
 
     [makeTeamHeadAction.pending.toString()]: isFetching,
     [makeTeamHeadAction.fulfilled.toString()]: (state, action) => {
-      let newAllEventTeams = [...state.allEventTeams];
-      for (let i = 0; i < newAllEventTeams.length; i++) {
-        if (newAllEventTeams[i].id == action.payload.response.id) {
-          newAllEventTeams[i] = action.payload.response;
+      let newAllProgramTeams = [...state.allProgramTeams];
+      for (let i = 0; i < newAllProgramTeams.length; i++) {
+        if (newAllProgramTeams[i].id == action.payload.response.id) {
+          newAllProgramTeams[i] = action.payload.response;
         }
       }
-      state.allEventTeams = newAllEventTeams;
+      state.allProgramTeams = newAllProgramTeams;
       state.isFetching = false;
     },
     [makeTeamHeadAction.rejected.toString()]: isNotFetching,
 
     [addUserToTeamAction.pending.toString()]: isFetching,
     [addUserToTeamAction.fulfilled.toString()]: (state, action) => {
-      let newAllEventTeams = [...state.allEventTeams];
-      for (let i = 0; i < newAllEventTeams.length; i++) {
-        if (newAllEventTeams[i].id == action.payload.response.id) {
-          newAllEventTeams[i] = action.payload.response;
+      let newAllProgramTeams = [...state.allProgramTeams];
+      for (let i = 0; i < newAllProgramTeams.length; i++) {
+        if (newAllProgramTeams[i].id == action.payload.response.id) {
+          newAllProgramTeams[i] = action.payload.response;
         }
       }
-      state.allEventTeams = newAllEventTeams;
+      state.allProgramTeams = newAllProgramTeams;
       state.isFetching = false;
     },
     [addUserToTeamAction.rejected.toString()]: isNotFetching,
@@ -703,16 +702,16 @@ const eventSlice = createSlice({
 
     [removeFromTeamAction.pending.toString()]: isFetching,
     [removeFromTeamAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg: { receipt } } }) => {
-      const newAllEventTeams = [...state.allEventTeams];
-      for (let i = 0; i < newAllEventTeams.length; i++) {
-        const team = newAllEventTeams[i];
+      const newAllProgramTeams = [...state.allProgramTeams];
+      for (let i = 0; i < newAllProgramTeams.length; i++) {
+        const team = newAllProgramTeams[i];
         for (let j = 0; j < team.members.length; j++) {
           if (team.members[j].id === receipt) {
             team.members.splice(j, 1);
           }
         }
       }
-      state.allEventTeams = newAllEventTeams;
+      state.allProgramTeams = newAllProgramTeams;
       state.isFetching = false;
     },
     [removeFromTeamAction.rejected.toString()]: isNotFetching,
@@ -722,6 +721,6 @@ const eventSlice = createSlice({
 export const {
   createRequestMentor: createRequestMentorAction,
   removeRequestMentor: removeRequestMentorAction,
-} = eventSlice.actions;
+} = programSlice.actions;
 
-export const { reducer: eventsReducer } = eventSlice;
+export const { reducer: programsReducer } = programSlice;

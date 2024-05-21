@@ -29,7 +29,7 @@ type FinancialTabPropsType = {
   createDiscountCode: any;
   deleteDiscountCode: any;
   getAllMerchandiseDiscountCodes: any;
-  event: ProgramType;
+  program: ProgramType;
   discountCodes: any;
 }
 
@@ -37,17 +37,17 @@ const Financial: FC<FinancialTabPropsType> = ({
   createDiscountCode,
   deleteDiscountCode,
   getAllMerchandiseDiscountCodes,
-  event,
+  program,
   discountCodes,
 }) => {
   const [value, setValue] = useState<number>();
   const [username, setUsername] = useState<string>();
 
   useEffect(() => {
-    if (event?.merchandise?.id) {
-      getAllMerchandiseDiscountCodes({ merchandiseId: event?.merchandise?.id });
+    if (program?.merchandise?.id) {
+      getAllMerchandiseDiscountCodes({ merchandiseId: program?.merchandise?.id });
     }
-  }, [getAllMerchandiseDiscountCodes, event?.merchandise?.id])
+  }, [getAllMerchandiseDiscountCodes, program?.merchandise?.id])
 
   const handleCreateDiscountCode = () => {
     if (!username) {
@@ -62,7 +62,7 @@ const Financial: FC<FinancialTabPropsType> = ({
       toast.error('لطفاً عددی طبیعی بین ۰ تا ۱۰۰ وارد کنید.');
       return;
     }
-    createDiscountCode({ value: (value / 100), merchandise: event?.merchandise?.id, username });
+    createDiscountCode({ value: (value / 100), merchandise: program?.merchandise?.id, username });
   }
 
   const handleDeleteDiscountCode = (discountCodeId) => {
@@ -172,7 +172,7 @@ const Financial: FC<FinancialTabPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  event: state.events.event,
+  program: state.programs.program,
   newDiscountCode: state.account.newDiscountCode,
   discountCodes: state.account.discountCodes,
 });

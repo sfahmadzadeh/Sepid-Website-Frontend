@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Stepper from 'components/organisms/Stepper';
 import {
   getOneRegistrationFormAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import Layout from 'components/template/Layout';
 import { ProgramType, RegistrationFormType } from 'types/models';
 import useRegistrationSteps from 'components/hooks/useRegistrationSteps';
@@ -44,7 +44,7 @@ const RegistrationProcess: FC<RegistrationProcessPropsType> = ({
   if (currentStepNameIndex === steps.length - 1) {
     navigate(`/program/${programId}/`);
     window.location.reload();
-    // todo: invalidate event fetched info
+    // todo: invalidate program fetched info
   }
 
   return (
@@ -69,7 +69,7 @@ const RegistrationProcess: FC<RegistrationProcessPropsType> = ({
 
 const mapStateToProps = (state) => ({
   userInfo: state.account.userInfo,
-  registrationForm: state.events.registrationForm,
+  registrationForm: state.programs.registrationForm,
 });
 
 export default connect(mapStateToProps, {

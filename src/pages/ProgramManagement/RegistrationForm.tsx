@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { EditPaper } from 'components/template/Paper';
-import { getRegistrationFormAction } from 'redux/slices/events';
+import { getRegistrationFormAction } from 'redux/slices/programs';
 
 type RegistrationFormPropsType = {
   registrationFormId: any;

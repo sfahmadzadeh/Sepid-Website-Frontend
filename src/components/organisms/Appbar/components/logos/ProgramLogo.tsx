@@ -5,16 +5,16 @@ import useWidth from 'utils/UseWidth';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-function ProgramLogo({ event }) {
+function ProgramLogo({ program }) {
   const { programId } = useParams();
   const width = useWidth();
 
   return (
     <Stack direction={'row'} alignItems={'center'}>
-      <Tooltip title={event?.name} arrow>
+      <Tooltip title={program?.name} arrow>
         <IconButton disabled={width !== 'xs'} component={Link} to={`/program/${programId}/`}>
           <img
-            src={event?.cover_page}
+            src={program?.cover_page}
             alt='course-logo'
             style={{
               objectFit: 'cover',
@@ -31,7 +31,7 @@ function ProgramLogo({ event }) {
           fontSize={20} color={'black'}
           maxWidth={{ xs: 100, sm: 200, md: 300 }} whiteSpace={'nowrap'}
           overflow={'hidden'} textOverflow={'ellipsis'}>
-          {event?.name}
+          {program?.name}
         </Typography>
       </Button>
     </Stack>
@@ -39,7 +39,7 @@ function ProgramLogo({ event }) {
 }
 
 const mapStateToProps = (state) => ({
-  event: state.events.event,
+  program: state.programs.program,
 })
 
 export default connect(mapStateToProps)(ProgramLogo);

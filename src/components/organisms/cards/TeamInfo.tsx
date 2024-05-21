@@ -20,7 +20,7 @@ import {
   makeTeamHeadAction,
   deleteTeamAction,
   updateTeamChatRoomLinkAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import TeamMember from 'components/atoms/TeamMember';
 
 const TeamInfo = ({

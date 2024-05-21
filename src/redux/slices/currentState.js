@@ -95,7 +95,7 @@ export const enterWorkshopAction = createAsyncThunkApi(
   Apis.POST,
   enterWorkshopUrl,
   {
-    bodyCreator: ({ programId, fsmId, password }) => ({ event: programId, fsm: fsmId, password }),
+    bodyCreator: ({ programId, fsmId, password }) => ({ program: programId, fsm: fsmId, password }),
     defaultNotification: {
       showHttpError: true
     }

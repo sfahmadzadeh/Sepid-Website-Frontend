@@ -16,7 +16,7 @@ import RegisterUsersViaCSV from './RegisterUsersViaCSV';
 import RegisterOneUser from './RegisterOneUser';
 import {
   getAllRegistrationReceiptsAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import { faSeri, toPersianNumber } from 'utils/translateNumber';
 import { RegistrationReceiptType } from 'types/models';
 
@@ -49,7 +49,7 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
     }
   }, [registrationFormId, page])
 
-  const handleChange = (event, value) => {
+  const handleChange = (_, value) => {
     setPage(value);
   };
 
@@ -117,7 +117,7 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
 
 const mapStateToProps = (state, ownProps) => ({
   registrationFormId: ownProps.registrationFormId,
-  allRegistrationReceipts: state.events.allRegistrationReceipts || [],
+  allRegistrationReceipts: state.programs.allRegistrationReceipts || [],
 });
 
 export default connect(mapStateToProps, {
