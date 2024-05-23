@@ -23,6 +23,7 @@ import {
   getRequestMentorAction,
   removeRequestMentorAction,
 } from 'redux/slices/programs';
+import NoDataFound from 'components/molecules/NoDataFound';
 
 function Teams({
   addUserToTeam,
@@ -184,22 +185,29 @@ function Teams({
       >
         {teamsCards}
       </Grid>
-      <Pagination
-        sx={{
-          justifyContent: "center",
-          justifySelf: 'center',
-          margin: '40px auto 0 auto',
-          padding: "10px"
-        }}
-        count={noOfPages}
-        page={page}
-        onChange={handleChange}
-        defaultPage={1}
-        color="primary"
-        size="large"
-        showFirstButton
-        showLastButton
-      />
+      {teams.length === 0 &&
+        <Grid item xs={12}>
+          <NoDataFound variant={4} />
+        </Grid>
+      }
+      {teams.length > 0 &&
+        <Pagination
+          sx={{
+            justifyContent: "center",
+            justifySelf: 'center',
+            margin: '40px auto 0 auto',
+            padding: "10px"
+          }}
+          count={noOfPages}
+          page={page}
+          onChange={handleChange}
+          defaultPage={1}
+          color="primary"
+          size="large"
+          showFirstButton
+          showLastButton
+        />
+      }
     </Grid>
   );
 }
