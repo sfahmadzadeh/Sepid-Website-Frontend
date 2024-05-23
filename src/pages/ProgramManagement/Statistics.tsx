@@ -51,7 +51,7 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
         </Typography>
       </Stack>
 
-      <Stack spacing={1}>
+      <Stack spacing={1} width={'100%'}>
         <Typography variant='h3' gutterBottom>
           {'آمار کارگاه‌ها'}
         </Typography>
