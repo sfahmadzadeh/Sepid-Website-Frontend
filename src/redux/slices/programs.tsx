@@ -377,12 +377,6 @@ export const addMentorToWorkshopAction = createAsyncThunkApi(
   'programs/addMentorToWorkshopAction',
   Apis.POST,
   addMentorToWorkshopUrl,
-  {
-    defaultNotification: {
-      success: 'همیار با موفقیت اضافه شد.',
-      error: 'شما دسترسی لازم برای این عملیات را ندارید.'
-    },
-  }
 );
 
 export const getPlayerFromTeamAction = createAsyncThunkApi(

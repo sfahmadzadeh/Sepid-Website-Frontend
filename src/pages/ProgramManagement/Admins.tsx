@@ -22,7 +22,7 @@ type AdminsTabPropsType = {
 const AdminTab: FC<AdminsTabPropsType> = ({
 }) => {
   const { programId } = useParams();
-  const [username, setUsername] = useState<string>(null);
+  const [username, setUsername] = useState<string>('');
   const [addAdminToProgram, addAdminToProgramResutl] = useAddAdminToProgramMutation();
   const [removeAdminFromProgram, _] = useRemoveAdminFromProgramMutation();
   const { data: programAdmins } = useGetProgramAdminsQuery({ programId });
@@ -33,7 +33,7 @@ const AdminTab: FC<AdminsTabPropsType> = ({
 
   useEffect(() => {
     if (addAdminToProgramResutl.isSuccess) {
-      setUsername(null);
+      setUsername('');
     }
   }, [addAdminToProgramResutl])
 

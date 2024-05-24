@@ -169,15 +169,6 @@ export const removeMentorFromWorkshopAction = createAsyncThunkApi(
   'programs/removeMentorFromWorkshopAction',
   Apis.POST,
   removeMentorURL,
-  {
-    bodyCreator: ({ mentor }) => ({
-      ...mentor
-    }),
-    defaultNotification: {
-      success: 'همیار با موفقیت از کارگاه حذف شد',
-      error: 'اشکالی در حذف همیار از کارگاه رخداد.'
-    },
-  }
 );
 
 const IndexSlice = createSlice({
