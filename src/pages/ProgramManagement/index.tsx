@@ -8,6 +8,7 @@ import ArticleIcon from '@mui/icons-material/Article';
 import InfoIcon from '@mui/icons-material/Info';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
+import PersonIcon from '@mui/icons-material/Person';
 
 import React, { useEffect, FC } from 'react';
 import { connect } from 'react-redux';
@@ -28,6 +29,7 @@ import StatisticsTab from './Statistics';
 import Certificates from './Certificates';
 import { DashboardTabType } from 'types/global';
 import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import Admins from './Admins';
 
 const tabs: DashboardTabType[] = [
   {
@@ -60,6 +62,12 @@ const tabs: DashboardTabType[] = [
     icon: WorkspacePremiumIcon,
     component: Certificates,
     isActive: false,
+  },
+  {
+    name: 'mentors',
+    label: 'مدیران',
+    icon: PersonIcon,
+    component: Admins,
   },
   {
     name: 'teams',
@@ -150,7 +158,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
           </Box>
         </Grid>
         <Grid item sm={9} xs={12} >
-          <Paper elevation={3} sx={{ padding: '10px 20px' }}>
+          <Paper elevation={3}>
             {TabComponent}
           </Paper>
         </Grid>
