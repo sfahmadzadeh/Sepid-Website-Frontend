@@ -5,7 +5,7 @@ import Layout from 'components/template/Layout';
 import { ProgramType } from 'types/models';
 import ProgramCardSkeleton from 'components/organisms/cards/ProgramCardSkeleton';
 import Banner from 'components/molecules/Banner';
-import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramsQuery } from 'redux/features/program/ProgramSlice';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import NoDataFound from 'components/molecules/NoDataFound';
 

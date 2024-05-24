@@ -9,7 +9,7 @@ import ProgramInfoForm from 'components/template/forms/ProgramInfoForm';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useGetProgramQuery, useUpdateProgramMutation } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery, useUpdateProgramMutation } from 'redux/features/program/ProgramSlice';
 
 import { ProgramType } from 'types/models';
 import removeBlankAttributes from 'utils/removeBlankAttributes';

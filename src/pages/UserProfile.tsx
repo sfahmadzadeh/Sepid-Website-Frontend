@@ -9,7 +9,7 @@ import {
 } from 'redux/slices/account';
 import { DashboardTabType } from 'types/global';
 import { UserInfoType } from 'types/profile';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 let tabs: DashboardTabType[] = [
   {

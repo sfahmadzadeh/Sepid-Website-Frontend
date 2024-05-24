@@ -35,7 +35,7 @@ import { ProgramType, FSMType } from 'types/models';
 import Mentors from './Mentors';
 import GoToAnswer from './GoToAnswer';
 import { DashboardTabType } from 'types/global';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 const initialTabs: DashboardTabType[] = [
   {

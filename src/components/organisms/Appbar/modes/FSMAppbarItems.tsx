@@ -10,7 +10,7 @@ import DashboardButton from '../components/DashboardButton';
 import FSMLogo from '../components/logos/FSMLogo';
 import UserAvatar from '../components/UserAvatar';
 import { useParams } from 'react-router-dom';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 const FSMAppbarItems = ({ fsm }) => {
   const { programId } = useParams();

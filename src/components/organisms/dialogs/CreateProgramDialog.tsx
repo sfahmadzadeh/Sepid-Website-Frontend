@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { ProgramType } from 'types/models';
 import ProgramInfoForm from 'components/template/forms/ProgramInfoForm';
 import ProgramCard from '../cards/ProgramCard';
-import { useCreateProgramMutation } from 'redux/features/ProgramSlice';
+import { useCreateProgramMutation } from 'redux/features/program/ProgramSlice';
 
 type CreateProgramDialogPropsType = {
   open: boolean;

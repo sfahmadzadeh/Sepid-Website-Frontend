@@ -1,7 +1,7 @@
 import { Paper, Stack, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { ProgramType } from 'types/models';
 
 type RegistrationStatusPropsType = {

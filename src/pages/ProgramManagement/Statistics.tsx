@@ -11,7 +11,7 @@ import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import { toPersianNumber } from 'utils/translateNumber';
 import MetabaseDashboard from 'components/template/MetabaseDashboard';
 import { useGetFSMsQuery } from 'redux/features/FSMSlice';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type StatisticsTabPropsType = {
 

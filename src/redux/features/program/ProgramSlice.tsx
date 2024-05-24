@@ -1,5 +1,5 @@
 import { ProgramType } from 'types/models';
-import { ManageContentServiceApi } from './ManageContentServiceApiSlice';
+import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type GetProgramsInputType = {
   websiteName: string | undefined;

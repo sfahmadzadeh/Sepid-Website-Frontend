@@ -13,7 +13,7 @@ import { WidgetModes } from 'components/organisms/Widget';
 import ProgramInfo from 'components/organisms/ProgramInfo';
 import { ProgramType, RegistrationFormType } from 'types/models';
 import useCollectWidgetsAnswers from 'components/hooks/useCollectWidgetsAnswers';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 const ANSWER_TYPES = {
   SmallAnswerProblem: 'SmallAnswer',

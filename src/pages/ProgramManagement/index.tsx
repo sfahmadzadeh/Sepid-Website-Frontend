@@ -28,7 +28,7 @@ import FSMs from './FSMs';
 import StatisticsTab from './Statistics';
 import Certificates from './Certificates';
 import { DashboardTabType } from 'types/global';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import Admins from './Admins';
 
 const tabs: DashboardTabType[] = [

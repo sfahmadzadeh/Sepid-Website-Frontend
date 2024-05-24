@@ -38,7 +38,7 @@ import Layout from 'components/template/Layout';
 import { Team, ProgramType } from 'types/models';
 import RespondInvitation from 'components/molecules/RespondInvitation';
 import { toast } from 'react-toastify';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 

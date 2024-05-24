@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import { addMentorToWorkshopAction } from 'redux/slices/programs';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
-import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramsQuery } from 'redux/features/program/ProgramSlice';
 import ManageProgramCard from 'components/organisms/cards/ManageProgramCard';
 import CreateProgramDialog from 'components/organisms/dialogs/CreateProgramDialog';
 import NoDataFound from 'components/molecules/NoDataFound';

@@ -12,7 +12,7 @@ import {
 } from 'redux/slices/programs';
 import ProgramPageDashboardButton from 'components/molecules/ProgramPageDashboardButton';
 import ProgramContactInfo from 'components/molecules/ProgramContactInfo';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import ShareProgramButton from 'components/atoms/ShareProgramButton';
 
 type ProgramPageSidebarPropsType = {

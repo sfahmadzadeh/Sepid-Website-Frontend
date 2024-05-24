@@ -12,7 +12,7 @@ import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import Banner from 'components/molecules/Banner';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import { useGetFSMsQuery } from 'redux/features/FSMSlice';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type ProgramPropsType = {}
 

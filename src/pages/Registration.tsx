@@ -11,7 +11,7 @@ import Layout from 'components/template/Layout';
 import { ProgramType, RegistrationFormType } from 'types/models';
 import useRegistrationSteps from 'components/hooks/useRegistrationSteps';
 import { UserInfoType } from 'types/profile';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type RegistrationProcessPropsType = {
   registrationForm: RegistrationFormType;

@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import {
   applyDiscountCodeAction,
   getOneRegistrationFormAction,

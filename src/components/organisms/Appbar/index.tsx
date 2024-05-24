@@ -20,7 +20,7 @@ import { useParams } from 'react-router-dom';
 import useAppbarItems from './useAppbarModes';
 import { AppbarModes } from 'types/global';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
-import { useGetProgramQuery } from 'redux/features/ProgramSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type AppbarPropsType = {
   fsm: any;
