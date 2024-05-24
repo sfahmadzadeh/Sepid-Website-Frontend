@@ -49,7 +49,7 @@ const InfoTab: FC<InfoTabPropsType> = ({
   }
 
   return (
-    <Stack spacing={4}>
+    <Stack spacing={3} alignItems={'start'} justifyContent={'center'} padding={2}>
       <Stack>
         <Typography variant='h2' gutterBottom>
           {'مشخصات دوره'}

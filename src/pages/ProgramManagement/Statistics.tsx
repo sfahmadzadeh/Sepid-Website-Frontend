@@ -36,11 +36,7 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
   if (!fsmsData) return;
 
   return (
-    <Stack spacing={3} alignItems={'start'} justifyContent={'center'} paddingTop={2}>
-
-      <Typography variant='h2' gutterBottom>
-        {'آمار'}
-      </Typography>
+    <Stack spacing={3} alignItems={'start'} justifyContent={'center'}>
 
       <Stack spacing={1}>
         <Typography variant='h3' gutterBottom>

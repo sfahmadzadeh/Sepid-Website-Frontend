@@ -22,6 +22,7 @@ import { addMentorToWorkshopAction } from 'redux/slices/programs';
 import { getAllWorkshopMentorsAction, removeMentorFromWorkshopAction } from 'redux/slices/workshop';
 import { Mentor } from 'types/models';
 import { toEnglishNumber } from 'utils/translateNumber';
+import InfoIcon from '@mui/icons-material/Info';
 
 type MentorsPropsType = {
   addMentorToWorkshop: Function,
@@ -68,21 +69,25 @@ const Mentors: FC<MentorsPropsType> = ({
       <Grid
         padding={2}
         container
-        item
         spacing={2}
         alignItems="center"
         justifyContent="center"
         direction="row">
 
-        <Grid item container xs={12} spacing={2}>
-          <Grid item>
+        <Grid item xs={12} spacing={2}>
+          <Stack direction={'row'} alignItems={'center'}>
             <Typography variant='h2'>
-              {'افزودن همیار به کارگاه'}
+              {'همیاران کارگاه'}
             </Typography>
-          </Grid>
+            <Tooltip title='همیار کارگاه تنها به تنظیمات یک کارگاه دسترسی دارد؛ از جمله می‌تواند محتوای کارگاه را ویرایش کند، پاسخ‌های شرکت‌کنندگان را تصحیح کند یا به درخواست آن‌ها پاسخ دهد.'>
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
+          </Stack>
         </Grid>
 
-        <Grid item container xs spacing={1} justifyContent="space-evenly">
+        <Grid item container spacing={1} justifyContent="space-evenly">
           <Grid item xs={12} sm={6}>
             <TextField
               value={properties.username}
@@ -102,14 +107,13 @@ const Mentors: FC<MentorsPropsType> = ({
               variant="contained"
               color="primary"
               onClick={addMentor}>
-              {'بیافزا'}
+              {'افزودن همیار جدید'}
             </Button>
           </Grid>
         </Grid>
-
       </Grid>
 
-      <Divider sx={{ margin: '30px auto' }}></Divider>
+      <Divider />
 
       <TableContainer>
         <Table>
