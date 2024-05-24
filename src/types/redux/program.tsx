@@ -8,7 +8,6 @@ import {
   RegistrationFormType,
   Merchandise, 
   UploadedFile,
-  Mentor,
   FSMType
 } from '../models'
 

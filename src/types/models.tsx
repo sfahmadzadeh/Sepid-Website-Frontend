@@ -141,7 +141,15 @@ export type Answer = any
 export type WorkshopEdge = any
 export type Player = any
 export type Token = any
-export type Mentor = { id: string, first_name: string, last_name: string, email: string, phone_number: string, profilePicturePath?: string }
+export type UserMinimalType = {
+  username: string;
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  profilePicturePath?: string;
+}
 export type UploadedFile = { link: string, name: string, id: string }
 
 export type LogoType = {

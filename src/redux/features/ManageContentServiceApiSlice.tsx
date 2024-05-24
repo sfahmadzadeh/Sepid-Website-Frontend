@@ -4,7 +4,7 @@ import { MCS_URL } from 'configs/Constants';
 
 export const ManageContentServiceApi = createApi({
   reducerPath: 'manage-content-service',
-  tagTypes: ['program', 'programs', 'fsm', 'fsms'],
+  tagTypes: ['program', 'programs', 'fsm', 'fsms', 'program-admins'],
   baseQuery: CustomBaseQuery({ baseUrl: MCS_URL + 'api/' }),
   endpoints: build => ({
   })

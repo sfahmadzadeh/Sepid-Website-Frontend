@@ -27,7 +27,7 @@ import {
   getPlayerFromTeamAction,
 } from 'redux/slices/programs';
 import { useParams } from 'react-router-dom'
-import { Mentor, RegistrationReceiptType } from 'types/models';
+import { UserMinimalType, RegistrationReceiptType } from 'types/models';
 import { stringToColor } from 'utils/stringToColor'
 import { getTeamStateSubscription, getTeamState } from 'parse/team';
 import { e2p } from 'utils/translateNumber';
@@ -41,7 +41,7 @@ type TeamWorkshopInfoPropsType = {
   playerIdFromRedux: number,
   deleteRequestMentor: Function,
   getPlayerFromTeam: Function,
-  mentorsInRoom: Mentor[],
+  mentorsInRoom: UserMinimalType[],
   startProblemTime: string,
   teamStage: String,
   isStarred: Boolean,

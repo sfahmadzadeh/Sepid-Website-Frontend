@@ -5,7 +5,7 @@ import {
     Widget,
     Answer,
     Player,
-    Mentor,
+    UserMinimalType,
     FSMType
 } from '../models'
 
@@ -21,7 +21,7 @@ export type InitialStateType = {
     answers: Answer[],
     allWorkshops: FSMType[],
     players: Player,
-    allWorkshopMentors: Mentor[],
+    allWorkshopMentors: UserMinimalType[],
 };
 
 type CurrentState = {

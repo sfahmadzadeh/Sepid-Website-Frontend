@@ -101,6 +101,8 @@ export const persianMessages = { //todo: handle english
   '5002': 'given registration form is illegal, a form must either associate with an program or a fsm',
   '5003': 'given merchandise is illegal, a merch must be either for an program or a fsm',
   '5004': 'each program/fsm must have a registration form, given one doesn\'t',
+  '5006': 'شما نمی‌توانید سازنده‌ی کارگاه را از لیست همیاران حذف کنید.',
+  '5007': 'شما نمی‌توانید سازنده‌ی دوره را از لیست مدیران حذف کنید.',
 
   '6000': 'شما قبلاً به این سوال پاسخ درست داده‌اید',
   '6001': 'شما به اندازه‌ی کافی امتیاز ندارید',
