@@ -19,8 +19,8 @@ const errorHandler = async (
     return rejectWithValue();
   }
 
-  if (error.response.detail) {
-    toast.error(error.response.detail);
+  if (error.response.data.detail) {
+    toast.error(error.response.data.detail);
     return rejectWithValue();
   }
 
