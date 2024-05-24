@@ -29,7 +29,7 @@ const SimpleTable: FC<SimpleTablePropsType> = ({
           <TableRow>
             <TableCell align='center'>ردیف</TableCell>
             {headers.map((header) =>
-              <TableCell align='center'>{header.label}</TableCell>
+              <TableCell key={header.name} align='center'>{header.label}</TableCell>
             )}
           </TableRow>
         </TableHead>
@@ -39,8 +39,8 @@ const SimpleTable: FC<SimpleTablePropsType> = ({
               <TableCell align='center'>
                 {index + 1}
               </TableCell>
-              {headers.map((header) =>
-                <TableCell align='center'>
+              {headers.map((header, index) =>
+                <TableCell key={index} align='center'>
                   {row[header.name] || '-'}
                 </TableCell>
               )}

@@ -67,7 +67,7 @@ const Mentors: FC<MentorsPropsType> = ({
         justifyContent="center"
         direction="row">
 
-        <Grid item xs={12} spacing={2}>
+        <Grid item xs={12}>
           <Stack direction={'row'} alignItems={'center'}>
             <Typography variant='h2'>
               {'همیاران کارگاه'}
