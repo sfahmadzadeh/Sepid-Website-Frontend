@@ -21,9 +21,6 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   }, []);
 
   const registrationForm = papers[registrationFormId];
-  if (!registrationForm) {
-    return null;
-  }
 
   return (
     <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
@@ -44,7 +41,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
           {'فرم ثبت‌نام'}
         </Typography>
         <EditPaper
-          widgets={registrationForm.widgets}
+          widgets={registrationForm?.widgets || []}
           paperId={registrationFormId}
         />
       </Stack>
