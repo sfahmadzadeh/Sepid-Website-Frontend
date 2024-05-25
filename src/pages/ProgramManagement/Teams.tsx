@@ -8,7 +8,8 @@ import {
   TextField,
   Typography,
   Divider,
-  Box
+  Box,
+  Stack
 } from '@mui/material';
 import React, { useState, useMemo, useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -24,15 +25,16 @@ import {
   removeRequestMentorAction,
 } from 'redux/slices/programs';
 import NoDataFound from 'components/molecules/NoDataFound';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 function Teams({
   addUserToTeam,
   createTeam,
-  program,
 
   allProgramTeams: allProgramTeams,
 }) {
-  const { fsmId } = useParams();
+  const { fsmId, programId } = useParams();
+  const { data: program } = useGetProgramQuery({ programId });
   const [newTeamName, setNewTeamName] = useState('');
   const [username, setUserName] = useState(null);
   const [selectedTeamId, setSelectedTeamId] = useState('');
@@ -87,128 +89,120 @@ function Teams({
   }
 
   return (
-    <Grid container spacing={2} margin='-8px' marginBottom='30px'>
-      <Grid item xs={12}>
-        <Typography variant='h4'>
+    <Stack spacing={2}>
+      <Stack spacing={2} padding={2}>
+        <Typography gutterBottom variant='h2'>
           {'ساخت گروه'}
         </Typography>
-      </Grid>
-      <Grid item container xs spacing={1}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            value={newTeamName || ''}
-            size="small"
-            fullWidth
-            variant="outlined"
-            label="نام گروه"
-            onChange={(e) => { setNewTeamName(e.target.value) }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Button
-            disabled={!newTeamName}
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={doCreateTeam}>
-            {'بساز'}
-          </Button>
-        </Grid>
-      </Grid>
+        <Stack>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                value={newTeamName || ''}
+                size="small"
+                fullWidth
+                variant="outlined"
+                label="نام گروه"
+                onChange={(e) => { setNewTeamName(e.target.value) }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Button
+                disabled={!newTeamName}
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={doCreateTeam}>
+                {'بساز'}
+              </Button>
+            </Grid>
+          </Grid>
+        </Stack>
+      </Stack>
 
-      <Box width='100%' height='30px'></Box>
       <Divider />
-      <Box width='100%' height='10px'></Box>
 
-      <Grid item xs={12}>
-        <Typography variant='h4'>
+      <Stack spacing={2} padding={2}>
+        <Typography variant='h2' gutterBottom>
           {'افزودن کاربر به گروه'}
         </Typography>
-      </Grid>
-      <Grid item container xs spacing={1}>
-        <Grid item xs={12} sm={4}>
-          <TextField
-            value={username || ''}
-            size="small"
-            fullWidth
-            variant="outlined"
-            label="نام کاربری"
-            inputProps={{ className: 'ltr-input' }}
-            onChange={(e) => { setUserName(e.target.value) }}
-          />
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <FormControl size="small" fullWidth variant="outlined">
-            <InputLabel>گروه</InputLabel>
-            <Select defaultValue="" onChange={(e) => setSelectedTeamId(e.target.value)} label="گروه">
-              {allProgramTeams?.map((team) => (
-                <MenuItem key={team.id} value={team.id || ''}>
-                  {team.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Button
-            disabled={!username || !selectedTeamId}
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={doAddUserToTeam}>
-            {'بیافزا'}
-          </Button>
-        </Grid>
-      </Grid>
+        <Stack>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                value={username || ''}
+                size="small"
+                fullWidth
+                variant="outlined"
+                label="نام کاربری"
+                inputProps={{ className: 'ltr-input' }}
+                onChange={(e) => { setUserName(e.target.value) }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <FormControl size="small" fullWidth variant="outlined">
+                <InputLabel>گروه</InputLabel>
+                <Select defaultValue="" onChange={(e) => setSelectedTeamId(e.target.value)} label="گروه">
+                  {allProgramTeams?.map((team) => (
+                    <MenuItem key={team.id} value={team.id || ''}>
+                      {team.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Button
+                disabled={!username || !selectedTeamId}
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={doAddUserToTeam}>
+                {'بیافزا'}
+              </Button>
+            </Grid>
+          </Grid>
+        </Stack>
+      </Stack>
 
-      <Box width='100%' height='30px'></Box>
       <Divider />
-      <Box width='100%' height='10px'></Box>
 
-      <Grid item xs={12}>
-        <Typography variant='h4'>
+      <Stack spacing={2} padding={2}>
+        <Typography variant='h2' gutterBottom>
           {'تیم‌ها'}
         </Typography>
-      </Grid>
-      <Grid container spacing={2}
-        alignItems='stretch'
-        justifyContent="center"
-        sx={(theme) => ({
-          height: '100%',
-          marginTop: '4px',
-          justifyContent: 'start',
-          [theme.breakpoints.down('sm')]: {
-            justifyContent: 'center',
-            marginRight: "0px",
-          },
-        })}
-      >
-        {teamsCards}
-      </Grid>
-      {teams.length === 0 &&
-        <Grid item xs={12}>
+        {teams.length > 0 &&
+          <Pagination
+            sx={{ alignSelf: 'center' }}
+            count={noOfPages}
+            page={page}
+            onChange={handleChange}
+            defaultPage={1}
+            color="primary"
+            showFirstButton
+            showLastButton
+          />
+        }
+        <Stack>
+          <Grid container spacing={2}
+            alignItems='stretch'
+            justifyContent="center"
+            sx={(theme) => ({
+              height: '100%',
+              justifyContent: 'start',
+              [theme.breakpoints.down('sm')]: {
+                justifyContent: 'center',
+                marginRight: "0px",
+              },
+            })}>
+            {teamsCards}
+          </Grid>
+        </Stack>
+        {teams.length === 0 &&
           <NoDataFound variant={4} />
-        </Grid>
-      }
-      {teams.length > 0 &&
-        <Pagination
-          sx={{
-            justifyContent: "center",
-            justifySelf: 'center',
-            margin: '40px auto 0 auto',
-            padding: "10px"
-          }}
-          count={noOfPages}
-          page={page}
-          onChange={handleChange}
-          defaultPage={1}
-          color="primary"
-          size="large"
-          showFirstButton
-          showLastButton
-        />
-      }
-    </Grid>
+        }
+      </Stack>
+    </Stack>
   );
 }
 
@@ -216,7 +210,6 @@ const mapStateToProps = (state) => ({
   allWorkshops: state.programs.myWorkshops || [],
   allProgramTeams: state.programs.allProgramTeams || [],
   requestTeams: state.programs.requestTeams || {},
-  program: state.programs.program,
 });
 
 export default connect(mapStateToProps, {

@@ -19,7 +19,7 @@ const StatesMenu: FC<StatesMenuPropsType> = ({
 
   return (
     <Fragment>
-      <Stack direction={'row'} alignContent={'stretch'} justifyContent={'space-between'}>
+      <Stack direction={'row'} alignContent={'stretch'} justifyContent={'space-between'} spacing={1}>
         <Autocomplete
           fullWidth
           getOptionLabel={(option) => option.name}

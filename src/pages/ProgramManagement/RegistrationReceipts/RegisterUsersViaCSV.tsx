@@ -5,26 +5,26 @@ import {
   IconButton,
   Stack,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
 import React, { FC, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   registerUsersViaCSVAction,
 } from 'redux/slices/programs';
-import { ProgramType } from 'types/models';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type RegisterUsersViaCSVPropsType = {
   registerUsersViaCSV: any;
-  program: ProgramType;
 }
 
 const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
   registerUsersViaCSV,
-  program,
 }) => {
+  const { programId } = useParams();
   const [file, setFile] = useState(null);
   const fileRef = useRef(null);
+  const { data: program } = useGetProgramQuery({ programId });
 
   const submit = () => {
     registerUsersViaCSV({ registrationFormId: program?.registration_form, file })
@@ -44,69 +44,69 @@ const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
   }
 
   return (
-    <Stack spacing={1}>
+    <Stack spacing={2}>
+
       <Stack direction='row' spacing={1} alignItems='flex-end'>
-        <Typography variant='h4' component="h2">
+        <Typography variant='h2'>
           {'افزودن کاربران از طریق فایل csv'}
         </Typography>
         <Typography>
           <Link style={{ textDecoration: 'none' }} target="_blank" download to={"/register-participants-sample.csv"}>{'(نمونه فایل)'}</Link>
         </Typography>
       </Stack>
-      <Grid container spacing={1}>
-        <Grid item xs={12} sm={6}>
-          <Stack direction='row' spacing={1}>
-            <Button
-              component="label"
-              htmlFor={"csv-info-input"}
-              sx={{ whiteSpace: 'nowrap' }}
-              variant="contained"
-              color="secondary">
-              انتخاب فایل
-            </Button>
-            <input
-              ref={fileRef}
-              accept=".xlsx"
-              id={"csv-info-input"}
-              style={{ display: 'none' }}
-              type="file"
-              onChange={changeFile} />
-            {file?.name &&
+
+      <Stack>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={6}>
+            <Stack direction='row' spacing={1}>
               <Button
-                size="small"
-                variant='outlined'
-                sx={{
-                  whiteSpace: 'nowrap',
-                }}
-                endIcon={
-                  <IconButton size='small' onClick={clearFile}>
-                    <ClearIcon sx={{ fontSize: 14 }} />
-                  </IconButton>
-                }>
-                {file?.name}
+                component="label"
+                htmlFor={"csv-info-input"}
+                sx={{ whiteSpace: 'nowrap' }}
+                variant="contained"
+                color="secondary">
+                انتخاب فایل
               </Button>
-            }
-          </Stack>
+              <input
+                ref={fileRef}
+                accept=".xlsx"
+                id={"csv-info-input"}
+                style={{ display: 'none' }}
+                type="file"
+                onChange={changeFile} />
+              {file?.name &&
+                <Button
+                  size="small"
+                  variant='outlined'
+                  sx={{
+                    whiteSpace: 'nowrap',
+                  }}
+                  endIcon={
+                    <IconButton size='small' onClick={clearFile}>
+                      <ClearIcon sx={{ fontSize: 14 }} />
+                    </IconButton>
+                  }>
+                  {file?.name}
+                </Button>
+              }
+            </Stack>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Button
+              disabled={!file}
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={submit}>
+              {'ارسال'}
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Button
-            disabled={!file}
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={submit}>
-            {'ارسال'}
-          </Button>
-        </Grid>
-      </Grid>
+      </Stack>
     </Stack >
   );
 }
 
-const mapStateToProps = (state) => ({
-  program: state.programs.program,
-});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   registerUsersViaCSV: registerUsersViaCSVAction,
 })(RegisterUsersViaCSV);

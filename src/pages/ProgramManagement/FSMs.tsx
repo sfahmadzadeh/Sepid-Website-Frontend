@@ -15,13 +15,9 @@ import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetFSMsQuery } from 'redux/features/FSMSlice';
 import NoDataFound from 'components/molecules/NoDataFound';
 
-type ProgramManagementFsmTabPropsType = {
+type ProgramManagementFsmTabPropsType = {}
 
-}
-
-const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
-
-}) => {
+const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({ }) => {
   const { programId } = useParams();
   const [openCreateFSMDialog, setOpenCreateFSMDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
@@ -29,62 +25,51 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({
 
   return (
     <Fragment>
-      <Grid
-        container
-        item
-        spacing={2}
-        alignItems="center"
-        justifyContent="center"
-        direction="row">
+      <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
 
-        <Grid item container justifyContent='space-between' xs={12} spacing={2} style={{ marginTop: 2 }}>
-          <Grid item>
-            <Typography variant='h2'>
+        <Stack padding={2} spacing={2}>
+          <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+            <Typography variant='h2' gutterBottom>
               {'کارگاه‌ها'}
             </Typography>
-          </Grid>
-          <Grid item>
             <AddNewThingButton label={'افزودن کارگاه جدید'} onClick={() => setOpenCreateFSMDialog(true)} />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={2}
-          alignItems='stretch'
-          margin='10px 5px'
-          justifyContent="center"
-          sx={(theme) => ({
-            height: '100%',
-            justifyContent: 'start',
-            [theme.breakpoints.down('sm')]: {
-              justifyContent: 'center',
-              marginRight: "0px",
-            },
-          })}>
-          {fsmsData?.fsms?.map((fsm) => (
-            <Grid container item xs={12} sm={6} md={4} key={fsm.id} alignItems='center' justifyContent='center'>
-              <MentorFSMCard {...fsm} />
-            </Grid>
-          ))}
-          {(!isLoading && fsmsData.fsms.length == 0) &&
-            <Stack width={'100%'}>
-              <NoDataFound variant={1} />
+          </Stack>
+          <Stack spacing={2}>
+            {(!isLoading && fsmsData.fsms.length > 0) &&
+              <Pagination
+                variant="outlined"
+                color="primary"
+                shape='rounded'
+                count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
+                page={pageNumber}
+                onChange={(e, value) => setPageNumber(value)}
+              />
+            }
+            <Stack>
+              <Grid container spacing={2}
+                alignItems='stretch'
+                justifyContent="center"
+                sx={(theme) => ({
+                  justifyContent: 'start',
+                  [theme.breakpoints.down('sm')]: {
+                    justifyContent: 'center',
+                    marginRight: "0px",
+                  },
+                })}>
+                {fsmsData?.fsms?.map((fsm) => (
+                  <Grid item xs={12} sm={6} md={4} key={fsm.id}>
+                    <MentorFSMCard {...fsm} />
+                  </Grid>
+                ))}
+              </Grid>
             </Stack>
-          }
-        </Grid>
+            {(!isLoading && fsmsData.fsms.length == 0) &&
+              <NoDataFound variant={3} />
+            }
+          </Stack>
+        </Stack>
 
-        <Grid item container>
-          <Grid item>
-            <Pagination
-              variant="outlined"
-              color="primary"
-              shape='rounded'
-              count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
-              page={pageNumber}
-              onChange={(e, value) => setPageNumber(value)}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
+      </Stack>
       <CreateFSMDialog
         open={openCreateFSMDialog}
         handleClose={() => setOpenCreateFSMDialog(false)}

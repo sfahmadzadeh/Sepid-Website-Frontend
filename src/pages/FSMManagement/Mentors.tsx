@@ -58,53 +58,46 @@ const Mentors: FC<MentorsPropsType> = ({
   }
 
   return (
-    <Stack>
-      <Grid
-        padding={2}
-        container
-        spacing={2}
-        alignItems="center"
-        justifyContent="center"
-        direction="row">
+    <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
+      <Stack padding={2} spacing={2}>
+        <Stack direction={'row'} alignItems={'center'}>
+          <Typography variant='h2'>
+            {'همیاران کارگاه'}
+          </Typography>
+          <Tooltip title='همیار کارگاه تنها به تنظیمات یک کارگاه دسترسی دارد؛ از جمله می‌تواند محتوای کارگاه را ویرایش کند، پاسخ‌های شرکت‌کنندگان را تصحیح کند یا به درخواست آن‌ها پاسخ دهد.'>
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
 
-        <Grid item xs={12}>
-          <Stack direction={'row'} alignItems={'center'}>
-            <Typography variant='h2'>
-              {'همیاران کارگاه'}
-            </Typography>
-            <Tooltip title='همیار کارگاه تنها به تنظیمات یک کارگاه دسترسی دارد؛ از جمله می‌تواند محتوای کارگاه را ویرایش کند، پاسخ‌های شرکت‌کنندگان را تصحیح کند یا به درخواست آن‌ها پاسخ دهد.'>
-              <IconButton>
-                <InfoIcon />
-              </IconButton>
-            </Tooltip>
-          </Stack>
-        </Grid>
-
-        <Grid item container spacing={1} justifyContent="space-evenly">
-          <Grid item xs={12} sm={6}>
-            <TextField
-              value={username}
-              size="small"
-              fullWidth
-              variant="outlined"
-              label="نام کاربری"
-              name="username"
-              inputProps={{ className: 'ltr-input' }}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+        <Stack>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                value={username}
+                size="small"
+                fullWidth
+                variant="outlined"
+                label="نام کاربری"
+                name="username"
+                inputProps={{ className: 'ltr-input' }}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Button
+                disabled={!username}
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={addMentor}>
+                {'افزودن همیار جدید'}
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Button
-              disabled={!username}
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={addMentor}>
-              {'افزودن همیار جدید'}
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
+        </Stack>
+      </Stack>
 
       <Divider />
 

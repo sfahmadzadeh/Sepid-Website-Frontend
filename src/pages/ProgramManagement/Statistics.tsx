@@ -1,4 +1,5 @@
 import {
+  Divider,
   Grid,
   Stack,
   Typography,
@@ -36,10 +37,10 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
   if (!fsmsData) return;
 
   return (
-    <Stack spacing={3} alignItems={'start'} justifyContent={'center'}>
+    <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
 
-      <Stack spacing={1}>
-        <Typography variant='h3' gutterBottom>
+      <Stack padding={2} spacing={2}>
+        <Typography variant='h2' gutterBottom>
           {'آمار دوره'}
         </Typography>
         <Typography variant='h5'>
@@ -47,8 +48,10 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
         </Typography>
       </Stack>
 
-      <Stack spacing={1} width={'100%'}>
-        <Typography variant='h3' gutterBottom>
+      <Divider />
+
+      <Stack padding={2} spacing={2}>
+        <Typography variant='h2' gutterBottom>
           {'آمار کارگاه‌ها'}
         </Typography>
         <Typography variant='h5'>
@@ -72,6 +75,8 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
           onChange={(e, value) => setPageNumber(value)}
         />
       </Stack>
+
+      <Divider />
 
       <MetabaseDashboard dashboard_id={5} params={{ "program_id": programId }} />
     </Stack>

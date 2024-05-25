@@ -5,13 +5,9 @@ import {
 import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-type CertificatesTabPropsType = {
+type CertificatesTabPropsType = {}
 
-}
-
-const CertificatesTab: FC<CertificatesTabPropsType> = ({
-
-}) => {
+const CertificatesTab: FC<CertificatesTabPropsType> = ({ }) => {
   const { websiteName } = useParams();
   const [pageNumber, setPageNumber] = useState(1);
 

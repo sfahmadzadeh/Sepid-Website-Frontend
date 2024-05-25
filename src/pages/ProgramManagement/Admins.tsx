@@ -16,11 +16,9 @@ import { useAddAdminToProgramMutation, useGetProgramAdminsQuery, useRemoveAdminF
 import SimpleTable from 'components/organisms/tables/SimpleTable';
 
 
-type AdminsTabPropsType = {
-}
+type AdminsTabPropsType = {}
 
-const AdminTab: FC<AdminsTabPropsType> = ({
-}) => {
+const AdminTab: FC<AdminsTabPropsType> = ({ }) => {
   const { programId } = useParams();
   const [username, setUsername] = useState<string>('');
   const [addAdminToProgram, addAdminToProgramResutl] = useAddAdminToProgramMutation();
@@ -42,55 +40,50 @@ const AdminTab: FC<AdminsTabPropsType> = ({
   }
 
   return (
-    <Stack>
-      <Grid
-        padding={2}
-        container
-        spacing={2}
-        alignItems="center"
-        justifyContent="center"
-        direction="row">
+    <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
+      <Stack padding={2} spacing={2}>
 
-        <Grid item xs={12}>
-          <Stack direction={'row'} alignItems={'center'}>
-            <Typography variant='h2'>
-              {'مدیران دوره'}
-            </Typography>
-            <Tooltip title='مدیر دوره کسی است که به تمام تنظیمات دوره دسترسی دارد. او هم‌چنین می‌تواند کارگاه‌های دوره را ویرایش کند.'>
-              <IconButton>
-                <InfoIcon />
-              </IconButton>
-            </Tooltip>
-          </Stack>
-        </Grid>
+        <Stack direction={'row'} alignItems={'center'}>
+          <Typography variant='h2'>
+            {'مدیران دوره'}
+          </Typography>
+          <Tooltip title='مدیر دوره کسی است که به تمام تنظیمات دوره دسترسی دارد. او هم‌چنین می‌تواند کارگاه‌های دوره را ویرایش کند.'>
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
 
-        <Grid item container spacing={1} justifyContent="space-evenly">
-          <Grid item xs={12} sm={6}>
-            <TextField
-              value={username}
-              size="small"
-              fullWidth
-              variant="outlined"
-              label="نام کاربری"
-              name="username"
-              inputProps={{ className: 'ltr-input' }}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+        <Stack>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                value={username}
+                size="small"
+                fullWidth
+                variant="outlined"
+                label="نام کاربری"
+                name="username"
+                inputProps={{ className: 'ltr-input' }}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Button
+                disabled={!username}
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={addAdmin}>
+                {'افزودن مدیر جدید'}
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Button
-              disabled={!username}
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={addAdmin}>
-              {'افزودن مدیر جدید'}
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
+        </Stack>
+      </Stack>
 
       <Divider />
+
       <SimpleTable
         headers={[
           { name: 'first_name', label: 'نام' },

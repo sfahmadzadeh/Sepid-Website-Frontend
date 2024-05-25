@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import useWidth from 'utils/UseWidth';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
-function ProgramLogo({ program }) {
+function ProgramLogo({ }) {
   const { programId } = useParams();
   const width = useWidth();
+  const { data: program } = useGetProgramQuery({ programId });
 
   return (
     <Stack direction={'row'} alignItems={'center'}>
@@ -38,8 +40,5 @@ function ProgramLogo({ program }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  program: state.programs.program,
-})
 
-export default connect(mapStateToProps)(ProgramLogo);
+export default ProgramLogo;

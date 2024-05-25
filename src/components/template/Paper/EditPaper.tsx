@@ -4,6 +4,7 @@ import React, { useState, FC, Fragment } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import Widget, { WidgetModes } from 'components/organisms/Widget';
 import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog';
+import NoDataFound from 'components/molecules/NoDataFound';
 
 type EditPaperPropsType = {
   widgets: any[];
@@ -27,11 +28,9 @@ const EditPaper: FC<EditPaperPropsType> = ({
 
   return (
     <Fragment>
-      <Stack
-        spacing={2}
-        justifyContent="center">
+      <Stack spacing={4} justifyContent="center">
         {widgets.length === 0 ?
-          <Typography align="center">{t('thereIsNoItem')}</Typography> :
+          <NoDataFound variant={4} message={'ویجتی وجود ندارد'} /> :
           <Fragment>
             {widgets.map((widget, index) => (
               <Widget

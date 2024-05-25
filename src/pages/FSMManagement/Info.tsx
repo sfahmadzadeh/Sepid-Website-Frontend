@@ -35,8 +35,6 @@ const Info: FC<InfoPropsType> = ({
     }
   }, [result])
 
-  if (!properties) return null;
-
   const handleUpdateFSM = () => {
     if (!properties.name) {
       toast.error('لطفاً نام کارگاه را انتخاب کنید.');
@@ -59,7 +57,9 @@ const Info: FC<InfoPropsType> = ({
         {'مشخصات کارگاه'}
       </Typography>
       <Stack>
-        <FSMInfoForm showCoverImage={true} data={properties} setData={setProperties} />
+        {properties &&
+          <FSMInfoForm showCoverImage={true} data={properties} setData={setProperties} />
+        }
       </Stack>
       <Stack direction={'row'} justifyContent={'end'}>
         <Button

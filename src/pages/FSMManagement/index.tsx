@@ -67,6 +67,7 @@ const initialTabs: DashboardTabType[] = [
     label: 'تصحیح',
     icon: BorderColorIcon,
     component: GoToAnswer,
+    isActive: false,
   },
   {
     name: 'statistics',
@@ -142,6 +143,7 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
               {tabs.map((tab, index) => (
                 <Button
                   key={index}
+                  disabled={tab.isActive === false}
                   onClick={() => {
                     navigate(`/program/${programId}/fsm/${fsmId}/manage/${tabs[index].name}/`)
                   }}

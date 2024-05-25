@@ -40,21 +40,21 @@ const tabs: DashboardTabType[] = [
   },
   {
     name: 'registration-form',
-    label: 'فرم ثبت‌نام',
+    label: 'فرایند ثبت‌نام',
     icon: ArticleIcon,
     component: RegistrationForm,
-  },
-  {
-    name: 'registration-receipts',
-    label: 'رسیدهای ثبت‌نام',
-    icon: ReceiptLongIcon,
-    component: RegistrationReceipts,
   },
   {
     name: 'merchandise',
     label: 'اطلاعات مالی',
     icon: AttachMoneyIcon,
     component: Financial,
+  },
+  {
+    name: 'registration-receipts',
+    label: 'شرکت‌کنندگان',
+    icon: ReceiptLongIcon,
+    component: RegistrationReceipts,
   },
   {
     name: 'certificates',

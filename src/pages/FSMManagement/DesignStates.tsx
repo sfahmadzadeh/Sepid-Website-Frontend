@@ -49,21 +49,19 @@ const DesignStates: FC<DesignStatesPropsType> = ({
   const hints = currentState?.hints;
 
   return (
-    <Stack >
+    <Stack padding={2} spacing={3}>
       <StatesMenu
         stateIndex={stateIndex}
         setStateIndex={setStateIndex}
         states={allStates}
       />
-      <Box padding={2} paddingTop={4}>
-        {currentState ?
-          <EditState {...currentState} />
-          :
-          <Typography align="center" variant="h3" gutterBottom>
-            {'گامی وجود ندارد.'}
-          </Typography>
-        }
-      </Box>
+      {currentState ?
+        <EditState {...currentState} />
+        :
+        <Typography align="center" variant="h3" gutterBottom>
+          {'گامی وجود ندارد.'}
+        </Typography>
+      }
     </Stack>
   );
 };

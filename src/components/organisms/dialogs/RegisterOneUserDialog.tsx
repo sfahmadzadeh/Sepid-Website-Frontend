@@ -14,6 +14,8 @@ import {
 } from '@mui/material';
 import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import {
   registerOneUserAction,
 } from 'redux/slices/programs';
@@ -29,11 +31,11 @@ type AddOneUserDialogPropsType = {
 
 const RegisterOneUserDialog: FC<AddOneUserDialogPropsType> = ({
   registerOneUser,
-  program,
   handleClose,
   open,
   isFetching,
 }) => {
+  const { programId } = useParams();
   const [data, setData] = useState({
     first_name: '',
     last_name: '',
@@ -44,6 +46,7 @@ const RegisterOneUserDialog: FC<AddOneUserDialogPropsType> = ({
     gender: '',
     grade: '',
   });
+  const { data: program } = useGetProgramQuery({ programId });
 
   const submit = () => {
     if (!data.first_name || !data.last_name || !data.gender || !data.grade || !data.username || !data.national_code || !data.phone_number || !data.password) {
@@ -182,7 +185,6 @@ const RegisterOneUserDialog: FC<AddOneUserDialogPropsType> = ({
 
 const mapStateToProps = (state) => ({
   isFetching: state.programs.isFetching,
-  program: state.programs.program,
 });
 
 export default connect(mapStateToProps, {

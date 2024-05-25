@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Divider,
   Stack,
@@ -14,13 +15,9 @@ import { useGetProgramQuery, useUpdateProgramMutation } from 'redux/features/pro
 import { ProgramType } from 'types/models';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 
-type InfoTabPropsType = {
+type InfoTabPropsType = {}
 
-}
-
-const InfoTab: FC<InfoTabPropsType> = ({
-
-}) => {
+const InfoTab: FC<InfoTabPropsType> = ({ }) => {
   const { programId } = useParams();
   const [properties, setProperties] = useState<ProgramType>();
   const [updateProgram, result] = useUpdateProgramMutation();
@@ -38,8 +35,6 @@ const InfoTab: FC<InfoTabPropsType> = ({
     }
   }, [result])
 
-  if (!properties) return null;
-
   const handleUpdateProgram = () => {
     if (!properties.name) {
       toast.error('لطفاً نام دوره را انتخاب کنید.');
@@ -49,36 +44,49 @@ const InfoTab: FC<InfoTabPropsType> = ({
   }
 
   return (
-    <Stack spacing={3} alignItems={'start'} justifyContent={'center'} padding={2}>
-      <Stack>
+    <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
+      <Stack padding={2} spacing={2}>
         <Typography variant='h2' gutterBottom>
           {'مشخصات دوره'}
         </Typography>
-        <ProgramInfoForm showCoverImage={true} data={properties} setData={setProperties} />
+        <Box>
+          {properties &&
+            <ProgramInfoForm showCoverImage={true} data={properties} setData={setProperties} />
+          }
+        </Box>
       </Stack>
+
       <Divider />
-      <Stack>
+
+      <Stack padding={2} spacing={2}>
         <Typography variant='h2' gutterBottom>
           {'راه‌های ارتباطی'}
         </Typography>
-        <ProgramContactInfoForm
-          data={properties.program_contact_info}
-          setData={(programContactInfo) => {
-            setProperties(properties => ({
-              ...properties,
-              program_contact_info: programContactInfo,
-            }));
-          }} />
+        <Box>
+          <ProgramContactInfoForm
+            data={properties?.program_contact_info}
+            setData={(programContactInfo) => {
+              setProperties(properties => ({
+                ...properties,
+                program_contact_info: programContactInfo,
+              }));
+            }} />
+        </Box>
       </Stack>
+
       <Divider />
-      <Stack>
+
+      <Stack padding={2} spacing={2}>
         <Typography variant='h2' gutterBottom>
           {'تنظیمات ظاهری'}
         </Typography>
-        {/* دکمه‌های سوالات متداول + راهنمای سایت */}
-        {'todo'}
+        {/* دکمه‌های سوالات متداول + راهنمای سایت + اپ‌بار و هدر و اوپن‌گراف سایت */}
+        <Typography>
+          {'todo'}
+        </Typography>
       </Stack>
-      <Stack direction={'row'} justifyContent={'end'}>
+
+      <Stack padding={2} direction={'row'} justifyContent={'end'}>
         <Button
           variant="contained"
           color="primary"
