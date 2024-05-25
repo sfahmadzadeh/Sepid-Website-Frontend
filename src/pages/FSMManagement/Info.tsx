@@ -52,16 +52,19 @@ const Info: FC<InfoPropsType> = ({
   }
 
   return (
-    <Stack padding={2} spacing={2}>
-      <Typography variant='h2' gutterBottom>
-        {'مشخصات کارگاه'}
-      </Typography>
-      <Stack>
-        {properties &&
-          <FSMInfoForm showCoverImage={true} data={properties} setData={setProperties} />
-        }
+    <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
+      <Stack padding={2}>
+        <Typography variant='h2' gutterBottom>
+          {'مشخصات کارگاه'}
+        </Typography>
+        <Stack>
+          {properties &&
+            <FSMInfoForm showCoverImage={true} data={properties} setData={setProperties} />
+          }
+        </Stack>
       </Stack>
-      <Stack direction={'row'} justifyContent={'end'}>
+
+      <Stack padding={2} alignItems={'end'}>
         <Button
           variant="contained"
           color="primary"

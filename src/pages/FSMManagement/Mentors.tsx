@@ -121,7 +121,6 @@ const Mentors: FC<MentorsPropsType> = ({
             </Tooltip>
         }))}
       />
-
     </Stack>
   );
 }
