@@ -11,7 +11,7 @@ import FSMLogo from '../components/logos/FSMLogo';
 import UserAvatar from '../components/UserAvatar';
 import { useParams } from 'react-router-dom';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
-import { useGetFSMQuery } from 'redux/features/FSMSlice';
+import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
 const FSMAppbarItems = ({ }) => {
   const { fsmId, programId } = useParams();

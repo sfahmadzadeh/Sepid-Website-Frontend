@@ -16,7 +16,7 @@ import DraggableChatRoom from 'components/organisms/DraggableMeeting';
 import Layout from 'components/template/Layout';
 import { FSMType, TeamType } from 'types/models';
 import { toast } from 'react-toastify';
-import { useGetFSMQuery } from 'redux/features/FSMSlice';
+import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
 var moment = require('moment');
 

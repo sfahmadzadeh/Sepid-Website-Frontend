@@ -7,7 +7,7 @@ import FSMInfoForm from 'components/template/forms/FSMInfoForm';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useGetFSMQuery, useUpdateFSMMutation } from 'redux/features/FSMSlice';
+import { useGetFSMQuery, useUpdateFSMMutation } from 'redux/features/fsm/FSMSlice';
 import { FSMType } from 'types/models';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 

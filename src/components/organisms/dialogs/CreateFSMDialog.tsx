@@ -16,7 +16,7 @@ import removeBlankAttributes from 'utils/removeBlankAttributes';
 import { toast } from 'react-toastify';
 import FSMInfoForm from 'components/template/forms/FSMInfoForm';
 import { FSMType } from 'types/models';
-import { useCreateFSMMutation } from 'redux/features/FSMSlice';
+import { useCreateFSMMutation } from 'redux/features/fsm/FSMSlice';
 
 type CreateFSMDialog = {
   open: boolean;

@@ -11,7 +11,7 @@ import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import Banner from 'components/molecules/Banner';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
-import { useGetFSMsQuery } from 'redux/features/FSMSlice';
+import { useGetFSMsQuery } from 'redux/features/fsm/FSMSlice';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type ProgramPropsType = {}

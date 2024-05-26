@@ -2,7 +2,7 @@ import { IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import useWidth from 'utils/UseWidth';
 import LogoSkeleton from './LogoSkeleton';
-import { useGetFSMQuery } from 'redux/features/FSMSlice';
+import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 import { useParams } from 'react-router-dom';
 
 type FSMLogoPropsType = {}

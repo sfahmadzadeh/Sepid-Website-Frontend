@@ -7,7 +7,7 @@ import ChatRoomButton from '../components/ChatRoomButton';
 import TeamAvatar from '../components/TeamAvatar';
 import WhiteboardButton from '../components/WhiteboardButton';
 import { announceMentorDeparture } from 'parse/mentorsInRoom';
-import { useGetFSMQuery } from 'redux/features/FSMSlice';
+import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
 const MentorFSMAppbarItems = ({ mentorId }) => {
   const { programId, fsmId } = useParams();

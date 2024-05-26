@@ -1,5 +1,5 @@
 import { FSMType } from 'types/models';
-import { ManageContentServiceApi } from './ManageContentServiceApiSlice';
+import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type UpdateFSMInputType = {
   fsmId: string;
@@ -83,7 +83,12 @@ export const FSMSlice = ManageContentServiceApi.injectEndpoints({
           count: response.count,
         };
       },
-    })
+    }),
+
+    softDeleteFSM: builder.mutation<any, { fsmId: string }>({
+      invalidatesTags: ['fsms'],
+      query: ({ fsmId }) => `fsm/fsm/${fsmId}/`
+    }),
   })
 });
 
@@ -92,4 +97,5 @@ export const {
   useCreateFSMMutation,
   useGetFSMQuery,
   useGetFSMsQuery,
+  useSoftDeleteFSMMutation,
 } = FSMSlice;

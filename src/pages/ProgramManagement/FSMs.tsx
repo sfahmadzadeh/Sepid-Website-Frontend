@@ -12,7 +12,7 @@ import CreateFSMDialog from 'components/organisms/dialogs/CreateFSMDialog';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import { addMentorToWorkshopAction } from 'redux/slices/programs';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
-import { useGetFSMsQuery } from 'redux/features/FSMSlice';
+import { useGetFSMsQuery } from 'redux/features/fsm/FSMSlice';
 import NoDataFound from 'components/molecules/NoDataFound';
 
 type ProgramManagementFsmTabPropsType = {}

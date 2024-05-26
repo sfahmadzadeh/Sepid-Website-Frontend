@@ -32,7 +32,7 @@ import Mentors from './Mentors';
 import GoToAnswer from './GoToAnswer';
 import { DashboardTabType } from 'types/global';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
-import { useGetFSMQuery } from 'redux/features/FSMSlice';
+import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
 const initialTabs: DashboardTabType[] = [
   {

@@ -11,7 +11,7 @@ import MentorStaticsFSMCard from 'components/organisms/cards/MentorStaticsFSMCar
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import { toPersianNumber } from 'utils/translateNumber';
 import MetabaseDashboard from 'components/template/MetabaseDashboard';
-import { useGetFSMsQuery } from 'redux/features/FSMSlice';
+import { useGetFSMsQuery } from 'redux/features/fsm/FSMSlice';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type StatisticsTabPropsType = {
