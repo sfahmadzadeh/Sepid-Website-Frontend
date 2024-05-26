@@ -2,7 +2,6 @@ import {
   Button,
   Checkbox,
   FormControl,
-  Grid,
   IconButton,
   InputLabel,
   MenuItem,
@@ -26,8 +25,7 @@ import {
   removeEdgeAction,
   updateEdgeAction,
 } from 'redux/slices/workshop';
-import { WorkshopEdge, State } from 'types/models';
-import CustomJoyrideButton from 'components/atoms/CustomJoyrideButton';
+import { WorkshopEdge, FSMStateType } from 'types/models';
 
 type IndexPropsType = {
   getAllWorkshopEdges: Function,
@@ -36,7 +34,7 @@ type IndexPropsType = {
   updateEdge: Function,
   removeEdge: Function,
   allWorkshopEdges: WorkshopEdge[],
-  allStates: State[],
+  allStates: FSMStateType[],
 }
 
 const Index: FC<IndexPropsType> = ({

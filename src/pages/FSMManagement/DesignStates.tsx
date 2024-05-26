@@ -14,7 +14,7 @@ import {
 import {
   getOneStateAction,
 } from 'redux/slices/Paper';
-import { State } from 'types/models';
+import { FSMStateType } from 'types/models';
 import EditState from 'components/template/EditState';
 
 
@@ -22,7 +22,7 @@ type DesignStatesPropsType = {
   getAllWorkshopStatesInfo: Function;
   getOneState: Function;
   papers: {};
-  allStates: State[];
+  allStates: FSMStateType[];
 }
 
 const DesignStates: FC<DesignStatesPropsType> = ({

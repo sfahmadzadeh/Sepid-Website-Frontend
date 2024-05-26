@@ -60,14 +60,6 @@ export const getFSMPlayersAction = createAsyncThunkApi(
   getFSMPlayersUrl,
 )
 
-export const getOneWorkshopsInfoAction = createAsyncThunkApi(
-  'workshop/getOneWorkshopsInfoAction',
-  Apis.GET,
-  workshopCRUDUrl
-);
-
-
-
 export const addMentorToWorkshopAction = createAsyncThunkApi(
   'workshop/addMentorToWorkshopAction',
   Apis.POST,
@@ -191,14 +183,6 @@ const IndexSlice = createSlice({
     },
     [getAnswersForReviewAction.rejected.toString()]: isNotFetching,
 
-
-    [getOneWorkshopsInfoAction.pending.toString()]: isFetching,
-    [getOneWorkshopsInfoAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.workshop = response;
-      state.isFetching = false;
-    },
-    [getOneWorkshopsInfoAction.rejected.toString()]: isNotFetching,
-
     [getAllWorkshopStatesInfoAction.pending.toString()]: isFetching,
     [getAllWorkshopStatesInfoAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.allStates = response;
@@ -281,9 +265,6 @@ const IndexSlice = createSlice({
       state.isFetching = false;
     },
     [removeEdgeAction.rejected.toString()]: isNotFetching,
-
-
-
 
     [getFSMPlayersAction.pending.toString()]: isFetching,
     [getFSMPlayersAction.fulfilled.toString()]: (state, { payload: { response } }) => {

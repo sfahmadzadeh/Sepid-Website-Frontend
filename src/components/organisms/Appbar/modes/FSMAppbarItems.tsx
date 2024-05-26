@@ -11,11 +11,13 @@ import FSMLogo from '../components/logos/FSMLogo';
 import UserAvatar from '../components/UserAvatar';
 import { useParams } from 'react-router-dom';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
+import { useGetFSMQuery } from 'redux/features/FSMSlice';
 
-const FSMAppbarItems = ({ fsm }) => {
-  const { programId } = useParams();
+const FSMAppbarItems = ({ }) => {
+  const { fsmId, programId } = useParams();
   // todo: refactor: fetch program minimal info (not whole program info!)
   // const { data: program } = useGetProgramQuery({ programId });
+  const { data: fsm } = useGetFSMQuery({ fsmId });
 
   const reviewAnswers = <ReviewAnswersButton />
   const chatRoomButton = <ChatRoomButton />;

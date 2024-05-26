@@ -2,12 +2,12 @@ import { Button, FormControl, InputLabel, Autocomplete, MenuItem, Stack, Typogra
 import React, { FC, Fragment, useState } from 'react';
 
 import CreateStateDialog from './dialogs/CreateStateDialog';
-import { State } from 'types/models';
+import { FSMStateType } from 'types/models';
 
 type StatesMenuPropsType = {
   stateIndex: any;
   setStateIndex: any;
-  states: State[];
+  states: FSMStateType[];
 }
 
 const StatesMenu: FC<StatesMenuPropsType> = ({

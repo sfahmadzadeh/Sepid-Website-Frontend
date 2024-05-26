@@ -1,16 +1,16 @@
-import { IconButton, Skeleton, Stack, Tooltip, Typography } from '@mui/material';
+import { IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import useWidth from 'utils/UseWidth';
-import { connect } from 'react-redux';
-import { FSMType } from 'types/models';
 import LogoSkeleton from './LogoSkeleton';
+import { useGetFSMQuery } from 'redux/features/FSMSlice';
+import { useParams } from 'react-router-dom';
 
-type FSMLogoPropsType = {
-  fsm: FSMType;
-}
+type FSMLogoPropsType = {}
 
-const FSMLogo: FC<FSMLogoPropsType> = ({ fsm }) => {
+const FSMLogo: FC<FSMLogoPropsType> = ({ }) => {
   const width = useWidth();
+  const { fsmId } = useParams();
+  const { data: fsm } = useGetFSMQuery({ fsmId });
 
   if (!fsm) {
     return <LogoSkeleton />
@@ -43,8 +43,4 @@ const FSMLogo: FC<FSMLogoPropsType> = ({ fsm }) => {
   );
 }
 
-const mapStateToProps = (state) => ({
-  fsm: state.workshop.workshop,
-})
-
-export default connect(mapStateToProps)(FSMLogo);
+export default FSMLogo;

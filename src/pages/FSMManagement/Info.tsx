@@ -5,22 +5,18 @@ import {
 } from '@mui/material';
 import FSMInfoForm from 'components/template/forms/FSMInfoForm';
 import React, { FC, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useUpdateFSMMutation } from 'redux/features/FSMSlice';
+import { useGetFSMQuery, useUpdateFSMMutation } from 'redux/features/FSMSlice';
 import { FSMType } from 'types/models';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 
-type InfoPropsType = {
-  fsm: FSMType;
-}
+type InfoPropsType = {}
 
-const Info: FC<InfoPropsType> = ({
-  fsm,
-}) => {
+const Info: FC<InfoPropsType> = ({ }) => {
   const [properties, setProperties] = useState<FSMType>();
   const { fsmId } = useParams();
+  const { data: fsm } = useGetFSMQuery({ fsmId });
   const [updateFSM, result] = useUpdateFSMMutation();
 
   useEffect(() => {
@@ -76,8 +72,5 @@ const Info: FC<InfoPropsType> = ({
   );
 }
 
-const mapStateToProps = (state) => ({
-  fsm: state.workshop.workshop,
-});
 
-export default connect(mapStateToProps)(Info);
+export default Info;

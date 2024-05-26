@@ -29,6 +29,12 @@ type GetFSMsOutputType = {
   count: number;
 }
 
+type GetFSMInputType = {
+  fsmId: string;
+};
+
+type GetFSMOutputType = FSMType;
+
 
 export const FSMSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
@@ -59,13 +65,22 @@ export const FSMSlice = ManageContentServiceApi.injectEndpoints({
       },
     }),
 
+
+    getFSM: builder.query<GetFSMOutputType, GetFSMInputType>({
+      providesTags: ['fsm'],
+      query: ({ fsmId }) => `fsm/fsm/${fsmId}/`,
+      transformResponse: (response: any): GetFSMOutputType => {
+        return response;
+      },
+    }),
+
     getFSMs: builder.query<GetFSMsOutputType, GetFSMsInputType>({
       providesTags: ['fsms', 'programs'],
       query: ({ programId, pageNumber = 1, isPrivate }) => `fsm/fsm/?program=${programId}&page=${pageNumber}${isPrivate != null ? `&is_private=${isPrivate}` : ''}`,
-      transformResponse: (respons: any): GetFSMsOutputType => {
+      transformResponse: (response: any): GetFSMsOutputType => {
         return {
-          fsms: respons.results,
-          count: respons.count,
+          fsms: response.results,
+          count: response.count,
         };
       },
     })
@@ -75,5 +90,6 @@ export const FSMSlice = ManageContentServiceApi.injectEndpoints({
 export const {
   useUpdateFSMMutation,
   useCreateFSMMutation,
+  useGetFSMQuery,
   useGetFSMsQuery,
 } = FSMSlice;

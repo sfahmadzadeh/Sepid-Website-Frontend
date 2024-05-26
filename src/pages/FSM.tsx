@@ -11,14 +11,12 @@ import {
   mentorGetCurrentStateAction,
   changeOpenChatRoomAction,
 } from 'redux/slices/currentState';
-import {
-  getOneWorkshopAction,
-} from 'redux/slices/workshop';
 import { addMentorToRoom, updateMentorTime } from 'parse/mentorsInRoom';
 import DraggableChatRoom from 'components/organisms/DraggableMeeting';
 import Layout from 'components/template/Layout';
 import { FSMType, TeamType } from 'types/models';
 import { toast } from 'react-toastify';
+import { useGetFSMQuery } from 'redux/features/FSMSlice';
 
 var moment = require('moment');
 
@@ -30,7 +28,6 @@ type FSMPagePropsType = {
   paperId: any;
   studentPlayerId: any;
   myTeam: TeamType;
-  getOneWorkshop: any;
   enterWorkshop: any;
   mentorGetCurrentState: any;
   // todo:
@@ -39,7 +36,6 @@ type FSMPagePropsType = {
   changeOpenChatRoom: any;
   personsName: string;
   mentorId: string;
-  fsm: FSMType;
   teamId: string;
 }
 const FSM: FC<FSMPagePropsType> = ({
@@ -48,7 +44,6 @@ const FSM: FC<FSMPagePropsType> = ({
   paperId,
   studentPlayerId,
   myTeam,
-  getOneWorkshop,
   enterWorkshop,
   mentorGetCurrentState,
   // todo:
@@ -57,10 +52,10 @@ const FSM: FC<FSMPagePropsType> = ({
   changeOpenChatRoom,
   personsName,
   mentorId,
-  fsm,
   teamId,
 }) => {
   const { fsmId, programId } = useParams();
+  const { data: fsm } = useGetFSMQuery({ fsmId });
   const subscriberRef = useRef(null);
   const [mentorAdded, setMentorAdded] = useState(false)
   const search = useLocation().search;
@@ -98,10 +93,6 @@ const FSM: FC<FSMPagePropsType> = ({
   //     }
   //   )
   // }, [isMentor, readyToAddMentor])
-
-  useEffect(() => {
-    getOneWorkshop({ fsmId });
-  }, [])
 
   useEffect(() => {
     if (isMentor) {
@@ -201,11 +192,9 @@ const mapStateToProps = (state, ownProps) => ({
   teamId: state.currentState.teamId,
   personsName: `${state.account.userInfo?.first_name} ${state.account.userInfo?.last_name}`,
   mentorId: state.account.userInfo?.id,
-  fsm: state.workshop.workshop,
 });
 
 export default connect(mapStateToProps, {
-  getOneWorkshop: getOneWorkshopAction,
   enterWorkshop: enterWorkshopAction,
   mentorGetCurrentState: mentorGetCurrentStateAction,
   changeOpenChatRoom: changeOpenChatRoomAction,

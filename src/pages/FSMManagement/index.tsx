@@ -21,9 +21,6 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import {
   getProgramTeamsAction,
 } from 'redux/slices/programs';
-import {
-  getOneWorkshopsInfoAction,
-} from 'redux/slices/workshop';
 import Layout from 'components/template/Layout';
 import DesignStates from './DesignStates';
 import Edges from './Edges';
@@ -31,11 +28,11 @@ import Statistics from './Statistics';
 import IndividualRequests from './IndividualRequests';
 import Info from './Info';
 import TeamRequests from './TeamRequests';
-import { ProgramType, FSMType } from 'types/models';
 import Mentors from './Mentors';
 import GoToAnswer from './GoToAnswer';
 import { DashboardTabType } from 'types/global';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
+import { useGetFSMQuery } from 'redux/features/FSMSlice';
 
 const initialTabs: DashboardTabType[] = [
   {
@@ -79,18 +76,15 @@ const initialTabs: DashboardTabType[] = [
 
 type FSMManagementPropsType = {
   getProgramTeams: Function,
-  getOneWorkshopsInfo: Function,
-  fsm: FSMType,
 }
 
 const FSMManagement: FC<FSMManagementPropsType> = ({
   getProgramTeams: getProgramTeams,
-  getOneWorkshopsInfo,
-  fsm,
 }) => {
   const t = useTranslate();
   const navigate = useNavigate();
   const { fsmId, programId, section } = useParams();
+  const { data: fsm } = useGetFSMQuery({ fsmId });
   const { data: program } = useGetProgramQuery({ programId });
 
   useEffect(() => {
@@ -119,10 +113,6 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
             component: IndividualRequests,
           },
         ] : initialTabs : initialTabs
-
-  useEffect(() => {
-    getOneWorkshopsInfo({ fsmId });
-  }, []);
 
   useEffect(() => {
     if (program && program.registration_form) {
@@ -182,11 +172,6 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  fsm: state.workshop.workshop,
-});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   getProgramTeams: getProgramTeamsAction,
-  getOneWorkshopsInfo: getOneWorkshopsInfoAction,
 })(FSMManagement);

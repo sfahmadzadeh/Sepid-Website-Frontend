@@ -20,10 +20,8 @@ import { useParams } from 'react-router-dom';
 import useAppbarItems from './useAppbarModes';
 import { AppbarModes } from 'types/global';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
-import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type AppbarPropsType = {
-  fsm: any;
   mode: AppbarModes;
   showBackOnScroll?: boolean;
   hideOnScroll?: boolean;
@@ -32,7 +30,6 @@ type AppbarPropsType = {
 }
 
 const ResponsiveAppBar: FC<AppbarPropsType> = ({
-  fsm,
   mode,
   showBackOnScroll = false,
   hideOnScroll = false,
@@ -44,7 +41,7 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
   const [openToolbar, setOpenToolbar] = useState(true);
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 30 });
   const width = useWidth();
-  const appbarItems = useAppbarItems({ mode, fsm, mentorId });
+  const appbarItems = useAppbarItems({ mode, mentorId });
 
   if (mode === 'None') return null;
 
@@ -154,7 +151,6 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  fsm: state.workshop.workshop,
   mentorId: state.account.userInfo?.id,
 })
 

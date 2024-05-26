@@ -18,13 +18,11 @@ const mode2component = {
 
 type UseAppbarItemsPropsType = {
   mode: AppbarModes;
-  fsm: any;
   mentorId: string;
 }
 
 const useAppbarItems = ({
   mode,
-  fsm,
   mentorId,
 }: UseAppbarItemsPropsType): AppbarItemsType => {
   if (!mode || mode === 'None') {
@@ -32,7 +30,7 @@ const useAppbarItems = ({
     return;
   }
   const appbarComponent = mode2component[mode];
-  return appbarComponent({ fsm, mentorId })
+  return appbarComponent({ mentorId })
 }
 
 export default useAppbarItems;

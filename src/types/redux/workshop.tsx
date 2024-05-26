@@ -1,5 +1,5 @@
 import {
-    State,
+    FSMStateType,
     WorkshopEdge,
     Team,
     Widget,
@@ -12,7 +12,7 @@ import {
 export type InitialStateType = {
     currentState: CurrentState,
     isFetching: boolean,
-    allStates: State[],
+    allStates: FSMStateType[],
     allWorkshopEdges: WorkshopEdge[],
     fetchedTeamsObjects: Team[],
     requestedTeams: Team[],
