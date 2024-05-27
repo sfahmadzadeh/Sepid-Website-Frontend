@@ -107,7 +107,7 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
           checked={data.is_visible}
           onChange={() => toggleValue('is_visible')}
           control={<Switch color="primary" />}
-          label="قابل مشاهده برای دانش‌آموزان:"
+          label="قابل مشاهده برای شرکت‌کنندگان:"
           labelPlacement='start'
         />
       </Grid>

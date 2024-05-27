@@ -5,6 +5,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import SoftDeleteProgramButton from 'components/atoms/SoftDeleteProgramButton';
 import ProgramContactInfoForm from 'components/template/forms/ProgramContactInfoForm';
 import ProgramInfoForm from 'components/template/forms/ProgramInfoForm';
 import React, { FC, useEffect, useState } from 'react';
@@ -46,9 +47,13 @@ const InfoTab: FC<InfoTabPropsType> = ({ }) => {
   return (
     <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
       <Stack padding={2} spacing={2}>
-        <Typography variant='h2' gutterBottom>
-          {'مشخصات دوره'}
-        </Typography>
+        <Stack direction={'row'} alignItems={'start'} justifyContent={'space-between'}>
+          <Typography variant='h2' gutterBottom>
+            {'مشخصات دوره'}
+          </Typography>
+          <SoftDeleteProgramButton programId={programId} />
+        </Stack>
+
         <Box>
           {properties &&
             <ProgramInfoForm showCoverImage={true} data={properties} setData={setProperties} />

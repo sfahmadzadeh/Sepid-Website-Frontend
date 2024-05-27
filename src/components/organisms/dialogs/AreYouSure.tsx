@@ -9,13 +9,13 @@ import {
 } from '@mui/material';
 import React from 'react';
 
-function AreYouSure({ open, handleClose, callBackFunction }) {
+function AreYouSure({ open, handleClose, callBackFunction, text = '' }) {
   return (
     <Dialog disableScrollLock maxWidth="xs" open={open} onClose={handleClose}>
       <DialogContent>
         <Grid item>
           <Typography variant="h5" align="center">
-            آیا مطمئن هستید؟
+            {text || 'آیا مطمئن هستید؟'}
           </Typography>
         </Grid>
       </DialogContent>

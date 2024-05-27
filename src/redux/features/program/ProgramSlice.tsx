@@ -85,7 +85,12 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
       transformResponse: (respons: any): GetProgramOutputType => {
         return respons;
       },
-    })
+    }),
+
+    softDeleteProgram: builder.mutation<any, { programId: string }>({
+      invalidatesTags: ['programs'],
+      query: ({ programId }) => `fsm/program/${programId}/soft_remove_program/`
+    }),
   })
 });
 
@@ -94,4 +99,5 @@ export const {
   useGetProgramsQuery,
   useUpdateProgramMutation,
   useCreateProgramMutation,
+  useSoftDeleteProgramMutation,
 } = ProgramSlice;

@@ -3,6 +3,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import SoftDeleteFSMButton from 'components/atoms/SoftDeleteFSMButton';
 import FSMInfoForm from 'components/template/forms/FSMInfoForm';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -15,7 +16,7 @@ type InfoPropsType = {}
 
 const Info: FC<InfoPropsType> = ({ }) => {
   const [properties, setProperties] = useState<FSMType>();
-  const { fsmId } = useParams();
+  const { fsmId, programId } = useParams();
   const { data: fsm } = useGetFSMQuery({ fsmId });
   const [updateFSM, result] = useUpdateFSMMutation();
 
@@ -50,9 +51,12 @@ const Info: FC<InfoPropsType> = ({ }) => {
   return (
     <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
       <Stack padding={2}>
-        <Typography variant='h2' gutterBottom>
-          {'مشخصات کارگاه'}
-        </Typography>
+        <Stack direction={'row'} alignItems={'start'} justifyContent={'space-between'}>
+          <Typography variant='h2' gutterBottom>
+            {'مشخصات کارگاه'}
+          </Typography>
+          <SoftDeleteFSMButton fsmId={fsmId} programId={programId} />
+        </Stack>
         <Stack>
           {properties &&
             <FSMInfoForm showCoverImage={true} data={properties} setData={setProperties} />
