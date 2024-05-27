@@ -9,23 +9,19 @@ import { useGetProgramsQuery } from 'redux/features/program/ProgramSlice';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import NoDataFound from 'components/molecules/NoDataFound';
 
-
 const Programs = ({ }) => {
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
-
-  const banners = pageMetadata?.banners;
-
   const {
     data,
     isLoading,
     isSuccess,
   } = useGetProgramsQuery({ websiteName: website?.name, isPrivate: false }, { skip: !Boolean(website) });
   const programs = data?.programs.filter(program => program.is_visible) || [];
-  const count = data?.count || 0;
+  const visiblePrograms = programs.filter(program => program.is_visible)
 
-  const activePrograms: ProgramType[] = programs.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
-  const inactivePrograms: ProgramType[] = programs.filter((program: ProgramType) => !program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
+  const activePrograms: ProgramType[] = visiblePrograms.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
+  const inactivePrograms: ProgramType[] = visiblePrograms.filter((program: ProgramType) => !program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
 
   const activeProgramsElement = (
     <Grid item container spacing={2} xs={12}>
@@ -70,7 +66,7 @@ const Programs = ({ }) => {
   return (
     <Layout appbarMode='DASHBOARD'>
       <Stack width={'100%'} spacing={4} justifyContent='center'>
-        <Banner banners={banners} />
+        <Banner banners={pageMetadata?.banners} />
         <Typography variant="h1" align='center'>
           {'دوره‌‌ها'}
         </Typography>
