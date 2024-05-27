@@ -10,7 +10,6 @@ type UpdateFSMOutputType = {
 }
 
 type CreateFSMInputType = {
-  programId: string;
   body: any;
 };
 
@@ -40,13 +39,10 @@ export const FSMSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     createFSM: builder.mutation<CreateFSMOutputType, CreateFSMInputType>({
       invalidatesTags: ['fsms'],
-      query: ({ programId, ...body }) => ({
+      query: ({ ...body }) => ({
         url: `/fsm/fsm/`,
         method: 'POST',
-        body: {
-          ...body,
-          program: programId,
-        },
+        body,
       }),
       transformResponse: (response: any): CreateFSMOutputType => {
         return response;
