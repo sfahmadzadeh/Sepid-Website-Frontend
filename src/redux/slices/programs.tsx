@@ -380,7 +380,7 @@ export const addMentorToWorkshopAction = createAsyncThunkApi(
 );
 
 export const getPlayerFromTeamAction = createAsyncThunkApi(
-  'programs/removeEdgeAction',
+  'programs/getPlayerFromTeamAction',
   Apis.POST,
   getPlayerFromTeamUrl,
   {

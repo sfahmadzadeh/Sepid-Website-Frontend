@@ -138,6 +138,7 @@ export type Problem = any
 export type Submission = any
 export type SubmissionIsLoading = boolean
 export type FSMStateType = any;
+export type FSMEdgeType = any;
 export type Answer = any
 export type WorkshopEdge = any
 export type Player = any

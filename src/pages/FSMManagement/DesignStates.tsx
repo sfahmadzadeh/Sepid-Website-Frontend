@@ -1,77 +1,33 @@
+import React, { FC, useState } from 'react';
 import {
   Stack,
-  Typography,
-  Box,
+  Skeleton,
 } from '@mui/material';
-import React, { FC, useState, useEffect, Fragment } from 'react';
-import { connect } from 'react-redux';
 import { useParams } from 'react-router';
-
 import StatesMenu from 'components/organisms/StatesMenu';
-import {
-  getAllWorkshopStatesInfoAction,
-} from 'redux/slices/workshop';
-import {
-  getOneStateAction,
-} from 'redux/slices/Paper';
-import { FSMStateType } from 'types/models';
 import EditState from 'components/template/EditState';
+import { useGetFSMStatesQuery } from 'redux/features/fsm/FSMSlice';
 
+type DesignStatesPropsType = {}
 
-type DesignStatesPropsType = {
-  getAllWorkshopStatesInfo: Function;
-  getOneState: Function;
-  papers: {};
-  allStates: FSMStateType[];
-}
-
-const DesignStates: FC<DesignStatesPropsType> = ({
-  getAllWorkshopStatesInfo,
-  getOneState,
-  allStates = [],
-  papers,
-}) => {
+const DesignStates: FC<DesignStatesPropsType> = ({ }) => {
   const { fsmId } = useParams();
   const [stateIndex, setStateIndex] = useState(0);
-  const currentState = papers[allStates[stateIndex]?.id];
-
-  useEffect(() => {
-    getAllWorkshopStatesInfo({ fsmId });
-  }, []);
-
-  useEffect(() => {
-    if (allStates[stateIndex]) {
-      getOneState({ paperId: allStates[stateIndex].id });
-    }
-  }, [allStates, stateIndex]);
-
-  const widgets = currentState?.widgets;
-  const hints = currentState?.hints;
+  const { data: fsmStates = [], isLoading } = useGetFSMStatesQuery({ fsmId });
 
   return (
-    <Stack padding={2} spacing={3}>
+    <Stack padding={2} spacing={4}>
       <StatesMenu
         stateIndex={stateIndex}
         setStateIndex={setStateIndex}
-        states={allStates}
+        states={fsmStates}
       />
-      {currentState ?
-        <EditState {...currentState} />
-        :
-        <Typography align="center" variant="h3" gutterBottom>
-          {'گامی وجود ندارد.'}
-        </Typography>
+      {(isLoading || stateIndex === -1) ?
+        <Skeleton variant="rounded" width={'100%'} height={600} /> :
+        <EditState fsmStateId={fsmStates[stateIndex].id} />
       }
     </Stack>
   );
 };
 
-const mapStateToProps = (state) => ({
-  allStates: state.workshop.allStates,
-  papers: state.paper.papers,
-});
-
-export default connect(mapStateToProps, {
-  getOneState: getOneStateAction,
-  getAllWorkshopStatesInfo: getAllWorkshopStatesInfoAction,
-})(DesignStates);
+export default DesignStates;

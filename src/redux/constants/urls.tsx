@@ -133,13 +133,12 @@ export const registrationFormCRUDUrl = ({ registrationFormId }) => registrationF
 export const getFSMPlayersUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/players/`;
 export const workshopCRUDUrl = ({ fsmId }) => fsmId ? `/fsm/fsm/${fsmId}/` : '/fsm/fsm/';
 export const getAllWorkshopStatesInfoUrl = ({ fsmId }) => `/fsm/fsm/${fsmId}/get_states/`;
-export const getAllWorkshopEdges = ({ fsmId }) => `/fsm/fsm/${fsmId}/get_edges/`;
 export const getAllWorkshopMentors = ({ fsmId }) => `/fsm/fsm/${fsmId}/get_mentors/`;
 export const removeMentorURL = ({ fsmId }) => `/fsm/fsm/${fsmId}/remove_mentor/`;
 
 // state:
 export const stateCRUDUrl = ({ paperId }) => paperId ? `/fsm/state/${paperId}/` : '/fsm/state/';
-export const edgeUrl = ({ edgeId }) => edgeId ? `/fsm/edge/${edgeId}/` : '/fsm/edge/';
+export const edgeUrl = ({ fsmEdgeId }) => fsmEdgeId ? `/fsm/edge/${fsmEdgeId}/` : '/fsm/edge/';
 
 // fsm:
 export const programInfoUrl = ({ pageNumber, programId }) => programId ? `fsm/program/${programId}/` : `fsm/program/?page=${pageNumber}`;

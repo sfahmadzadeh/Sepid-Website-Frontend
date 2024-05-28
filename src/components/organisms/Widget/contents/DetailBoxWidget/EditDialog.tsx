@@ -8,7 +8,6 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-
 import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
 import { EditPaper } from 'components/template/Paper';
 import useCollectWidgetsData from 'components/hooks/useCollectWidgetsData';

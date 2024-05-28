@@ -1,7 +1,7 @@
 import { Button, FormControl, InputLabel, Autocomplete, MenuItem, Stack, Typography, TextField } from '@mui/material';
 import React, { FC, Fragment, useState } from 'react';
 
-import CreateStateDialog from './dialogs/CreateStateDialog';
+import CreateFSMStateDialog from './dialogs/CreateFSMStateDialog';
 import { FSMStateType } from 'types/models';
 
 type StatesMenuPropsType = {
@@ -47,7 +47,7 @@ const StatesMenu: FC<StatesMenuPropsType> = ({
           </Typography>
         </Button>
       </Stack>
-      <CreateStateDialog
+      <CreateFSMStateDialog
         open={openCreateStateDialog}
         handleClose={() => setOpenCreateStateDialog(false)}
       />

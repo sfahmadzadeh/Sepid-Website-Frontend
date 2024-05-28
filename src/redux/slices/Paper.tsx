@@ -4,8 +4,6 @@ import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
 import {
   hintUrl,
   widgetHintUrl,
-  stateCRUDUrl,
-  statesCRUDUrl,
 } from '../constants/urls';
 import { InitialStateType } from 'types/redux/Paper';
 import { getArticleAction } from './article';
@@ -17,20 +15,6 @@ import {
   makeWidgetFileEmptyAction,
   _updateWidgetAction,
 } from './widget';
-
-//////////////// متفرقه ////////////////
-
-export const getOneStateAction = createAsyncThunkApi(
-  'workshop/getOneStateAction',
-  Apis.GET,
-  stateCRUDUrl
-);
-
-export const deleteStateAction = createAsyncThunkApi(
-  'widget/delete',
-  Apis.DELETE,
-  statesCRUDUrl,
-);
 
 //////////////// HINT ////////////////
 
@@ -105,14 +89,6 @@ const PaperSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: {
-    [getOneStateAction.pending.toString()]: isFetching,
-    [getOneStateAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg } }) => {
-      state.papers[arg.paperId] = response;
-      state.papers = addNewPaperToList(state.papers, response);
-      state.isFetching = false;
-    },
-    [getOneStateAction.rejected.toString()]: isNotFetching,
-
 
     [getWidgetAction.pending.toString()]: isFetching,
     [getWidgetAction.fulfilled.toString()]: (state, { payload: { response } }) => {

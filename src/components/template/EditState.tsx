@@ -7,73 +7,53 @@ import {
   Typography,
 } from '@mui/material';
 import { Save as SaveIcon, Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
-import React, { useEffect, useState, FC, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { useTranslate } from 'react-redux-multilingual/lib/context';
+import React, { useState, FC, Fragment } from 'react';
 import { useParams } from 'react-router';
-import {
-  removeStateAction,
-  updateStateAction,
-} from 'redux/slices/workshop';
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
 import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog';
 import { EditPaper } from './Paper';
 import EditHints from './EditHints';
+import { useDeleteFSMStateMutation, useGetFSMStateQuery, useUpdateFSMStateMutation } from 'redux/features/fsm/FSMStateSlice';
 
 type EditStatePropsType = {
-  removeState: any;
-  updateState: any;
-  hints: any[];
-  widgets: any[];
-  id: number;
-  name: string;
+  fsmStateId: string;
 }
 
 const EditState: FC<EditStatePropsType> = ({
-  removeState,
-  updateState,
-
-  hints,
-  widgets = [],
-  id: paperId,
-  name,
+  fsmStateId,
 }) => {
-  const t = useTranslate();
   const { fsmId } = useParams()
   const [openCreateProblemDialog, setOpenCreateProblemDialog] = useState(false);
   const [openCreateContentDialog, setOpenCreateContentDialog] = useState(false);
   const [openDeleteWidgetDialog, setOpenDeleteWidgetDialog] = useState(false);
   const [isEditingStateName, setIsEditingStateName] = useState(false);
   const [newName, setNewName] = useState<string>(null);
+  const { data: fsmState } = useGetFSMStateQuery({ fsmStateId });
+  const [deleteFSMState] = useDeleteFSMStateMutation();
+  const [updateFSMState] = useUpdateFSMStateMutation();
 
-  useEffect(() => {
-    if (name) {
-      setNewName(name)
-    }
-  }, [name])
-
-  const problems = widgets?.filter((widget) =>
+  const problems = fsmState?.widgets?.filter((widget) =>
     widget.widget_type.includes('Problem')
-  );
-
-  const contents = widgets?.filter(
+  ) || [];
+  const contents = fsmState?.widgets?.filter(
     (widget) => !widget.widget_type.includes('Problem')
-  );
+  ) || [];
+  const hints = fsmState?.hints || [];
 
   return (
     <Fragment>
       <Stack spacing={2}>
-        {paperId &&
+        {fsmStateId &&
           <Stack direction='row' alignItems='flex-start' justifyContent='space-between'>
             {isEditingStateName &&
               <TextField
                 onChange={(e) => setNewName(e.target.value)}
                 fullWidth variant='outlined'
-                defaultValue={name} />
+                defaultValue={fsmState?.name} />
             }
             {!isEditingStateName &&
               <Typography align="center" variant="h1" gutterBottom>
-                {name}
+                {fsmState?.name}
               </Typography>
             }
             <Stack direction='row'>
@@ -81,10 +61,13 @@ const EditState: FC<EditStatePropsType> = ({
                 <Tooltip title='ذخیره' arrow>
                   <IconButton size='small'
                     onClick={() => {
-                      updateState({ paperId, name: newName, fsm: fsmId });
-                      setIsEditingStateName(false);
-                    }
-                    }>
+                      updateFSMState({
+                        fsmStateId,
+                        name: newName,
+                        fsm: fsmId,
+                        onSuccess: () => setIsEditingStateName(false),
+                      });
+                    }}>
                     <SaveIcon />
                   </IconButton>
                 </Tooltip>
@@ -108,36 +91,33 @@ const EditState: FC<EditStatePropsType> = ({
           {'مسئله‌ها'}
         </Typography>
         <Divider />
-        <EditPaper widgets={problems} paperId={paperId} mode='problems' />
+        <EditPaper widgets={problems} paperId={+fsmStateId} mode='problems' />
         <Typography variant='h2' gutterBottom>
           {'محتواها'}
         </Typography>
         <Divider />
-        <EditPaper widgets={contents} paperId={paperId} mode='contents' />
-        <EditHints hints={hints} referenceId={paperId} />
+        <EditPaper widgets={contents} paperId={+fsmStateId} mode='contents' />
+        <EditHints hints={hints} referenceId={fsmStateId} />
       </Stack >
       <CreateWidgetDialog
         showProblems={true}
         showContent={false}
-        paperId={paperId}
+        paperId={+fsmStateId}
         open={openCreateProblemDialog}
         handleClose={() => setOpenCreateProblemDialog(false)}
       />
       <CreateWidgetDialog
-        paperId={paperId}
+        paperId={+fsmStateId}
         open={openCreateContentDialog}
         handleClose={() => setOpenCreateContentDialog(false)}
       />
       <AreYouSure
         open={openDeleteWidgetDialog}
         handleClose={() => setOpenDeleteWidgetDialog(false)}
-        callBackFunction={() => removeState({ paperId })}
+        callBackFunction={() => deleteFSMState({ fsmStateId })}
       />
     </Fragment>
   );
 }
 
-export default connect(null, {
-  removeState: removeStateAction,
-  updateState: updateStateAction,
-})(EditState);
+export default EditState;

@@ -5,28 +5,24 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import React, { FC, useState } from 'react';
-import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router';
-
-import {
-  addStateAction,
-} from 'redux/slices/workshop';
+import { useCreateFSMStateMutation } from 'redux/features/fsm/FSMStateSlice';
 
 type CreateStateDialogPropsType = {
-  addState: any;
   open: boolean;
   handleClose: any;
 }
 
-const CreateStateDialog: FC<CreateStateDialogPropsType> = ({
-  addState,
+const CreateFSMStateDialog: FC<CreateStateDialogPropsType> = ({
   open,
   handleClose,
 }) => {
   const [name, setName] = useState('');
   const { fsmId } = useParams();
   const t = useTranslate();
+  const [createFSMState, result] = useCreateFSMStateMutation();
+
 
   return (
     <Dialog disableScrollLock open={open} onClose={handleClose}>
@@ -43,7 +39,7 @@ const CreateStateDialog: FC<CreateStateDialogPropsType> = ({
         <Button
           color="primary"
           variant="contained"
-          onClick={() => addState({ name, fsm: fsmId }).then(handleClose)}>
+          onClick={() => createFSMState({ body: { name }, fsmId }).then(handleClose)}>
           {t('create')}
         </Button>
       </DialogActions>
@@ -51,6 +47,4 @@ const CreateStateDialog: FC<CreateStateDialogPropsType> = ({
   );
 }
 
-export default connect(null, {
-  addState: addStateAction,
-})(CreateStateDialog);
+export default CreateFSMStateDialog;

@@ -1,4 +1,4 @@
-import { FSMType } from 'types/models';
+import { FSMStateType, FSMType } from 'types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type UpdateFSMInputType = {
@@ -33,6 +33,10 @@ type GetFSMInputType = {
 };
 
 type GetFSMOutputType = FSMType;
+
+
+type GetFSMStatesOutputType = FSMStateType[];
+
 
 
 export const FSMSlice = ManageContentServiceApi.injectEndpoints({
@@ -81,6 +85,22 @@ export const FSMSlice = ManageContentServiceApi.injectEndpoints({
       },
     }),
 
+    getFSMStates: builder.query<GetFSMStatesOutputType, { fsmId: string }>({
+      providesTags: ['fsm-states'],
+      query: ({ fsmId }) => `fsm/fsm/${fsmId}/get_states/`,
+      transformResponse: (response: any): GetFSMStatesOutputType => {
+        return response;
+      },
+    }),
+
+    getFSMEdges: builder.query<GetFSMStatesOutputType, { fsmId: string }>({
+      providesTags: ['fsm-edges'],
+      query: ({ fsmId }) => `fsm/fsm/${fsmId}/get_edges/`,
+      transformResponse: (response: any): GetFSMStatesOutputType => {
+        return response;
+      },
+    }),
+
     softDeleteFSM: builder.mutation<any, { fsmId: string }>({
       invalidatesTags: ['fsms'],
       query: ({ fsmId }) => `fsm/fsm/${fsmId}/soft_remove_fsm/`
@@ -94,4 +114,6 @@ export const {
   useGetFSMQuery,
   useGetFSMsQuery,
   useSoftDeleteFSMMutation,
+  useGetFSMStatesQuery,
+  useGetFSMEdgesQuery,
 } = FSMSlice;

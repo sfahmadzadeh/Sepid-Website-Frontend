@@ -10,12 +10,8 @@ import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import { useChangePhoneNumberMutation } from 'redux/features/UserSlice';
-import {
-  addStateAction,
-} from 'redux/slices/workshop';
 
 type ChangePhoneNumberDialogPropsType = {
-  addState: any;
   open: boolean;
   handleClose: any;
 }
@@ -78,6 +74,4 @@ const ChangePhoneNumberDialog: FC<ChangePhoneNumberDialogPropsType> = ({
   );
 }
 
-export default connect(null, {
-  addState: addStateAction,
-})(ChangePhoneNumberDialog);
+export default ChangePhoneNumberDialog;
