@@ -7,13 +7,14 @@ import {
   Typography,
 } from '@mui/material';
 import { Save as SaveIcon, Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
-import React, { useState, FC, Fragment } from 'react';
+import React, { useState, FC, Fragment, useEffect } from 'react';
 import { useParams } from 'react-router';
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
 import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog';
 import { EditPaper } from './Paper';
 import EditHints from './EditHints';
 import { useDeleteFSMStateMutation, useGetFSMStateQuery, useUpdateFSMStateMutation } from 'redux/features/fsm/FSMStateSlice';
+import { toast } from 'react-toastify';
 
 type EditStatePropsType = {
   fsmStateId: string;
@@ -27,7 +28,7 @@ const EditState: FC<EditStatePropsType> = ({
   const [openCreateContentDialog, setOpenCreateContentDialog] = useState(false);
   const [openDeleteWidgetDialog, setOpenDeleteWidgetDialog] = useState(false);
   const [isEditingStateName, setIsEditingStateName] = useState(false);
-  const [newName, setNewName] = useState<string>(null);
+  const [name, setName] = useState<string>(null);
   const { data: fsmState } = useGetFSMStateQuery({ fsmStateId });
   const [deleteFSMState] = useDeleteFSMStateMutation();
   const [updateFSMState] = useUpdateFSMStateMutation();
@@ -40,6 +41,25 @@ const EditState: FC<EditStatePropsType> = ({
   ) || [];
   const hints = fsmState?.hints || [];
 
+  useEffect(() => {
+    if (fsmState) {
+      setName(fsmState?.name);
+    }
+  }, [fsmState])
+
+  const renameFSMState = () => {
+    if (!name) {
+      toast.error('نام گام نمی‌تواند خالی بماند.');
+      return;
+    }
+    updateFSMState({
+      fsmStateId,
+      name: name,
+      fsm: fsmId,
+      onSuccess: () => setIsEditingStateName(false),
+    });
+  }
+
   return (
     <Fragment>
       <Stack spacing={2}>
@@ -47,9 +67,9 @@ const EditState: FC<EditStatePropsType> = ({
           <Stack direction='row' alignItems='flex-start' justifyContent='space-between'>
             {isEditingStateName &&
               <TextField
-                onChange={(e) => setNewName(e.target.value)}
-                fullWidth variant='outlined'
-                defaultValue={fsmState?.name} />
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                fullWidth variant='outlined' />
             }
             {!isEditingStateName &&
               <Typography align="center" variant="h1" gutterBottom>
@@ -60,14 +80,7 @@ const EditState: FC<EditStatePropsType> = ({
               {isEditingStateName &&
                 <Tooltip title='ذخیره' arrow>
                   <IconButton size='small'
-                    onClick={() => {
-                      updateFSMState({
-                        fsmStateId,
-                        name: newName,
-                        fsm: fsmId,
-                        onSuccess: () => setIsEditingStateName(false),
-                      });
-                    }}>
+                    onClick={renameFSMState}>
                     <SaveIcon />
                   </IconButton>
                 </Tooltip>
