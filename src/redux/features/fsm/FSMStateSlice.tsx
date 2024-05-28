@@ -23,10 +23,13 @@ export const FSMStateSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     createFSMState: builder.mutation<CreateFSMStateOutputType, CreateFSMStateInputType>({
       invalidatesTags: ['fsm-states'],
-      query: ({ ...body }) => ({
+      query: ({ fsmId, ...body }) => ({
         url: `/fsm/state/`,
         method: 'POST',
-        body,
+        body: {
+          ...body,
+          fsm: fsmId,
+        },
       }),
       transformResponse: (response: any): CreateFSMStateOutputType => {
         return response;
