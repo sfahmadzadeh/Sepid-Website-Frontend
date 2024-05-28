@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import React, { FC, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router';
+import { toast } from 'react-toastify';
 import { useCreateFSMStateMutation } from 'redux/features/fsm/FSMStateSlice';
 
 type CreateStateDialogPropsType = {
@@ -23,7 +24,6 @@ const CreateFSMStateDialog: FC<CreateStateDialogPropsType> = ({
   const t = useTranslate();
   const [createFSMState, result] = useCreateFSMStateMutation();
 
-
   return (
     <Dialog disableScrollLock open={open} onClose={handleClose}>
       <DialogTitle>{t('createState')}</DialogTitle>
@@ -39,7 +39,7 @@ const CreateFSMStateDialog: FC<CreateStateDialogPropsType> = ({
         <Button
           color="primary"
           variant="contained"
-          onClick={() => createFSMState({ name, fsmId }).then(handleClose)}>
+          onClick={() => createFSMState({ name, fsmId }).then(() => { handleClose(); toast.success('گام جدید با موفقیت ساخته شد.') })}>
           {t('create')}
         </Button>
       </DialogActions>
