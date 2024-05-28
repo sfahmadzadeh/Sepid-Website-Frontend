@@ -9,8 +9,7 @@ type UpdateFSMStateOutputType = FSMStateType;
 
 type CreateFSMStateInputType = {
   fsmId: string;
-  body: any;
-};
+} & any;
 
 type CreateFSMStateOutputType = {
 

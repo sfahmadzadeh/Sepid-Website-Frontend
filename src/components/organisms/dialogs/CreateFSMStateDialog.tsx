@@ -39,7 +39,7 @@ const CreateFSMStateDialog: FC<CreateStateDialogPropsType> = ({
         <Button
           color="primary"
           variant="contained"
-          onClick={() => createFSMState({ body: { name }, fsmId }).then(handleClose)}>
+          onClick={() => createFSMState({ name, fsmId }).then(handleClose)}>
           {t('create')}
         </Button>
       </DialogActions>
