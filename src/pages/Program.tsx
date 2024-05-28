@@ -1,7 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import React, { FC, Fragment, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
@@ -9,7 +8,6 @@ import FSMsGrid from 'components/organisms/FSMsGrid';
 import Layout from 'components/template/Layout';
 import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import Banner from 'components/molecules/Banner';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import { useGetFSMsQuery } from 'redux/features/fsm/FSMSlice';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
