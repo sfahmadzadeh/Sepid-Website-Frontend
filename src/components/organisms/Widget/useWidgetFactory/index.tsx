@@ -21,7 +21,7 @@ const useWidgetFactory = ({
   collectAnswerData,
 }: WidgetFactoryType) => {
   const dispatcher = useDispatch();
-  let onDelete, onEdit, onAnswerChange, onViwe, onAnswerSubmit;
+  let onDelete, onMutate, onAnswerChange, onQuery, onAnswerSubmit;
 
   if (!widgetType) {
     return null;
@@ -35,7 +35,7 @@ const useWidgetFactory = ({
     submitAnswerAction,
   } = WIDGET_TYPE_MAPPER[widgetType];
 
-  onEdit = paperId ?
+  onMutate = paperId ?
     (widgetId ?
       (arg) => dispatcher(updateAction(arg)) :
       (arg) => dispatcher(createAction(arg))) :
@@ -54,9 +54,9 @@ const useWidgetFactory = ({
 
   return {
     onDelete,
-    onEdit,
+    onMutate,
     onAnswerChange,
-    onViwe,
+    onQuery,
     onAnswerSubmit,
     WidgetComponent,
     EditWidgetDialog,

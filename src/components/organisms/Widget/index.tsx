@@ -68,10 +68,10 @@ const Widget: FC<WidgetPropsType> = ({
   const widgetType = widget.widget_type || AnswerType2WidgetType[widget.answer_type];
   const {
     onDelete,
-    onEdit,
+    onMutate,
     onAnswerChange,
     onAnswerSubmit,
-    onViwe,
+    onQuery,
     WidgetComponent,
     EditWidgetDialog,
   } = useWidgetFactory({
@@ -144,7 +144,7 @@ const Widget: FC<WidgetPropsType> = ({
                 paperId={paperId}
                 open={openEditDialog}
                 handleClose={() => setOpenEditDialog(false)}
-                onEdit={onEdit}
+                onMutate={onMutate}
               />
               <DeleteWidgetDialog
                 paperId={paperId}

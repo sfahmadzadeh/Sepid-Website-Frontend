@@ -45,7 +45,7 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
 
   if (widgetType) {
     const {
-      onEdit,
+      onMutate,
       EditWidgetDialog,
     } = widgeProperties;
 
@@ -53,7 +53,7 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
       <EditWidgetDialog
         paperId={paperId}
         open={open}
-        onEdit={onEdit}
+        onMutate={onMutate}
         handleClose={() => {
           setWidgetType('');
           handleClose();

@@ -14,7 +14,7 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import UploadFile from 'components/molecules/UploadFile';
 
 function ImageEditWidget({
-  onEdit,
+  onMutate,
   handleClose,
 
   paperId,
@@ -43,7 +43,7 @@ function ImageEditWidget({
         link,
       }
     }
-    onEdit({
+    onMutate({
       ...payload,
       widgetId,
       onSuccess: handleClose,

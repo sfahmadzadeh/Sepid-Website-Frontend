@@ -12,7 +12,7 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
 
 function SmallAnswerProblemEditWidget({
-  onEdit,
+  onMutate,
   handleClose,
 
   open,
@@ -28,7 +28,7 @@ function SmallAnswerProblemEditWidget({
   const [solution, setSolution] = useState<string>(oldSolution || '');
 
   const handleSubmit = () => {
-    onEdit({
+    onMutate({
       widgetId,
       paper: paperId,
       text: text,

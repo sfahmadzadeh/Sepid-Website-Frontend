@@ -12,7 +12,7 @@ import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorCom
 
 type BigAnswerProblemEditWidgetPropsType = {
   handleClose: any;
-  onEdit: any;
+  onMutate: any;
 
   open: boolean;
   text: string;
@@ -23,7 +23,7 @@ type BigAnswerProblemEditWidgetPropsType = {
 
 const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
   handleClose,
-  onEdit,
+  onMutate,
 
   open,
   text: oldText,
@@ -36,7 +36,7 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
   const [solution, setSolution] = useState<string>(oldSolution || '');
 
   const handleClick = () => {
-    onEdit({
+    onMutate({
       widgetId,
       paper: paperId,
       text: text,

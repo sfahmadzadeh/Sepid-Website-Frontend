@@ -14,7 +14,7 @@ import { useTranslate } from 'react-redux-multilingual/lib/context'
 import UploadFile from 'components/molecules/UploadFile'
 
 function VideoEditWidget ({
-  onEdit,
+  onMutate,
 
   paperId,
   open,
@@ -43,7 +43,7 @@ function VideoEditWidget ({
         link
       }
     }
-    onEdit({
+    onMutate({
       ...payload,
       widgetId,
       onSuccess: handleClose

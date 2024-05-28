@@ -15,7 +15,7 @@ import UploadFile from 'components/molecules/UploadFile';
 
 
 function AudioEditWidget({
-  onEdit,
+  onMutate,
   handleClose,
 
   paperId,
@@ -44,7 +44,7 @@ function AudioEditWidget({
         link,
       }
     }
-    onEdit({
+    onMutate({
       ...payload,
       widgetId,
       onSuccess: handleClose,

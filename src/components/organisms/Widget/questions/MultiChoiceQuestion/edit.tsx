@@ -21,7 +21,7 @@ import { ChoiceType } from 'types/widgets';
 import MultiChoiceQuestionChoice from 'components/molecules/MultiChoiceQuestionChoice';
 
 type MultiChoiceQuestionEditWidgetPropsType = {
-  onEdit: any;
+  onMutate: any;
 
   text: string;
   open: boolean;
@@ -32,7 +32,7 @@ type MultiChoiceQuestionEditWidgetPropsType = {
 }
 
 const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> = ({
-  onEdit,
+  onMutate,
 
   text: previousQuestionText,
   choices: previousQuestionChoices,
@@ -53,7 +53,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
       ]);
 
   const handleSubmit = () => {
-    onEdit({
+    onMutate({
       paper: paperId,
       text: questionText,
       choices: questionChoices,

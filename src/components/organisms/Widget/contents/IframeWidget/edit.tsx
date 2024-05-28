@@ -13,7 +13,7 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 
 function IframeEditWidget({
   handleClose,
-  onEdit,
+  onMutate,
 
   open,
   paperId,
@@ -24,7 +24,7 @@ function IframeEditWidget({
   const t = useTranslate();
 
   const onEditWrapper = () => {
-    onEdit({
+    onMutate({
       paper: paperId,
       link,
       widgetId,

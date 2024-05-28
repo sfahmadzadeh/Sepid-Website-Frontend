@@ -11,7 +11,7 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
 
 function TextEditWidget({
-  onEdit,
+  onMutate,
 
   open,
   handleClose,
@@ -23,7 +23,7 @@ function TextEditWidget({
   const [text, setText] = useState(oldText);
 
   const handleClick = () => {
-    onEdit({
+    onMutate({
       paper: paperId,
       text,
       widgetId,
