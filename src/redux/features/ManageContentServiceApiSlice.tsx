@@ -14,6 +14,7 @@ export const ManageContentServiceApi = createApi({
     'fsm-state',
     'fsm-edges',
     'fsm-edge',
+    'widget',
   ],
   baseQuery: CustomBaseQuery({ baseUrl: MCS_URL + 'api/' }),
   endpoints: build => ({

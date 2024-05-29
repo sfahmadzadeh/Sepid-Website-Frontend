@@ -40,6 +40,8 @@ export type WidgetTypes =
   'MultiChoiceProblem' |
   'UploadFileProblem';
 
+export type WidgetType = any;
+
 export type RegistrationStepType = {
   name: RegistrationStepNameType;
   label: RegistrationStepLabelType;

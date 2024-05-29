@@ -10,9 +10,6 @@ import { getArticleAction } from './article';
 import { getRegistrationFormAction } from './programs';
 import {
   _createWidgetAction,
-  deleteWidgetAction,
-  getWidgetAction,
-  makeWidgetFileEmptyAction,
   _updateWidgetAction,
 } from './widget';
 
@@ -90,14 +87,6 @@ const PaperSlice = createSlice({
   reducers: {},
   extraReducers: {
 
-    [getWidgetAction.pending.toString()]: isFetching,
-    [getWidgetAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.widget = response;
-      state.isFetching = false;
-    },
-    [getWidgetAction.rejected.toString()]: isNotFetching,
-
-
     [_createWidgetAction.pending.toString()]: isFetching,
     [_createWidgetAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg } }) => {
       state.papers[arg.paper] ||= {};
@@ -106,22 +95,7 @@ const PaperSlice = createSlice({
     },
     [_createWidgetAction.rejected.toString()]: isNotFetching,
 
-
-    [deleteWidgetAction.pending.toString()]: isFetching,
-    [deleteWidgetAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg } }) => {
-      const newWidgets = state.papers[arg.paperId].widgets;
-      for (let i = 0; i < newWidgets.length; i++) {
-        if (newWidgets[i].id === arg.widgetId) {
-          newWidgets.splice(i, 1);
-          break;
-        }
-      }
-      state.papers[arg.paperId].widgets = newWidgets;
-      state.isFetching = false;
-    },
-    [deleteWidgetAction.rejected.toString()]: isNotFetching,
-
-
+    
     [_updateWidgetAction.pending.toString()]: isFetching,
     [_updateWidgetAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg } }) => {
       state.papers[arg.paper] ||= {};
@@ -170,25 +144,13 @@ const PaperSlice = createSlice({
     },
     [deleteWidgetHintAction.rejected.toString()]: isNotFetching,
 
-    [makeWidgetFileEmptyAction.pending.toString()]: isFetching,
-    [makeWidgetFileEmptyAction.fulfilled.toString()]: (state, { meta: { arg } }) => {
-      const newPapers = { ...state.papers }
-      const widgets = newPapers[arg.paperId].widgets;
-      for (let i = 0; i < widgets.length; i++) {
-        if (widgets[i].id == arg.widgetId) {
-          widgets[i].file = null;
-        }
-      }
-      state.papers = newPapers;
-      state.isFetching = false;
-    },
-    [makeWidgetFileEmptyAction.rejected.toString()]: isNotFetching,
 
     [getArticleAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.papers[response.id] = response;
       state.isFetching = false;
     },
 
+    
     [getRegistrationFormAction.pending.toString()]: isFetching,
     [getRegistrationFormAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.papers[response.id] = response;

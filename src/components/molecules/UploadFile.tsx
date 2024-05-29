@@ -8,17 +8,15 @@ import {
 } from '@mui/icons-material';
 import ClearIcon from '@mui/icons-material/Clear';
 import React, { FC } from 'react';
-import { makeWidgetFileEmptyAction } from 'redux/slices/widget';
-import { connect } from 'react-redux';
 import { toast } from 'react-toastify'
+import { useMakeWidgetFileEmptyMutation } from 'redux/features/widget/WidgetSlice';
 
 type UploadFilePropsType = {
   previousFile: string;
   file: any;
   setFile: any;
-  widgetId: number;
+  widgetId: string;
   paperId: number;
-  makeWidgetFileEmpty: any;
 }
 
 const UploadFile: FC<UploadFilePropsType> = ({
@@ -27,8 +25,8 @@ const UploadFile: FC<UploadFilePropsType> = ({
   file,
   widgetId,
   paperId,
-  makeWidgetFileEmpty,
 }) => {
+  const [makeWidgetFileEmpty, result] = useMakeWidgetFileEmptyMutation();
 
   const submitFile = (e) => {
     const file = e.target.files[0];
@@ -46,7 +44,7 @@ const UploadFile: FC<UploadFilePropsType> = ({
 
   const clearFile = (e) => {
     e.preventDefault(); // to prevent opening media file
-    makeWidgetFileEmpty({ widgetId, paperId });
+    makeWidgetFileEmpty({ widgetId });
   }
 
   const fileSrc = file ? window.URL.createObjectURL(file) : previousFile;
@@ -94,6 +92,4 @@ const UploadFile: FC<UploadFilePropsType> = ({
   );
 }
 
-export default connect(null, {
-  makeWidgetFileEmpty: makeWidgetFileEmptyAction,
-})(UploadFile);
+export default UploadFile;

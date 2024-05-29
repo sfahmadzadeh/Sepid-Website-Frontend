@@ -3,7 +3,6 @@ import { Apis } from '../apis';
 import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
 import {
   widgetCRUDUrl,
-  makeWidgetFileEmptyUrl,
 } from '../constants/urls';
 
 export type InitialStateType = {
@@ -24,37 +23,6 @@ const isNotFetching = (state) => {
   state.isFetching = false;
 };
 
-
-//////////////// GET AND DELETE WIDGETS ////////////////
-
-
-export const getWidgetAction = createAsyncThunkApi(
-  'widget/getWidgetAction',
-  Apis.GET,
-  widgetCRUDUrl,
-);
-
-export const deleteWidgetAction = createAsyncThunkApi(
-  'widget/widgets/delete',
-  Apis.DELETE,
-  widgetCRUDUrl,
-  {
-    defaultNotification: {
-      error: 'مشکلی وجود داشت. دوباره تلاش کنید.'
-    },
-  }
-);
-
-export const makeWidgetFileEmptyAction = createAsyncThunkApi(
-  'widget/makeWidgetFileEmptyAction',
-  Apis.GET,
-  makeWidgetFileEmptyUrl,
-  {
-    defaultNotification: {
-      error: 'مشکلی در حذف فایل وجود داشت.'
-    },
-  }
-);
 
 /////////////////////////// CREATE AND UPDATE WIDGETS ///////////////////////////
 

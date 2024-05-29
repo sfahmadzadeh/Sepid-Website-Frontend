@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { WidgetModes } from 'components/organisms/Widget';
 import WIDGET_TYPE_MAPPER from './WidgetTypeMapper';
-import { deleteWidgetAction } from 'redux/slices/widget';
+import { useDeleteWidgetMutation } from 'redux/features/widget/WidgetSlice';
 
 type WidgetFactoryType = {
   widgetId?: number;
@@ -21,6 +21,7 @@ const useWidgetFactory = ({
   collectAnswerData,
 }: WidgetFactoryType) => {
   const dispatcher = useDispatch();
+  const [deleteWidget, result] = useDeleteWidgetMutation();
   let onDelete, onMutate, onAnswerChange, onQuery, onAnswerSubmit;
 
   if (!widgetType) {
@@ -49,7 +50,7 @@ const useWidgetFactory = ({
   onAnswerSubmit = (arg) => dispatcher(submitAnswerAction(arg));
 
   onDelete = paperId ?
-    (arg) => dispatcher<any>(deleteWidgetAction(arg)) :
+    (arg) => deleteWidget(arg) :
     collectWidgetDataToolkit?.removeWidget;
 
   return {

@@ -36,7 +36,7 @@ export const FSMStateSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     updateFSMState: builder.mutation<UpdateFSMStateOutputType, UpdateFSMStateInputType>({
-      invalidatesTags: ['fsm-state', 'fsm-states'],
+      invalidatesTags: (result) => [{ type: 'fsm-state', id: result.id }, 'fsm-states'],
       query: ({ fsmStateId, ...body }) => ({
         url: `/fsm/state/${fsmStateId}/`,
         method: 'PATCH',
@@ -48,7 +48,7 @@ export const FSMStateSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     getFSMState: builder.query<GetFSMStateOutputType, { fsmStateId: string }>({
-      providesTags: ['fsm-state'],
+      providesTags: (result) => [{ type: 'fsm-state', id: result.id }],
       query: ({ fsmStateId }) => `fsm/state/${fsmStateId}/`,
       transformResponse: (response: any): GetFSMStateOutputType => {
         return response;

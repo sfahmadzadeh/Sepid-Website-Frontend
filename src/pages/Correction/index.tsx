@@ -13,39 +13,30 @@ import {
   getScoresAndCommentsAction,
   setScoreAction,
 } from 'redux/slices/scoring';
-import {
-  getWidgetAction,
-} from 'redux/slices/widget';
 import Layout from 'components/template/Layout';
 import ScoringColumn from './ScoringColumn';
+import { useGetWidgetQuery } from 'redux/features/widget/WidgetSlice';
 
 function Correction({
   getAnswer,
-  getWidget,
   getScoresAndComments,
   answer,
-  problem,
 }) {
   const t = useTranslate();
   const { answerId } = useParams();
+  const { data: widget } = useGetWidgetQuery({ widgetId: answer?.problem }, { skip: !Boolean(answer?.problem) });
 
   useEffect(() => {
     getAnswer({ answerId })
     getScoresAndComments({ answer_id: answerId })
   }, [])
 
-  useEffect(() => {
-    if (answer?.problem) {
-      getWidget({ widgetId: answer?.problem })
-    }
-  }, [answer])
-
-  if (!problem) {
+  if (!widget) {
     return null;
   }
 
   const problemWithAnswer = {
-    ...problem,
+    ...widget,
     last_submitted_answer: answer,
   };
 
@@ -78,12 +69,10 @@ function Correction({
 const mapStateToProps = (state) => ({
   answer: state.scoring.answer,
   scores: state.scoring.scores,
-  problem: state.paper.widget,
 });
 
 export default connect(mapStateToProps, {
   setScore: setScoreAction,
   getScoresAndComments: getScoresAndCommentsAction,
-  getWidget: getWidgetAction,
   getAnswer: getAnswerAction,
 })(Correction);
