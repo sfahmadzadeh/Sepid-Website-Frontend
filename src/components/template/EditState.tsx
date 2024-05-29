@@ -35,10 +35,10 @@ const EditState: FC<EditStatePropsType> = ({
 
   const problems = fsmState?.widgets?.filter((widget) =>
     widget.widget_type.includes('Problem')
-  ) || [];
+  );
   const contents = fsmState?.widgets?.filter(
     (widget) => !widget.widget_type.includes('Problem')
-  ) || [];
+  );
   const hints = fsmState?.hints || [];
 
   useEffect(() => {

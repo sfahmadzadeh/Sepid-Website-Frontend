@@ -29,10 +29,10 @@ const EditPaper: FC<EditPaperPropsType> = ({
   return (
     <Fragment>
       <Stack spacing={4} justifyContent="center">
-        {widgets.length === 0 ?
+        {(widgets && widgets.length === 0) ?
           <NoDataFound variant={4} message={'ویجتی وجود ندارد'} /> :
           <Fragment>
-            {widgets.map((widget, index) => (
+            {widgets?.map((widget, index) => (
               <Widget
                 key={index}
                 paperId={paperId}
