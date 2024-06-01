@@ -16,7 +16,7 @@ const initialState: RoadmapInitialStateType = {
 export const getPlayerTransitedPathAction = createAsyncThunkApi(
   'Roadmap/getPlayerTransitedPathAction',
   Apis.POST,
-  `${roadmapCRUDUrl}get_player_taken_path/`,
+  `${roadmapCRUDUrl}get_player_transited_path/`,
 );
 
 export const getFSMRoadmapAction = createAsyncThunkApi(
