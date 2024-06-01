@@ -8,33 +8,32 @@ import {
   TextField,
   Box,
   Divider,
-  Stack
+  Stack,
 } from '@mui/material';
-import { NotificationsActive } from '@mui/icons-material';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import validateURL from 'utils/validators/urlValidator'
 import AreYouSure from 'components/organisms/dialogs/AreYouSure'
 
 import {
-  makeTeamHeadAction,
   deleteTeamAction,
   updateTeamChatRoomLinkAction,
 } from 'redux/slices/programs';
 import TeamMember from 'components/atoms/TeamMember';
+import { TeamType } from 'types/models';
 
-const TeamInfo = ({
-  name,
-  team_head,
-  members,
-  teamId,
-  playerId,
-  makeTeamHead,
+type TeamInfoCardPropsType = {
+  team: TeamType;
+  deleteTeam: Function;
+  updateTeamChatRoomLink: Function;
+}
+
+const TeamInfoCard: FC<TeamInfoCardPropsType> = ({
+  team,
   deleteTeam,
   updateTeamChatRoomLink,
-  chatRoom,
 }) => {
-  const [teamLink, setTeamLink] = useState(chatRoom)
+  const [teamLink, setTeamLink] = useState(team?.chat_room)
   const [linkIsValid, setLinkIsValid] = useState(false)
   const [disableRequest, setDisableRequest] = useState(false)
   const [deleteDialogId, setDeleteDialogId] = useState(false)
@@ -45,9 +44,13 @@ const TeamInfo = ({
 
   function updateTeamLink() {
     setDisableRequest(true)
-    updateTeamChatRoomLink({ teamId, chat_room: teamLink }).then((response) => {
+    updateTeamChatRoomLink({ teamId: team.id, chat_room: teamLink }).then((response) => {
       setDisableRequest(false);
     })
+  }
+
+  if (!team) {
+    return null;
   }
 
   return (
@@ -76,19 +79,18 @@ const TeamInfo = ({
 
       >
         <CardContent>
-          {playerId && <NotificationsActive color="primary" />}
           <Typography gutterBottom variant="h3" align="center">
-            {name}
+            {team.name}
           </Typography>
           <Stack spacing={2}>
-            {members.length > 0 ? members.map((member) => (
+            {team.members.length > 0 ? team.members.map((member) => (
               <Box key={member.id}>
                 <TeamMember memberId={member.id}
-                  firstName={member.first_name}
-                  lastName={member.last_name}
-                  teamId={teamId}
-                  username={member.username}
-                  teamHead={team_head} />
+                  firstName={member.user.first_name}
+                  lastName={member.user.last_name}
+                  teamId={team.id}
+                  username={member.user.username}
+                  teamHead={team.team_head} />
               </Box>
             ))
               :
@@ -115,7 +117,7 @@ const TeamInfo = ({
                 sx={{ marginBottom: '10px', marginTop: '10px', width: '100%', direction: 'rtl' }}
               />
               <ButtonGroup sx={{ height: '40px' }} variant="outlined" color="primary" fullWidth>
-                <Button disabled={!linkIsValid || teamLink === '' || teamLink === chatRoom || disableRequest} onClick={updateTeamLink}>{'به‌روز‌رسانی'}</Button>
+                <Button disabled={!linkIsValid || teamLink === '' || teamLink === team.chat_room || disableRequest} onClick={updateTeamLink}>{'به‌روز‌رسانی'}</Button>
                 <Button onClick={() => setDeleteDialogId(true)}>{'حذف'}</Button>
               </ButtonGroup>
             </Box>
@@ -125,14 +127,13 @@ const TeamInfo = ({
       <AreYouSure
         open={!!deleteDialogId}
         handleClose={() => setDeleteDialogId(false)}
-        callBackFunction={() => deleteTeam({ teamId: teamId })}
+        callBackFunction={() => deleteTeam({ teamId: team.id })}
       />
     </Fragment>
   );
 };
 
 export default connect(null, {
-  makeTeamHead: makeTeamHeadAction,
   deleteTeam: deleteTeamAction,
   updateTeamChatRoomLink: updateTeamChatRoomLinkAction
-})(TeamInfo);
+})(TeamInfoCard);

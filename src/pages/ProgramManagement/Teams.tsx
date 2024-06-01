@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import { useParams } from 'react-router';
 import Pagination from '@mui/material/Pagination';
 
-import TeamInfoCard from 'components/organisms/cards/TeamInfo';
+import TeamInfoCard from 'components/organisms/cards/TeamInfoCard';
 import {
   addUserToTeamAction,
   createRequestMentorAction,
@@ -49,18 +49,11 @@ function Teams({
 
   useEffect(() => {
     setTeamsCards(
-      teams
-        .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-        .map((team) => (
-          <Grid container item xs={12} sm={6} md={4} key={team.id} alignItems='center' justifyContent='center'>
-            <TeamInfoCard
-              {...team}
-              teamId={team.id}
-              fsmId={fsmId}
-              chatRoom={team.chat_room}
-            />
-          </Grid>
-        ))
+      teams.slice((page - 1) * itemsPerPage, page * itemsPerPage).map((team) => (
+        <Grid container item xs={12} sm={6} md={4} key={team.id} alignItems='center' justifyContent='center'>
+          <TeamInfoCard team={team} />
+        </Grid>
+      ))
     )
   }, [page, teams])
 
