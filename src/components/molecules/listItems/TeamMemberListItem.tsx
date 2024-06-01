@@ -1,5 +1,4 @@
 import {
-  Box,
   Checkbox,
   FormControlLabel,
   Stack,
@@ -15,11 +14,9 @@ import { removeFromTeamAction } from 'redux/slices/programs';
 
 import {
   makeTeamHeadAction,
-  deleteTeamAction,
-  updateTeamChatRoomLinkAction,
 } from 'redux/slices/programs';
 
-type TeamMemberPropsType = {
+type TeamMemberListItemPropsType = {
   memberId: number;
   firstName: string;
   lastName: string;
@@ -31,7 +28,7 @@ type TeamMemberPropsType = {
   removeFromTeam: any;
 }
 
-const TeamMember: FC<TeamMemberPropsType> = ({
+const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
   memberId,
   firstName,
   lastName,
@@ -99,4 +96,4 @@ const TeamMember: FC<TeamMemberPropsType> = ({
 export default connect(null, {
   removeFromTeam: removeFromTeamAction,
   makeTeamHead: makeTeamHeadAction,
-})(TeamMember);
+})(TeamMemberListItem);

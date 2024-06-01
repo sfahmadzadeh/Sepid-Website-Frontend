@@ -19,8 +19,8 @@ import {
   deleteTeamAction,
   updateTeamChatRoomLinkAction,
 } from 'redux/slices/programs';
-import TeamMember from 'components/atoms/TeamMember';
 import { TeamType } from 'types/models';
+import TeamMemberListItem from 'components/molecules/listItems/TeamMemberListItem';
 
 type TeamInfoCardPropsType = {
   team: TeamType;
@@ -85,7 +85,8 @@ const TeamInfoCard: FC<TeamInfoCardPropsType> = ({
           <Stack spacing={2}>
             {team.members.length > 0 ? team.members.map((member) => (
               <Box key={member.id}>
-                <TeamMember memberId={member.id}
+                <TeamMemberListItem
+                  memberId={member.id}
                   firstName={member.user.first_name}
                   lastName={member.user.last_name}
                   teamId={team.id}
