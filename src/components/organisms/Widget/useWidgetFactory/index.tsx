@@ -50,10 +50,11 @@ const useWidgetFactory = ({
   onAnswerChange = collectAnswerData;
 
   // todo refactor: this peace of code should be extracted as a seprate method
-  onAnswerSubmit = (arg) => dispatcher(submitAnswerAction(arg)).then(({ payload: { response } }) => {
+  onAnswerSubmit = (arg) => dispatcher(submitAnswerAction(arg)).then((response) => {
     const CORRECTNESS_TRESHOLD = 50;
-    if (response) {
-      if (response.correctness_percentage > CORRECTNESS_TRESHOLD) {
+    if (response.error) return;
+    if (response?.payload?.response) {
+      if (response?.payload?.response.correctness_percentage > CORRECTNESS_TRESHOLD) {
         runConfetti();
         toast.success('آفرین! پاسخ شما درست بود.')
       } else {
