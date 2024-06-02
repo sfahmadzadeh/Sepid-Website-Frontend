@@ -2,6 +2,8 @@ import { useDispatch } from 'react-redux';
 import { WidgetModes } from 'components/organisms/Widget';
 import WIDGET_TYPE_MAPPER from './WidgetTypeMapper';
 import { useDeleteWidgetMutation } from 'redux/features/widget/WidgetSlice';
+import { runConfetti } from 'components/molecules/confetti'
+import { toast } from 'react-toastify';
 
 type WidgetFactoryType = {
   widgetId?: number;
@@ -47,7 +49,20 @@ const useWidgetFactory = ({
 
   onAnswerChange = collectAnswerData;
 
-  onAnswerSubmit = (arg) => dispatcher(submitAnswerAction(arg));
+  // todo refactor: this peace of code should be extracted as a seprate method
+  onAnswerSubmit = (arg) => dispatcher(submitAnswerAction(arg)).then(({ payload: { response } }) => {
+    const CORRECTNESS_TRESHOLD = 50;
+    if (response) {
+      if (response.correctness_percentage > CORRECTNESS_TRESHOLD) {
+        runConfetti();
+        toast.success('آفرین! پاسخ شما درست بود.')
+      } else {
+        toast.error('پاسخ شما اشتباه بود')
+      }
+    } else {
+      toast.success('پاسخ شما با موفقیت ثبت شد.');
+    }
+  });
 
   onDelete = paperId ?
     (arg) => deleteWidget(arg) :

@@ -21,6 +21,7 @@ import translations from './translations';
 import LinearLoading from 'components/atoms/LinearLoading';
 import { useGetThirdPartiesQuery } from 'redux/features/ThirdPartySlice';
 import { initSupportingThirdPartyApps } from 'configs/SupportingThirdPartyApps';
+import { ConfettiContainer } from 'components/molecules/confetti';
 
 const App = ({
   dir,
@@ -100,6 +101,7 @@ const App = ({
               limit={3}
               draggable={false}
             />
+            <ConfettiContainer />
             <LinearLoading loading={loading} />
             <CssBaseline />
             <Root />

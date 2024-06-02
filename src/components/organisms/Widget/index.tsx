@@ -1,7 +1,6 @@
 import { Box, Divider, IconButton, Paper, Stack, Typography, Tooltip } from '@mui/material';
 import { Delete as DeleteIcon, Edit as EditIcon, Help as HelpIcon } from '@mui/icons-material';
 import React, { FC, Fragment, useMemo, useState } from 'react';
-import Confetti from 'react-confetti'
 
 import DeleteWidgetDialog from 'components/organisms/dialogs/DeleteWidgetDialog';
 import EditHintsDialog from 'components/organisms/dialogs/EditHintsDialog';
@@ -165,9 +164,6 @@ const Widget: FC<WidgetPropsType> = ({
         </Stack>
         <WidgetComponent {...widget} mode={mode} onAnswerSubmit={onAnswerSubmitWrapper || onAnswerSubmit} onAnswerChange={onAnswerChange} />
       </Cover>
-      {false &&
-        <Confetti recycle={false} tweenDuration={6000} numberOfPieces={800} />
-      }
       {cost &&
         <CostDialog cost={cost} callBackFunction={onSubmit} open={showCostDialog} handleClose={() => setShowCostDialog(showCostDialog => !showCostDialog)} />
       }

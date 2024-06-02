@@ -4,9 +4,6 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
 import { WidgetModes } from 'components/organisms/Widget';
 import SmallAnswerProblemEditWidget from './edit';
-import { toast } from 'react-toastify';
-import Confetti from 'react-confetti'
-import CostDialog from 'components/organisms/dialogs/CostDialog';
 
 type SmallAnswerProblemWidgetPropsType = {
   onAnswerChange: any;

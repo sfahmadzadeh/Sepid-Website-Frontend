@@ -33,7 +33,6 @@ const _sendWidgetAnswerAction = createAsyncThunkApi(
   sendWidgetAnswerUrl,
   {
     defaultNotification: {
-      success: 'پاسخ شما با موفقیت ثبت شد.',
       error: 'مشکلی در ثبت پاسخ وجود داشت.',
     },
   }
@@ -84,7 +83,6 @@ export const uploadFileAnswerAction = createAsyncThunkApi(
       onSuccess,
     }),
     defaultNotification: {
-      success: 'پاسخ شما با موفقیت ثبت شد.',
       error: 'مشکلی در ثبت پاسخ وجود داشت.',
     },
   }
@@ -96,7 +94,6 @@ export const makeAnswerFileEmptyAction = createAsyncThunkApi(
   makeAnswerEmptyUrl,
   {
     defaultNotification: {
-      success: 'پاسخ شما با موفقیت حذف شد.',
       error: 'مشکلی در حذف‌کردن پاسخ وجود داشت.',
     },
   }
