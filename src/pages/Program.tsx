@@ -1,26 +1,19 @@
 import { Box, Stack, Typography } from '@mui/material';
-import Pagination from '@mui/material/Pagination';
-import React, { FC, Fragment, useEffect, useState } from 'react';
+import React, { FC, Fragment, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
 import FSMsGrid from 'components/organisms/FSMsGrid';
 import Layout from 'components/template/Layout';
 import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
-import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
-import { useGetFSMsQuery } from 'redux/features/fsm/FSMSlice';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type ProgramPropsType = {}
 
-const Program: FC<ProgramPropsType> = ({
-
-}) => {
+const Program: FC<ProgramPropsType> = ({ }) => {
   const { programId } = useParams();
   const navigate = useNavigate();
-  const [pageNumber, setPageNumber] = useState(1);
-  const { data: fsmsData, isLoading } = useGetFSMsQuery({ programId, pageNumber })
   const { data: program } = useGetProgramQuery({ programId });
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
@@ -56,22 +49,7 @@ const Program: FC<ProgramPropsType> = ({
             <Typography component="h1" fontWeight={700} fontSize={32} gutterBottom>
               {'کارگاه‌ها'}
             </Typography>
-            <Stack>
-              <FSMsGrid
-                fsms={fsmsData?.fsms || []}
-                isLoading={isLoading}
-              />
-            </Stack>
-            {(!isLoading && fsmsData?.fsms.length > 0) &&
-              <Pagination
-                variant="outlined"
-                color="primary"
-                shape='rounded'
-                count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
-                page={pageNumber}
-                onChange={(e, value) => setPageNumber(value)}
-              />
-            }
+            <FSMsGrid programId={programId} />
           </Stack>
         </Stack>
       </Layout>
