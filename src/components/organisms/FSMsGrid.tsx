@@ -19,8 +19,8 @@ const FSMsGrid: FC<FSMsGridPropsType> = ({
   const { data: fsmsData, isLoading } = useGetFSMsQuery({ programId, pageNumber })
 
   const numberOfSkeleton = width === 'sm' || width === 'md' ? 4 : 3;
-
-  const visibleFSMS = fsmsData?.fsms?.filter(fsm => fsm.is_visible)
+  
+  const visibleFSMS = fsmsData?.fsms?.filter(fsm => fsm.is_visible) || []
 
   if (isLoading) {
     return (
@@ -35,7 +35,7 @@ const FSMsGrid: FC<FSMsGridPropsType> = ({
   }
 
   if (visibleFSMS.length > 0) {
-    let tmpArr = [...fsmsData?.fsms].filter(fsm => fsm.is_visible).sort((fsm1, fsm2) => fsm2.order_in_program - fsm1.order_in_program)
+    let tmpArr = [...visibleFSMS].filter(fsm => fsm.is_visible).sort((fsm1, fsm2) => fsm2.order_in_program - fsm1.order_in_program)
     return (
       <Stack>
         <Grid container spacing={2}>
