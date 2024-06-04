@@ -18,10 +18,10 @@ ARG REACT_APP_METABASE_SECRET_KEY
 
 
 COPY ./package.json ./
-RUN npm i --legacy-peer-deps
+RUN yarn
 ENV PATH="./node_modules/.bin:$PATH"
 COPY . .
-RUN npm run build
+RUN yarn build
 
 FROM nginx:latest as production
 ENV SERVER_NAME = _
