@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { WidgetModes } from 'components/organisms/Widget';
 import WIDGET_TYPE_MAPPER from './WidgetTypeMapper';
-import { useDeleteWidgetMutation } from 'redux/features/widget/WidgetSlice';
+import { useCreateWidgetMutation, useDeleteWidgetMutation, useUpdateWidgetMutation } from 'redux/features/widget/WidgetSlice';
 import { runConfetti } from 'components/molecules/confetti'
 import { toast } from 'react-toastify';
 
@@ -23,7 +23,10 @@ const useWidgetFactory = ({
   collectAnswerData,
 }: WidgetFactoryType) => {
   const dispatcher = useDispatch();
-  const [deleteWidget, result] = useDeleteWidgetMutation();
+  const [deleteWidget] = useDeleteWidgetMutation();
+  const [createWidget] = useCreateWidgetMutation();
+  const [updateWidget] = useUpdateWidgetMutation();
+
   let onDelete, onMutate, onAnswerChange, onQuery, onAnswerSubmit;
 
   if (!widgetType) {
@@ -33,15 +36,13 @@ const useWidgetFactory = ({
   const {
     WidgetComponent,
     EditWidgetDialog,
-    createAction,
-    updateAction,
     submitAnswerAction,
   } = WIDGET_TYPE_MAPPER[widgetType];
 
   onMutate = paperId ?
     (widgetId ?
-      (arg) => dispatcher(updateAction(arg)) :
-      (arg) => dispatcher(createAction(arg))) :
+      (arg) => updateWidget({ widgetType, fsmStateId: paperId, widgetId, ...arg }) :
+      (arg) => createWidget({ widgetType, fsmStateId: paperId, ...arg })) :
     // todo: fix TOF. لزوماً نباید با ?. هندلش کرد و لزوماً نباید اینجا صداش زد. اینجا صرفاً باید پاسش داد
     (widgetId ?
       collectWidgetDataToolkit?.updateWidget :

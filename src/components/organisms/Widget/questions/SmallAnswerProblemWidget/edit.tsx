@@ -31,9 +31,12 @@ function SmallAnswerProblemEditWidget({
     onMutate({
       widgetId,
       paper: paperId,
-      text: text,
-      correctAnswer,
+      text,
       solution,
+      correct_answer: {
+        text: correctAnswer,
+        answer_type: 'SmallAnswer',
+      },
       onSuccess: handleClose,
     });
   };

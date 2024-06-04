@@ -8,39 +8,7 @@ import UploadFileProblemWidget, { UploadFileProblemEditWidget } from '../questio
 import VideoWidget, { VideoEditWidget } from '../contents/VideoWidget';
 import AudioWidget, { AudioEditWidget } from '../contents/AudioWidget';
 import DetailBoxWidget, { DetailBoxEditDialog } from '../contents/DetailBoxWidget';
-
-import {
-  createSmallAnswerProblemWidgetAction,
-  updateSmallAnswerProblemWidgetAction,
-
-  createBigAnswerQuestionWidgetAction,
-  updateBigAnswerQuestionWidgetAction,
-
-  createImageWidgetAction,
-  updateImageWidgetAction,
-
-  createIframeWidgetAction,
-  updateIframeWidgetAction,
-
-  createAudioWidgetAction,
-  updateAudioWidgetAction,
-
-  createTextWidgetAction,
-  updateTextWidgetAction,
-
-  createVideoWidgetAction,
-  updateVideoWidgetAction,
-
-  createUploadFileWidgetAction,
-  updateUploadFileWidgetAction,
-
-  createDetailBoxWidgetAction,
-  updateDetailBoxWidgetAction,
-
-  createMultiChoicesQuestionWidgetAction,
-  updateMultiChoicesQuestionWidgetAction,
-
-} from 'redux/slices/widget';
+import InviteeUsername, { InviteeUsernameEdit } from '../questions/InviteeUsername';
 
 import {
   sendSmallAnswerAction,
@@ -50,18 +18,12 @@ import {
   sendInviteeUsernameResponseAction,
 } from 'redux/slices/Answer';
 
-
-
-import InviteeUsername, { InviteeUsernameEdit } from '../questions/InviteeUsername';
-
 const WIDGET_TYPE_MAPPER = {
   SmallAnswerProblem: {
     WidgetComponent: SmallAnswerProblemWidget,
     EditWidgetDialog: SmallAnswerProblemEditWidget,
     label: 'سوال کوتاه‌پاسخ',
     backendType: 'SmallAnswerProblem',
-    createAction: createSmallAnswerProblemWidgetAction,
-    updateAction: updateSmallAnswerProblemWidgetAction,
     submitAnswerAction: sendSmallAnswerAction,
   },
   BigAnswerProblem: {
@@ -69,8 +31,6 @@ const WIDGET_TYPE_MAPPER = {
     EditWidgetDialog: BigAnswerQuestionEditWidget,
     label: 'سوال تشریحی',
     backendType: 'BigAnswerProblem',
-    createAction: createBigAnswerQuestionWidgetAction,
-    updateAction: updateBigAnswerQuestionWidgetAction,
     submitAnswerAction: sendBigAnswerAction,
   },
   MultiChoiceProblem: {
@@ -78,8 +38,6 @@ const WIDGET_TYPE_MAPPER = {
     EditWidgetDialog: MultiChoiceQuestionEditWidget,
     label: 'سوال چند‌گزینه‌ای',
     backendType: 'MultiChoiceProblem',
-    createAction: createMultiChoicesQuestionWidgetAction,
-    updateAction: updateMultiChoicesQuestionWidgetAction,
     submitAnswerAction: sendMultiChoiceAnswerAction,
   },
   // InviteeUsername: {
@@ -87,8 +45,6 @@ const WIDGET_TYPE_MAPPER = {
   //   EditWidgetDialog: InviteeUsernameEdit,
   //   label: 'سوال کد معرف',
   //   backendType: 'InviteeUsernameProblem',
-  //   createAction: createSmallAnswerProblemWidgetAction,
-  //   updateAction: updateSmallAnswerProblemWidgetAction,
   //   submitAnswerAction: sendInviteeUsernameResponseAction,
   // },
   UploadFileProblem: {
@@ -96,8 +52,6 @@ const WIDGET_TYPE_MAPPER = {
     EditWidgetDialog: UploadFileProblemEditWidget,
     label: 'ارسال فایل',
     backendType: 'UploadFileProblem',
-    createAction: createUploadFileWidgetAction,
-    updateAction: updateUploadFileWidgetAction,
     submitAnswerAction: uploadFileAnswerAction,
   },
   TextWidget: {
@@ -105,48 +59,36 @@ const WIDGET_TYPE_MAPPER = {
     EditWidgetDialog: TextEditWidget,
     label: 'متن',
     backendType: 'TextWidget',
-    createAction: createTextWidgetAction,
-    updateAction: updateTextWidgetAction,
   },
   DetailBoxWidget: {
     WidgetComponent: DetailBoxWidget,
     EditWidgetDialog: DetailBoxEditDialog,
     label: 'نکته',
     backendType: 'DetailBoxWidget',
-    createAction: createDetailBoxWidgetAction,
-    updateAction: updateDetailBoxWidgetAction,
   },
   Image: {
     WidgetComponent: ImageWidget,
     EditWidgetDialog: ImageEditWidget,
     label: 'عکس',
     backendType: 'Image',
-    createAction: createImageWidgetAction,
-    updateAction: updateImageWidgetAction,
   },
   Video: {
     WidgetComponent: VideoWidget,
     EditWidgetDialog: VideoEditWidget,
     label: 'فیلم',
     backendType: 'Video',
-    createAction: createVideoWidgetAction,
-    updateAction: updateVideoWidgetAction,
   },
   Audio: {
     WidgetComponent: AudioWidget,
     EditWidgetDialog: AudioEditWidget,
     label: 'صوت',
     backendType: 'Audio',
-    createAction: createAudioWidgetAction,
-    updateAction: updateAudioWidgetAction,
   },
   Iframe: {
     WidgetComponent: IframeWidget,
     EditWidgetDialog: IframeEditWidget,
     label: 'بازی',
     backendType: 'Iframe',
-    createAction: createIframeWidgetAction,
-    updateAction: updateIframeWidgetAction,
   },
 };
 export default WIDGET_TYPE_MAPPER;
