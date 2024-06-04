@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import React, { FC, Fragment, useEffect } from 'react';
 import { toast } from 'react-toastify'
-import { useCreateFileMutation } from 'redux/features/FileSlice';
+import { useUploadFileMutation } from 'redux/features/FileSlice';
 
 type UploadImagePropsType = {
   file?: any;
@@ -31,12 +31,12 @@ const UploadImage: FC<UploadImagePropsType> = ({
     return true;
   };
 
-  const [createFile, result] = useCreateFileMutation();
+  const [uploadFile, result] = useUploadFileMutation();
   const handleUploadFile = (event) => {
     if (!event.target.files?.[0]) return;
     const file = event.target.files[0];
     if (!validateFile(file)) return;
-    createFile({ file });
+    uploadFile({ file });
   };
 
   useEffect(() => {

@@ -1,34 +1,24 @@
 import {
   Button,
-  IconButton,
   Stack,
 } from '@mui/material';
 import {
   CloudUpload as CloudUploadIcon,
 } from '@mui/icons-material';
-import ClearIcon from '@mui/icons-material/Clear';
-import React, { FC } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { toast } from 'react-toastify'
-import { useMakeWidgetFileEmptyMutation } from 'redux/features/widget/WidgetSlice';
+import { useUploadFileMutation } from 'redux/features/FileSlice';
 
 type UploadFilePropsType = {
-  previousFile: string;
-  file: any;
-  setFile: any;
-  widgetId: string;
-  paperId: number;
+  setFileLink: any;
 }
 
 const UploadFile: FC<UploadFilePropsType> = ({
-  setFile,
-  previousFile,
-  file,
-  widgetId,
-  paperId,
+  setFileLink,
 }) => {
-  const [makeWidgetFileEmpty, result] = useMakeWidgetFileEmptyMutation();
+  const [uploadFile, result] = useUploadFileMutation();
 
-  const submitFile = (e) => {
+  const handleUploadFile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     if (file.name.length > 100) {
@@ -39,18 +29,17 @@ const UploadFile: FC<UploadFilePropsType> = ({
       toast.error('حداکثر حجم فایل ۵۰ مگابایت است.');
       return;
     }
-    setFile(file);
+    uploadFile({ file });
   };
 
-  const clearFile = (e) => {
-    e.preventDefault(); // to prevent opening media file
-    makeWidgetFileEmpty({ widgetId });
-  }
-
-  const fileSrc = file ? window.URL.createObjectURL(file) : previousFile;
+  useEffect(() => {
+    if (result.data) {
+      setFileLink(result.data.file);
+    }
+  }, [result])
 
   return (
-    <Stack spacing={1}>
+    <Fragment>
       <Button
         component="label"
         htmlFor={'upload-widget-file'}
@@ -66,29 +55,9 @@ const UploadFile: FC<UploadFilePropsType> = ({
         style={{ display: 'none' }}
         id={'upload-widget-file'}
         type="file"
-        onChange={submitFile}
+        onChange={handleUploadFile}
       />
-      {fileSrc &&
-        <Button
-          size="small"
-          variant='outlined'
-          sx={{
-            whiteSpace: 'nowrap',
-          }}
-          endIcon={
-            !file ?
-              <IconButton size='small' onClick={clearFile}>
-                <ClearIcon sx={{ fontSize: 14 }} />
-              </IconButton>
-              : null
-          }
-          href={fileSrc}
-          component="a"
-          target="_blank">
-          {file ? 'فایل انتخاب‌شده' : 'آخرین فایل ارسالی'}
-        </Button>
-      }
-    </Stack>
+    </Fragment>
   );
 }
 

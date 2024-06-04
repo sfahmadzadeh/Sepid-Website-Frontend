@@ -13,38 +13,22 @@ import React, { useState } from 'react'
 import { useTranslate } from 'react-redux-multilingual/lib/context'
 import UploadFile from 'components/molecules/UploadFile'
 
-function VideoEditWidget ({
+const VideoEditWidget = ({
   onMutate,
 
   paperId,
   open,
-  link: oldLink,
+  link: previousLink,
   handleClose,
   id: widgetId,
-  file: previousFile
-}) {
+}) => {
   const t = useTranslate()
-  const [link, setLink] = useState(oldLink)
-  const [file, setFile] = useState(null)
+  const [link, setLink] = useState(previousLink || '')
 
   const handleClick = () => {
-    let payload = {
-      paper: paperId
-    }
-    if (file) {
-      payload = {
-        ...payload,
-        file
-      }
-    }
-    if (link) {
-      payload = {
-        ...payload,
-        link
-      }
-    }
     onMutate({
-      ...payload,
+      paper: paperId,
+      link,
       widgetId,
       onSuccess: handleClose
     })
@@ -55,7 +39,7 @@ function VideoEditWidget ({
       <DialogTitle>فیلم</DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
-          <UploadFile widgetId={widgetId} paperId={paperId} file={file} setFile={setFile} previousFile={previousFile} />
+          <UploadFile setFileLink={setLink} />
           <Divider>یا</Divider>
           <DialogContentText>{t('uploadFileFillUrl')}</DialogContentText>
           <TextField

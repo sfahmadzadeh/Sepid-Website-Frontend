@@ -60,14 +60,6 @@ export const WidgetSlice = ManageContentServiceApi.injectEndpoints({
       }),
     }),
 
-    makeWidgetFileEmpty: builder.mutation<WidgetType, { widgetId: string }>({
-      invalidatesTags: (result) => [{ type: 'widget', id: result.id }],
-      query: ({ widgetId }) => ({
-        url: `/fsm/widget/${widgetId}/make_widget_file_empty/`,
-        method: 'GET',
-      }),
-    }),
-
   })
 });
 
@@ -76,5 +68,4 @@ export const {
   useUpdateWidgetMutation,
   useGetWidgetQuery,
   useDeleteWidgetMutation,
-  useMakeWidgetFileEmptyMutation,
 } = WidgetSlice;

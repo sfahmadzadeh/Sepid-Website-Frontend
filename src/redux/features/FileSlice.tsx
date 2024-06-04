@@ -12,7 +12,7 @@ type CreateFileOutputType = {
 
 export const FileSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
-    createFile: builder.mutation<CreateFileOutputType, CreateFileInputType>({
+    uploadFile: builder.mutation<CreateFileOutputType, CreateFileInputType>({
       query: (body) => ({
         url: 'file-storage/file/',
         method: 'POST',
@@ -26,4 +26,4 @@ export const FileSlice = ManageContentServiceApi.injectEndpoints({
   })
 });
 
-export const { useCreateFileMutation } = FileSlice;
+export const { useUploadFileMutation } = FileSlice;
