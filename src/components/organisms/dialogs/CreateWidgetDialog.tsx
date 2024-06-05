@@ -16,7 +16,6 @@ import useWidgetFactory from 'components/organisms/Widget/useWidgetFactory';
 import { WidgetModes } from 'components/organisms/Widget';
 
 type CreateWidgetDialogPropsType = {
-  collectWidgetDataToolkit?: any;
   handleClose: any;
 
   open: boolean;
@@ -27,7 +26,6 @@ type CreateWidgetDialogPropsType = {
 
 
 const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
-  collectWidgetDataToolkit,
   open,
   handleClose,
   paperId,
@@ -40,7 +38,6 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
     paperId,
     widgetType,
     mode: WidgetModes.Create,
-    collectWidgetDataToolkit,
   });
 
   if (widgetType) {

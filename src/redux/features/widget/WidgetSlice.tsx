@@ -2,13 +2,13 @@ import { WidgetType, WidgetTypes } from 'types/global';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type CreateWidgetInputType = {
-  fsmStateId: string;
+  paperId: string;
   widgetType: WidgetTypes;
 }
 
 type UpdateWidgetInputType = {
   widgetId: string;
-  fsmStateId: string;
+  paperId: string;
   widgetType: WidgetTypes;
 }
 
@@ -18,13 +18,13 @@ export const WidgetSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
 
     createWidget: builder.mutation<void, CreateWidgetInputType>({
-      invalidatesTags: (result, error, item) => [{ type: 'fsm-state', id: item.fsmStateId }],
-      query: ({ widgetType, fsmStateId, ...props }) => ({
+      invalidatesTags: (result, error, item) => [{ type: 'fsm-state', id: item.paperId }],
+      query: ({ widgetType, paperId, ...props }) => ({
         url: `/fsm/widget/`,
         method: 'POST',
         body: {
           widget_type: widgetType,
-          paper_id: fsmStateId,
+          paper: paperId,
           ...props,
         }
       }),
@@ -32,13 +32,13 @@ export const WidgetSlice = ManageContentServiceApi.injectEndpoints({
 
     updateWidget: builder.mutation<void, UpdateWidgetInputType>({
       invalidatesTags: (result, error, item) => [{ type: 'widget', id: item.widgetId }],
-      query: ({ widgetType, widgetId, fsmStateId, ...props }) => ({
+      query: ({ widgetType, widgetId, paperId, ...props }) => ({
         url: `/fsm/widget/${widgetId}/`,
         method: 'PATCH',
         body: {
           widget_id: widgetId,
           widget_type: widgetType,
-          paper_id: fsmStateId,
+          paper: paperId,
           ...props,
         }
       }),
@@ -52,8 +52,8 @@ export const WidgetSlice = ManageContentServiceApi.injectEndpoints({
       },
     }),
 
-    deleteWidget: builder.mutation<void, { widgetId: string, fsmStateId: string }>({
-      invalidatesTags: (result, error, item) => [{ type: 'fsm-state', id: item.fsmStateId }],
+    deleteWidget: builder.mutation<void, { widgetId: string, paperId: string }>({
+      invalidatesTags: (result, error, item) => [{ type: 'fsm-state', id: item.paperId }],
       query: ({ widgetId }) => ({
         url: `/fsm/widget/${widgetId}/`,
         method: 'DELETE',

@@ -47,7 +47,6 @@ type WidgetPropsType = {
   mode?: WidgetModes;
   paperId: number | null;
   coveredWithPaper?: boolean;
-  collectWidgetDataToolkit?: any;
   collectAnswerData?: any;
 }
 
@@ -56,7 +55,6 @@ const Widget: FC<WidgetPropsType> = ({
   mode = WidgetModes.View,
   paperId,
   coveredWithPaper = true,
-  collectWidgetDataToolkit,
   collectAnswerData,
 }) => {
   const [openDeleteWidgetDialog, setOpenDeleteWidgetDialog] = useState(false);
@@ -80,7 +78,6 @@ const Widget: FC<WidgetPropsType> = ({
     paperId,
     widgetType,
     mode,
-    collectWidgetDataToolkit,
     collectAnswerData,
   });
   const { data: updatedWidgetData } = useGetWidgetQuery({ widgetId: initialWidgetData.id }, { skip: skipFetch });
@@ -105,12 +102,12 @@ const Widget: FC<WidgetPropsType> = ({
 
   const Cover = useMemo(() =>
     coveredWithPaper
-      ? (props) =>
+      ? ({ children }) =>
         <Paper elevation={2} sx={{ padding: 1 }}>
-          {props.children}
+          {children}
         </Paper>
-      : (props) => props.children
-    , [widgetData])
+      : ({ children }) => children
+    , [])
 
   return (
     <Fragment>
