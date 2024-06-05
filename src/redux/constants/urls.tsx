@@ -167,7 +167,7 @@ export const checkUsernameUrl = 'question/check_username/';
 
 // widget
 export const sendWidgetAnswerUrl = ({ widgetId }) => `/fsm/widget/${widgetId}/submit_answer/`;
-export const makeAnswerEmptyUrl = ({ widgetId }) => `/fsm/widget/${widgetId}/make_empty/`;
+export const clearWidgetAnswerUrl = ({ widgetId }) => `/fsm/widget/${widgetId}/clear_widget_answer/`;
 export const getProblemsUrl = 'fsm/getproblems/';
 export const getUnreadNotificationsUrl = 'notifications/api/unread_list/';
 export const markSubmissionUrl = 'fsm/marksubmission/';

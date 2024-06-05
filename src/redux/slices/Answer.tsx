@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Apis } from 'redux/apis';
 import { createAsyncThunkApi } from 'redux/apis/cerateApiAsyncThunk';
 import {
-  makeAnswerEmptyUrl,
+  clearWidgetAnswerUrl,
   sendWidgetAnswerUrl,
   uploadFileUrl,
 } from 'redux/constants/urls';
@@ -88,10 +88,10 @@ export const uploadFileAnswerAction = createAsyncThunkApi(
   }
 );
 
-export const makeAnswerFileEmptyAction = createAsyncThunkApi(
-  'widget/makeAnswerFileEmptyAction',
+export const clearWidgetAnswerAction = createAsyncThunkApi(
+  'widget/clearWidgetAnswerAction',
   Apis.GET,
-  makeAnswerEmptyUrl,
+  clearWidgetAnswerUrl,
   {
     defaultNotification: {
       error: 'مشکلی در حذف‌کردن پاسخ وجود داشت.',

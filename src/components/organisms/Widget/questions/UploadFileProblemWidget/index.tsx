@@ -7,7 +7,7 @@ import React, { useEffect, useState, FC, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import {
-  makeAnswerFileEmptyAction,
+  clearWidgetAnswerAction,
 } from 'redux/slices/Answer';
 import UploadFileProblemEditWidget from './edit';
 import { WidgetModes } from 'components/organisms/Widget';
@@ -17,7 +17,7 @@ type UploadFileProblemWidgetPropsType = {
   onAnswerChange: any;
   onAnswerSubmit: any;
 
-  makeAnswerFileEmpty: any;
+  clearWidgetAnswer: any;
   id: number;
   text: string;
   last_submitted_answer: any;
@@ -29,7 +29,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
   onAnswerChange,
   onAnswerSubmit,
 
-  makeAnswerFileEmpty,
+  clearWidgetAnswer,
   id: widgetId,
   text = 'محل بارگذاری فایل:',
   last_submitted_answer,
@@ -73,7 +73,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
 
   const clearFile = (e) => {
     e.preventDefault();
-    makeAnswerFileEmpty({ widgetId }).then((response) => {
+    clearWidgetAnswer({ widgetId }).then((response) => {
       if (response.type?.endsWith('fulfilled')) {
         setFileLink(null);
         onAnswerChange({ 'upload_file_answer': null });
@@ -142,7 +142,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  makeAnswerFileEmpty: makeAnswerFileEmptyAction,
+  clearWidgetAnswer: clearWidgetAnswerAction,
 })(UploadFileProblemWidget);
 
 export { UploadFileProblemEditWidget };
