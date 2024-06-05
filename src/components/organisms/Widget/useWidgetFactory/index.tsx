@@ -4,6 +4,7 @@ import WIDGET_TYPE_MAPPER from './WidgetTypeMapper';
 import { useCreateWidgetMutation, useDeleteWidgetMutation, useUpdateWidgetMutation } from 'redux/features/widget/WidgetSlice';
 import { runConfetti } from 'components/molecules/confetti'
 import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 type WidgetFactoryType = {
   widgetId?: number;
@@ -22,6 +23,9 @@ const useWidgetFactory = ({
   collectWidgetDataToolkit,
   collectAnswerData,
 }: WidgetFactoryType) => {
+  // skip fetch is initially true, means it doesnot need to fetch the widget data for the first time
+  // the widget data should be fetched after each update
+  const [skipFetch, setSkipFetch] = useState(true);
   const dispatcher = useDispatch();
   const [deleteWidget] = useDeleteWidgetMutation();
   const [createWidget] = useCreateWidgetMutation();
@@ -41,8 +45,14 @@ const useWidgetFactory = ({
 
   onMutate = paperId ?
     (widgetId ?
-      (arg) => updateWidget({ widgetType, fsmStateId: paperId, widgetId, ...arg }) :
-      (arg) => createWidget({ widgetType, fsmStateId: paperId, ...arg })) :
+      (props) => {
+        updateWidget({ widgetType, fsmStateId: paperId, widgetId, ...props });
+        setSkipFetch(false);
+      } :
+      (props) => {
+        createWidget({ widgetType, fsmStateId: paperId, ...props });
+        setSkipFetch(false);
+      }) :
     // todo: fix TOF. لزوماً نباید با ?. هندلش کرد و لزوماً نباید اینجا صداش زد. اینجا صرفاً باید پاسش داد
     (widgetId ?
       collectWidgetDataToolkit?.updateWidget :
@@ -78,6 +88,7 @@ const useWidgetFactory = ({
     onAnswerSubmit,
     WidgetComponent,
     EditWidgetDialog,
+    skipFetch,
   };
 }
 

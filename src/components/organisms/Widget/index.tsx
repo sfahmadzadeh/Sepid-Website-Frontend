@@ -7,6 +7,7 @@ import EditHintsDialog from 'components/organisms/dialogs/EditHintsDialog';
 import WidgetHint from 'components/molecules/WidgetHint';
 import useWidgetFactory from './useWidgetFactory';
 import CostDialog from '../dialogs/CostDialog';
+import { useGetWidgetQuery } from 'redux/features/widget/WidgetSlice';
 
 export enum WidgetModes {
   Create,
@@ -51,7 +52,7 @@ type WidgetPropsType = {
 }
 
 const Widget: FC<WidgetPropsType> = ({
-  widget,
+  widget: initialWidgetData,
   mode = WidgetModes.View,
   paperId,
   coveredWithPaper = true,
@@ -64,7 +65,7 @@ const Widget: FC<WidgetPropsType> = ({
   const [showCostDialog, setShowCostDialog] = useState(false);
   const [answerBody, setAnswerBody] = useState({});
 
-  const widgetType = widget.widget_type || AnswerType2WidgetType[widget.answer_type];
+  const widgetType = initialWidgetData.widget_type || AnswerType2WidgetType[initialWidgetData.answer_type];
   const {
     onDelete,
     onMutate,
@@ -73,18 +74,22 @@ const Widget: FC<WidgetPropsType> = ({
     onQuery,
     WidgetComponent,
     EditWidgetDialog,
+    skipFetch,
   } = useWidgetFactory({
-    widgetId: widget.id,
+    widgetId: initialWidgetData.id,
     paperId,
     widgetType,
     mode,
     collectWidgetDataToolkit,
     collectAnswerData,
   });
+  const { data: updatedWidgetData } = useGetWidgetQuery({ widgetId: initialWidgetData.id }, { skip: skipFetch });
 
-  const beCorrected = widget.be_corrected;
-  const cost = widget.cost;
-  const reward = widget.reward;
+  const widgetData = updatedWidgetData || initialWidgetData;
+
+  const beCorrected = widgetData.be_corrected;
+  const cost = widgetData.cost;
+  const reward = widgetData.reward;
 
   const onSubmit = () => {
     onAnswerSubmit({ ...answerBody, onSuccess: () => setShowCostDialog(showCostDialog => !showCostDialog) });
@@ -105,7 +110,7 @@ const Widget: FC<WidgetPropsType> = ({
           {props.children}
         </Paper>
       : (props) => props.children
-    , [widget])
+    , [widgetData])
 
   return (
     <Fragment>
@@ -115,7 +120,7 @@ const Widget: FC<WidgetPropsType> = ({
             <Stack>
               <Stack direction='row' alignItems='center' justifyContent='space-between'>
                 <Typography variant='h3' gutterBottom>
-                  {widget.name}
+                  {widgetData.name}
                 </Typography>
                 <Box>
                   <Tooltip title='راهنمایی‌ها' arrow>
@@ -139,7 +144,7 @@ const Widget: FC<WidgetPropsType> = ({
                 <Divider />
               </Box>
               <EditWidgetDialog
-                {...widget}
+                {...widgetData}
                 paperId={paperId}
                 open={openEditDialog}
                 handleClose={() => setOpenEditDialog(false)}
@@ -147,22 +152,22 @@ const Widget: FC<WidgetPropsType> = ({
               />
               <DeleteWidgetDialog
                 paperId={paperId}
-                widgetId={widget.id}
+                widgetId={widgetData.id}
                 open={openDeleteWidgetDialog}
                 handleClose={() => setOpenDeleteWidgetDialog(false)}
                 onDelete={onDelete}
               />
               <EditHintsDialog
-                hints={widget.hints}
-                referenceId={widget.id}
+                hints={widgetData.hints}
+                referenceId={widgetData.id}
                 open={openEditHintDialog}
                 handleClose={() => setEditHintDialog(false)}
               />
             </Stack>
           }
-          {(mode === WidgetModes.View && widget?.hints?.length) ? <WidgetHint hints={widget.hints} /> : null}
+          {(mode === WidgetModes.View && widgetData?.hints?.length) ? <WidgetHint hints={widgetData.hints} /> : null}
         </Stack>
-        <WidgetComponent {...widget} mode={mode} onAnswerSubmit={onAnswerSubmitWrapper || onAnswerSubmit} onAnswerChange={onAnswerChange} />
+        <WidgetComponent {...widgetData} mode={mode} onAnswerSubmit={onAnswerSubmitWrapper || onAnswerSubmit} onAnswerChange={onAnswerChange} />
       </Cover>
       {cost &&
         <CostDialog cost={cost} callBackFunction={onSubmit} open={showCostDialog} handleClose={() => setShowCostDialog(showCostDialog => !showCostDialog)} />

@@ -142,7 +142,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  makeAnswerEmpty: makeAnswerFileEmptyAction,
+  makeAnswerFileEmpty: makeAnswerFileEmptyAction,
 })(UploadFileProblemWidget);
 
 export { UploadFileProblemEditWidget };
