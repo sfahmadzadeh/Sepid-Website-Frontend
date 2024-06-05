@@ -29,8 +29,6 @@ const DetailBoxEditDialog = ({
   const [title, setTitle] = useState(previousTitle);
   const [activeStep, setActiveStep] = useState(0);
 
-  console.log(activeStep)
-
   const handleNext = () => {
     if (activeStep === 0) {
       onMutate({
