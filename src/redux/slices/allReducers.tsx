@@ -4,13 +4,11 @@ import { programsReducer } from './programs';
 import { redirectReducer } from './redirect';
 import { translatorReducer } from './translator';
 import { whiteboardReducer } from './whiteboard';
-import { widgetReducer } from './widget';
 import { workshopReducer } from './workshop';
 import { articleReducer } from './article';
 import { paperReducer } from './Paper';
 import { scoringReducer } from './scoring';
 import { questionReducer } from './Question';
-import { WebSiteAppearanceReducer } from './WebSiteAppearance';
 import { RoadmapReducer } from './Roadmap';
 import { AnswerReducer } from './Answer';
 
@@ -18,10 +16,8 @@ const allReducers = {
   paper: paperReducer,
   account: accountReducer,
   currentState: currentStateReducer,
-  WebSiteAppearance: WebSiteAppearanceReducer,
   Roadmap: RoadmapReducer,
   whiteboard: whiteboardReducer,
-  widget: widgetReducer,
   redirect: redirectReducer,
   programs: programsReducer,
   workshop: workshopReducer,

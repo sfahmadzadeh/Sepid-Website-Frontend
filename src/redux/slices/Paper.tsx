@@ -8,10 +8,6 @@ import {
 import { InitialStateType } from 'types/redux/Paper';
 import { getArticleAction } from './article';
 import { getRegistrationFormAction } from './programs';
-import {
-  _createWidgetAction,
-  _updateWidgetAction,
-} from './widget';
 
 //////////////// HINT ////////////////
 
@@ -86,31 +82,6 @@ const PaperSlice = createSlice({
   initialState: initialState,
   reducers: {},
   extraReducers: {
-
-    [_createWidgetAction.pending.toString()]: isFetching,
-    [_createWidgetAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg } }) => {
-      state.papers[arg.paper] ||= {};
-      state.papers[arg.paper].widgets = [...(state.papers[arg.paper].widgets || []), response];
-      state.isFetching = false;
-    },
-    [_createWidgetAction.rejected.toString()]: isNotFetching,
-
-    
-    [_updateWidgetAction.pending.toString()]: isFetching,
-    [_updateWidgetAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg } }) => {
-      state.papers[arg.paper] ||= {};
-      const newWidgets = [...(state.papers[arg.paper].widgets || [])];
-      for (let i = 0; i < newWidgets.length; i++) {
-        if (newWidgets[i].id === arg.widgetId) {
-          newWidgets[i] = response;
-        }
-      }
-      state.papers[arg.paper].widgets = newWidgets;
-      state.isFetching = false;
-    },
-    [_updateWidgetAction.rejected.toString()]: isNotFetching,
-
-
     [createHintAction.pending.toString()]: isFetching,
     [createHintAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg } }) => {
       state.papers[arg.referenceId] ||= {};
@@ -150,7 +121,7 @@ const PaperSlice = createSlice({
       state.isFetching = false;
     },
 
-    
+
     [getRegistrationFormAction.pending.toString()]: isFetching,
     [getRegistrationFormAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.papers[response.id] = response;
