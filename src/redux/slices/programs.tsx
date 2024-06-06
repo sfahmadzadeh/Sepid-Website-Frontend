@@ -284,18 +284,6 @@ export const getCertificateAction = createAsyncThunkApi(
   }
 );
 
-// mentor programs:
-export const getRegistrationFormAction = createAsyncThunkApi(
-  'programs/getRegistrationFormAction',
-  Apis.GET,
-  registrationFormCRUDUrl,
-  {
-    defaultNotification: {
-      error: 'مشکلی در دریافت فرم ثبت‌نام وجود داشت.'
-    },
-  }
-);
-
 
 export const registerUsersViaCSVAction = createAsyncThunkApi(
   'programs/registerUsersViaCSVAction',

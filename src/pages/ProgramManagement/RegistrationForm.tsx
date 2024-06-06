@@ -1,26 +1,17 @@
-import React, { FC, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { FC } from 'react';
 import { EditPaper } from 'components/template/Paper';
-import { getRegistrationFormAction } from 'redux/slices/programs';
 import { Divider, Stack, Typography } from '@mui/material';
+import { useGetFormQuery } from 'redux/features/form/FormSlice';
 
 type RegistrationFormPropsType = {
   registrationFormId: any;
-  getRegistrationForm: any;
-  papers: any[];
 }
 
 const RegistrationForm: FC<RegistrationFormPropsType> = ({
   registrationFormId,
-  getRegistrationForm,
-  papers,
 }) => {
 
-  useEffect(() => {
-    getRegistrationForm({ registrationFormId });
-  }, []);
-
-  const registrationForm = papers[registrationFormId];
+  const { data: registrationForm } = useGetFormQuery({ formId: registrationFormId });
 
   return (
     <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
@@ -46,10 +37,4 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  papers: state.paper.papers,
-});
-
-export default connect(mapStateToProps, {
-  getRegistrationForm: getRegistrationFormAction,
-})(RegistrationForm);
+export default RegistrationForm;

@@ -6,14 +6,12 @@ import { translatorReducer } from './translator';
 import { whiteboardReducer } from './whiteboard';
 import { workshopReducer } from './workshop';
 import { articleReducer } from './article';
-import { paperReducer } from './Paper';
 import { scoringReducer } from './scoring';
 import { questionReducer } from './Question';
 import { RoadmapReducer } from './Roadmap';
 import { AnswerReducer } from './Answer';
 
 const allReducers = {
-  paper: paperReducer,
   account: accountReducer,
   currentState: currentStateReducer,
   Roadmap: RoadmapReducer,

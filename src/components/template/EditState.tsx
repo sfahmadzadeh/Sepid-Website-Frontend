@@ -102,7 +102,7 @@ const EditState: FC<EditStatePropsType> = ({
         </Typography>
         <Divider />
         <EditPaper paperId={fsmStateId} mode='contents' />
-        <EditHints hints={fsmState?.hints} type='state' referenceId={fsmStateId} />
+        <EditHints paperId={fsmStateId} hints={fsmState?.hints} type='state' referenceId={fsmStateId} />
       </Stack >
       <CreateWidgetDialog
         showProblems={true}

@@ -3,41 +3,33 @@ import { Add as AddIcon } from '@mui/icons-material';
 import React, { useState, FC } from 'react';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
-import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import {
-  createHintAction,
-  deleteHintAction,
-  createWidgetHintAction,
-  deleteWidgetHintAction,
-} from 'redux/slices/Paper';
 
 import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog';
 import { toPersianNumber } from 'utils/translateNumber';
 import { EditPaper } from './Paper';
+import { useCreateFSMStateHintMutation, useCreateWidgetHintMutation, useDeleteFSMStateHintMutation, useDeleteWidgetHintMutation } from 'redux/features/hint/HintSlice';
 
 type EditHintsPropsType = {
   type: 'widget' | 'state';
   hints: any[];
   referenceId: string;
-  createHint: any;
-  deleteHint: any;
-  createWidgetHint: any,
-  deleteWidgetHint: any,
+  paperId: string;
 }
 
 const EditHints: FC<EditHintsPropsType> = ({
   type = 'state',
   referenceId,
-  createHint,
   hints = [],
-  deleteHint,
-  createWidgetHint,
-  deleteWidgetHint,
+  paperId,
 }) => {
   const t = useTranslate();
   const [hintId, setHintId] = useState<string>(null);
   const [deleteDialogId, setDeleteDialogId] = useState<string>(null);
+  const [createHint] = useCreateFSMStateHintMutation();
+  const [deleteHint] = useDeleteFSMStateHintMutation();
+  const [createWidgetHint] = useCreateWidgetHintMutation();
+  const [deleteWidgetHint] = useDeleteWidgetHintMutation();
 
   return (
     <Stack spacing={2} width='100%'>
@@ -62,7 +54,7 @@ const EditHints: FC<EditHintsPropsType> = ({
                         </Tooltip>
                       </Box>
                     </Stack>
-                    <EditPaper paperId={hint.id}/>
+                    <EditPaper paperId={hint.id} />
                   </Stack>
                 </Paper>
               </Grid>
@@ -79,7 +71,7 @@ const EditHints: FC<EditHintsPropsType> = ({
         startIcon={<AddIcon />}
         variant="contained"
         color="primary"
-        onClick={() => type === 'state' ? createHint({ referenceId }) : createWidgetHint({ referenceId })}>
+        onClick={() => type === 'state' ? createHint({ fsmStateId: referenceId }) : createWidgetHint({ paperId, widgetId: referenceId })}>
         {t('createHelp')}
       </Button>
       <CreateWidgetDialog
@@ -90,17 +82,10 @@ const EditHints: FC<EditHintsPropsType> = ({
       <AreYouSure
         open={!!deleteDialogId}
         handleClose={() => setDeleteDialogId(null)}
-        callBackFunction={() => type === 'state' ? deleteHint({ referenceId, hintId: deleteDialogId }) : deleteWidgetHint({ hintId: deleteDialogId })}
+        callBackFunction={() => type === 'state' ? deleteHint({ fsmStateId: referenceId, hintId: deleteDialogId }) : deleteWidgetHint({ paperId, hintId: deleteDialogId })}
       />
     </Stack>
   );
 }
 
-
-export default connect(null, {
-  // todo: TOFF
-  createHint: createHintAction,
-  deleteHint: deleteHintAction,
-  createWidgetHint: createWidgetHintAction,
-  deleteWidgetHint: deleteWidgetHintAction,
-})(EditHints);
+export default EditHints;

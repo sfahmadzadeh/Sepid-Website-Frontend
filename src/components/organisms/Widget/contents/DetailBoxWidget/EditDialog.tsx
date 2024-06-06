@@ -8,19 +8,17 @@ import {
   MobileStepper,
   useTheme,
 } from '@mui/material';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
 import { EditPaper } from 'components/template/Paper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import { useGetWidgetQuery } from 'redux/features/widget/WidgetSlice';
-import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
 
 const DetailBoxEditDialog = ({
   paperId,
   id: widgetId,
   title: previousTitle,
-details,
+  details,
   onMutate,
 
   open,

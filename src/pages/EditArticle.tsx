@@ -1,22 +1,13 @@
 import { Stack, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from 'components/template/Layout';
 import EditPaper from '../components/template/Paper/EditPaper';
-import { getArticleAction } from '../redux/slices/article';
+import { useGetArticleQuery } from 'redux/features/article/ArticleSlice';
 
-const EditArticle = ({
-	papers,
-	getArticle,
-}) => {
+const EditArticle = ({ }) => {
 	const { articleId } = useParams();
-
-	useEffect(() => {
-		getArticle({ articleId });
-	}, []);
-
-	const article = papers[articleId];
+	const { data: article } = useGetArticleQuery({ articleId });
 
 	return (
 		<Layout appbarMode='ARTICLE'>
@@ -36,10 +27,4 @@ const EditArticle = ({
 	);
 };
 
-const mapStateToProps = (state) => ({
-	papers: state.paper.papers,
-});
-
-export default connect(mapStateToProps, {
-	getArticle: getArticleAction,
-})(EditArticle);
+export default EditArticle;

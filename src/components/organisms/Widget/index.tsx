@@ -69,7 +69,6 @@ const Widget: FC<WidgetPropsType> = ({
     onMutate,
     onAnswerChange,
     onAnswerSubmit,
-    onQuery,
     WidgetComponent,
     EditWidgetDialog,
     skipFetch,
@@ -154,6 +153,7 @@ const Widget: FC<WidgetPropsType> = ({
                 onDelete={onDelete}
               />
               <EditHintsDialog
+                paperId={paperId}
                 hints={widgetData.hints}
                 referenceId={widgetData.id}
                 open={openEditHintDialog}

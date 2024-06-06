@@ -126,3 +126,6 @@ export type AppbarMenuItemType = {
   items: AppbarMenuItemType[];
   position: 'right' | 'left';
 }
+
+
+export type HintType = any;

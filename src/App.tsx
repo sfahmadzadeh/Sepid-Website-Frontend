@@ -119,8 +119,7 @@ const mapStateToProps = (state) => ({
   loading:
     state.account.isFetching ||
     state.programs.isFetching ||
-    state.currentState.isFetching ||
-    state.paper.isFetching,
+    state.currentState.isFetching,
   accessToken: state.account?.accessToken,
 });
 
