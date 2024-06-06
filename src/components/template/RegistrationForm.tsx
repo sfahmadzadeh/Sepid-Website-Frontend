@@ -1,31 +1,19 @@
-import { Box, Button, Paper, Stack, Typography } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
+import { Button, Paper as MUIPaper, Stack, Typography } from '@mui/material';
+import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
-import Widget from 'components/organisms/Widget';
 import {
   getOneRegistrationFormAction,
   submitRegistrationFormAction,
 } from 'redux/slices/programs';
-import { WidgetModes } from 'components/organisms/Widget';
 import ProgramInfo from 'components/organisms/ProgramInfo';
-import { ProgramType, RegistrationFormType } from 'types/models';
+import { RegistrationFormType } from 'types/models';
 import useCollectWidgetsAnswers from 'components/hooks/useCollectWidgetsAnswers';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
+import Paper from './Paper';
 
-const ANSWER_TYPES = {
-  SmallAnswerProblem: 'SmallAnswer',
-  BigAnswerProblem: 'BigAnswer',
-  UploadFileProblem: 'UploadFileAnswer',
-  MultiChoiceProblem: 'MultiChoiceAnswer',
-  TextWidget: 'TextWidget',
-  Image: 'Image',
-  Video: 'Video',
-  Iframe: 'Iframe',
-  InviteeUsernameQuestion: 'InviteeUsernameResponse',
-};
 
 type RegistrationFormPropsType = {
   registrationForm: RegistrationFormType;
@@ -42,7 +30,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
 }) => {
   const { programId } = useParams();
   const [isDialogOpen, setDialogStatus] = useState(false);
-  const { answers, setAnswers, collectAnswers } = useCollectWidgetsAnswers([]);
+  const { answers } = useCollectWidgetsAnswers([]);
   const { data: program } = useGetProgramQuery({ programId });
 
   const submit = () => {
@@ -76,18 +64,8 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   return (
     <Stack spacing={2}>
       <ProgramInfo program={program} />
-      <Stack width={'100%'} component={Paper} padding={2} spacing={2}>
-        {registrationForm.widgets.map((widget) => (
-          <Box key={widget.id}>
-            <Widget
-              paperId={registrationForm.id}
-              coveredWithPaper={false}
-              mode={WidgetModes.InAnswerSheet}
-              collectAnswerData={collectAnswers({ widgetId: widget.id, widgetType: ANSWER_TYPES[widget.widget_type] })}
-              widget={widget}
-            />
-          </Box>
-        ))}
+      <Stack width={'100%'} component={MUIPaper} padding={2} spacing={2}>
+        <Paper paperId={registrationForm.id} />
         {isSubmitButtonDisabled().isDisabled &&
           <Typography color={'red'} textAlign={'center'} fontSize={24} fontWeight={400}>
             {isSubmitButtonDisabled().message}
