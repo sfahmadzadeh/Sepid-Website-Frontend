@@ -29,7 +29,7 @@ const DetailBoxWidget = ({ title, details }) => {
         </Box>
       </Stack>
       <Collapse in={openRoadMap}>
-        <Paper paper={details} />
+        <Paper paperId={details?.id} />
       </Collapse>
     </Fragment>
   );

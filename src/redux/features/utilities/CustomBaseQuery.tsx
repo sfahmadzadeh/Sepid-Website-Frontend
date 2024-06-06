@@ -18,10 +18,10 @@ const CustomBaseQuery = ({ baseUrl }) =>
     })(args, api, extraOptions);
 
     if (result.error) {
-      args.body?.onFailure?.();
+      args.body?.onFailure?.(result);
       handleError({ error: result.error, dispatch: api.dispatch })
     } else {
-      args.body?.onSuccess?.();
+      args.body?.onSuccess?.(result);
     }
     return result;
   };

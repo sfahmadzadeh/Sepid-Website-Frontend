@@ -7,8 +7,8 @@ import { toast } from 'react-toastify';
 import { useState } from 'react';
 
 type WidgetFactoryType = {
-  widgetId?: number;
-  paperId?: number;
+  widgetId?: string;
+  paperId?: string;
   widgetType?: string;
   mode: WidgetModes;
   collectAnswerData?: any;

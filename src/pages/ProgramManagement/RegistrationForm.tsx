@@ -40,10 +40,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
         <Typography variant='h2' gutterBottom>
           {'فرم ثبت‌نام'}
         </Typography>
-        <EditPaper
-          widgets={registrationForm?.widgets || []}
-          paperId={registrationFormId}
-        />
+        <EditPaper paperId={registrationFormId} />
       </Stack>
     </Stack>
   );

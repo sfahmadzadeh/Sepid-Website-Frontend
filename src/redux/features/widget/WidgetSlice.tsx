@@ -12,13 +12,13 @@ type UpdateWidgetInputType = {
   widgetType: WidgetTypes;
 }
 
-type GetWidgetOutputType = {}
+type GetWidgetOutputType = WidgetType;
 
 export const WidgetSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
 
     createWidget: builder.mutation<void, CreateWidgetInputType>({
-      invalidatesTags: (result, error, item) => [{ type: 'fsm-state', id: item.paperId }],
+      invalidatesTags: (result, error, item) => [{ type: 'paper', id: item.paperId }],
       query: ({ widgetType, paperId, ...props }) => ({
         url: `/fsm/widget/`,
         method: 'POST',
@@ -53,7 +53,7 @@ export const WidgetSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     deleteWidget: builder.mutation<void, { widgetId: string, paperId: string }>({
-      invalidatesTags: (result, error, item) => [{ type: 'fsm-state', id: item.paperId }],
+      invalidatesTags: (result, error, item) => [{ type: 'paper', id: item.paperId }],
       query: ({ widgetId }) => ({
         url: `/fsm/widget/${widgetId}/`,
         method: 'DELETE',

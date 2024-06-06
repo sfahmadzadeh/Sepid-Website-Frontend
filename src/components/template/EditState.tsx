@@ -33,14 +33,6 @@ const EditState: FC<EditStatePropsType> = ({
   const [deleteFSMState] = useDeleteFSMStateMutation();
   const [updateFSMState] = useUpdateFSMStateMutation();
 
-  const problems = fsmState?.widgets?.filter((widget) =>
-    widget.widget_type.includes('Problem')
-  );
-  const contents = fsmState?.widgets?.filter(
-    (widget) => !widget.widget_type.includes('Problem')
-  );
-  const hints = fsmState?.hints || [];
-
   useEffect(() => {
     if (fsmState) {
       setName(fsmState?.name);
@@ -104,23 +96,23 @@ const EditState: FC<EditStatePropsType> = ({
           {'مسئله‌ها'}
         </Typography>
         <Divider />
-        <EditPaper widgets={problems} paperId={+fsmStateId} mode='problems' />
+        <EditPaper paperId={fsmStateId} mode='problems' />
         <Typography variant='h2' gutterBottom>
           {'محتواها'}
         </Typography>
         <Divider />
-        <EditPaper widgets={contents} paperId={+fsmStateId} mode='contents' />
-        <EditHints hints={hints} referenceId={fsmStateId} />
+        <EditPaper paperId={fsmStateId} mode='contents' />
+        <EditHints hints={fsmState?.hints} type='state' referenceId={fsmStateId} />
       </Stack >
       <CreateWidgetDialog
         showProblems={true}
         showContent={false}
-        paperId={+fsmStateId}
+        paperId={fsmStateId}
         open={openCreateProblemDialog}
         handleClose={() => setOpenCreateProblemDialog(false)}
       />
       <CreateWidgetDialog
-        paperId={+fsmStateId}
+        paperId={fsmStateId}
         open={openCreateContentDialog}
         handleClose={() => setOpenCreateContentDialog(false)}
       />

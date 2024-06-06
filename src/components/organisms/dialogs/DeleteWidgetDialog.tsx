@@ -11,8 +11,6 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 function DeleteWidgetDialog({
   handleClose,
   onDelete,
-  
-  paperId,
   open,
   widgetId
 }) {
@@ -21,7 +19,6 @@ function DeleteWidgetDialog({
   const onDeleteWrapper = () => {
     onDelete({
       widgetId,
-      paperId,
       onSuccess: handleClose,
     });
   }

@@ -5,14 +5,18 @@ import BackButton from 'components/atoms/BackButton';
 import NextButton from 'components/atoms/NextButton';
 import FSMStateRoadMap from 'components/organisms/FSMStateRoadMap';
 import FSMStateHelpButton from 'components/molecules/FSMStateHelpButton';
+import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
+import { FSMStateType } from 'types/models';
 
 type FSMStateTemplatePropsType = {
-  state: any;
+  state: FSMStateType;
   playerId: number;
 }
 
-const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state = {}, playerId }) => {
-  const widgets = [...state.widgets];
+const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state, playerId }) => {
+  const { data: paper } = useGetPaperQuery({ paperId: state.id }, { skip: !state.id });
+
+  const widgets = [...(paper?.widgets || [])];
   const hints = [...state.hints];
 
   const { inward_edges, outward_edges } = state;

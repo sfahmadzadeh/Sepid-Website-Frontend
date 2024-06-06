@@ -12,15 +12,14 @@ import {
   deleteWidgetHintAction,
 } from 'redux/slices/Paper';
 
-import Widget, { WidgetModes } from 'components/organisms/Widget';
 import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog';
 import { toPersianNumber } from 'utils/translateNumber';
+import { EditPaper } from './Paper';
 
 type EditHintsPropsType = {
   type: 'widget' | 'state';
-  papers: any[];
   hints: any[];
-  referenceId: number;
+  referenceId: string;
   createHint: any;
   deleteHint: any;
   createWidgetHint: any,
@@ -29,24 +28,16 @@ type EditHintsPropsType = {
 
 const EditHints: FC<EditHintsPropsType> = ({
   type = 'state',
-  papers,
   referenceId,
   createHint,
+  hints = [],
   deleteHint,
   createWidgetHint,
   deleteWidgetHint,
 }) => {
   const t = useTranslate();
-  const [hintId, setHintId] = useState<number>(null);
-  const [deleteDialogId, setDeleteDialogId] = useState<number>(null);
-
-  const hints = [];
-  for (const key in papers) {
-    const paper = papers[key];
-    if (paper.reference === referenceId) {
-      hints.push(paper);
-    }
-  }
+  const [hintId, setHintId] = useState<string>(null);
+  const [deleteDialogId, setDeleteDialogId] = useState<string>(null);
 
   return (
     <Stack spacing={2} width='100%'>
@@ -54,7 +45,7 @@ const EditHints: FC<EditHintsPropsType> = ({
         {'راهنمایی‌ها'}
       </Typography>
       <Divider />
-      {hints.length > 0 ?
+      {hints?.length > 0 ?
         <Stack>
           <Grid container alignItems='stretch' spacing={2}>
             {hints.map((hint, index) => (
@@ -71,26 +62,11 @@ const EditHints: FC<EditHintsPropsType> = ({
                         </Tooltip>
                       </Box>
                     </Stack>
-                    {hint.widgets.map((widget) => (
-                      <Widget
-                        key={widget.id}
-                        paperId={hint.id}
-                        widget={widget}
-                        mode={WidgetModes.Edit}
-                      />
-                    ))}
-                    <Button
-                      startIcon={<AddIcon />}
-                      variant="contained"
-                      color="primary"
-                      onClick={() => setHintId(hint.id)}>
-                      {t('createWidget')}
-                    </Button>
+                    <EditPaper paperId={hint.id}/>
                   </Stack>
                 </Paper>
               </Grid>
-            ))
-            }
+            ))}
           </Grid>
         </Stack>
         :
@@ -120,11 +96,8 @@ const EditHints: FC<EditHintsPropsType> = ({
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  papers: state.paper.papers,
-})
 
-export default connect(mapStateToProps, {
+export default connect(null, {
   // todo: TOFF
   createHint: createHintAction,
   deleteHint: deleteHintAction,

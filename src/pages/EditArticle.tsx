@@ -28,12 +28,9 @@ const EditArticle = ({
 					gutterBottom>
 					{article?.name}
 				</Typography>
-				{article && (
-					<EditPaper
-						widgets={article.widgets}
-						paperId={parseInt(articleId)}
-					/>
-				)}
+				{article &&
+					<EditPaper paperId={articleId} />
+				}
 			</Stack>
 		</Layout>
 	);

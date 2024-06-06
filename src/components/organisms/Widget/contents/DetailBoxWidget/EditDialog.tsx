@@ -8,18 +8,19 @@ import {
   MobileStepper,
   useTheme,
 } from '@mui/material';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
 import { EditPaper } from 'components/template/Paper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import { useGetWidgetQuery } from 'redux/features/widget/WidgetSlice';
+import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
 
 const DetailBoxEditDialog = ({
   paperId,
   id: widgetId,
   title: previousTitle,
-  details,
-
+details,
   onMutate,
 
   open,
@@ -28,6 +29,7 @@ const DetailBoxEditDialog = ({
   const theme = useTheme();
   const [title, setTitle] = useState(previousTitle);
   const [activeStep, setActiveStep] = useState(0);
+  const [detailsId, setDetailsId] = useState<string>(details?.id);
 
   const handleNext = () => {
     if (activeStep === 0) {
@@ -35,10 +37,12 @@ const DetailBoxEditDialog = ({
         paperId,
         widgetId,
         title,
-        onSuccess: () => {
+        onSuccess: (result) => {
+          const widget = result.data;
+          setDetailsId(widget.details.id);
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         },
-      })
+      });
     }
     if (activeStep === 1) {
       handleClose();
@@ -71,11 +75,12 @@ const DetailBoxEditDialog = ({
           <Fragment>
             <Typography mt={2} variant='h5' gutterBottom>{'جزئیات بیشتر'}</Typography>
             <DialogContentText gutterBottom>ویجت‌هایی را که می‌خواهید به‌صورت پنهان‌شونده باشند، اینجا بگذارید.</DialogContentText>
-            <EditPaper
-              paperId={details?.id}
-              widgets={details?.widgets || []}
-              mode='contents'
-            />
+            {detailsId &&
+              <EditPaper
+                paperId={detailsId}
+                mode='contents'
+              />
+            }
           </Fragment>
         }
       </DialogContent>

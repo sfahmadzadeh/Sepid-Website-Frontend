@@ -34,7 +34,7 @@ const Article: FC<ArticlePropsType> = ({ papers, getArticle }) => {
           gutterBottom>
           {article?.name}
         </Typography>
-        <Paper paper={article} />
+        <Paper paperId={article.id} />
       </Stack>
     </Layout >
   );

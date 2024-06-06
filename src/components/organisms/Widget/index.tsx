@@ -45,7 +45,7 @@ enum AnswerType2WidgetType {
 type WidgetPropsType = {
   widget: any;
   mode?: WidgetModes;
-  paperId: number | null;
+  paperId: string;
   coveredWithPaper?: boolean;
   collectAnswerData?: any;
 }
@@ -107,7 +107,7 @@ const Widget: FC<WidgetPropsType> = ({
           {children}
         </Paper>
       : ({ children }) => children
-    , [])
+    , [coveredWithPaper])
 
   return (
     <Fragment>
@@ -148,7 +148,6 @@ const Widget: FC<WidgetPropsType> = ({
                 onMutate={onMutate}
               />
               <DeleteWidgetDialog
-                paperId={paperId}
                 widgetId={widgetData.id}
                 open={openDeleteWidgetDialog}
                 handleClose={() => setOpenDeleteWidgetDialog(false)}

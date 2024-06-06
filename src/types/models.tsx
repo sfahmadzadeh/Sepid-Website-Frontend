@@ -123,7 +123,7 @@ export type RegistrationFormType = {
   program: number;
   fsm: FSMType;
   has_certificate: boolean;
-  id: number;
+  id: string;
   is_exam: boolean;
   max_grade: number;
   min_grade: number;

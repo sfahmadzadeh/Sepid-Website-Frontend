@@ -19,7 +19,7 @@ type CreateWidgetDialogPropsType = {
   handleClose: any;
 
   open: boolean;
-  paperId: number;
+  paperId: string;
   showContent?: boolean;
   showProblems?: boolean;
 }
@@ -80,9 +80,6 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
           </Select>
         </FormControl >
       </DialogContent>
-      <DialogActions>
-
-      </DialogActions>
     </Dialog>
   );
 }
