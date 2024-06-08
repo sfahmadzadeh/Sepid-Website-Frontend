@@ -34,7 +34,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
 }) => {
   const t = useTranslate();
   const [answer, setAnswer] = useState<string>(last_submitted_answer ? last_submitted_answer.text : '');
-  const [disableSubmitButton, setDisableSubmitButton] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasAnswered, setHasAnswered] = useState(false);
   const [hasAnsweredCorrectly, setHasAnsweredCorrectly] = useState(false);
 
@@ -49,7 +49,17 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
     if (!answer) {
       return;
     }
-    onAnswerSubmit({ widgetId: paperId, text: answer });
+    setIsSubmitting(true);
+    onAnswerSubmit({
+      widgetId: paperId,
+      text: answer,
+      onSuccess: () => {
+        setIsSubmitting(false);
+      },
+      onFailure: () => {
+        setIsSubmitting(false);
+      },
+    });
   }
 
   return (
@@ -86,7 +96,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
                   variant='outlined'
                   color='primary'
                   sx={{ whiteSpace: 'nowrap' }}
-                  disabled={disableSubmitButton || hasAnsweredCorrectly}
+                  disabled={isSubmitting || hasAnsweredCorrectly}
                   onClick={submit}>
                   {t('submit')}
                 </Button>
