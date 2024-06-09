@@ -20,13 +20,14 @@ const handleError = ({
     return;
   }
 
-  if (persianMessages?.[error.data?.code]) {
+  if (persianMessages[error.data?.code]) {
     toast.error(persianMessages[error.data.code]);
     return;
   }
 
-  if (error.detail) {
-    toast.error(error.detail);
+  if (error.data?.detail) {
+    let message = persianMessages[error.data?.detail] || error.data?.detail;
+    toast.error(message);
     return;
   }
 

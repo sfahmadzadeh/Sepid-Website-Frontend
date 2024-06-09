@@ -15,6 +15,12 @@ export const createAsyncThunkApi: CreateAsyncThunkApiType = (typePrefix, api, ur
   createAsyncThunk(typePrefix, async (arg, { rejectWithValue, dispatch, getState }) => {
     try {
       const body = options?.bodyCreator?.(arg) || arg;
+      const state: any = getState();
+      const website = state.website?.website?.name;
+      if (body) {
+        body['website'] = website;
+      }
+
       let stringUrl = typeof url === 'function' ? url(arg) : url;
 
       if (arg?.parameters) {

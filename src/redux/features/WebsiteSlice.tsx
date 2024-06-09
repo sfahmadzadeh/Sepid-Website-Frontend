@@ -1,13 +1,10 @@
 import { WebsiteType, PageMetadataType } from 'types/global';
 import { ManageWebsiteServiceApi } from './ManageWebsiteServiceApiSlice'
 
-type GetWebsiteInputDataType = {
-  is_authenticated?: boolean;
-}
 
 export const WebsiteSlice = ManageWebsiteServiceApi.injectEndpoints({
   endpoints: builder => ({
-    getWebsite: builder.query<WebsiteType, GetWebsiteInputDataType | void>({
+    getWebsite: builder.query<WebsiteType, void>({
       query: () => `website/get-website/`,
     }),
     getPageMetadata: builder.query<PageMetadataType, { websiteName: string, pageAddress: string }>({

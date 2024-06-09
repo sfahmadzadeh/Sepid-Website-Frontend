@@ -3,8 +3,6 @@ import { SchoolStudentshipType, UserInfoType } from "./profile";
 type AudienceTypeType = "All" | "Student" | "Academic";
 type ProgramTypeType = "Team" | "Individual";
 
-export type WebsiteType = any;
-
 export type ProgramContactInfoType = {
   phone_number: string;
   eitaa_link: string;

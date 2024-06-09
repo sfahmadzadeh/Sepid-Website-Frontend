@@ -10,8 +10,10 @@ import { scoringReducer } from './scoring';
 import { questionReducer } from './Question';
 import { RoadmapReducer } from './Roadmap';
 import { AnswerReducer } from './Answer';
+import { WebsiteReducer } from './Website';
 
 const allReducers = {
+  website: WebsiteReducer,
   account: accountReducer,
   currentState: currentStateReducer,
   Roadmap: RoadmapReducer,

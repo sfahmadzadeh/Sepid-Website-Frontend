@@ -3,7 +3,10 @@ import { MWS_URL } from 'configs/Constants'
 import CustomBaseQuery from './utilities/CustomBaseQuery';
 
 export const ManageWebsiteServiceApi = createApi({
-  reducerPath: 'mangage-website-service',
+  reducerPath: 'manage-website-service',
+  tagTypes:[
+    'website',
+  ],
   baseQuery: CustomBaseQuery({ baseUrl: MWS_URL + 'api/' }),
   endpoints: build => ({
   })

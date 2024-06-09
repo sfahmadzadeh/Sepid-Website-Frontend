@@ -56,6 +56,7 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     loginGoogleUser: builder.mutation<LoginGoogleUserOutputType, LoginGoogleUserInputType>({
+      // todo: this invalidation should be deleted (after separating permission and programs)
       invalidatesTags: ['programs'],
       query: (body) => ({
         url: 'auth/accounts/login-with-google/',
@@ -76,6 +77,8 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     login: builder.mutation<LoginOutputType, LoginInput>({
+      // todo: this invalidation should be deleted (after separating permission and programs)
+      invalidatesTags: ['programs'],
       query: (body) => ({
         url: 'auth/accounts/login/',
         method: 'POST',

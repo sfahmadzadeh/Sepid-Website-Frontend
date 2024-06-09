@@ -3,7 +3,7 @@ import { MPS_URL } from 'configs/Constants'
 import CustomBaseQuery from './utilities/CustomBaseQuery';
 
 export const ManagePartyServiceApi = createApi({
-  reducerPath: 'mangage-party-service',
+  reducerPath: 'manage-party-service',
   baseQuery: CustomBaseQuery({ baseUrl: MPS_URL + 'api/' }),
   endpoints: build => ({
   })

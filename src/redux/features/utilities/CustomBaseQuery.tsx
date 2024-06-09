@@ -4,14 +4,21 @@ import handleError from './ErrorHandler';
 const CustomBaseQuery = ({ baseUrl }) =>
   async (args, api, extraOptions) => {
 
+    const state: any = api.getState();
+    const website = state.website?.website?.name;
+    if (args?.body) {
+      args.body['website'] = website;
+    }
+
     const result = await fetchBaseQuery({
       baseUrl,
       prepareHeaders: (headers, { getState, endpoint }) => {
-        const accessToken = (getState() as any).account?.accessToken;
+        const state: any = getState();
+        const accessToken = state.account?.accessToken;
         //todo: what should we do with refresh token?!
-        const refreshToken = (getState() as any).account?.refreshToken;
+        const refreshToken = state.account?.refreshToken;
         if (accessToken) {
-          headers.append('Authorization', `JWT ${accessToken}`)
+          headers.append('Authorization', `JWT ${accessToken}`);
         }
         return headers
       },
