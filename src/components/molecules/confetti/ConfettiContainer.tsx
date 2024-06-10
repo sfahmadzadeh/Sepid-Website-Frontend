@@ -1,22 +1,36 @@
-import React, { FC, Fragment, useState } from "react"
+import React, { FC, Fragment, useEffect, useState } from "react"
 import Confetti from 'react-confetti'
 
 type ConfettiContainerPropsType = {}
 
 const ConfettiContainer: FC<ConfettiContainerPropsType> = ({ }) => {
-  const [runConfetti, setRunCongetti] = useState(false);
+  const [runConfetti, setRunConfetti] = useState(false);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   window.addEventListener('confetti-event', () => {
-    setRunCongetti(true);
+    setRunConfetti(true);
     setTimeout(() => {
-      setRunCongetti(false);
-    }, (5000));
+      setRunConfetti(false);
+    }, (6000));
   });
 
   return (
     <Fragment>
       {runConfetti &&
-        <Confetti recycle={false} tweenDuration={5000} numberOfPieces={1000} />
+        <Confetti recycle={false} height={windowHeight} tweenDuration={6000} numberOfPieces={2000} />
       }
     </Fragment>
   );
