@@ -10,6 +10,7 @@ import {
 import React, { useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import { runConfetti } from 'components/molecules/confetti';
 
 function SmallAnswerProblemEditWidget({
   onMutate,
@@ -28,17 +29,22 @@ function SmallAnswerProblemEditWidget({
   const [solution, setSolution] = useState<string>(oldSolution || '');
 
   const handleSubmit = () => {
-    onMutate({
+    console.log("SSSSSSSSs")
+    runConfetti()
+    const body = {
       widgetId,
       paper: paperId,
       text,
       solution,
-      correct_answer: {
+      onSuccess: handleClose,
+    }
+    if (correctAnswer) {
+      body['correct_answer'] = {
         text: correctAnswer,
         answer_type: 'SmallAnswer',
-      },
-      onSuccess: handleClose,
-    });
+      }
+    }
+    onMutate(body);
   };
 
   return (
