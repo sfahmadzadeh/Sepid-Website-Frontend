@@ -1,6 +1,5 @@
 import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
-
-import errorHandler from './errorHandler';
+import handleError from 'redux/features/utilities/ErrorHandler';
 import { toast } from 'react-toastify';
 
 type CreateAsyncThunkApiType =
@@ -46,18 +45,17 @@ export const createAsyncThunkApi: CreateAsyncThunkApiType = (typePrefix, api, ur
       return {
         response,
       };
-    } catch (error) {
+    } catch (error: any) {
       // component self onFailure action
       arg?.onFailure?.();
 
       if ((getState() as any).Intl.locale == 'fa') {
-        return errorHandler(
-          error,
+        handleError({
+          error: error.response,
           dispatch,
-          rejectWithValue,
-          options?.defaultNotification?.error,
-          options?.defaultNotification?.showHttpError || false
-        );
+          errorMessage: options?.defaultNotification?.error,
+        });
+        return rejectWithValue(null);
       }
     }
   });
