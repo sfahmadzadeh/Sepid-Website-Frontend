@@ -114,6 +114,17 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
       <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
+          value={data.order_in_program}
+          variant='outlined'
+          label={'اولویت نمایش'}
+          name='order_in_program'
+          onChange={putData}
+          helperText={'کارگاه با اولویت نمایش بزرگ‌تر، زودتر در صفحه‌ی اصلی دوره نمایش داده می‌شود.'}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          fullWidth
           value={data.lock || ''}
           variant='outlined'
           label={'رمز ورود'}
