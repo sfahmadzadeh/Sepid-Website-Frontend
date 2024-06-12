@@ -59,10 +59,10 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
   }
 
   return (
-    <Dialog open={open} maxWidth='sm' onClose={handleClose}>
+    <Dialog disableScrollLock open={open} onClose={handleClose}>
       <DialogTitle>{t('createWidget')}</DialogTitle>
       <DialogContent>
-        <FormControl size='small' fullWidth style={{ width: '200px' }} variant="outlined">
+        <FormControl size='small' fullWidth sx={{ width: 200, marginTop: 1 }} variant="outlined">
           <InputLabel>{t('widgetType')}</InputLabel>
           <Select
             onChange={(e) => setWidgetType(e.target.value)}

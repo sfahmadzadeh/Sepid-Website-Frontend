@@ -32,7 +32,7 @@ function TextEditWidget({
   };
 
   return (
-    <Dialog fullWidth open={open} maxWidth='md'>
+    <Dialog disableScrollLock fullWidth open={open} maxWidth='md'>
       <DialogTitle>{t('text')}</DialogTitle>
       <DialogContent>
         <DialogContentText gutterBottom>متن مورد نظر خود را وارد کنید.</DialogContentText>

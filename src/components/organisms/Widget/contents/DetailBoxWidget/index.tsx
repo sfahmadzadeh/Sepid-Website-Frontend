@@ -28,7 +28,7 @@ const DetailBoxWidget = ({ title, details }) => {
           />
         </Box>
       </Stack>
-      <Collapse in={openRoadMap} sx={{ paddingTop: 1, paddingLeft: 2 }}>
+      <Collapse in={openRoadMap} sx={{ paddingLeft: 2 }}>
         <Paper paperId={details?.id} />
       </Collapse>
     </Fragment>
