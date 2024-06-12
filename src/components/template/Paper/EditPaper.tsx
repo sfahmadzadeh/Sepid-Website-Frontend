@@ -33,7 +33,6 @@ const EditPaper: FC<EditPaperPropsType> = ({
       (widget) => widget.widget_type.includes('Problem')
     );
   }
-  widgets = widgets || [];
 
   return (
     <Fragment>
