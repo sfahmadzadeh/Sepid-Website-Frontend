@@ -28,7 +28,7 @@ export default function Frame ({
     }
     doc.open()
     doc.write(
-      `<head><link rel='stylesheet' href='${process.env.PUBLIC_URL}/styles/frame.css' /><link rel='stylesheet' href='${process.env.PUBLIC_URL}/fonts/font.css' /><base target="_blank" /></head><body>${content}</body>`
+      `<head><link rel='stylesheet' href='${process.env.PUBLIC_URL}/styles/frame.css' /><link rel='stylesheet' href='${process.env.PUBLIC_URL}/styles/font.css' /><base target="_blank" /></head><body>${content}</body>`
     )
     doc.close()
 

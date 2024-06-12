@@ -5,7 +5,6 @@ import {
   Select,
 } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import React, { FC, useState } from 'react';
@@ -34,7 +33,7 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
 }) => {
   const [widgetType, setWidgetType] = useState('');
   const t = useTranslate();
-  const widgeProperties = useWidgetFactory({
+  const widgetProperties = useWidgetFactory({
     paperId,
     widgetType,
     mode: WidgetModes.Create,
@@ -44,7 +43,7 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
     const {
       onMutate,
       EditWidgetDialog,
-    } = widgeProperties;
+    } = widgetProperties;
 
     return (
       <EditWidgetDialog
@@ -60,7 +59,7 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
   }
 
   return (
-    <Dialog disableScrollLock open={open} maxWidth='sm' onClose={handleClose}>
+    <Dialog open={open} maxWidth='sm' onClose={handleClose}>
       <DialogTitle>{t('createWidget')}</DialogTitle>
       <DialogContent>
         <FormControl size='small' fullWidth style={{ width: '200px' }} variant="outlined">

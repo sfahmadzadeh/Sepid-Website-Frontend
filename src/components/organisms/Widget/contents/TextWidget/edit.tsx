@@ -32,20 +32,19 @@ function TextEditWidget({
   };
 
   return (
-    <Dialog disableScrollLock
-      open={open}
-      onClose={handleClose}
-      disableAutoFocus
-      disableEnforceFocus>
+    <Dialog fullWidth open={open} maxWidth='md'>
       <DialogTitle>{t('text')}</DialogTitle>
       <DialogContent>
-        <DialogContentText>متن مورد نظر خود را وارد کنید.</DialogContentText>
+        <DialogContentText gutterBottom>متن مورد نظر خود را وارد کنید.</DialogContentText>
         <TinyEditorComponent
           content={text}
           onChange={(text) => setText(text)}
         />
       </DialogContent>
       <DialogActions>
+        <Button onClick={handleClose} color="primary" variant="outlined">
+          {'انصراف'}
+        </Button>
         <Button onClick={handleClick} color="primary" variant="contained">
           {t('submit')}
         </Button>
