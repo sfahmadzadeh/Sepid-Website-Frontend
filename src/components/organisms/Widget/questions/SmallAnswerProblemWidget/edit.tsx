@@ -29,7 +29,6 @@ function SmallAnswerProblemEditWidget({
   const [solution, setSolution] = useState<string>(oldSolution || '');
 
   const handleSubmit = () => {
-    runConfetti()
     const body = {
       widgetId,
       paper: paperId,
