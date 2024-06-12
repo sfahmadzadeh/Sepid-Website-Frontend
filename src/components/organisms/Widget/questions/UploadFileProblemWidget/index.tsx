@@ -137,11 +137,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  isFetching: state.paper.isFetching,
-});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   clearWidgetAnswer: clearWidgetAnswerAction,
 })(UploadFileProblemWidget);
 
