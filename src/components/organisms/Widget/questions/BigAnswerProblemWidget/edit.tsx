@@ -49,7 +49,7 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
     <Dialog disableScrollLock
       open={open}
       onClose={handleClose}
-      maxWidth="sm"
+      maxWidth="md"
       fullWidth
       scroll="body"
       disableAutoFocus

@@ -53,6 +53,7 @@ const DetailBoxEditDialog = ({
 
   return (
     <Dialog
+      maxWidth='md'
       disableScrollLock
       open={open}
       onClose={handleClose}

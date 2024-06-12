@@ -29,7 +29,6 @@ function SmallAnswerProblemEditWidget({
   const [solution, setSolution] = useState<string>(oldSolution || '');
 
   const handleSubmit = () => {
-    console.log("SSSSSSSSs")
     runConfetti()
     const body = {
       widgetId,
@@ -51,7 +50,7 @@ function SmallAnswerProblemEditWidget({
     <Dialog disableScrollLock
       open={open}
       onClose={handleClose}
-      maxWidth="sm"
+      maxWidth="md"
       fullWidth
       disableAutoFocus
       disableEnforceFocus>
