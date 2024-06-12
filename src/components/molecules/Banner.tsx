@@ -10,7 +10,6 @@ import 'swiper/css/virtual';
 import 'swiper/css/autoplay';
 import { BannerType } from 'types/redux/WebSiteAppearance';
 import useWidth from 'utils/UseWidth';
-import { Skeleton } from '@mui/material';
 
 type BannerPropsType = {
   banners: BannerType[] | undefined;
@@ -19,11 +18,7 @@ type BannerPropsType = {
 const Banner: FC<BannerPropsType> = ({ banners }) => {
   const width = useWidth();
 
-  if (!banners) {
-    return <Skeleton variant="rounded" width={'100%'} sx={{ height: { xs: 300, sm: 300 } }} />
-  }
-
-  if (banners.length === 0) {
+  if (!banners || banners.length === 0) {
     return null;
   }
 
@@ -39,7 +34,7 @@ const Banner: FC<BannerPropsType> = ({ banners }) => {
       virtual>
       {banners.map((banner, index) => (
         <SwiperSlide key={index} virtualIndex={index} onClick={() => window.location.href = banner.redirect_to}>
-          <img src={(width === 'xs' || width === 'sm') ? banner.mobile_image : banner.desktop_image} style={{ width: '100%', borderRadius: 10 }} />
+          <img alt='' src={(width === 'xs' || width === 'sm') ? banner.mobile_image : banner.desktop_image} style={{ width: '100%', borderRadius: 10 }} />
         </SwiperSlide>
       ))}
     </Swiper>
