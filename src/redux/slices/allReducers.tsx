@@ -11,8 +11,10 @@ import { questionReducer } from './Question';
 import { RoadmapReducer } from './Roadmap';
 import { AnswerReducer } from './Answer';
 import { WebsiteReducer } from './Website';
+import { GlobalReducer } from './Global';
 
 const allReducers = {
+  global: GlobalReducer,
   website: WebsiteReducer,
   account: accountReducer,
   currentState: currentStateReducer,
