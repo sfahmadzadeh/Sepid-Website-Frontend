@@ -52,14 +52,16 @@ const useWidgetFactory = ({
         setSkipFetch(false);
       }
 
-  onAnswerChange = collectAnswerData;
+  onAnswerChange = collectAnswerData ? collectAnswerData : () => { };
 
-  // todo refactor: this peace of code should be extracted as a seprate method
+  // todo refactor: this peace of code should be extracted as a separate method
   onAnswerSubmit = (props) => dispatcher(submitAnswerAction(props)).then((response) => {
-    const CORRECTNESS_TRESHOLD = 50;
+    const CORRECTNESS_THRESHOLD = 50;
     if (response.error) return;
-    if (response?.payload?.response) {
-      if (response?.payload?.response.correctness_percentage > CORRECTNESS_TRESHOLD) {
+    if (response?.payload?.response &&
+      response.payload.response.correctness_percentage &&
+      response.payload.response.correctness_percentage != -1) {
+      if (response.payload.response.correctness_percentage > CORRECTNESS_THRESHOLD) {
         runConfetti();
         toast.success('آفرین! پاسخ شما درست بود.')
       } else {

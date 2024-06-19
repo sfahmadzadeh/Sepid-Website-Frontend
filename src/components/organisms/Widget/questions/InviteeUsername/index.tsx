@@ -35,7 +35,7 @@ const InviteeUsername: FC<InviteeUsernamePropsType> = ({
   onAnswerChange,
 
   checkUsername,
-  id: paperId,
+  id: questionId,
   inviteeUserFirstName,
   inviteeUserLastName,
   isFetching,
@@ -67,7 +67,7 @@ const InviteeUsername: FC<InviteeUsernamePropsType> = ({
     setTimeout(() => {
       setDisableSubmitButton(false);
     }, 20000);
-    onAnswerSubmit({ widgetId: paperId, username });
+    onAnswerSubmit({ questionId, username });
   }
 
   return (

@@ -156,9 +156,9 @@ export const startWorkshopUrl = 'fsm/startWorkshop/';
 
 // response
 // answer
-export const clearWidgetAnswerUrl = ({ widgetId }) => `/response/answers/${widgetId}/clear_widget_answer/`;
+export const clearQuestionAnswerUrl = `/response/answers/clear_question_answer/`;
 export const answerCRUDUrl = ({ answerId }) => answerId ? `response/answers/${answerId}/` : 'response/answers/';
-export const sendWidgetAnswerUrl = ({ widgetId }) => `/response/answers/${widgetId}/submit_answer/`;
+export const sendWidgetAnswerUrl = `/response/answers/submit_answer/`;
 
 
 // scoring:

@@ -25,7 +25,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
 
   reward,
   cost,
-  id: paperId,
+  id: questionId,
   mode,
   text: problemText,
   last_submitted_answer,
@@ -51,7 +51,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
     }
     setIsSubmitting(true);
     onAnswerSubmit({
-      widgetId: paperId,
+      questionId,
       text: answer,
       onSuccess: () => {
         setIsSubmitting(false);

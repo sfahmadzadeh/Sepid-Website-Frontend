@@ -21,7 +21,7 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
   onAnswerSubmit,
   onAnswerChange,
 
-  id: widgetId,
+  id: questionId,
   text: questionText,
   choices: questionChoices,
   last_submitted_answer,
@@ -37,7 +37,7 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
   const onAnswerSubmitWrapper = (choice) => {
     if (mode === WidgetModes.Edit) return;
     setSelectedChoices([choice])
-    onAnswerSubmit({ problemId: widgetId, selectedChoices: [choice] });
+    onAnswerSubmit({ questionId, selectedChoices: [choice] });
   }
 
   return (

@@ -20,7 +20,7 @@ type BigAnswerProblemWidgetPropsType = {
 const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
   onAnswerSubmit,
   onAnswerChange,
-  id,
+  id: questionId,
   text,
   mode,
   last_submitted_answer,
@@ -36,12 +36,12 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
     setAnswer(val);
   }
 
-  const onSubmitWrappere = (e) => {
+  const onSubmitWrapper = (e) => {
     setButtonDisable(true);
     setTimeout(() => {
       setButtonDisable(false);
     }, 20000)
-    onAnswerSubmit({ widgetId: id, text: answer })
+    onAnswerSubmit({ questionId, text: answer })
   }
 
   return (
@@ -67,7 +67,7 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
           variant="outlined"
           color="primary"
           size="small"
-          onClick={onSubmitWrappere}>
+          onClick={onSubmitWrapper}>
           {t('submitAnswer')}
         </Button>
       }
