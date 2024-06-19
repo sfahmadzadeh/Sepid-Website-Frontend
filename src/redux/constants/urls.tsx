@@ -154,8 +154,14 @@ export const sendAnswerUrl = 'fsm/sendanswer/';
 
 export const startWorkshopUrl = 'fsm/startWorkshop/';
 
+// response
+// answer
+export const clearWidgetAnswerUrl = ({ widgetId }) => `/response/answers/${widgetId}/clear_widget_answer/`;
+export const answerCRUDUrl = ({ answerId }) => answerId ? `response/answers/${answerId}/` : 'response/answers/';
+export const sendWidgetAnswerUrl = ({ widgetId }) => `/response/answers/${widgetId}/submit_answer/`;
+
+
 // scoring:
-export const answerCRUDUrl = ({ answerId }) => answerId ? `fsm/answers/${answerId}/` : 'fsm/answers/';
 export const getAnswerScoresAndCommentsUrl = 'scoring/get_answer_scores_and_comments/';
 export const setAnswerScoreUrl = 'scoring/set_answer_score/';
 export const createCommentUrl = 'scoring/create_comment/';
@@ -166,8 +172,6 @@ export const scoreTypeUrl = ({ actionUrl }) => actionUrl ? `scoring/score_type/$
 export const checkUsernameUrl = 'question/check_username/';
 
 // widget
-export const sendWidgetAnswerUrl = ({ widgetId }) => `/fsm/widget/${widgetId}/submit_answer/`;
-export const clearWidgetAnswerUrl = ({ widgetId }) => `/fsm/widget/${widgetId}/clear_widget_answer/`;
 export const getProblemsUrl = 'fsm/getproblems/';
 export const getUnreadNotificationsUrl = 'notifications/api/unread_list/';
 export const markSubmissionUrl = 'fsm/marksubmission/';
