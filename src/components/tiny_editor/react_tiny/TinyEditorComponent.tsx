@@ -59,7 +59,7 @@ const TinyEditor = ({ content, onChange }) => {
   return (
     <Editor
       init={{
-        height: 400,
+        height: 300,
         menubar: false,
         width: '100%',
         branding: false,
