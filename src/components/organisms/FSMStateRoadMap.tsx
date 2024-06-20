@@ -69,7 +69,7 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
         <Divider />
         {(!FSMRoadmap || !fetchedPlayerTransitedPath)
           ? <Skeleton variant='rectangular' height={200} sx={{ borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }} />
-          : <RoadMapType1 currentNodeId={currentNodeName} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlighedPath={playerTransitedPath} />
+          : <RoadMapType1 currentNodeId={currentNodeName} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlightedPath={playerTransitedPath} />
         }
       </Collapse>
     </Box>

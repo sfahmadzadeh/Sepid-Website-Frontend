@@ -10,7 +10,7 @@ type GraphMapBasePropsType = {
   links: Link[];
   dragAndDrop: any;
   height?: number;
-  highlighedPath?: Link[];
+  highlightedPath?: Link[];
 };
 
 const GraphMapBase: FC<GraphMapBasePropsType> = ({
@@ -19,7 +19,7 @@ const GraphMapBase: FC<GraphMapBasePropsType> = ({
   links,
   dragAndDrop,
   height = 400,
-  highlighedPath = [],
+  highlightedPath: highlightedPath = [],
 }) => {
   const highlightGreenColor = '#80ff2b';
   const highlightBlueColor = '#00b4e0';
@@ -38,6 +38,8 @@ const GraphMapBase: FC<GraphMapBasePropsType> = ({
     }, 2 * delay)
   }
 
+  console.log(currentNodeId)
+
   const handleBoxResize = () => {
     if (boxRef.current) {
       setWidth(boxRef.current.clientWidth);
@@ -45,7 +47,7 @@ const GraphMapBase: FC<GraphMapBasePropsType> = ({
   }
 
   // make transited path highlighted:
-  highlighedPath.forEach(pathLink => {
+  highlightedPath.forEach(pathLink => {
     const linkSourceNode = nodes.find(node => node.id === pathLink.source);
     if (linkSourceNode) linkSourceNode['color'] = highlightGreenColor;
     const linkTargetNode = nodes.find(node => node.id === pathLink.target);

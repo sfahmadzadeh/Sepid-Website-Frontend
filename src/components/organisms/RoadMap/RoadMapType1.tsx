@@ -1,18 +1,18 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import BaseGraph from './Base';
 import { Link, Node } from 'types/redux/Roadmap';
 
 type GraphType1PropsType = {
   currentNodeId: string;
   links: Link[];
-  highlighedPath: Link[];
+  highlightedPath: Link[];
   firstStateName: string;
 };
 
-const GraphType1: FC<GraphType1PropsType> = ({
+const RoadMapType1: FC<GraphType1PropsType> = ({
   currentNodeId,
   links: inputLinks,
-  highlighedPath,
+  highlightedPath: highlightedPath,
   firstStateName,
 }) => {
   const nodesXdistance = 120;
@@ -88,14 +88,14 @@ const GraphType1: FC<GraphType1PropsType> = ({
   }
 
   // check weather inputLinks are updated and are not cached in the redux from previous fsm
-  if (!inputLinks.find(link => link.source === currentNodeId || link.target === currentNodeId)) {
+  if (inputLinks.length > 0 && !inputLinks.find(link => link.source === currentNodeId || link.target === currentNodeId)) {
     return;
   }
   const [nodes, links] = developGraph([...inputLinks]);
 
   return (
-    <BaseGraph height={200} dragAndDrop={false} currentNodeId={currentNodeId} nodes={nodes} links={links} highlighedPath={highlighedPath} />
+    <BaseGraph height={200} dragAndDrop={false} currentNodeId={currentNodeId} nodes={nodes} links={links} highlightedPath={highlightedPath} />
   );
 };
 
-export default GraphType1;
+export default RoadMapType1;
