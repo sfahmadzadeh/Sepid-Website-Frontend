@@ -38,8 +38,6 @@ const GraphMapBase: FC<GraphMapBasePropsType> = ({
     }, 2 * delay)
   }
 
-  console.log(currentNodeId)
-
   const handleBoxResize = () => {
     if (boxRef.current) {
       setWidth(boxRef.current.clientWidth);
