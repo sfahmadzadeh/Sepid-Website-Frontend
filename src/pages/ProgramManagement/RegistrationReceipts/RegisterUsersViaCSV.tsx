@@ -48,7 +48,7 @@ const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
 
       <Stack direction='row' spacing={1} alignItems='flex-end'>
         <Typography variant='h2'>
-          {'افزودن کاربران از طریق فایل csv'}
+          {'افزودن کاربران از طریق فایل .xlsx'}
         </Typography>
         <Typography>
           <Link style={{ textDecoration: 'none' }} target="_blank" download to={"/register-participants-sample.xlsx"}>{'(نمونه فایل)'}</Link>
@@ -61,7 +61,7 @@ const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
             <Stack direction='row' spacing={1}>
               <Button
                 component="label"
-                htmlFor={"csv-info-input"}
+                htmlFor={"xlsx-info-input"}
                 sx={{ whiteSpace: 'nowrap' }}
                 variant="contained"
                 color="secondary">
@@ -70,7 +70,7 @@ const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
               <input
                 ref={fileRef}
                 accept=".xlsx"
-                id={"csv-info-input"}
+                id={"xlsx-info-input"}
                 style={{ display: 'none' }}
                 type="file"
                 onChange={changeFile} />
