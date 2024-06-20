@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  uploadProgress: 0
+  uploadProgress: null,
 }
 
 const GlobalSlice = createSlice({
@@ -9,7 +9,6 @@ const GlobalSlice = createSlice({
   initialState,
   reducers: {
     setUploadProgress: (state, action) => {
-      console.log(action.payload);
       return {
         ...state,
         uploadProgress: action.payload

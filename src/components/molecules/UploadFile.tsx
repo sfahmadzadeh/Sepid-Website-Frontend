@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   Stack,
 } from '@mui/material';
 import {
@@ -8,6 +9,7 @@ import {
 import React, { FC, Fragment, useEffect, useState } from 'react';
 import { toast } from 'react-toastify'
 import { useUploadFileMutation } from 'redux/features/FileSlice';
+import { useSelector } from 'react-redux';
 
 type UploadFilePropsType = {
   setFileLink: any;
@@ -17,6 +19,7 @@ const UploadFile: FC<UploadFilePropsType> = ({
   setFileLink,
 }) => {
   const [uploadFile, result] = useUploadFileMutation();
+  const { uploadProgress } = useSelector((state) => (state as any).global);
 
   const handleUploadFile = (e) => {
     const file = e.target.files[0];
@@ -41,12 +44,17 @@ const UploadFile: FC<UploadFilePropsType> = ({
   return (
     <Fragment>
       <Button
+        startIcon={<CloudUploadIcon />}
+        endIcon={
+          uploadProgress &&
+          <CircularProgress color='secondary' thickness={4} size={24} variant="determinate" value={uploadProgress} />
+        }
+        disabled={result.isLoading}
         component="label"
         htmlFor={'upload-widget-file'}
         variant="contained"
         color="primary"
         size="small"
-        startIcon={<CloudUploadIcon />}
         sx={{ whiteSpace: 'nowrap' }}>
         {'بارگذاری فایل'}
       </Button>
