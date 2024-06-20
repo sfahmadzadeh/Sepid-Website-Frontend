@@ -54,7 +54,7 @@ export const FSMSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     updateFSM: builder.mutation<UpdateFSMOutputType, UpdateFSMInputType>({
-      invalidatesTags: ['fsms'],
+      invalidatesTags: ['fsm', 'fsms'],
       query: ({ fsmId, ...body }) => ({
         url: `/fsm/fsm/${fsmId}/`,
         method: 'PATCH',
@@ -75,7 +75,7 @@ export const FSMSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     getFSMs: builder.query<GetFSMsOutputType, GetFSMsInputType>({
-      providesTags: ['fsms', 'programs'],
+      providesTags: ['fsms'],
       query: ({ programId, pageNumber = 1, isPrivate }) => `fsm/fsm/?program=${programId}&page=${pageNumber}${isPrivate != null ? `&is_private=${isPrivate}` : ''}`,
       transformResponse: (response: any): GetFSMsOutputType => {
         return {

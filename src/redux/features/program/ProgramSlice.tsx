@@ -57,7 +57,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     updateProgram: builder.mutation<UpdateProgramOutputType, UpdateProgramInputType>({
-      invalidatesTags: ['programs'],
+      invalidatesTags: ['program', 'programs'],
       query: ({ programId, ...body }) => ({
         url: `/fsm/program/${programId}/`,
         method: 'PATCH',
