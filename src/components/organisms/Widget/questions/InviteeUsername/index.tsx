@@ -10,7 +10,7 @@ import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { checkUsernameAction } from 'redux/slices/Question';
-import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
+import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
 import { WidgetModes } from '../..';
 import InviteeUsernameEdit from './edit';
 import isPhoneNumber from 'utils/validators/isPhoneNumber';

@@ -1,4 +1,4 @@
-import mathTextToSvg from '../additional_plugins/mathTextToSvg'
+import mathTextToSvg from '../additional-plugins/mathTextToSvg'
 
 export default function fixDocumentMathElements (doc) {
   const tinyMathEls = doc.getElementsByClassName('tiny-math')

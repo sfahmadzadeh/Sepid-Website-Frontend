@@ -9,7 +9,7 @@ import {
   useTheme,
 } from '@mui/material';
 import React, { Fragment, useState } from 'react';
-import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 import { EditPaper } from 'components/template/Paper';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';

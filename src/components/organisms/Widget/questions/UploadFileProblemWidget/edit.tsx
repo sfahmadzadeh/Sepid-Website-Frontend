@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import React, { useState, FC } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 
 type UploadFileProblemEditWidgetPropsType = {
   onMutate: any;

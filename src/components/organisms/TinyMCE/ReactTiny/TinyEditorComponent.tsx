@@ -49,7 +49,7 @@ import 'tinymce/plugins/emoticons/js/emojis';
 import 'tinymce/skins/content/default/content';
 import 'tinymce/skins/ui/oxide/content';
 
-import '../additional_plugins/latex';
+import '../additional-plugins/latex';
 
 import { Editor } from '@tinymce/tinymce-react'
 import React from 'react'

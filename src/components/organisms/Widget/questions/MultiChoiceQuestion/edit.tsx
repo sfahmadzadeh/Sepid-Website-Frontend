@@ -12,10 +12,10 @@ import {
 import {
   AddCircle as AddCircleIcon,
 } from '@mui/icons-material';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 
-import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 import { toPersianNumber } from 'utils/translateNumber';
 import { ChoiceType } from 'types/widgets';
 import MultiChoiceQuestionChoice from 'components/molecules/MultiChoiceQuestionChoice';

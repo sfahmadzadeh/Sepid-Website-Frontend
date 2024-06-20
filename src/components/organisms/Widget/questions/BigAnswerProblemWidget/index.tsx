@@ -1,8 +1,8 @@
 import { Button, Stack, Typography } from '@mui/material';
 import React, { FC, Fragment, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
-import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
+import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 import { WidgetModes } from 'components/organisms/Widget';
 import BigAnswerProblemEditWidget from './edit';
 

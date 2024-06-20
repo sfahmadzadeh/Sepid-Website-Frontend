@@ -2,7 +2,7 @@ import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Button, Stack } from '@mui/material';
 
-import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
+import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
 import { WidgetModes } from 'components/organisms/Widget';
 import MultiChoiceQuestionEditWidget from './edit';
 export { MultiChoiceQuestionEditWidget };
