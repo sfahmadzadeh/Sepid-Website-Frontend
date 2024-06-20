@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import { connect } from 'react-redux';
 
 import { StatePageContext } from 'pages/FSM';
-import { getWhiteboardActionSubscription } from '../../parse/whiteboard';
+import { getWhiteboardActionSubscription } from 'parse/whiteboard';
 import {
   addNewLineNodeAction,
   deselectWhiteboardNodesAction,
