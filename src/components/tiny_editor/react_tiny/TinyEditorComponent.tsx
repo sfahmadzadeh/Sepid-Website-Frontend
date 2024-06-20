@@ -58,6 +58,7 @@ const TinyEditor = ({ content, onChange }) => {
 
   return (
     <Editor
+      licenseKey='gpl'
       init={{
         height: 300,
         menubar: false,

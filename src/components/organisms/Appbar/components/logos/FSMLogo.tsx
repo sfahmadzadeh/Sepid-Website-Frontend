@@ -19,19 +19,21 @@ const FSMLogo: FC<FSMLogoPropsType> = ({ }) => {
   return (
     <Stack direction={'row'} alignItems={'center'} spacing={1}>
       <Tooltip title={fsm.name} arrow>
-        <IconButton disabled={width !== 'xs'} sx={{ padding: 0 }}>
-          <img
-            src={fsm.cover_page}
-            alt='logo'
-            style={{
-              objectFit: 'cover',
-              borderRadius: '50%',
-              height: 40,
-              width: 40,
-              border: '1px solid #00000099',
-            }}
-          />
-        </IconButton>
+        <span>
+          <IconButton disabled={width !== 'xs'} sx={{ padding: 0 }}>
+            <img
+              src={fsm.cover_page}
+              alt='logo'
+              style={{
+                objectFit: 'cover',
+                borderRadius: '50%',
+                height: 40,
+                width: 40,
+                border: '1px solid #00000099',
+              }}
+            />
+          </IconButton>
+        </span>
       </Tooltip>
       <Typography
         fontSize={20} color={'black'}
