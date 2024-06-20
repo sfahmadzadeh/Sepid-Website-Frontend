@@ -76,7 +76,7 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
             <MenuItem value={'Unsupervised'}>{'بدون همیار'}</MenuItem>
             <MenuItem value={'Supervised'}>{'با همیار'}</MenuItem>
           </Select>
-          <FormHelperText>{'منظور از نوع آموزش، امکان یا عدم امکان کمک همیار/معلم به‌صورت در لحظه در کارگاه است.'}</FormHelperText>
+          <FormHelperText>{'همیار می‌تواند به‌صورت در لحظه به سوالات شرکت‌کنندگان پاسخ دهد و با آن‌ها گفتگو کند.'}</FormHelperText>
         </FormControl>
       </Grid>
       <Grid item xs={12} md={6}>
