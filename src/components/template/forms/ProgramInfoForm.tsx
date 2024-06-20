@@ -59,7 +59,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
           fullWidth
           value={data.description}
           variant='outlined'
-          label={'توضیحات کارگاه'}
+          label={'توضیحات دوره'}
           name='description'
           onChange={putData}
         />
