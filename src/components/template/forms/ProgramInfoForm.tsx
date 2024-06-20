@@ -66,7 +66,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
       </Grid>
       <Grid item xs={12} md={6}>
         <FormControl fullWidth variant="outlined">
-          <InputLabel>وضعیت گروه</InputLabel>
+          <InputLabel>وضعیت دوره</InputLabel>
           <Select
             value={data.program_type}
             onChange={(event) => {
@@ -77,7 +77,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
               }))
             }}
             name='program_type'
-            label='وضعیت گروه'>
+            label='وضعیت دوره'>
             <MenuItem value={'Individual'}>{'انفرادی'}</MenuItem>
             <MenuItem value={'Team'}>{'گروهی'}</MenuItem>
           </Select>

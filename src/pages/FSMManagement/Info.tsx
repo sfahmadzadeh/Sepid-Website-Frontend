@@ -44,7 +44,7 @@ const Info: FC<InfoPropsType> = ({ }) => {
       return;
     }
     if (!properties.fsm_p_type) {
-      toast.error('لطفاً وضعیت گروه کارگاه را انتخاب کنید.');
+      toast.error('لطفاً وضعیت فردی یا گروهی بودن کارگاه را انتخاب کنید.');
       return;
     }
     updateFSM({ fsmId, ...removeBlankAttributes(properties) });

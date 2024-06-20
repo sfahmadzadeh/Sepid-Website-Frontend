@@ -1,6 +1,7 @@
 import {
   FormControl,
   FormControlLabel,
+  FormHelperText,
   Grid,
   InputLabel,
   MenuItem,
@@ -72,44 +73,25 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
             onChange={putData}
             name='fsm_learning_type'
             label='نوع آموزش'>
-            <MenuItem value={'Supervised'}>{'با همیار'}</MenuItem>
             <MenuItem value={'Unsupervised'}>{'بدون همیار'}</MenuItem>
+            <MenuItem value={'Supervised'}>{'با همیار'}</MenuItem>
           </Select>
+          <FormHelperText>{'منظور از نوع آموزش، امکان یا عدم امکان کمک همیار/معلم به‌صورت در لحظه در کارگاه است.'}</FormHelperText>
         </FormControl>
       </Grid>
       <Grid item xs={12} md={6}>
         <FormControl fullWidth variant="outlined">
-          <InputLabel>وضعیت گروه</InputLabel>
+          <InputLabel>وضعیت کارگاه</InputLabel>
           <Select
             value={data.fsm_p_type}
             onChange={putData}
             name='fsm_p_type'
-            label='وضعیت گروه'>
+            label='وضعیت کارگاه'>
             <MenuItem value={'Individual'}>{'فردی'}</MenuItem>
             <MenuItem value={'Team'}>{'گروهی'}</MenuItem>
             {/* <MenuItem value={'Hybrid'}>{'هیبرید'}</MenuItem> */}
           </Select>
         </FormControl>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <FormControlLabel
-          name='is_active'
-          checked={data.is_active}
-          onChange={() => toggleValue('is_active')}
-          control={<Switch color="primary" />}
-          label="فعال بودن ورود به کارگاه:"
-          labelPlacement='start'
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <FormControlLabel
-          name='is_visible'
-          checked={data.is_visible}
-          onChange={() => toggleValue('is_visible')}
-          control={<Switch color="primary" />}
-          label="قابل مشاهده برای شرکت‌کنندگان:"
-          labelPlacement='start'
-        />
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
@@ -130,6 +112,28 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
           label={'رمز ورود'}
           name='lock'
           onChange={putData}
+          helperText={'رمزی که شرکت‌کنندگان برای ورود به کارگاه باید وارد کنند (اختیاری)'}
+        />
+      </Grid>
+
+      <Grid item xs={12} sm={6}>
+        <FormControlLabel
+          name='is_active'
+          checked={data.is_active}
+          onChange={() => toggleValue('is_active')}
+          control={<Switch color="primary" />}
+          label="فعال بودن ورود به کارگاه:"
+          labelPlacement='start'
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <FormControlLabel
+          name='is_visible'
+          checked={data.is_visible}
+          onChange={() => toggleValue('is_visible')}
+          control={<Switch color="primary" />}
+          label="قابل مشاهده برای شرکت‌کنندگان:"
+          labelPlacement='start'
         />
       </Grid>
     </Grid>
