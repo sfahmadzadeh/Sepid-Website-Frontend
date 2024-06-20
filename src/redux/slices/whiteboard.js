@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import undoable, { includeAction, ActionCreators as UndoActionCreators } from 'redux-undo'
 
-import DrawingModes from 'components/Whiteboard/Drawing/DrawingModes'
+import DrawingModes from 'components/organisms/Whiteboard/Drawing/DrawingModes'
 import {
   addWhiteboardNode,
   getWhiteboard,
