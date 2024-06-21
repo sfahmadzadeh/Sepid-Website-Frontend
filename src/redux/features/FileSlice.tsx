@@ -27,13 +27,11 @@ export const FileSlice = ManageContentServiceApi.injectEndpoints({
                 //Set the progress value to show the progress bar
                 const uploadProgress = Math.round((100 * upload.loaded) / upload.total);
                 api.dispatch(setUploadProgress(uploadProgress));
-                if (uploadProgress >= 90) {
-                  setTimeout(() => {
-                    api.dispatch(setUploadProgress(null));
-                  }, 3 * 1000)
-                }
               },
             });
+          setTimeout(() => {
+            api.dispatch(setUploadProgress(null));
+          }, 3 * 1000)
           return { data: result.data }
 
         } catch (axiosError) {
