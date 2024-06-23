@@ -29,11 +29,8 @@ export const FileSlice = ManageContentServiceApi.injectEndpoints({
                 api.dispatch(setUploadProgress(uploadProgress));
               },
             });
-          setTimeout(() => {
-            api.dispatch(setUploadProgress(null));
-          }, 3 * 1000)
+          api.dispatch(setUploadProgress(null));
           return { data: result.data }
-
         } catch (axiosError) {
           let err: any = axiosError;
           return {
