@@ -8,7 +8,7 @@ import {
   Skeleton,
 } from '@mui/material';
 import React, { useEffect, useState, FC } from 'react';
-import RoadMapType1 from 'components/organisms/RoadMap/RoadMapType1';
+import RoadMapType1 from 'components/organisms/Roadmap/RoadMapType1';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
 import {
   getPlayerTransitedPathAction,
