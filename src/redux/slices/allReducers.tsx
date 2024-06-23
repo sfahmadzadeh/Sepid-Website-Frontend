@@ -8,7 +8,6 @@ import { workshopReducer } from './workshop';
 import { articleReducer } from './article';
 import { scoringReducer } from './scoring';
 import { questionReducer } from './Question';
-import { RoadmapReducer } from './Roadmap';
 import { AnswerReducer } from './Answer';
 import { WebsiteReducer } from './Website';
 import { GlobalReducer } from './Global';
@@ -18,7 +17,6 @@ const allReducers = {
   website: WebsiteReducer,
   account: accountReducer,
   currentState: currentStateReducer,
-  Roadmap: RoadmapReducer,
   whiteboard: whiteboardReducer,
   redirect: redirectReducer,
   programs: programsReducer,

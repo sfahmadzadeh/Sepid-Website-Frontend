@@ -172,7 +172,7 @@ const FSM: FC<FSMPagePropsType> = ({
       }
       <StatePageContext.Provider value={{ fsmId, paperId, playerId, teamId, isMentor, myTeam, teamRoom }}>
         <Layout appbarMode={isMentor ? 'MENTOR_FSM' : 'FSM'}>
-          <FSMStateTemplate state={currentState} playerId={parseInt(playerId)} />
+          <FSMStateTemplate state={currentState} playerId={playerId} />
         </Layout>
         {(fsm.fsm_p_type == 'Team' || fsm.fsm_learning_type == 'Supervised') &&
           <DraggableChatRoom open={openChatRoom} handleClose={() => changeOpenChatRoom()} />

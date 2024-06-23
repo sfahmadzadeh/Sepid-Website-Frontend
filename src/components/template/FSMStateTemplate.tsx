@@ -10,7 +10,7 @@ import { FSMStateType } from 'types/models';
 
 type FSMStateTemplatePropsType = {
   state: FSMStateType;
-  playerId: number;
+  playerId: string;
 }
 
 const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state, playerId }) => {
