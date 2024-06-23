@@ -87,10 +87,6 @@ const RoadMapType1: FC<GraphType1PropsType> = ({
     return [nodes, links]
   }
 
-  // check weather inputLinks are updated and are not cached in the redux from previous fsm
-  if (inputLinks.length > 0 && !inputLinks.find(link => link.source === currentNodeId || link.target === currentNodeId)) {
-    return;
-  }
   const [nodes, links] = developGraph([...inputLinks]);
 
   return (
