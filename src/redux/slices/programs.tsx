@@ -291,7 +291,7 @@ export const registerUsersViaCSVAction = createAsyncThunkApi(
   registerUsersViaCSVUrl,
   {
     defaultNotification: {
-      success: 'کاربران با موفقیت ثبت‌نام شدند.',
+      success: 'کاربران در دست ایجاد قرار گرفتند...',
       error: 'اشکالی در ثبت‌نام کردن کاربران وجود داشت.'
     },
   }
