@@ -1,4 +1,4 @@
-import { TextField, InputAdornment, Tooltip, Radio, IconButton } from '@mui/material';
+import { TextField, InputAdornment, Tooltip, Radio, IconButton, Checkbox } from '@mui/material';
 import React, { FC } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ChoiceType } from 'types/widgets';
@@ -8,6 +8,7 @@ type MultiChoiceQuestionChoicePropsType = {
   changeChoiceIsCorrect: any;
   deleteChoice: any;
   changeChoiceText: any;
+  variant: 'checkbox' | 'radio';
 }
 
 const MultiChoiceQuestionChoice: FC<MultiChoiceQuestionChoicePropsType> = ({
@@ -15,26 +16,33 @@ const MultiChoiceQuestionChoice: FC<MultiChoiceQuestionChoicePropsType> = ({
   changeChoiceIsCorrect,
   deleteChoice,
   changeChoiceText,
+  variant,
 }) => {
 
   return (
     <TextField
+      multiline
       InputProps={{
-        sx: { paddingX: 0.5 },
-        startAdornment: <InputAdornment position='start'>
-          <Tooltip title='انتخاب به‌عنوان گزینه صحیح' arrow>
-            <Radio checked={!!choice.is_correct} onClick={changeChoiceIsCorrect} />
-          </Tooltip>
-        </InputAdornment>,
-        endAdornment: <InputAdornment position='end'>
-          <Tooltip title='حذف' arrow>
-            <IconButton onClick={deleteChoice}>
-              <DeleteIcon />
-            </IconButton>
-          </Tooltip>
-        </InputAdornment>
+        startAdornment:
+          <InputAdornment position='start'>
+            <Tooltip title='انتخاب به‌عنوان گزینه صحیح' arrow>
+              {variant === 'radio' ?
+                <Radio size='small' checked={!!choice.is_correct} onClick={changeChoiceIsCorrect} /> :
+                <Checkbox size='small' checked={!!choice.is_correct} onClick={changeChoiceIsCorrect} />
+              }
+            </Tooltip>
+          </InputAdornment>,
+        endAdornment:
+          <InputAdornment position='end'>
+            <Tooltip title='حذف' arrow>
+              <IconButton onClick={deleteChoice}>
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </InputAdornment>
       }}
       fullWidth
+      variant='standard'
       value={choice.text}
       onChange={changeChoiceText}
     />
