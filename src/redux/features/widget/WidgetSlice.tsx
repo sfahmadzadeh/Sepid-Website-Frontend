@@ -31,7 +31,7 @@ export const WidgetSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     updateWidget: builder.mutation<void, UpdateWidgetInputType>({
-      invalidatesTags: (result, error, item) => [{ type: 'widget', id: item.widgetId }],
+      invalidatesTags: (result, error, item) => [{ type: 'paper', id: item.paperId }],
       query: ({ widgetType, widgetId, paperId, ...props }) => ({
         url: `/fsm/widget/${widgetId}/`,
         method: 'PATCH',

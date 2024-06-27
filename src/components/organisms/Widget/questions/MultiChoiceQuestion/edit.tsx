@@ -46,7 +46,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
   maximum_choices_could_be_chosen,
 }) => {
   const t = useTranslate();
-  const [maximumChoicesCouldBeChosen, setMaximumChoicesCouldBeChosen] = useState(maximum_choices_could_be_chosen);
+  const [maximumChoicesCouldBeChosen, setMaximumChoicesCouldBeChosen] = useState(maximum_choices_could_be_chosen || 1);
   const [questionText, setQuestionText] = useState(previousQuestionText);
   const [questionChoices, setQuestionChoices] = useState<ChoiceType[]>(
     previousQuestionChoices ?
@@ -68,7 +68,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
     });
   };
 
-  const changeChoiceText = (newValue, choiceIndex) => {
+  const changeText = (newValue, choiceIndex) => {
     const newChoices = [...questionChoices];
     newChoices[choiceIndex] = {
       ...newChoices[choiceIndex],
@@ -77,7 +77,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
     setQuestionChoices(newChoices);
   };
 
-  const changeChoiceIsCorrect = (choiceIndex: number) => {
+  const changeIsCorrect = (choiceIndex: number) => {
     const newChoices = [...questionChoices];
     newChoices[choiceIndex] = {
       ...newChoices[choiceIndex],
@@ -126,11 +126,11 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
                 <Choice
                   key={index}
                   isSelected={choice.is_correct}
-                  onSelectionChange={() => changeChoiceIsCorrect(index)}
+                  onSelectionChange={() => changeIsCorrect(index)}
                   variant={maximumChoicesCouldBeChosen > 1 ? 'checkbox' : 'radio'}
                   choice={choice}
                   onDelete={() => deleteChoice(index)}
-                  onTextChange={(event) => changeChoiceText(event.target.value, index)}
+                  onTextChange={(event) => changeText(event.target.value, index)}
                   mode={WidgetModes.Edit}
                 />
               ))}
