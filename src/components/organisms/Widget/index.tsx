@@ -7,7 +7,6 @@ import EditHintsDialog from 'components/organisms/dialogs/EditHintsDialog';
 import WidgetHint from 'components/molecules/WidgetHint';
 import useWidgetFactory from './useWidgetFactory';
 import CostDialog from '../dialogs/CostDialog';
-import { useGetWidgetQuery } from 'redux/features/widget/WidgetSlice';
 
 export enum WidgetModes {
   Create,
@@ -51,7 +50,7 @@ type WidgetPropsType = {
 }
 
 const Widget: FC<WidgetPropsType> = ({
-  widget: initialWidgetData,
+  widget,
   mode = WidgetModes.View,
   paperId,
   coveredWithPaper = true,
@@ -63,7 +62,7 @@ const Widget: FC<WidgetPropsType> = ({
   const [showCostDialog, setShowCostDialog] = useState(false);
   const [answerBody, setAnswerBody] = useState({});
 
-  const widgetType = initialWidgetData.widget_type || AnswerType2WidgetType[initialWidgetData.answer_type];
+  const widgetType = widget.widget_type || AnswerType2WidgetType[widget.answer_type];
   const {
     onDelete,
     onMutate,
@@ -73,19 +72,16 @@ const Widget: FC<WidgetPropsType> = ({
     EditWidgetDialog,
     skipFetch,
   } = useWidgetFactory({
-    widgetId: initialWidgetData.id,
+    widgetId: widget.id,
     paperId,
     widgetType,
     mode,
     collectAnswerData,
   });
-  const { data: updatedWidgetData } = useGetWidgetQuery({ widgetId: initialWidgetData.id }, { skip: skipFetch });
 
-  const widgetData = updatedWidgetData || initialWidgetData;
-
-  const beCorrected = widgetData.be_corrected;
-  const cost = widgetData.cost;
-  const reward = widgetData.reward;
+  const beCorrected = widget.be_corrected;
+  const cost = widget.cost;
+  const reward = widget.reward;
 
   const onSubmit = () => {
     onAnswerSubmit({ ...answerBody, onSuccess: () => setShowCostDialog(showCostDialog => !showCostDialog) });
@@ -116,7 +112,7 @@ const Widget: FC<WidgetPropsType> = ({
             <Stack>
               <Stack direction='row' alignItems='center' justifyContent='space-between'>
                 <Typography variant='h3' gutterBottom>
-                  {widgetData.name}
+                  {widget.name}
                 </Typography>
                 <Box>
                   <Tooltip title='راهنمایی‌ها' arrow>
@@ -140,30 +136,30 @@ const Widget: FC<WidgetPropsType> = ({
                 <Divider />
               </Box>
               <EditWidgetDialog
-                {...widgetData}
+                {...widget}
                 paperId={paperId}
                 open={openEditDialog}
                 handleClose={() => setOpenEditDialog(false)}
                 onMutate={onMutate}
               />
               <DeleteWidgetDialog
-                widgetId={widgetData.id}
+                widgetId={widget.id}
                 open={openDeleteWidgetDialog}
                 handleClose={() => setOpenDeleteWidgetDialog(false)}
                 onDelete={onDelete}
               />
               <EditHintsDialog
                 paperId={paperId}
-                hints={widgetData.hints}
-                referenceId={widgetData.id}
+                hints={widget.hints}
+                referenceId={widget.id}
                 open={openEditHintDialog}
                 handleClose={() => setEditHintDialog(false)}
               />
             </Stack>
           }
-          {(mode === WidgetModes.View && widgetData?.hints?.length) ? <WidgetHint hints={widgetData.hints} /> : null}
+          {(mode === WidgetModes.View && widget?.hints?.length) ? <WidgetHint hints={widget.hints} /> : null}
         </Stack>
-        <WidgetComponent {...widgetData} mode={mode} onAnswerSubmit={onAnswerSubmitWrapper || onAnswerSubmit} onAnswerChange={onAnswerChange} />
+        <WidgetComponent {...widget} mode={mode} onAnswerSubmit={onAnswerSubmitWrapper || onAnswerSubmit} onAnswerChange={onAnswerChange} />
       </Cover>
       {cost &&
         <CostDialog cost={cost} callBackFunction={onSubmit} open={showCostDialog} handleClose={() => setShowCostDialog(showCostDialog => !showCostDialog)} />
