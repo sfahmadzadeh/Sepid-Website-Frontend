@@ -30,7 +30,7 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
   const [isButtonDisabled, setButtonDisable] = useState(false);
 
   const onChangeWrapper = (val: string) => {
-    if (mode === WidgetModes.InAnswerSheet) {
+    if (mode === WidgetModes.InForm) {
       onAnswerChange({ text: val });
     };
     setAnswer(val);
@@ -54,7 +54,7 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
         }}
         content={text}
       />
-      {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
+      {(mode === WidgetModes.View || mode === WidgetModes.InForm) &&
         <TinyEditorComponent
           content={answer}
           onChange={onChangeWrapper}

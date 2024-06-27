@@ -39,7 +39,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
   const [hasAnsweredCorrectly, setHasAnsweredCorrectly] = useState(false);
 
   const changeText = (e) => {
-    if (mode === WidgetModes.InAnswerSheet) {
+    if (mode === WidgetModes.InForm) {
       onAnswerChange({ text: e.target.value });
     }
     setAnswer(e.target.value);
@@ -78,7 +78,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
           justifyContent='flex-start'
           alignItems='stretch'
           spacing={1}>
-          {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
+          {(mode === WidgetModes.View || mode === WidgetModes.InForm) &&
             <Fragment>
               <TextField
                 fullWidth

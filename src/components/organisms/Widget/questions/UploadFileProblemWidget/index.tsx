@@ -84,7 +84,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
     <Stack alignItems='center' justifyContent='space-between' direction='row' spacing={1}>
       <Typography>{text}</Typography>
       <Stack justifyContent='flex-end' spacing={1}>
-        {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
+        {(mode === WidgetModes.View || mode === WidgetModes.InForm) &&
           <Fragment>
             <Button
               component="label"

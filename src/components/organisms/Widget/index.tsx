@@ -14,7 +14,7 @@ export enum WidgetModes {
   View,
   Edit,
   Review,
-  InAnswerSheet,
+  InForm,
 };
 
 export enum WidgetTypes {

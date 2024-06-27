@@ -85,7 +85,7 @@ const InviteeUsername: FC<InviteeUsernamePropsType> = ({
         justifyContent='flex-start'
         alignItems="stretch"
         spacing={1}>
-        {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
+        {(mode === WidgetModes.View || mode === WidgetModes.InForm) &&
           <Fragment>
             <TextField
               InputProps={{
