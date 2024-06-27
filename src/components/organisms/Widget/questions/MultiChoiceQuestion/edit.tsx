@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
@@ -19,8 +18,9 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 import { toPersianNumber } from 'utils/translateNumber';
 import { ChoiceType } from 'types/widgets';
-import MultiChoiceQuestionChoice from 'components/molecules/MultiChoiceQuestionChoice';
+import Choice from 'components/molecules/Choice';
 import { toast } from 'react-toastify';
+import { WidgetModes } from '../..';
 
 type MultiChoiceQuestionEditWidgetPropsType = {
   onMutate: any;
@@ -81,7 +81,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
     const newChoices = [...questionChoices];
     newChoices[choiceIndex] = {
       ...newChoices[choiceIndex],
-      is_correct: newChoices[choiceIndex].is_correct ? false : true
+      is_correct: !newChoices[choiceIndex].is_correct,
     };
     setQuestionChoices(newChoices);
   }
@@ -111,7 +111,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
       disableEnforceFocus>
       <DialogTitle>{t('multipleChoiceQuestions')}</DialogTitle>
       <DialogContent>
-        <Stack spacing={2}>
+        <Stack spacing={4}>
           <Stack>
             <label>{'صورت سوال:'}</label>
             <TinyEditorComponent content={questionText} onChange={(val) => setQuestionText(val)} />
@@ -123,13 +123,15 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
             </Typography>
             <Stack spacing={2}>
               {questionChoices.map((choice, index) => (
-                <MultiChoiceQuestionChoice
-                  variant={maximumChoicesCouldBeChosen > 1 ? 'checkbox' : 'radio'}
+                <Choice
                   key={index}
+                  isSelected={choice.is_correct}
+                  onSelectionChange={() => changeChoiceIsCorrect(index)}
+                  variant={maximumChoicesCouldBeChosen > 1 ? 'checkbox' : 'radio'}
                   choice={choice}
-                  changeChoiceIsCorrect={() => changeChoiceIsCorrect(index)}
-                  deleteChoice={() => deleteChoice(index)}
-                  changeChoiceText={(event) => changeChoiceText(event.target.value, index)}
+                  onDelete={() => deleteChoice(index)}
+                  onTextChange={(event) => changeChoiceText(event.target.value, index)}
+                  mode={WidgetModes.Edit}
                 />
               ))}
             </Stack>
@@ -139,7 +141,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
           </Stack>
 
           <TextField
-            label='حداکثر تعداد گزینه‌های انتخابی'
+            label='حداکثر تعداد گزینه‌هایی که کاربر بتواند انتخاب کند'
             variant='outlined'
             fullWidth
             onChange={(event) => {

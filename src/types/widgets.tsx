@@ -1,3 +1,5 @@
+export type ChoiceVariantType = 'checkbox' | 'radio';
+
 export type ChoiceType = {
   id?: number;
   text: string;
