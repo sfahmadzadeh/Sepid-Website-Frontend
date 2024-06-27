@@ -29,7 +29,12 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
   mode,
   maximum_choices_could_be_chosen: maximumChoicesCouldBeChosen,
 }) => {
-  const [selectedChoices, setSelectedChoices] = useState<any[]>([]);
+  const [selectedChoices, _setSelectedChoices] = useState<any[]>([]);
+
+  const setSelectedChoices = (newSelectedChoices) => {
+    onAnswerChange({ choices: newSelectedChoices });
+    _setSelectedChoices(newSelectedChoices);
+  }
 
   const onChoiceSelect = (choice) => {
     if (mode === WidgetModes.Edit) return;
