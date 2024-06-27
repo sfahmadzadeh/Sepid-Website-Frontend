@@ -65,7 +65,7 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
   }
 
   return (
-    <Stack spacing={1} alignItems='end'>
+    <Stack spacing={1}>
       <TinyPreview
         frameProps={{
           frameBorder: '0',
@@ -88,7 +88,7 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
       </Stack>
       {mode === WidgetModes.View && maximumChoicesCouldBeChosen > 1 && selectedChoices.length > 0 &&
         <Button
-          sx={{ width: 80 }}
+          sx={{ width: 80, alignSelf: 'end' }}
           variant='contained'
           onClick={() => submitAnswer(selectedChoices)}>
           <Typography fontWeight={400}>
