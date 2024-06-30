@@ -70,7 +70,6 @@ export type RegistrationStepNameType =
 export type WebsiteType = {
   website_type: 'academy';
   name: string;
-  is_admin: boolean;
   display_name: string;
   logo: LogoType;
   appbar: { body: BackendAppbarType };

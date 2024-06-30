@@ -47,8 +47,8 @@ export const WidgetSlice = ManageContentServiceApi.injectEndpoints({
     getWidget: builder.query<GetWidgetOutputType, { widgetId: string }>({
       providesTags: (result, error, item) => [{ type: 'widget', id: item.widgetId }],
       query: ({ widgetId }) => `fsm/widget/${widgetId}/`,
-      transformResponse: (respons: any): GetWidgetOutputType => {
-        return respons;
+      transformResponse: (response: any): GetWidgetOutputType => {
+        return response;
       },
     }),
 

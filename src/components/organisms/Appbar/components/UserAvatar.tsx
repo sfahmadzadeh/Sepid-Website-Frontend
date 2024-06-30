@@ -1,13 +1,13 @@
-import { Avatar, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from '@mui/material';
+import { Avatar, IconButton, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { stringToColor } from 'utils/stringToColor';
 import { logoutAction } from 'redux/slices/account';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
+import { useGetPermissionQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 type UserAvatarPropsType = {
   name: string;
@@ -28,6 +28,7 @@ const UserAvatar = ({ name = 'بی‌نام', logout }: UserAvatarPropsType) => 
   };
 
   const { data: website } = useGetWebsiteQuery();
+  const { data: websitePermissions } = useGetPermissionQuery({ websiteName: website.name }, { skip: !website?.name });
 
   return (
     <Fragment>
@@ -60,7 +61,7 @@ const UserAvatar = ({ name = 'بی‌نام', logout }: UserAvatarPropsType) => 
             </Typography>
           </Stack>
         </MenuItem>
-        {website?.is_admin &&
+        {websitePermissions?.isAdmin &&
           <MenuItem onClick={() => navigate(`/website/${website.name}/manage/`)}>
             <Stack direction='row' spacing={1} alignItems={'center'}>
               <SettingsIcon />
