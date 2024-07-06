@@ -70,7 +70,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
 
     getPrograms: builder.query<GetProgramsOutputType, GetProgramsInputType>({
       providesTags: ['programs'],
-      query: ({ websiteName, pageNumber = 1, isPrivate }) => `fsm/program/?website=${websiteName}&page=${pageNumber}${isPrivate != null ? `&is_private=${isPrivate}` : ''}`,
+      query: ({ websiteName, pageNumber = 1, isPrivate }) => `fsm/program/?website=${websiteName}&page=${pageNumber}`,
       transformResponse: (respons: any): GetProgramsOutputType => {
         return {
           programs: respons.results,

@@ -76,7 +76,7 @@ export const FSMSlice = ManageContentServiceApi.injectEndpoints({
 
     getFSMs: builder.query<GetFSMsOutputType, GetFSMsInputType>({
       providesTags: ['fsms'],
-      query: ({ programId, pageNumber = 1, isPrivate }) => `fsm/fsm/?program=${programId}&page=${pageNumber}${isPrivate != null ? `&is_private=${isPrivate}` : ''}`,
+      query: ({ programId, pageNumber = 1, isPrivate }) => `fsm/fsm/?program=${programId}&page=${pageNumber}`,
       transformResponse: (response: any): GetFSMsOutputType => {
         return {
           fsms: response.results,

@@ -15,7 +15,7 @@ type GetArticlesOutputType = {
 export const ArticleSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getArticles: builder.query<GetArticlesOutputType, GetArticlesInputType>({
-      query: ({ websiteName, pageNumber }) => `fsm/article/?website=${websiteName}&page=${pageNumber}&is_private=False`,
+      query: ({ websiteName, pageNumber }) => `fsm/article/?website=${websiteName}&page=${pageNumber}`,
       transformResponse: (respons: any): GetArticlesOutputType => {
         return {
           count: respons.count,
