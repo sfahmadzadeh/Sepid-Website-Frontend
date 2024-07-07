@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import ResetPassword from 'pages/ResetPassword';
 import CreateAccount from 'pages/CreateAccount';
@@ -29,7 +29,7 @@ const Root = () => {
   return (
     <Routes>
 
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Navigate to={'/programs/'} />} />
       <Route path="/login/" element={<Login />} />
       <Route path="/reset-password/" element={<ResetPassword />} />
       <Route path="/create-account/" element={<CreateAccount />} />
