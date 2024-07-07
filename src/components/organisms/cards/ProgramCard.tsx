@@ -106,7 +106,13 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
                 </Tooltip>
               </Stack>
 
-              <Typography textAlign={'start'} variant="body2" color="textSecondary">
+              <Typography
+                sx={{
+                  whiteSpace: 'normal',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+                textAlign={'start'} variant="body2" color="textSecondary">
                 {program.description}
               </Typography>
 
