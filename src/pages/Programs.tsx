@@ -13,11 +13,11 @@ const Programs = ({ }) => {
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
   const {
-    data,
+    data: programsData,
     isLoading,
     isSuccess,
-  } = useGetProgramsQuery({ websiteName: website?.name, isPrivate: false }, { skip: !Boolean(website) });
-  const programs = data?.programs.filter(program => program.is_visible) || [];
+  } = useGetProgramsQuery({ websiteName: website?.name }, { skip: !Boolean(website) });
+  const programs = programsData?.programs.filter(program => program.is_visible) || [];
   const visiblePrograms = programs.filter(program => program.is_visible)
 
   const activePrograms: ProgramType[] = visiblePrograms.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)

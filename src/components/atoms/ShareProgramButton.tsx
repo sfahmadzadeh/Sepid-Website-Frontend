@@ -14,7 +14,7 @@ const ShareProgramButton: FC<ShareProgramButtonPropsType> = ({
 
   function copyToClipboard() {
     navigator.clipboard.writeText(
-      `${window.location.origin}/?program=${programId}`
+      `${window.location.origin}/program/${programId}/`
     ).then(function () {
       toast.success('لینک اشتراک دوره با موفقیت کپی شد');
     }, function (err) {

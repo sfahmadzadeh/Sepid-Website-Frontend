@@ -4,7 +4,6 @@ import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 type GetProgramsInputType = {
   websiteName: string | undefined;
   pageNumber?: number;
-  isPrivate?: boolean;
 }
 
 type GetProgramsOutputType = {
@@ -36,7 +35,18 @@ type CreateProgramOutputType = {
 
 }
 
+type GetProgramPermissionInputType = {
+  programId: string;
+}
 
+type GetProgramPermissionOutputType = any;
+
+type GetProgramsPermissionsInputType = {
+  websiteName: string;
+  pageNumber: number;
+}
+
+type GetProgramsPermissionsOutputType = any;
 
 export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
@@ -70,7 +80,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
 
     getPrograms: builder.query<GetProgramsOutputType, GetProgramsInputType>({
       providesTags: ['programs'],
-      query: ({ websiteName, pageNumber = 1, isPrivate }) => `fsm/program/?website=${websiteName}&page=${pageNumber}`,
+      query: ({ websiteName, pageNumber = 1 }) => `fsm/program/?website=${websiteName}&page=${pageNumber}`,
       transformResponse: (respons: any): GetProgramsOutputType => {
         return {
           programs: respons.results,
@@ -91,6 +101,22 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
       invalidatesTags: ['programs'],
       query: ({ programId }) => `fsm/program/${programId}/soft_remove_program/`
     }),
+
+    getProgramPermission: builder.query<GetProgramPermissionOutputType, GetProgramPermissionInputType>({
+      providesTags: ['program'],
+      query: ({ programId }) => `fsm/program/${programId}/permission/`,
+      transformResponse: (respons: any): GetProgramPermissionOutputType => {
+        return respons;
+      },
+    }),
+
+    getProgramsPermissions: builder.query<GetProgramsPermissionsOutputType, GetProgramsPermissionsInputType>({
+      providesTags: ['programs'],
+      query: ({ websiteName, pageNumber }) => `fsm/program/permissions/?website=${websiteName}&page=${pageNumber}`,
+      transformResponse: (respons: any): GetProgramsPermissionsOutputType => {
+        return respons;
+      },
+    }),
   })
 });
 
@@ -100,4 +126,6 @@ export const {
   useUpdateProgramMutation,
   useCreateProgramMutation,
   useSoftDeleteProgramMutation,
+  useGetProgramPermissionQuery,
+  useGetProgramsPermissionsQuery,
 } = ProgramSlice;

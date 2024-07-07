@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GoogleLogin from 'components/molecules/GoogleLogin';
 import { useLoginMutation } from 'redux/features/UserSlice';
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
@@ -23,22 +23,19 @@ const LoginPage: FC<LoginPagePropsType> = ({
   accessToken,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState({
     password: '',
     username: '',
   });
   const { data: website } = useGetWebsiteQuery();
-  const urlParams = new URLSearchParams(window.location.search);
-  const programId = urlParams.get('program');
   const [login, result] = useLoginMutation();
 
   useEffect(() => {
     if (accessToken) {
-      if (programId) {
-        navigate(`/program/${programId}/`);
-      } else {
-        navigate('/programs/');
-      }
+      const previousLocation = location.state?.from?.pathname
+      const destinationLocation = previousLocation || '/programs/';
+      navigate(destinationLocation, { replace: true });
     }
   }, [accessToken])
 

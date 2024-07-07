@@ -36,9 +36,9 @@ const Root = () => {
       <Route path="/articles/" element={<Articles />} />
       <Route path="/article/:articleId/" element={<Article />} />
       <Route path="/profile/:partyName?/" element={<PartyProfile />} />
+      <Route path="/programs/" element={<Programs />} />
 
       <Route path="/" element={<PrivateRoute />}>
-
         <Route path="/edit-article/:articleId/" element={<EditArticle />} />
         <Route
           path="/message/payment/success/:paymentId?/"
@@ -50,7 +50,6 @@ const Root = () => {
         />
         <Route path="/registration-receipt/:registrationReceiptId/" element={<RegistrationReceipt />} />
         <Route path="/user-profile/:section?/" element={<UserProfile />} />
-        <Route path="/programs/" element={<Programs />} />
         <Route path="/articles/" element={<Articles />} />
         <Route path="/program/:programId/fsm/:fsmId/" element={<Workshop />} />
         <Route path="/program/:programId/user-profile/:section?/" element={<UserProfile />} />

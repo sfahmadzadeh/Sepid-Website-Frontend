@@ -13,6 +13,7 @@ export type ProgramContactInfoType = {
 }
 
 export type ProgramType = {
+  is_free: boolean;
   site_help_paper_id: number;
   FAQs_paper_id: number;
   is_manager: boolean;
