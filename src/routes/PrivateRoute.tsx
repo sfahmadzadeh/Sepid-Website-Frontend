@@ -6,7 +6,7 @@ const PrivateRoute = ({ accessToken }) => {
   const location = useLocation();
 
   if (!accessToken) {
-    return <Navigate state={{ from: location }} to={'/'} />
+    return <Navigate state={{ from: location }} to={'/login/'} />
   }
   return <Outlet />
 };
