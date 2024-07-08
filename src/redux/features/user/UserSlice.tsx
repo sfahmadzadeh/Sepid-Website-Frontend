@@ -1,4 +1,4 @@
-import { ManageContentServiceApi } from './ManageContentServiceApiSlice';
+import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type LoginGoogleUserInputType = {
   first_name: string;
@@ -45,6 +45,13 @@ type LoginOutputType = {
 
 export const UserSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
+    checkAuthentication: builder.query<void, void>({
+      query: () => ({
+        url: 'auth/accounts/check-authentication/',
+        method: 'GET',
+      }),
+    }),
+
     getGoogleUserProfile: builder.query<GetGoogleUserProfileOutput, GetGoogleUserProfileInput>({
       query: (body) => ({
         url: `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${body.accessToken}`,
@@ -89,6 +96,7 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
 });
 
 export const {
+  useCheckAuthenticationQuery,
   useGetGoogleUserProfileQuery,
   useLoginGoogleUserMutation,
   useChangePhoneNumberMutation,

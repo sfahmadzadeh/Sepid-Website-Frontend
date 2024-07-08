@@ -9,7 +9,7 @@ import VerifyPhoneNumber from 'components/molecules/VerifyPhoneNumber';
 import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useChangePhoneNumberMutation } from 'redux/features/UserSlice';
+import { useChangePhoneNumberMutation } from 'redux/features/user/UserSlice';
 
 type ChangePhoneNumberDialogPropsType = {
   open: boolean;

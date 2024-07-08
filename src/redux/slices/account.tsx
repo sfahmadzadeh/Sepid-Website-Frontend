@@ -11,7 +11,7 @@ import {
   studentshipCRUDUrl,
   verificationCodeUrl,
 } from '../constants/urls';
-import { UserSlice } from 'redux/features/UserSlice';
+import { UserSlice } from 'redux/features/user/UserSlice';
 
 export const createAccountAction = createAsyncThunkApi(
   'account/createAccountAction',

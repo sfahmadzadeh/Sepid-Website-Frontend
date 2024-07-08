@@ -10,7 +10,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GoogleLogin from 'components/molecules/GoogleLogin';
-import { useLoginMutation } from 'redux/features/UserSlice';
+import { useLoginMutation } from 'redux/features/user/UserSlice';
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 type LoginPagePropsType = {

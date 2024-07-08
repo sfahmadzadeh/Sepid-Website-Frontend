@@ -22,6 +22,7 @@ import LinearLoading from 'components/atoms/LinearLoading';
 import { useGetThirdPartiesQuery } from 'redux/features/ThirdPartySlice';
 import { initSupportingThirdPartyApps } from 'configs/SupportingThirdPartyApps';
 import { ConfettiContainer } from 'components/molecules/confetti';
+import { useCheckAuthenticationQuery } from 'redux/features/user/UserSlice';
 
 const App = ({
   dir,
@@ -31,20 +32,21 @@ const App = ({
   accessToken,
 }) => {
   const navigate = useNavigate();
-
+  // check token expiration:
+  useCheckAuthenticationQuery(null, { skip: !accessToken });
   const { data: website, refetch } = useGetWebsiteQuery();
   const { data: websiteMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
-  const { data: thridPartiesTokens } = useGetThirdPartiesQuery({ partyName: website?.name }, { skip: !Boolean(website) })
+  const { data: thirdPartiesTokens } = useGetThirdPartiesQuery({ partyName: website?.name }, { skip: !Boolean(website) })
 
   useEffect(() => {
     refetch();
   }, [accessToken])
 
   useEffect(() => {
-    if (thridPartiesTokens) {
-      initSupportingThirdPartyApps(thridPartiesTokens);
+    if (thirdPartiesTokens) {
+      initSupportingThirdPartyApps(thirdPartiesTokens);
     }
-  }, [thridPartiesTokens])
+  }, [thirdPartiesTokens])
 
   useEffect(() => {
     if (redirectTo !== null) {
