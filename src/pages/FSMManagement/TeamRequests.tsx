@@ -11,8 +11,8 @@ import {
   removeRequestMentorAction,
 } from 'redux/slices/programs';
 
-import { Team } from "types/models";
 import TeamsTab from './TeamsTab';
+import { TeamType } from 'types/models';
 
 const Teams: FC<TeamPropsType> = ({
   teamsRequests,
@@ -190,7 +190,7 @@ function a11yProps(index: number) {
 
 type TeamPropsType = {
   teamsRequests: string[],
-  programTeams: Team[],
+  programTeams: TeamType[],
   getRequestMentor: Function,
   createRequestMentor: Function,
   removeRequestMentor: Function,

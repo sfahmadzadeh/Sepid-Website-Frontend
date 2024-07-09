@@ -14,6 +14,7 @@ import ProgramPageDashboardButton from 'components/molecules/ProgramPageDashboar
 import ProgramContactInfo from 'components/molecules/ProgramContactInfo';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import ShareProgramButton from 'components/atoms/ShareProgramButton';
+import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 
 type ProgramPageSidebarPropsType = {
   getCertificate: any;
@@ -25,11 +26,12 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
   const { programId } = useParams();
   const navigate = useNavigate();
   const { data: program } = useGetProgramQuery({ programId });
+  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
 
   if (!program) return null;
 
   const doGetCertificate = () => {
-    getCertificate({ registrationReceiptId: program.registration_receipt }).then((action) => {
+    getCertificate({ receiptId: registrationReceipt.id }).then((action) => {
       if (action.meta.requestStatus === 'fulfilled') {
         downloadFile(action.payload.response.certificate, `گواهی حضور ${program.name}`, 'image/jpeg');
       }

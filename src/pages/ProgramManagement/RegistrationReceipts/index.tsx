@@ -71,7 +71,7 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
             id: registrationReceipt.id,
             name:
               <Button
-                href={`/registration-receipt/${registrationReceipt.id}/`}
+                href={`/receipt/${registrationReceipt.id}/`}
                 component="a" target="_blank">
                 {(registrationReceipt.user.first_name && registrationReceipt.user.last_name) ? `${registrationReceipt.user.first_name} ${registrationReceipt.user.last_name}` : 'بی‌نام'}
               </Button>,

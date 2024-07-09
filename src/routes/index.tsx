@@ -48,13 +48,13 @@ const Root = () => {
           path="/message/payment/failure/:paymentId?/"
           element={<FailedPayment />}
         />
-        <Route path="/registration-receipt/:registrationReceiptId/" element={<RegistrationReceipt />} />
+        <Route path="/receipt/:receiptId/" element={<RegistrationReceipt />} />
         <Route path="/user-profile/:section?/" element={<UserProfile />} />
         <Route path="/articles/" element={<Articles />} />
         <Route path="/program/:programId/fsm/:fsmId/" element={<Workshop />} />
         <Route path="/program/:programId/user-profile/:section?/" element={<UserProfile />} />
         <Route
-          path="/program/:programId/registration/"
+          path="/program/:programId/form/"
           element={<Registration />}
         />
         <Route

@@ -33,31 +33,18 @@ export type ProgramType = {
   id: number;
   is_active: boolean;
   is_approved: boolean;
-  is_paid: boolean;
   is_user_participating: boolean;
   maximum_participant: number | null;
   merchandise: Merchandise | null;
   name: string;
   participants_count: number;
-  registration_form: number;
-  registration_receipt: string | null;
+  registration_form: string;
   registration_since: string | null;
   registration_till: string | null;
   start_date: string | null;
   team_size: number;
-  user_registration_status:
-  'Waiting' |
-  'Rejected' |
-  'Accepted' |
-  'DeadlineMissed' |
-  'NotPermitted' |
-  'NotRegistered' |
-  'NotStarted' |
-  'GradeNotAvailable' |
-  'StudentshipDataIncomplete';
 }
 
-export type RegistrationStatusType = 'Accepted' | 'Rejected' | 'Waiting';
 export type AnswerSheetType = 'RegistrationReceipt' | 'StateAnswerSheet';
 
 export type Invitation = any
@@ -73,19 +60,29 @@ export type TeamType = {
 export type AnswerType = any;
 
 export type RegistrationReceiptType = {
+  profile_picture: string;
   id: number;
+  is_paid: boolean;
   user: UserInfoType;
   school_studentship: SchoolStudentshipType;
   is_participating: boolean;
-  status: RegistrationStatusType;
   answer_sheet_type: AnswerSheetType;
   certificate: CertificateType;
   team: TeamType;
   answers: AnswerType[];
+  status:
+  'Waiting' |
+  'Rejected' |
+  'Accepted' |
+  'DeadlineMissed' |
+  'NotPermitted' |
+  'NotRegistered' |
+  'NotStarted' |
+  'GradeNotAvailable' |
+  'StudentshipDataIncomplete';
 }
 
 export type Widget = any
-export type Team = any
 export type Request = any
 
 type PaperType = 'RegistrationForm';

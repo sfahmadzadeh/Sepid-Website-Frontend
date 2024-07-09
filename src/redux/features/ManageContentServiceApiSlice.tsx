@@ -20,6 +20,7 @@ export const ManageContentServiceApi = createApi({
     'article',
     'form',
     'forms',
+    'receipt',
     'player',
   ],
   baseQuery: CustomBaseQuery({ baseUrl: MCS_URL + 'api/' }),

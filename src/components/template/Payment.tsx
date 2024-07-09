@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import {
   applyDiscountCodeAction,
-  getOneRegistrationFormAction,
   purchaseProgramAction,
   submitRegistrationFormAction,
 } from 'redux/slices/programs';
@@ -124,7 +123,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  getOneRegistrationForm: getOneRegistrationFormAction,
   purchaseProgram: purchaseProgramAction,
   submitRegistrationForm: submitRegistrationFormAction,
   applyDiscountCode: applyDiscountCodeAction,

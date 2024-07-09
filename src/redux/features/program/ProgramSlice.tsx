@@ -81,10 +81,10 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
     getPrograms: builder.query<GetProgramsOutputType, GetProgramsInputType>({
       providesTags: ['programs'],
       query: ({ websiteName, pageNumber = 1 }) => `fsm/program/?website=${websiteName}&page=${pageNumber}`,
-      transformResponse: (respons: any): GetProgramsOutputType => {
+      transformResponse: (response: any): GetProgramsOutputType => {
         return {
-          programs: respons.results,
-          count: respons.count,
+          programs: response.results,
+          count: response.count,
         };
       },
     }),
@@ -92,8 +92,8 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
     getProgram: builder.query<GetProgramOutputType, GetProgramInputType>({
       providesTags: ['program'],
       query: ({ programId }) => `fsm/program/${programId}/`,
-      transformResponse: (respons: any): GetProgramOutputType => {
-        return respons;
+      transformResponse: (response: any): GetProgramOutputType => {
+        return response;
       },
     }),
 
@@ -105,16 +105,16 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
     getProgramPermission: builder.query<GetProgramPermissionOutputType, GetProgramPermissionInputType>({
       providesTags: ['program'],
       query: ({ programId }) => `fsm/program/${programId}/permission/`,
-      transformResponse: (respons: any): GetProgramPermissionOutputType => {
-        return respons;
+      transformResponse: (response: any): GetProgramPermissionOutputType => {
+        return response;
       },
     }),
 
     getProgramsPermissions: builder.query<GetProgramsPermissionsOutputType, GetProgramsPermissionsInputType>({
       providesTags: ['programs'],
       query: ({ websiteName, pageNumber }) => `fsm/program/permissions/?website=${websiteName}&page=${pageNumber}`,
-      transformResponse: (respons: any): GetProgramsPermissionsOutputType => {
-        return respons;
+      transformResponse: (response: any): GetProgramsPermissionsOutputType => {
+        return response;
       },
     }),
   })

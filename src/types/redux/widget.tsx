@@ -1,5 +1,5 @@
 import {
-  Team,
+  TeamType,
   Article,
   Problem,
   Submission,
@@ -12,7 +12,7 @@ export type InitialStateType = {
   isFetching: boolean,
   workshops: FSMType[],
   articles: Article[],
-  teams: Team[],
+  teams: TeamType[],
   problems: Problem[],
   submissions: Submission[],
   widgets: object,

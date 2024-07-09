@@ -8,17 +8,13 @@ import {
   getProgramsUrl,
   getAllUserMerchandisesUrl,
   getCertificateUrl,
-  getProgramRegistrationInfoUrl,
   getMyInvitationsUrl,
-  getOneRegistrationFormUrl,
   getTeamInvitationsUrl,
   getTeamUrl,
   registerOneUserUrl,
-  getWorkshopsUrl,
   inviteSomeoneUrl,
   paymentRequestUrl,
   purchaseProgramUrl,
-  registrationReceiptUrl,
   respondInvitationUrl,
   submitDiscountCodeUrl,
   submitRegistrationFormUrl,
@@ -70,12 +66,6 @@ export const getProgramsAction = createAsyncThunkApi(
   getProgramsUrl
 );
 
-export const getOneRegistrationFormAction = createAsyncThunkApi(
-  'programs/getOneRegistrationFormAction',
-  Apis.GET,
-  getOneRegistrationFormUrl
-);
-
 export const submitRegistrationFormAction = createAsyncThunkApi(
   'programs/submitRegistrationFormAction',
   Apis.POST,
@@ -122,13 +112,6 @@ export const purchaseProgramAction = createAsyncThunkApi(
     },
   }
 );
-
-export const getOneRegistrationReceiptAction = createAsyncThunkApi(
-  'programs/getOneRegistrationReceiptAction',
-  Apis.GET,
-  registrationReceiptUrl
-);
-
 
 export const getTeamAction = createAsyncThunkApi(
   'programs/getTeamAction',
@@ -234,17 +217,6 @@ export const deleteTeamAction = createAsyncThunkApi(
   }
 );
 
-export const getProgramRegistrationInfoAction = createAsyncThunkApi(
-  'programs/getProgramRegistrationInfo',
-  Apis.POST,
-  getProgramRegistrationInfoUrl,
-  {
-    bodyCreator: ({ programId, memberUuid }) => ({
-      program_id: programId,
-      member_uuid: memberUuid,
-    }),
-  }
-);
 
 export const paymentRequestAction = createAsyncThunkApi(
   'programs/paymentRequest',
@@ -475,13 +447,7 @@ const programSlice = createSlice({
     },
     [getProgramsAction.rejected.toString()]: isNotFetching,
 
-    [getOneRegistrationFormAction.pending.toString()]: isFetching,
-    [getOneRegistrationFormAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.registrationForm = response;
-      state.isFetching = false;
-    },
-    [getOneRegistrationFormAction.rejected.toString()]: isNotFetching,
-
+    
     [getOneMerchandiseAction.pending.toString()]: isFetching,
     [getOneMerchandiseAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.merchandise = response;
@@ -667,15 +633,7 @@ const programSlice = createSlice({
       state.isFetching = false;
     },
     [addUserToTeamAction.rejected.toString()]: isNotFetching,
-
-
-    [getOneRegistrationReceiptAction.pending.toString()]: isFetching,
-    [getOneRegistrationReceiptAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.registrationReceipt = response;
-      state.isFetching = false;
-    },
-    [getOneRegistrationReceiptAction.rejected.toString()]: isNotFetching,
-
+    
 
     [registerUsersViaCSVAction.pending.toString()]: isFetching,
     [registerUsersViaCSVAction.fulfilled.toString()]: isNotFetching,

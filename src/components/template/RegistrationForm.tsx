@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
 import {
-  getOneRegistrationFormAction,
   submitRegistrationFormAction,
 } from 'redux/slices/programs';
 import ProgramInfo from 'components/organisms/ProgramInfo';
@@ -13,17 +12,17 @@ import { RegistrationFormType } from 'types/models';
 import useCollectWidgetsAnswers from 'components/hooks/useCollectWidgetsAnswers';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import Paper from './Paper';
+import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
+import { useGetFormQuery } from 'redux/features/form/FormSlice';
 
 
 type RegistrationFormPropsType = {
-  registrationForm: RegistrationFormType;
   submitRegistrationForm: any;
   onSuccess?: any;
   onFailure?: any;
 }
 
 const RegistrationForm: FC<RegistrationFormPropsType> = ({
-  registrationForm,
   submitRegistrationForm,
   onSuccess,
   onFailure,
@@ -32,6 +31,8 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   const [isDialogOpen, setDialogStatus] = useState(false);
   const { answers } = useCollectWidgetsAnswers([]);
   const { data: program } = useGetProgramQuery({ programId });
+  const { data: registrationForm } = useGetFormQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
+  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program.registration_form });
 
   const submit = () => {
     submitRegistrationForm({
@@ -46,20 +47,20 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   const isSubmitButtonDisabled = (): { isDisabled: boolean; message: string; } => {
     return {
       isDisabled:
-        program.user_registration_status == 'DeadlineMissed' ||
-        program.user_registration_status == 'NotPermitted' ||
-        program.user_registration_status == 'GradeNotAvailable' ||
-        program.user_registration_status == 'StudentshipDataIncomplete',
+        registrationReceipt.status == 'DeadlineMissed' ||
+        registrationReceipt.status == 'NotPermitted' ||
+        registrationReceipt.status == 'GradeNotAvailable' ||
+        registrationReceipt.status == 'StudentshipDataIncomplete',
       message:
-        program.user_registration_status == 'DeadlineMissed' ? 'مهلت ثبت‌نام تمام شده است' :
-          program.user_registration_status == 'NotPermitted' ? 'با توجه به پایه تحصیلیتان، شما مجاز به شرکت در این رویداد نیستید' :
-            program.user_registration_status == 'GradeNotAvailable' ? 'ابتدا پایه‌ی تحصیلی خود را انتخاب کنید' :
-              program.user_registration_status == 'StudentshipDataIncomplete' ? 'مشخصات دانش‌آموزی‌تان کامل نیست' :
+        registrationReceipt.status == 'DeadlineMissed' ? 'مهلت ثبت‌نام تمام شده است' :
+          registrationReceipt.status == 'NotPermitted' ? 'با توجه به پایه تحصیلیتان، شما مجاز به شرکت در این رویداد نیستید' :
+            registrationReceipt.status == 'GradeNotAvailable' ? 'ابتدا پایه‌ی تحصیلی خود را انتخاب کنید' :
+              registrationReceipt.status == 'StudentshipDataIncomplete' ? 'مشخصات دانش‌آموزی‌تان کامل نیست' :
                 'خبری نیست، سلامتی!'
     }
   }
 
-  if (!program || !registrationForm) return null;
+  if (!program || !registrationForm || !registrationReceipt) return null;
 
   return (
     <Stack spacing={2}>
@@ -92,11 +93,9 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
 
 const mapStateToProps = (state) => ({
   userInfo: state.account.userInfo,
-  registrationForm: state.programs.registrationForm,
   isFetching: state.programs.isFetching,
 });
 
 export default connect(mapStateToProps, {
-  getOneRegistrationForm: getOneRegistrationFormAction,
   submitRegistrationForm: submitRegistrationFormAction,
 })(RegistrationForm);

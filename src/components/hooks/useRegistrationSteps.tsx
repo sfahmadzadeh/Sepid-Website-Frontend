@@ -5,21 +5,23 @@ import RegistrationStatus from 'components/template/RegistrationStatus';
 import Payment from 'components/template/Payment';
 import { RegistrationStepNameType, RegistrationStepType } from 'types/global';
 import Profiles from 'components/template/Profile';
-import { ProgramType, RegistrationFormType } from 'types/models';
+import { ProgramType } from 'types/models';
+import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
+import { useGetFormQuery } from 'redux/features/form/FormSlice';
 
 type propsType = {
   program: ProgramType;
-  registrationForm: RegistrationFormType;
 }
 
 const useRegistrationSteps = ({
   program,
-  registrationForm,
 }: propsType) => {
   const [currentStepNameIndex, setCurrentStepIndex] = useState<number>(0);
   const [lastActiveStepIndex, setLastActiveIndex] = useState<number>(0);
   const [steps, setSteps] = useState<RegistrationStepType[]>([]);
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const { data: registrationForm } = useGetFormQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
+  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
 
   useEffect(() => {
     const goToStep = (destinationStepIndex: number) => {
@@ -37,7 +39,7 @@ const useRegistrationSteps = ({
       return steps.indexOf(steps.find(step => step.name === stepName));
     }
 
-    if (!program || !registrationForm) return;
+    if (!program || !registrationForm || !registrationReceipt) return;
     const steps: RegistrationStepType[] = [];
 
     steps.push({
@@ -100,17 +102,17 @@ const useRegistrationSteps = ({
       if (program.is_user_participating) {
         goToStep(getStepIndex('form') + 1);
       }
-      if (['Waiting', 'Rejected'].includes(program?.user_registration_status)) {
+      if (['Waiting', 'Rejected'].includes(registrationReceipt.status)) {
         goToStep(getStepIndex('status'));
       }
-      if (program?.merchandise && program?.user_registration_status === 'Accepted') {
+      if (program?.merchandise && registrationReceipt?.status === 'Accepted') {
         goToStep(getStepIndex('payment'));
       }
       setIsFirstRender(false);
     }
 
     setSteps(steps);
-  }, [program, registrationForm, currentStepNameIndex, lastActiveStepIndex]);
+  }, [program, registrationForm, currentStepNameIndex, lastActiveStepIndex, registrationReceipt]);
 
   return {
     currentStepNameIndex,

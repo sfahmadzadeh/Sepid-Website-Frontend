@@ -17,32 +17,26 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router-dom';
 import Widget, { WidgetModes } from 'components/organisms/Widget';
 import {
-  getOneRegistrationReceiptAction,
   validateRegistrationReceiptAction,
 } from 'redux/slices/programs'
 import { faSeri } from '../utils/translateNumber';
 import Layout from 'components/template/Layout';
 import { toast } from 'react-toastify';
 import { RegistrationReceiptType } from 'types/models';
+import { useGetReceiptQuery } from 'redux/features/form/ReceiptSlice';
 
 type RegistrationReceiptPropsType = {
-  getOneRegistrationReceipt: any;
   validateRegistrationReceipt: any;
   registrationReceipt: RegistrationReceiptType;
 }
 
 const RegistrationReceipt: FC<RegistrationReceiptPropsType> = ({
-  getOneRegistrationReceipt,
   validateRegistrationReceipt,
-  registrationReceipt,
 }) => {
   const t = useTranslate();
-  const { registrationReceiptId } = useParams();
+  const { receiptId } = useParams();
   const [status, setStatus] = useState<string>(null);
-
-  useEffect(() => {
-    getOneRegistrationReceipt({ registrationReceiptId });
-  }, [])
+  const { data: registrationReceipt } = useGetReceiptQuery({ receiptId });
 
   useEffect(() => {
     if (registrationReceipt?.status) {
@@ -58,7 +52,7 @@ const RegistrationReceipt: FC<RegistrationReceiptPropsType> = ({
       toast.error('لطفاً وضعیت را تعیین کن!');
       return;
     }
-    validateRegistrationReceipt({ registrationReceiptId, status });
+    validateRegistrationReceipt({ receiptId: receiptId, status });
   }
 
   return (
@@ -142,6 +136,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  getOneRegistrationReceipt: getOneRegistrationReceiptAction,
   validateRegistrationReceipt: validateRegistrationReceiptAction,
 })(RegistrationReceipt);

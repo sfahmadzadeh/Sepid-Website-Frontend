@@ -1,8 +1,8 @@
 import { Paper, Stack, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
+import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
-import { ProgramType } from 'types/models';
 
 type RegistrationStatusPropsType = {
 
@@ -13,6 +13,7 @@ const RegistrationStatus: FC<RegistrationStatusPropsType> = ({
 }) => {
   const { programId } = useParams();
   const { data: program } = useGetProgramQuery({ programId });
+  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program.registration_form });
 
   return (
     <Stack spacing={4}>
@@ -25,12 +26,12 @@ const RegistrationStatus: FC<RegistrationStatusPropsType> = ({
         {'وضعیت ثبت‌نام'}
       </Typography>
       <Stack component={Paper} padding={2} spacing={2}>
-        {program.user_registration_status == 'Waiting' && (
+        {registrationReceipt.status == 'Waiting' && (
           <Typography align="center">
             {'شما فرم‌ثبت‌نام در این دوره را پر کرده‌اید! منتظر نتیجه‌ی بررسی از جانب ما باشید.'}
           </Typography>
         )}
-        {program.user_registration_status == 'Rejected' && (
+        {registrationReceipt.status == 'Rejected' && (
           <Typography align="center">
             {'متاسفانه شما برای شرکت در این دوره پذیرفته‌نشده‌اید :('}
           </Typography>
