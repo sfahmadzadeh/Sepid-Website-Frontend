@@ -119,14 +119,6 @@ export const getUserProfileAction = createAsyncThunkApi(
   profileCRUDUrl
 );
 
-
-// actions for mentors:
-export const getUserStudentshipAction = createAsyncThunkApi(
-  'account/getUserStudentshipAction',
-  Apis.GET,
-  studentshipCRUDUrl,
-);
-
 export const createDiscountCodeAction = createAsyncThunkApi(
   'account/createDiscountCodeAction',
   Apis.POST,
