@@ -23,6 +23,7 @@ import FSMManagement from 'pages/FSMManagement';
 import Correction from 'pages/Correction';
 import EditArticle from 'pages/EditArticle';
 import WebsiteManagement from 'pages/WebsiteManagement';
+import Profile from 'pages/Profile';
 
 const Root = () => {
 
@@ -37,6 +38,7 @@ const Root = () => {
       <Route path="/article/:articleId/" element={<Article />} />
       <Route path="/profile/:partyName?/" element={<PartyProfile />} />
       <Route path="/programs/" element={<Programs />} />
+      <Route path="/profile/" element={<Profile />} />
 
       <Route path="/" element={<PrivateRoute />}>
         <Route path="/edit-article/:articleId/" element={<EditArticle />} />
