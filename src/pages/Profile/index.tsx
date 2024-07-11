@@ -1,17 +1,18 @@
 import React, { FC } from "react";
 import CompanyProfile from "./CompanyProfile";
 import IndividualProfile from "./IndividualProfile";
+import { useParams } from "react-router-dom";
 
 type ProfilePropsType = {
 }
 
 const Profile: FC<ProfilePropsType> = ({
 }) => {
-  const type: 'individual' | 'company' = 'individual';
-  if (type === 'individual') {
+  const { partyType } = useParams();
+  if (partyType === 'ind') {
     return <IndividualProfile />
   }
-  if (type === 'company') {
+  if (partyType === 'com') {
     return <CompanyProfile />
   }
 }

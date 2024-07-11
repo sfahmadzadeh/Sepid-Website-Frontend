@@ -3,7 +3,7 @@ import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Layout from 'components/template/Layout';
-import ProfileTemplate from 'components/template/Profile';
+import SettingTemplate from 'components/template/Setting';
 import {
   getUserProfileAction,
 } from 'redux/slices/account';
@@ -13,34 +13,34 @@ import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 let tabs: DashboardTabType[] = [
   {
-    name: 'personal',
-    label: 'مشخصات فردی',
+    name: 'user',
+    label: 'اطلاعات فردی',
     icon: '',
-    component: <ProfileTemplate type='personal' />,
+    component: <SettingTemplate type='user' />,
     isActive: true,
   },
   {
-    name: 'student',
-    label: 'مشخصات دانش‌آموزی',
+    name: 'school',
+    label: 'اطلاعات دانش‌آموزی',
     icon: '',
-    component: <ProfileTemplate type='student' />,
+    component: <SettingTemplate type='school' />,
     isActive: true,
   },
   {
-    name: 'academic',
-    label: 'مشخصات دانشجویی',
+    name: 'university',
+    label: 'اطلاعات دانشجویی',
     icon: '',
-    component: <ProfileTemplate type='academic' />,
+    component: <SettingTemplate type='university' />,
     isActive: false,
   },
 ];
 
-type ProfilePropsType = {
+type SettingPropsType = {
   getUserProfile: any;
   userInfo: UserInfoType;
 }
 
-const Profile: FC<ProfilePropsType> = ({
+const Setting: FC<SettingPropsType> = ({
   getUserProfile,
   userInfo,
 }) => {
@@ -51,9 +51,9 @@ const Profile: FC<ProfilePropsType> = ({
   useEffect(() => {
     if (!section) {
       if (programId) {
-        navigate(`/program/${programId}/user-profile/personal/`);
+        navigate(`/program/${programId}/setting/user/`);
       } else {
-        navigate('/user-profile/personal/');
+        navigate('/setting/user/');
       }
     }
   }, [section])
@@ -88,7 +88,7 @@ const Profile: FC<ProfilePropsType> = ({
               orientation="vertical"
               variant="scrollable"
               value={tabs.indexOf(tab)}
-              onChange={(event, newValue) => navigate(programId ? `/program/${programId}/user-profile/${tabs[newValue].name}/` : `/user-profile/${tabs[newValue].name}/`)}>
+              onChange={(event, newValue) => navigate(programId ? `/program/${programId}/setting/${tabs[newValue].name}/` : `/setting/${tabs[newValue].name}/`)}>
               {
                 tabs.map((tab, index) => {
                   return (
@@ -113,4 +113,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getUserProfile: getUserProfileAction,
-})(Profile);
+})(Setting);

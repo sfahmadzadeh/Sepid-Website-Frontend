@@ -5,8 +5,7 @@ import ResetPassword from 'pages/ResetPassword';
 import CreateAccount from 'pages/CreateAccount';
 import RegistrationReceipt from 'pages/RegistrationReceipt';
 import Programs from 'pages/Programs';
-import UserProfile from 'pages/UserProfile';
-import PartyProfile from 'pages/PartyProfile';
+import Setting from 'pages/Setting';
 import Program from 'pages/Program';
 import ProgramManagement from 'pages/ProgramManagement';
 import NotFoundPage from 'pages/Message/NotFoundPage';
@@ -36,9 +35,8 @@ const Root = () => {
       <Route path="/create-account/" element={<CreateAccount />} />
       <Route path="/articles/" element={<Articles />} />
       <Route path="/article/:articleId/" element={<Article />} />
-      <Route path="/profile/:partyName?/" element={<PartyProfile />} />
       <Route path="/programs/" element={<Programs />} />
-      <Route path="/profile/" element={<Profile />} />
+      <Route path="/profile/:partyType/:partyId/" element={<Profile />} />
 
       <Route path="/" element={<PrivateRoute />}>
         <Route path="/edit-article/:articleId/" element={<EditArticle />} />
@@ -51,10 +49,11 @@ const Root = () => {
           element={<FailedPayment />}
         />
         <Route path="/receipt/:receiptId/" element={<RegistrationReceipt />} />
-        <Route path="/user-profile/:section?/" element={<UserProfile />} />
+        <Route path="/setting/:section?/" element={<Setting />} />
         <Route path="/articles/" element={<Articles />} />
         <Route path="/program/:programId/fsm/:fsmId/" element={<Workshop />} />
-        <Route path="/program/:programId/user-profile/:section?/" element={<UserProfile />} />
+        {/* todo: setting is not the under the program */}
+        <Route path="/program/:programId/setting/:section?/" element={<Setting />} />
         <Route
           path="/program/:programId/form/"
           element={<Registration />}

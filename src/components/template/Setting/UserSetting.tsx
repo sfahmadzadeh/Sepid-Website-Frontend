@@ -32,10 +32,10 @@ import ChangePhoneNumberDialog from 'components/organisms/dialogs/ChangePhoneNum
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
-type PersonalProfilePropsType = {
+type UserSettingPropsType = {
   updateUserInfo: any;
   userInfo: UserInfoType;
-  onSuccess?: any;
+  onSuccessfulSubmission?: any;
 }
 
 const hasUserCompletedPrimaryInformation = (userInfo) => {
@@ -43,10 +43,10 @@ const hasUserCompletedPrimaryInformation = (userInfo) => {
   return first_name && last_name && birth_date && gender && province && city;
 }
 
-const PersonalProfile: FC<PersonalProfilePropsType> = ({
+const UserSetting: FC<UserSettingPropsType> = ({
   updateUserInfo,
   userInfo: initialUserInfo,
-  onSuccess,
+  onSuccessfulSubmission,
 }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [isChangePhoneNumberDialogOpen, setIsChangePhoneNumberDialogOpen] = useState(false);
@@ -91,7 +91,7 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
     updateUserInfo({
       id: userInfo.id,
       ...newProfile,
-      onSuccess,
+      onSuccess: onSuccessfulSubmission,
     });
   };
 
@@ -140,7 +140,7 @@ const PersonalProfile: FC<PersonalProfilePropsType> = ({
       </Grid>
 
       <Grid item xs={12}>
-        <Typography variant="h2" gutterBottom>مشخصات فردی</Typography>
+        <Typography variant="h2" gutterBottom>اطلاعات فردی</Typography>
         <Divider />
       </Grid>
 
@@ -356,4 +356,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   updateUserInfo: updateUserInfoAction,
-})(PersonalProfile);
+})(UserSetting);

@@ -49,15 +49,15 @@ const UserAvatar = ({ name = 'بی‌نام', logout }: UserAvatarPropsType) => 
         </Typography>
         <MenuItem onClick={() => {
           if (programId) {
-            navigate(`/program/${programId}/user-profile/`);
+            navigate(`/program/${programId}/setting/`);
           } else {
-            navigate('/user-profile/');
+            navigate('/setting/');
           }
         }}>
           <Stack direction='row' spacing={1} alignItems={'center'}>
             <AccountCircleIcon />
             <Typography>
-              {'مشاهده پروفایل'}
+              {'تنظیمات فردی'}
             </Typography>
           </Stack>
         </MenuItem>

@@ -45,13 +45,13 @@ const SCHOOL_TYPES = {
   'SchoolOfArt': 'هنرستان',
 }
 
-type StudentProfilePropsType = {
+type SchoolSettingPropsType = {
   getInstitutes: any;
   updateStudentShip: any;
   userInfo: any;
   institutes: any[];
   newlyAddedInstitute?: any;
-  onSuccess?: any;
+  onSuccessfulSubmission?: any;
 }
 
 const hasUserCompletedStudentshipInformation = (schoolStudentship) => {
@@ -59,13 +59,13 @@ const hasUserCompletedStudentshipInformation = (schoolStudentship) => {
   return grade && school;
 }
 
-const StudentProfile: FC<StudentProfilePropsType> = ({
+const SchoolSetting: FC<SchoolSettingPropsType> = ({
   getInstitutes,
   updateStudentShip,
   userInfo,
   institutes,
   newlyAddedInstitute,
-  onSuccess,
+  onSuccessfulSubmission,
 }) => {
   const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: string; grade: number; }>(null);
   const [addInstituteDialog, setAddInstituteDialogStatus] = useState(false);
@@ -109,7 +109,7 @@ const StudentProfile: FC<StudentProfilePropsType> = ({
       toast.error('لطفاً همه‌ی اطلاعات خواسته‌شده را وارد کنید');
       return;
     }
-    updateStudentShip({ ...schoolStudentship, onSuccess });
+    updateStudentShip({ ...schoolStudentship, onSuccess: onSuccessfulSubmission });
   };
 
   const AddSchoolInstituteIcon = () => {
@@ -128,7 +128,7 @@ const StudentProfile: FC<StudentProfilePropsType> = ({
     <Fragment>
       <Grid container item spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h2" gutterBottom>مشخصات دانش‌آموزی</Typography>
+          <Typography variant="h2" gutterBottom>اطلاعات دانش‌آموزی</Typography>
           <Divider />
         </Grid>
 
@@ -214,4 +214,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getInstitutes: getInstitutesAction,
   updateStudentShip: updateStudentShipAction,
-})(StudentProfile);
+})(SchoolSetting);

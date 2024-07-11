@@ -4,7 +4,7 @@ import Form from 'components/template/RegistrationForm';
 import RegistrationStatus from 'components/template/RegistrationStatus';
 import Payment from 'components/template/Payment';
 import { RegistrationStepNameType, RegistrationStepType } from 'types/global';
-import Profiles from 'components/template/Profile';
+import SettingTemplate from 'components/template/Setting';
 import { ProgramType } from 'types/models';
 import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 import { useGetFormQuery } from 'redux/features/form/FormSlice';
@@ -50,27 +50,27 @@ const useRegistrationSteps = ({
     })
 
     steps.push({
-      name: 'personal-profile',
-      label: 'تکمیل مشخصات شخصی',
-      component: <Profiles type='personal' onSuccess={() => goToNextStep()} />,
-      onClick: () => goToStep(getStepIndex('personal-profile')),
+      name: 'user-setting',
+      label: 'تکمیل اطلاعات شخصی',
+      component: <SettingTemplate type='user' onSuccessfulSubmission={() => goToNextStep()} />,
+      onClick: () => goToStep(getStepIndex('user-setting')),
     })
 
     if (program.audience_type === 'Student') {
       steps.push({
-        name: 'student-profile',
-        label: 'تکمیل مشخصات دانش‌آموزی',
-        component: <Profiles type='student' onSuccess={() => goToNextStep()} />,
-        onClick: () => goToStep(getStepIndex('student-profile'))
+        name: 'school-setting',
+        label: 'تکمیل اطلاعات دانش‌آموزی',
+        component: <SettingTemplate type='school' onSuccessfulSubmission={() => goToNextStep()} />,
+        onClick: () => goToStep(getStepIndex('school-setting'))
       })
     }
 
     if (program.audience_type === 'Academic') {
       steps.push({
-        name: 'academic-profile',
-        label: 'تکمیل مشخصات دانشجویی',
-        component: <Profiles type='academic' onSuccess={() => goToNextStep()} />,
-        onClick: () => goToStep(getStepIndex('academic-profile'))
+        name: 'university-setting',
+        label: 'تکمیل اطلاعات دانشجویی',
+        component: <SettingTemplate type='university' onSuccessfulSubmission={() => goToNextStep()} />,
+        onClick: () => goToStep(getStepIndex('university-setting'))
       })
     }
 

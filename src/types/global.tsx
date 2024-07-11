@@ -50,18 +50,18 @@ export type RegistrationStepType = {
 };
 
 export type RegistrationStepLabelType =
-  'تکمیل مشخصات شخصی' |
-  'تکمیل مشخصات دانش‌آموزی' |
-  'تکمیل مشخصات دانشجویی' |
+  'تکمیل اطلاعات شخصی' |
+  'تکمیل اطلاعات دانش‌آموزی' |
+  'تکمیل اطلاعات دانشجویی' |
   'ثبت‌نام در دوره' |
   'وضعیت ثبت‌نام' |
   'پرداخت هزینه' |
   'ورود به دوره'
 
 export type RegistrationStepNameType =
-  'personal-profile' |
-  'student-profile' |
-  'academic-profile' |
+  'user-setting' |
+  'school-setting' |
+  'university-setting' |
   'form' |
   'status' |
   'payment' |

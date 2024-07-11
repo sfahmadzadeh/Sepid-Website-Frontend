@@ -1,6 +1,5 @@
 
-import React, { } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
 const hasUserCompletedAcademicInformation = (userInfo) => {
   if (userInfo.academic_studentship) {
@@ -10,13 +9,10 @@ const hasUserCompletedAcademicInformation = (userInfo) => {
   }
 }
 
-function AcademicProfile({ onSuccess }) {
+function UniversitySetting({ onSuccessfulSubmission }) {
   return null;
 }
 
-const mapStateToProps = (state) => ({
-});
-
-export default connect(mapStateToProps, {})(AcademicProfile);
+export default UniversitySetting;
 
 

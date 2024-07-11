@@ -77,7 +77,7 @@ export const updateStudentShipAction = createAsyncThunkApi(
   studentshipCRUDUrl,
   {
     defaultNotification: {
-      success: 'مشخصات دانش‌آموزی با موفقیت به‌روز شدند.',
+      success: 'اطلاعات دانش‌آموزی با موفقیت به‌روز شدند.',
     },
   }
 );
@@ -106,7 +106,7 @@ export const updateUserInfoAction = createAsyncThunkApi(
   accountCRUDUrl,
   {
     defaultNotification: {
-      success: 'مشخصات فردی با موفقیت به‌روز شدند.',
+      success: 'اطلاعات فردی با موفقیت به‌روز شدند.',
       error: 'مشکلی در به‌روز‌رسانی اطلاعات وجود داشت.',
     },
   }
