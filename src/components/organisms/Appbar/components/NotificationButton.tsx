@@ -7,9 +7,11 @@ import {
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import React, { FC, Fragment, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import NotificationsList from 'components/organisms/lists/NotificationsList';
 import { MessageType } from 'types/models';
+import useWebSocket from 'components/hooks/useWebsocket';
 
 type NotificationButtonPropsType = {
 }
@@ -17,6 +19,17 @@ type NotificationButtonPropsType = {
 const NotificationButton: FC<NotificationButtonPropsType> = ({
 }) => {
   const t = useTranslate();
+  const [message, setMessage] = useState('');
+  const sendMessage = useWebSocket({ address: 'sepid-ali1-ehsan' });
+  const messages = useSelector((state: any) => state.websocket.messages);
+  const status = useSelector((state: any) => state.websocket.status);
+
+  console.log(messages)
+
+  const handleSendMessage = () => {
+    sendMessage(message);
+    setMessage('');
+  };
 
   const notifications: MessageType[] = [];
   // [
@@ -158,3 +171,4 @@ const NotificationButton: FC<NotificationButtonPropsType> = ({
 };
 
 export default NotificationButton;
+

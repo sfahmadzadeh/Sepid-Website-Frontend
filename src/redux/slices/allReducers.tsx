@@ -11,8 +11,10 @@ import { questionReducer } from './Question';
 import { AnswerReducer } from './Answer';
 import { WebsiteReducer } from './Website';
 import { GlobalReducer } from './Global';
+import { websocketReducer } from './websocket';
 
 const allReducers = {
+  websocket: websocketReducer,
   global: GlobalReducer,
   website: WebsiteReducer,
   account: accountReducer,
