@@ -1,16 +1,15 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import undoable, { includeAction } from 'redux-undo';
-import { ActionCreators as UndoActionCreators } from 'redux-undo';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import undoable, { includeAction, ActionCreators as UndoActionCreators } from 'redux-undo'
 
-import DrawingModes from 'components/Whiteboard/Drawing/DrawingModes';
+import DrawingModes from 'components/organisms/Whiteboard/Drawing/DrawingModes'
 import {
   addWhiteboardNode,
   getWhiteboard,
   removeWhiteboardNode,
   removeWhiteboardNodes,
-  updateWhiteboardNode,
-} from 'parse/whiteboard';
-import makeId from 'utils/makeId';
+  updateWhiteboardNode
+} from 'parse/whiteboard'
+import makeId from 'utils/makeId'
 
 const initialState = {
   mode: DrawingModes.MOVE,
@@ -19,24 +18,24 @@ const initialState = {
     strokeWidth: 3,
     lineCap: 'round',
     lineJoin: 'round',
-    tension: 0.5,
+    tension: 0.5
   },
   nodes: [],
-  version: 0,
-};
+  version: 0
+}
 
 export const getWhiteboardNodesAction = createAsyncThunk(
   'whiteboard/getOne',
   async ({ uuid }, { rejectWithValue }) => {
     try {
-      return { nodes: (await getWhiteboard({ uuid })).get('nodes') };
+      return { nodes: (await getWhiteboard({ uuid })).get('nodes') }
     } catch (err) {
       return rejectWithValue({
-        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!',
-      });
+        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!'
+      })
     }
   }
-);
+)
 
 export const addWhiteboardNodeAction = createAsyncThunk(
   'whiteboard/addNode',
@@ -44,15 +43,15 @@ export const addWhiteboardNodeAction = createAsyncThunk(
     try {
       await addWhiteboardNode({
         uuid,
-        node: { ...node, id: makeId() },
-      });
+        node: { ...node, id: makeId() }
+      })
     } catch (err) {
       return rejectWithValue({
-        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!',
-      });
+        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!'
+      })
     }
   }
-);
+)
 
 export const updateWhiteboardNodeAction = createAsyncThunk(
   'whiteboard/update',
@@ -61,58 +60,58 @@ export const updateWhiteboardNodeAction = createAsyncThunk(
       await updateWhiteboardNode({
         uuid,
         nodeId,
-        shape,
-      });
+        shape
+      })
     } catch {
       return rejectWithValue({
-        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!',
-      });
+        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!'
+      })
     }
   }
-);
+)
 
 export const removeSelectedWhiteboardNodeAction = createAsyncThunk(
   'whiteboard/removeSelectedNode',
   async ({ uuid }, { rejectWithValue, getState }) => {
-    const { nodes } = getState().whiteboard.present;
+    const { nodes } = getState().whiteboard.present
     try {
-      const selectedNode = nodes.find((node) => node.isSelected);
+      const selectedNode = nodes.find((node) => node.isSelected)
       if (selectedNode) {
-        await removeWhiteboardNode({ uuid, nodeId: selectedNode.id });
+        await removeWhiteboardNode({ uuid, nodeId: selectedNode.id })
       }
     } catch (err) {
       return rejectWithValue({
-        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!',
-      });
+        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!'
+      })
     }
   }
-);
+)
 
 export const removeWhiteboardNodeAction = createAsyncThunk(
   'whiteboard/removeNode',
   async ({ uuid, nodeId }, { rejectWithValue }) => {
     try {
-      await removeWhiteboardNode({ uuid, nodeId });
+      await removeWhiteboardNode({ uuid, nodeId })
     } catch {
       return rejectWithValue({
-        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!',
-      });
+        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!'
+      })
     }
   }
-);
+)
 
 export const removeAllWhiteboardNodesAction = createAsyncThunk(
   'whiteboard/removeAllNodes',
   async ({ uuid }, { rejectWithValue }) => {
     try {
-      await removeWhiteboardNodes({ uuid });
+      await removeWhiteboardNodes({ uuid })
     } catch {
       return rejectWithValue({
-        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!',
-      });
+        message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!'
+      })
     }
   }
-);
+)
 
 const whiteboardSlice = createSlice({
   name: 'whiteboard',
@@ -122,36 +121,36 @@ const whiteboardSlice = createSlice({
     deselectNode: (state, { payload: { nodeId } }) => {
       state.nodes = state.nodes.map((node) =>
         node.id === nodeId ? { ...node, isSelected: false } : node
-      );
+      )
     },
     deselectNodes: (state) => {
       state.nodes = state.nodes.map((node) => ({
         ...node,
-        isSelected: false,
-      }));
+        isSelected: false
+      }))
     },
     selectNode: (state, { payload: { nodeId } }) => {
       state.nodes = state.nodes.map((node) =>
         node.id === nodeId ? { ...node, isSelected: true } : node
-      );
+      )
     },
     addNode: (state, { payload: { node } }) => {
-      state.nodes.push(node);
+      state.nodes.push(node)
     },
     updateNode: (state, { payload: { nodeId, shape } }) => {
       state.nodes = state.nodes.map((node) =>
         node.id === nodeId ? { ...node, shape } : node
-      );
+      )
     },
     changeMode: (state, { payload: { mode } }) => {
-      state.mode = mode;
+      state.mode = mode
     },
     removeAllNodes: (state) => {
-      state.nodes = [];
+      state.nodes = []
     },
     remove: (state, { payload: { nodeId } }) => {
-      state.nodes = state.nodes.filter((node) => node.id !== nodeId);
-    },
+      state.nodes = state.nodes.filter((node) => node.id !== nodeId)
+    }
   },
 
   extraReducers: {
@@ -159,10 +158,10 @@ const whiteboardSlice = createSlice({
       state,
       { payload: { nodes } }
     ) => {
-      state.nodes = nodes;
-    },
-  },
-});
+      state.nodes = nodes
+    }
+  }
+})
 
 export const {
   init: initWhiteboardAction,
@@ -173,26 +172,26 @@ export const {
   updateNode: offlineUpdateNodeAction,
   changeMode: changeWhiteboardModeAction,
   removeAllNodes: offlineRemoveAllWhiteboardNodesAction,
-  remove: offlineRemoveWhiteboardNodeAction,
-} = whiteboardSlice.actions;
+  remove: offlineRemoveWhiteboardNodeAction
+} = whiteboardSlice.actions
 
 export const offlineUpdateWhiteboardAction = (action) => {
   switch (action.type) {
     case 'ADD_NODE':
-      return offlineAddNodeAction({ node: action.node });
+      return offlineAddNodeAction({ node: action.node })
     case 'UPDATE_NODE':
       return offlineUpdateNodeAction({
         nodeId: action.nodeId,
-        shape: action.shape,
-      });
+        shape: action.shape
+      })
     case 'REMOVE_NODE':
       return offlineRemoveWhiteboardNodeAction({
-        nodeId: action.nodeId,
-      });
+        nodeId: action.nodeId
+      })
     case 'REMOVE_ALL_NODES':
-      return offlineRemoveAllWhiteboardNodesAction();
+      return offlineRemoveAllWhiteboardNodesAction()
   }
-};
+}
 
 export const whiteboardReducer = undoable(whiteboardSlice.reducer, {
   limit: 20,
@@ -201,9 +200,9 @@ export const whiteboardReducer = undoable(whiteboardSlice.reducer, {
     updateWhiteboardNodeAction.toString(),
     removeSelectedWhiteboardNodeAction.toString(),
     removeWhiteboardNodeAction.toString(),
-    removeAllWhiteboardNodesAction.toString(),
-  ]),
-});
+    removeAllWhiteboardNodesAction.toString()
+  ])
+})
 
 export const addNewLineNodeAction = ({ uuid, line }) =>
   addWhiteboardNodeAction({
@@ -212,10 +211,10 @@ export const addNewLineNodeAction = ({ uuid, line }) =>
       type: 'LINE',
       shape: {
         ...line.shape,
-        points: line.points,
-      },
-    },
-  });
+        points: line.points
+      }
+    }
+  })
 
 export const addNewTextNodeAction = ({ uuid }) =>
   addWhiteboardNodeAction({
@@ -230,16 +229,16 @@ export const addNewTextNodeAction = ({ uuid }) =>
         draggable: true,
         width: 200,
         align: 'right',
-        fontFamily: 'iranyekan',
-      },
-    },
-  });
+        fontFamily: 'iranyekan'
+      }
+    }
+  })
 
 export const addNewCircleNodeAction = ({ uuid, type }) => {
   let shape = {
     x: 100,
-    shadowBlur: 3,
-  };
+    shadowBlur: 3
+  }
   if (type === 'outlined') {
     shape = {
       ...shape,
@@ -247,31 +246,31 @@ export const addNewCircleNodeAction = ({ uuid, type }) => {
       width: 96,
       height: 96,
       stroke: 2,
-      strokeColor: 'black',
-    };
+      strokeColor: 'black'
+    }
   } else {
     shape = {
       ...shape,
       y: 100,
       width: 100,
       height: 100,
-      fill: 'black',
-    };
+      fill: 'black'
+    }
   }
   return addWhiteboardNodeAction({
     uuid,
     node: {
       type: 'CIRCLE',
-      shape,
-    },
-  });
-};
+      shape
+    }
+  })
+}
 
 export const addNewRectangleNodeAction = ({ uuid, type }) => {
   let shape = {
     x: 100,
-    shadowBlur: 3,
-  };
+    shadowBlur: 3
+  }
   if (type === 'outlined') {
     shape = {
       ...shape,
@@ -279,25 +278,25 @@ export const addNewRectangleNodeAction = ({ uuid, type }) => {
       width: 96,
       height: 96,
       stroke: 2,
-      strokeColor: 'black',
-    };
+      strokeColor: 'black'
+    }
   } else {
     shape = {
       ...shape,
       y: 100,
       width: 100,
       height: 100,
-      fill: 'black',
-    };
+      fill: 'black'
+    }
   }
   return addWhiteboardNodeAction({
     uuid,
     node: {
       type: 'RECT',
-      shape,
-    },
-  });
-};
+      shape
+    }
+  })
+}
 
-export const undo = () => UndoActionCreators.undo();
-export const redo = () => UndoActionCreators.redo();
+export const undo = () => UndoActionCreators.undo()
+export const redo = () => UndoActionCreators.redo()

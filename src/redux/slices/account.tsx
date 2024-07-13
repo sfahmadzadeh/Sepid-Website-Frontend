@@ -7,12 +7,11 @@ import {
   institutesUrl,
   discountCRUDUrl,
   merchandiseDiscountCodeUrl,
-  loginUrl,
   profileCRUDUrl,
   studentshipCRUDUrl,
   verificationCodeUrl,
 } from '../constants/urls';
-import { UserSlice } from 'redux/features/UserSlice';
+import { UserSlice } from 'redux/features/user/UserSlice';
 
 export const createAccountAction = createAsyncThunkApi(
   'account/createAccountAction',
@@ -50,17 +49,6 @@ export const getVerificationCodeAction = createAsyncThunkApi(
   }
 );
 
-export const loginAction = createAsyncThunkApi(
-  'account/loginAction',
-  Apis.POST,
-  loginUrl,
-  {
-    defaultNotification: {
-      success: 'سلام!',
-      error: 'نام کاربری یا رمز عبور اشتباه است.',
-    },
-  }
-);
 
 export const changePasswordAction = createAsyncThunkApi(
   'account/changePasswordAction',
@@ -89,7 +77,7 @@ export const updateStudentShipAction = createAsyncThunkApi(
   studentshipCRUDUrl,
   {
     defaultNotification: {
-      success: 'مشخصات دانش‌آموزی با موفقیت به‌روز شدند.',
+      success: 'اطلاعات دانش‌آموزی با موفقیت به‌روز شدند.',
     },
   }
 );
@@ -118,7 +106,7 @@ export const updateUserInfoAction = createAsyncThunkApi(
   accountCRUDUrl,
   {
     defaultNotification: {
-      success: 'مشخصات فردی با موفقیت به‌روز شدند.',
+      success: 'اطلاعات فردی با موفقیت به‌روز شدند.',
       error: 'مشکلی در به‌روز‌رسانی اطلاعات وجود داشت.',
     },
   }
@@ -129,14 +117,6 @@ export const getUserProfileAction = createAsyncThunkApi(
   'account/getUserProfileAction',
   Apis.GET,
   profileCRUDUrl
-);
-
-
-// actions for mentors:
-export const getUserStudentshipAction = createAsyncThunkApi(
-  'account/getUserStudentshipAction',
-  Apis.GET,
-  studentshipCRUDUrl,
 );
 
 export const createDiscountCodeAction = createAsyncThunkApi(
@@ -206,17 +186,6 @@ const accountSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-
-    builder.addCase(
-      loginAction.fulfilled,
-      (state, { payload: { response } }) => {
-        state.userInfo = { ...state.userInfo, ...response.account };
-        state.id = response.account.id;
-        state.accessToken = response.access;
-        state.refreshToken = response.refresh;
-        state.isFetching = false;
-      }
-    );
 
     builder.addCase(
       createAccountAction.fulfilled,
@@ -309,6 +278,17 @@ const accountSlice = createSlice({
     )
 
     builder.addMatcher(
+      UserSlice.endpoints.login.matchFulfilled,
+      (state, { payload }) => {
+        state.userInfo = { ...state.userInfo, ...payload.account };
+        state.id = payload.account.id;
+        state.accessToken = payload.access;
+        state.refreshToken = payload.refresh;
+        state.isFetching = false;
+      }
+    );
+
+    builder.addMatcher(
       UserSlice.endpoints.loginGoogleUser.matchFulfilled,
       (state, { payload }) => {
         state.userInfo = { ...state.userInfo, ...payload.user };
@@ -331,7 +311,6 @@ const accountSlice = createSlice({
 
     builder.addMatcher(
       isAnyOf(
-        loginAction.pending,
         createAccountAction.pending,
         changePasswordAction.pending,
         getUserProfileAction.pending,
@@ -342,6 +321,7 @@ const accountSlice = createSlice({
         createDiscountCodeAction.pending,
         deleteDiscountCodeAction.pending,
         getAllMerchandiseDiscountCodesAction.pending,
+        UserSlice.endpoints.login.matchPending,
         UserSlice.endpoints.getGoogleUserProfile.matchPending,
         UserSlice.endpoints.loginGoogleUser.matchPending,
         UserSlice.endpoints.changePhoneNumber.matchPending,
@@ -351,7 +331,6 @@ const accountSlice = createSlice({
 
     builder.addMatcher(
       isAnyOf(
-        loginAction.rejected,
         createAccountAction.rejected,
         changePasswordAction.fulfilled,
         changePasswordAction.rejected,
@@ -363,6 +342,7 @@ const accountSlice = createSlice({
         createDiscountCodeAction.rejected,
         deleteDiscountCodeAction.rejected,
         getAllMerchandiseDiscountCodesAction.rejected,
+        UserSlice.endpoints.login.matchRejected,
         UserSlice.endpoints.getGoogleUserProfile.matchRejected,
         UserSlice.endpoints.loginGoogleUser.matchRejected,
         UserSlice.endpoints.changePhoneNumber.matchRejected,

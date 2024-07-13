@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { FC, Fragment, useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams, useLocation } from 'react-router-dom';
 import { Helmet } from "react-helmet";
@@ -11,42 +11,51 @@ import {
   mentorGetCurrentStateAction,
   changeOpenChatRoomAction,
 } from 'redux/slices/currentState';
-import {
-  addNotificationAction,
-} from 'redux/slices/notifications';
-import {
-  getOneWorkshopAction,
-} from 'redux/slices/workshop';
 import { addMentorToRoom, updateMentorTime } from 'parse/mentorsInRoom';
 import DraggableChatRoom from 'components/organisms/DraggableMeeting';
-import { getOneEventInfoAction } from 'redux/slices/events';
 import Layout from 'components/template/Layout';
+import { FSMType, TeamType } from 'types/models';
+import { toast } from 'react-toastify';
+import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
 var moment = require('moment');
 
 export const StatePageContext = React.createContext<any>({});
 
-const FSM = ({
+type FSMPagePropsType = {
+  currentState: any;
+  needUpdateState: any;
+  paperId: any;
+  studentPlayerId: any;
+  myTeam: TeamType;
+  enterWorkshop: any;
+  mentorGetCurrentState: any;
+  // todo:
+  teamRoom: any;
+  openChatRoom: any;
+  changeOpenChatRoom: any;
+  personsName: string;
+  mentorId: string;
+  teamId: string;
+}
+const FSM: FC<FSMPagePropsType> = ({
   currentState,
   needUpdateState,
   paperId,
   studentPlayerId,
   myTeam,
-  getOneWorkshop,
   enterWorkshop,
-  getOneEventInfo,
   mentorGetCurrentState,
-  addNotification,
   // todo:
   teamRoom,
   openChatRoom,
   changeOpenChatRoom,
   personsName,
   mentorId,
-  workshop,
   teamId,
 }) => {
   const { fsmId, programId } = useParams();
+  const { data: fsm } = useGetFSMQuery({ fsmId });
   const subscriberRef = useRef(null);
   const [mentorAdded, setMentorAdded] = useState(false)
   const search = useLocation().search;
@@ -76,7 +85,6 @@ const FSM = ({
   //     updateMentorTime(teamId, mentorId.toString())
   //     updateInterval = setInterval(() => { updateMentorTime(teamId, mentorId.toString()) }, 10000)
   //   }
-
   //   return (
   //     () => {
   //       if (updateInterval) {
@@ -85,11 +93,6 @@ const FSM = ({
   //     }
   //   )
   // }, [isMentor, readyToAddMentor])
-
-  useEffect(() => {
-    getOneWorkshop({ fsmId });
-    getOneEventInfo({ programId });
-  }, [])
 
   useEffect(() => {
     if (isMentor) {
@@ -115,29 +118,24 @@ const FSM = ({
 
   useEffect(getCurrentStateIfNeed, [needUpdateState]);
 
-  const [parseTeamState, setParseTeamState] = useState(null);
+  const [parseTeamStateId, setParseTeamStateId] = useState(null);
 
   const onUpdateStateFromParse = (teamState) =>
-    setParseTeamState(teamState.get('paperId'));
+    setParseTeamStateId(teamState.get('stateId'));
 
-  // useEffect(() => {
-  //   if (!currentState?.id || !parseTeamState) return;
-  //   if (+parseTeamState !== +currentState.id) {
-  //     if (isMentor) {
-  //       addNotification({
-  //         type: 'info',
-  //         message: 'یکی از دانش‌آموزان مکان گروه رو جا‌به‌جا کرد!',
-  //       });
-  //       mentorGetCurrentState({ id: playerId });
-  //     } else {
-  //       addNotification({
-  //         type: 'info',
-  //         message: 'جابه‌جا شدید!',
-  //       });
-  //       enterWorkshop({  programId, fsmId });
-  //     }
-  //   }
-  // }, [parseTeamState]);
+  useEffect(() => {
+    if (!currentState?.id || !parseTeamStateId) return;
+    if (+parseTeamStateId !== +currentState.id) {
+      if (isMentor) {
+        toast.info('یکی از دانش‌آموزان مکان گروه رو جا‌به‌جا کرد');
+        mentorGetCurrentState({ id: playerId });
+      } else {
+        // با حرکت خود بازیکن هم، اینجا اجرا میشه!‌ نباید اینطوری باشه
+        // toast.info('جابه‌جا شدید');
+        enterWorkshop({ programId, fsmId });
+      }
+    }
+  }, [parseTeamStateId]);
 
   useEffect(() => {
     if (!teamId || !currentState) return;
@@ -163,20 +161,20 @@ const FSM = ({
     document.body.scrollTop = document.documentElement.scrollTop = 0;
   }, [currentState])
 
-  if (!currentState || !workshop) return null;
+  if (!currentState || !fsm) return null;
 
   return (
     <Fragment>
-      {workshop &&
+      {fsm &&
         <Helmet>
-          <title>{workshop.name}</title>
+          <title>{fsm.name}</title>
         </Helmet>
       }
       <StatePageContext.Provider value={{ fsmId, paperId, playerId, teamId, isMentor, myTeam, teamRoom }}>
         <Layout appbarMode={isMentor ? 'MENTOR_FSM' : 'FSM'}>
-          <FSMStateTemplate state={currentState} playerId={parseInt(playerId)} />
+          <FSMStateTemplate state={currentState} playerId={playerId} />
         </Layout>
-        {(workshop.fsm_p_type == 'Team' || workshop.fsm_learning_type == 'Supervised') &&
+        {(fsm.fsm_p_type == 'Team' || fsm.fsm_learning_type == 'Supervised') &&
           <DraggableChatRoom open={openChatRoom} handleClose={() => changeOpenChatRoom()} />
         }
       </StatePageContext.Provider>
@@ -194,14 +192,10 @@ const mapStateToProps = (state, ownProps) => ({
   teamId: state.currentState.teamId,
   personsName: `${state.account.userInfo?.first_name} ${state.account.userInfo?.last_name}`,
   mentorId: state.account.userInfo?.id,
-  workshop: state.workshop.workshop,
 });
 
 export default connect(mapStateToProps, {
-  getOneWorkshop: getOneWorkshopAction,
   enterWorkshop: enterWorkshopAction,
   mentorGetCurrentState: mentorGetCurrentStateAction,
-  addNotification: addNotificationAction,
   changeOpenChatRoom: changeOpenChatRoomAction,
-  getOneEventInfo: getOneEventInfoAction,
 })(FSM);

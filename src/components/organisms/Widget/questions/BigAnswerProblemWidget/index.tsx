@@ -1,8 +1,8 @@
 import { Button, Stack, Typography } from '@mui/material';
 import React, { FC, Fragment, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
-import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
+import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 import { WidgetModes } from 'components/organisms/Widget';
 import BigAnswerProblemEditWidget from './edit';
 
@@ -20,7 +20,7 @@ type BigAnswerProblemWidgetPropsType = {
 const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
   onAnswerSubmit,
   onAnswerChange,
-  id,
+  id: questionId,
   text,
   mode,
   last_submitted_answer,
@@ -30,18 +30,18 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
   const [isButtonDisabled, setButtonDisable] = useState(false);
 
   const onChangeWrapper = (val: string) => {
-    if (mode === WidgetModes.InAnswerSheet) {
+    if (mode === WidgetModes.InForm) {
       onAnswerChange({ text: val });
     };
     setAnswer(val);
   }
 
-  const onSubmitWrappere = (e) => {
+  const onSubmitWrapper = (e) => {
     setButtonDisable(true);
     setTimeout(() => {
       setButtonDisable(false);
     }, 20000)
-    onAnswerSubmit({ widgetId: id, text: answer })
+    onAnswerSubmit({ questionId, text: answer })
   }
 
   return (
@@ -54,7 +54,7 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
         }}
         content={text}
       />
-      {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
+      {(mode === WidgetModes.View || mode === WidgetModes.InForm) &&
         <TinyEditorComponent
           content={answer}
           onChange={onChangeWrapper}
@@ -67,7 +67,7 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
           variant="outlined"
           color="primary"
           size="small"
-          onClick={onSubmitWrappere}>
+          onClick={onSubmitWrapper}>
           {t('submitAnswer')}
         </Button>
       }

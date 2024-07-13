@@ -27,19 +27,11 @@ export const getAllArticlesAction = createAsyncThunkApi(
   articlesUrl
 );
 
-export const getArticleAction = createAsyncThunkApi(
-  'articles/getOne',
-  Apis.GET,
-  articlesUrl,
-);
-
 export const createArticleAction = createAsyncThunkApi(
   'articles/create',
   Apis.POST,
   articlesUrl
 );
-
-
 
 const isFetching = (state) => {
   state.isFetching = true;

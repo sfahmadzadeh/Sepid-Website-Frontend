@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
 
 import Form from 'components/template/RegistrationForm';
-import Status from 'components/template/RegistrationStatus';
+import RegistrationStatus from 'components/template/RegistrationStatus';
 import Payment from 'components/template/Payment';
 import { RegistrationStepNameType, RegistrationStepType } from 'types/global';
-import Profiles from 'components/template/Profile';
-import { ProgramType, RegistrationFormType } from 'types/models';
+import SettingTemplate from 'components/template/Setting';
+import { ProgramType } from 'types/models';
+import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
+import { useGetFormQuery } from 'redux/features/form/FormSlice';
 
 type propsType = {
   program: ProgramType;
-  registrationForm: RegistrationFormType;
 }
 
 const useRegistrationSteps = ({
   program,
-  registrationForm,
 }: propsType) => {
   const [currentStepNameIndex, setCurrentStepIndex] = useState<number>(0);
   const [lastActiveStepIndex, setLastActiveIndex] = useState<number>(0);
   const [steps, setSteps] = useState<RegistrationStepType[]>([]);
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const { data: registrationForm } = useGetFormQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
+  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
 
   useEffect(() => {
     const goToStep = (destinationStepIndex: number) => {
@@ -37,7 +39,7 @@ const useRegistrationSteps = ({
       return steps.indexOf(steps.find(step => step.name === stepName));
     }
 
-    if (!program || !registrationForm) return;
+    if (!program || !registrationForm || !registrationReceipt) return;
     const steps: RegistrationStepType[] = [];
 
     steps.push({
@@ -48,27 +50,27 @@ const useRegistrationSteps = ({
     })
 
     steps.push({
-      name: 'personal-profile',
-      label: 'تکمیل مشخصات شخصی',
-      component: <Profiles type='personal' onSuccess={() => goToNextStep()} />,
-      onClick: () => goToStep(getStepIndex('personal-profile')),
+      name: 'user-setting',
+      label: 'تکمیل اطلاعات شخصی',
+      component: <SettingTemplate type='user' onSuccessfulSubmission={() => goToNextStep()} />,
+      onClick: () => goToStep(getStepIndex('user-setting')),
     })
 
     if (program.audience_type === 'Student') {
       steps.push({
-        name: 'student-profile',
-        label: 'تکمیل مشخصات دانش‌آموزی',
-        component: <Profiles type='student' onSuccess={() => goToNextStep()} />,
-        onClick: () => goToStep(getStepIndex('student-profile'))
+        name: 'school-setting',
+        label: 'تکمیل اطلاعات دانش‌آموزی',
+        component: <SettingTemplate type='school' onSuccessfulSubmission={() => goToNextStep()} />,
+        onClick: () => goToStep(getStepIndex('school-setting'))
       })
     }
 
     if (program.audience_type === 'Academic') {
       steps.push({
-        name: 'academic-profile',
-        label: 'تکمیل مشخصات دانشجویی',
-        component: <Profiles type='academic' onSuccess={() => goToNextStep()} />,
-        onClick: () => goToStep(getStepIndex('academic-profile'))
+        name: 'university-setting',
+        label: 'تکمیل اطلاعات دانشجویی',
+        component: <SettingTemplate type='university' onSuccessfulSubmission={() => goToNextStep()} />,
+        onClick: () => goToStep(getStepIndex('university-setting'))
       })
     }
 
@@ -76,7 +78,7 @@ const useRegistrationSteps = ({
       steps.push({
         name: 'status',
         label: 'وضعیت ثبت‌نام',
-        component: <Status />,
+        component: <RegistrationStatus />,
         onClick: () => goToStep(getStepIndex('status')),
       })
     }
@@ -100,17 +102,17 @@ const useRegistrationSteps = ({
       if (program.is_user_participating) {
         goToStep(getStepIndex('form') + 1);
       }
-      if (['Waiting', 'Rejected'].includes(program?.user_registration_status)) {
+      if (['Waiting', 'Rejected'].includes(registrationReceipt.status)) {
         goToStep(getStepIndex('status'));
       }
-      if (program?.merchandise && program?.user_registration_status === 'Accepted') {
+      if (program?.merchandise && registrationReceipt?.status === 'Accepted') {
         goToStep(getStepIndex('payment'));
       }
       setIsFirstRender(false);
     }
 
     setSteps(steps);
-  }, [program, registrationForm, currentStepNameIndex, lastActiveStepIndex]);
+  }, [program, registrationForm, currentStepNameIndex, lastActiveStepIndex, registrationReceipt]);
 
   return {
     currentStepNameIndex,

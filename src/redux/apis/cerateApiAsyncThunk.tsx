@@ -1,6 +1,6 @@
 import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
-
-import errorHandler from './errorHandler';
+import handleError from 'redux/features/utilities/ErrorHandler';
+import { toast } from 'react-toastify';
 
 type CreateAsyncThunkApiType =
   (
@@ -14,6 +14,12 @@ export const createAsyncThunkApi: CreateAsyncThunkApiType = (typePrefix, api, ur
   createAsyncThunk(typePrefix, async (arg, { rejectWithValue, dispatch, getState }) => {
     try {
       const body = options?.bodyCreator?.(arg) || arg;
+      const state: any = getState();
+      const website = state.website?.website?.name;
+      if (body) {
+        body['website'] = website;
+      }
+
       let stringUrl = typeof url === 'function' ? url(arg) : url;
 
       if (arg?.parameters) {
@@ -25,32 +31,31 @@ export const createAsyncThunkApi: CreateAsyncThunkApiType = (typePrefix, api, ur
       const response = await api(stringUrl, body);
 
       // component self onSuccess action
-      arg?.onSuccess?.();
+      arg?.onSuccess?.(response);
 
       // function self onSuccess action
       if (options?.onSuccessAction) {
-        dispatch(options?.onSuccessAction({ response, arg, options }));
+        dispatch(options.onSuccessAction({ response, arg, options }));
+      }
+
+      if (options?.defaultNotification?.success) {
+        toast.success(options.defaultNotification.success)
       }
 
       return {
         response,
-        ...(options?.defaultNotification?.success
-          ? { message: options.defaultNotification.success }
-          : {})
       };
-    } catch (error) {
+    } catch (error: any) {
       // component self onFailure action
-      arg?.onFailure?.();
-      
+      arg?.onFailure?.(error);
+
       if ((getState() as any).Intl.locale == 'fa') {
-        return errorHandler(
-          getState(),
-          error,
+        handleError({
+          error: error.response,
           dispatch,
-          rejectWithValue,
-          options?.defaultNotification?.error,
-          options?.defaultNotification?.showHttpError || false
-        );
+          errorMessage: options?.defaultNotification?.error,
+        });
+        return rejectWithValue(null);
       }
     }
   });

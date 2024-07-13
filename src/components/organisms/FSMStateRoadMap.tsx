@@ -8,60 +8,40 @@ import {
   Skeleton,
 } from '@mui/material';
 import React, { useEffect, useState, FC } from 'react';
-import RoadMapType1 from 'components/organisms/RoadMap/RoadMapType1';
+import RoadMapType1 from 'components/organisms/Roadmap/RoadMapType1';
 import ArrowDropDownCircleIcon from '@mui/icons-material/ArrowDropDownCircle';
-import { getPlayerTakenPathAction, getFSMRoadmapAction } from 'redux/slices/Roadmap';
-import { connect } from 'react-redux';
-import { FSMRoadmapType, Link } from 'types/redux/Roadmap';
+import { Link } from 'types/redux/Roadmap';
+import { useGetFSMRoadmapActionQuery, useGetPlayerTransitedPathQuery } from 'redux/features/roadmap/RoadmapSlice';
 
 type FSMStateRoadMapPropsType = {
-  currentNodeId: string;
-  playerTakenPath: Link[];
-  FSMRoadmap: FSMRoadmapType;
-  playerId: number;
-  fsmId: number;
-  getPlayerTakenPath: any;
-  getFSMRoadmap: any;
+  currentNodeName: string;
+  playerId: string;
+  fsmId: string;
 };
 
 const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
-  currentNodeId,
-  playerTakenPath,
-  FSMRoadmap,
+  currentNodeName,
   playerId,
   fsmId,
-  getPlayerTakenPath,
-  getFSMRoadmap,
 }) => {
   const [openRoadMap, setOpenRoadMap] = useState(true);
-  const [lastTakenNode, setLastTakenNode] = useState<string>(null);
-  const [_playerTakenPath, set_PlayerTakenPath] = useState<Link[]>([]);
+  const [lastTransitedNode, setLastTransitedNode] = useState<string>(currentNodeName);
+  const [playerTransitedPath, setPlayerTransitedPath] = useState<Link[]>(undefined);
+  const { data: FSMRoadmap } = useGetFSMRoadmapActionQuery({ fsmId });
+  const { data: initialPlayerTransitedPath } = useGetPlayerTransitedPathQuery({ playerId });
 
   useEffect(() => {
-    getPlayerTakenPath({ player_id: playerId });
-    getFSMRoadmap({ fsm_id: fsmId });
-  }, [])
-
-  useEffect(() => {
-    setLastTakenNode(currentNodeId);
-    set_PlayerTakenPath(playerTakenPath);
-  }, [playerTakenPath])
-
-  useEffect(() => {
-    if (currentNodeId !== lastTakenNode) {
-      const lastTakenLink = _playerTakenPath[_playerTakenPath.length - 1];
-      if (!lastTakenLink) {
-        set_PlayerTakenPath([{ source: lastTakenNode, target: currentNodeId }]);
-      } else {
-        if (currentNodeId === lastTakenLink.source) {
-          set_PlayerTakenPath([..._playerTakenPath].slice(0, -1));
-        } else {
-          set_PlayerTakenPath([..._playerTakenPath, ({ source: lastTakenLink.target, target: currentNodeId })]);
-        }
-      }
-      setLastTakenNode(currentNodeId);
+    if (initialPlayerTransitedPath) {
+      setPlayerTransitedPath(initialPlayerTransitedPath);
     }
-  }, [currentNodeId])
+  }, [initialPlayerTransitedPath])
+
+  useEffect(() => {
+    if (currentNodeName !== lastTransitedNode) {
+      setPlayerTransitedPath([...playerTransitedPath, ({ source: lastTransitedNode, target: currentNodeName })]);
+      setLastTransitedNode(currentNodeName);
+    }
+  }, [currentNodeName])
 
   return (
     <Box component={Paper}>
@@ -73,21 +53,13 @@ const FSMStateRoadMap: FC<FSMStateRoadMapPropsType> = ({
       </Typography>
       <Collapse in={openRoadMap}>
         <Divider />
-        {(!FSMRoadmap || !playerTakenPath)
+        {(!FSMRoadmap || !playerTransitedPath)
           ? <Skeleton variant='rectangular' height={200} sx={{ borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }} />
-          : <RoadMapType1 currentNodeId={currentNodeId} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlighedPath={_playerTakenPath} />
+          : <RoadMapType1 currentNodeId={currentNodeName} firstStateName={FSMRoadmap.firstStateName} links={FSMRoadmap.links} highlightedPath={playerTransitedPath} />
         }
       </Collapse>
     </Box>
   );
 };
 
-const mapStatesToProps = (state) => ({
-  playerTakenPath: state.Roadmap.playerTakenPath,
-  FSMRoadmap: state.Roadmap.FSMRoadmap,
-});
-
-export default connect(mapStatesToProps, {
-  getPlayerTakenPath: getPlayerTakenPathAction,
-  getFSMRoadmap: getFSMRoadmapAction,
-})(FSMStateRoadMap);
+export default FSMStateRoadMap;

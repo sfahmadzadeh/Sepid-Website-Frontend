@@ -1,15 +1,14 @@
-import { Button, TextField, Container, Grid, Paper, Typography, Stack } from '@mui/material';
+import { Button, TextField, Container, Paper, Typography, Stack } from '@mui/material';
 import React, { useState, FC } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 import {
   changePasswordAction,
   getVerificationCodeAction,
 } from 'redux/slices/account';
-import appendPreviousParams from 'utils/AppendPreviousParams';
 import isNumber from 'utils/validators/isNumber';
 
 type ResetPasswordPropsType = {
@@ -30,7 +29,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
     phoneNumber: '',
     code: '',
   });
-  const { data: party } = useGetPartyQuery();
+  const { data: website } = useGetWebsiteQuery();
 
   const putData = (event) => {
     setData({
@@ -62,7 +61,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
     setButtonText('۱ دقیقه صبر کن');
     getVerificationCode({
       phoneNumber: data.phoneNumber,
-      partyDisplayName: party.display_name,
+      partyDisplayName: website.display_name,
       codeType: 'change-user-password',
     }).then(() => {
       setTimeout(
@@ -193,7 +192,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
         </Button>
 
         <Typography align="center">
-          <Link style={{ textDecoration: 'none' }} to={appendPreviousParams("/login")}>
+          <Link style={{ textDecoration: 'none' }} to={'/login'}>
             {'می‌خواهم وارد حسابم شوم...'}
           </Link>
         </Typography>

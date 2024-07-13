@@ -1,5 +1,4 @@
 import {
-    Team,
     Widget,
     Article,
     Problem,

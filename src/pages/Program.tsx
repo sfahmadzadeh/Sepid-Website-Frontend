@@ -1,71 +1,38 @@
 import { Box, Stack, Typography } from '@mui/material';
-import Pagination from '@mui/material/Pagination';
-import React, { FC, Fragment, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { FC, Fragment, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
 import FSMsGrid from 'components/organisms/FSMsGrid';
-import {
-  getEventWorkshopsAction,
-  getOneEventInfoAction,
-} from 'redux/slices/events';
 import Layout from 'components/template/Layout';
 import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
-import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import Banner from 'components/molecules/Banner';
-import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
+import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 
-type ProgramPropsType = {
-  getEventWorkshops: any;
-  getOneEventInfo: any;
-  getBanners: any;
+type ProgramPropsType = {}
 
-  program: any;
-  isLoading: any;
-  fsms: any;
-  fsmsCount: number;
-  banners: any;
-}
-
-const Program: FC<ProgramPropsType> = ({
-  getEventWorkshops,
-  getOneEventInfo,
-
-  program,
-  isLoading,
-  fsms,
-  fsmsCount,
-}) => {
+const Program: FC<ProgramPropsType> = ({ }) => {
   const { programId } = useParams();
   const navigate = useNavigate();
-  const [pageNumber, setPageNumber] = useState(1);
-
-  const { data: party } = useGetPartyQuery();
-  const { data: pageMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
-
-  const banners = pageMetadata?.banners || [];
-
-  useEffect(() => {
-    getOneEventInfo({ programId });
-  }, []);
+  const { data: program } = useGetProgramQuery({ programId });
+  const { data: website } = useGetWebsiteQuery();
+  const {
+    data: registrationReceipt,
+    isSuccess: isFetchingRegistrationReceiptSuccessful,
+  } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
+  const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
   useEffect(() => {
-    if (program?.is_user_participating != undefined && !program?.is_user_participating) {
-      navigate(`/program/${programId}/registration/`);
+    if (isFetchingRegistrationReceiptSuccessful && !registrationReceipt.is_participating) {
+      navigate(`/program/${programId}/form/`);
     }
-  }, [program])
+  }, [registrationReceipt])
 
-  useEffect(() => {
-    getEventWorkshops({ programId, pageNumber });
-  }, [pageNumber]);
-
-  // todo: handle event not found
-  // todo: handle in a better way  
-  if (program?.is_user_participating == undefined) {
+  if (!registrationReceipt?.is_participating) {
     return null;
   }
-
+  
   return (
     <Fragment>
       {pageMetadata && program &&
@@ -79,26 +46,11 @@ const Program: FC<ProgramPropsType> = ({
             <ProgramPageSidebar />
           </Box>
           <Stack width={{ xs: '100%', sm: '75%', md: '80%' }} spacing={2}>
-            <Banner banners={banners} />
+            {/* <Banner banners={pageMetadata?.banners} /> */}
             <Typography component="h1" fontWeight={700} fontSize={32} gutterBottom>
               {'کارگاه‌ها'}
             </Typography>
-            <Stack>
-              <FSMsGrid
-                fsms={fsms}
-                isLoading={isLoading}
-              />
-            </Stack>
-            {(!isLoading && fsms.length > 0) &&
-              <Pagination
-                variant="outlined"
-                color="primary"
-                shape='rounded'
-                count={Math.ceil(fsmsCount / ITEMS_PER_PAGE_NUMBER)}
-                page={pageNumber}
-                onChange={(e, value) => setPageNumber(value)}
-              />
-            }
+            <FSMsGrid programId={programId} />
           </Stack>
         </Stack>
       </Layout>
@@ -106,14 +58,4 @@ const Program: FC<ProgramPropsType> = ({
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  fsms: state.events.workshops,
-  isLoading: state.events.getWorkshopsLoading,
-  program: state.events.event,
-  fsmsCount: state.events.workshopsCount,
-});
-
-export default connect(mapStateToProps, {
-  getEventWorkshops: getEventWorkshopsAction,
-  getOneEventInfo: getOneEventInfoAction,
-})(Program);
+export default Program;

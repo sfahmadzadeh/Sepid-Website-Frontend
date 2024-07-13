@@ -11,32 +11,32 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router-dom';
 import Widget, { WidgetModes } from 'components/organisms/Widget';
 import {
-  getOneRegistrationReceiptAction,
   validateRegistrationReceiptAction,
-} from 'redux/slices/events'
+} from 'redux/slices/programs'
 import { faSeri } from '../utils/translateNumber';
 import Layout from 'components/template/Layout';
 import { toast } from 'react-toastify';
+import { RegistrationReceiptType } from 'types/models';
+import { useGetReceiptQuery } from 'redux/features/form/ReceiptSlice';
 
-function RegistrationReceipt({
-  getOneRegistrationReceipt,
+type RegistrationReceiptPropsType = {
+  validateRegistrationReceipt: any;
+  registrationReceipt: RegistrationReceiptType;
+}
+
+const RegistrationReceipt: FC<RegistrationReceiptPropsType> = ({
   validateRegistrationReceipt,
-
-  registrationReceipt,
-}) {
+}) => {
   const t = useTranslate();
-  const { registrationReceiptId } = useParams();
+  const { receiptId } = useParams();
   const [status, setStatus] = useState<string>(null);
-
-  useEffect(() => {
-    getOneRegistrationReceipt({ registrationReceiptId });
-  }, [])
+  const { data: registrationReceipt } = useGetReceiptQuery({ receiptId });
 
   useEffect(() => {
     if (registrationReceipt?.status) {
@@ -52,7 +52,7 @@ function RegistrationReceipt({
       toast.error('لطفاً وضعیت را تعیین کن!');
       return;
     }
-    validateRegistrationReceipt({ registrationReceiptId, status });
+    validateRegistrationReceipt({ receiptId: receiptId, status });
   }
 
   return (
@@ -81,7 +81,7 @@ function RegistrationReceipt({
                 <Divider />
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
-                    <Typography >{`پایه‌ی ${userInfo.school_studentship?.grade ? faSeri(userInfo.school_studentship?.grade) : '؟'}`}</Typography>
+                    <Typography >{`پایه: ${registrationReceipt.school_studentship?.grade ? faSeri(registrationReceipt.school_studentship?.grade) : '؟'}`}</Typography>
                   </Grid>
                   <Grid item xs={6}>
                     <Typography >{`جنسیت: ${userInfo.gender == 'Male' ? 'پسر' : (userInfo.gender == 'Female' ? 'دختر' : '؟')}`}</Typography>
@@ -105,8 +105,7 @@ function RegistrationReceipt({
                         disabled={registrationReceipt?.is_participating}
                         onChange={(e) => setStatus(e.target.value)}
                         name='status'
-                        label='وضعیت ثبت‌نام'
-                      >
+                        label='وضعیت ثبت‌نام'>
                         <MenuItem value={'Waiting'} >{'منتظر'}</MenuItem>
                         <MenuItem value={'Accepted'} >{'مجاز به پرداخت'}</MenuItem>
                         <MenuItem value={'Rejected'} >{'ردشده'}</MenuItem>
@@ -133,10 +132,9 @@ function RegistrationReceipt({
 }
 
 const mapStateToProps = (state) => ({
-  registrationReceipt: state.events.registrationReceipt,
+  registrationReceipt: state.programs.registrationReceipt,
 });
 
 export default connect(mapStateToProps, {
-  getOneRegistrationReceipt: getOneRegistrationReceiptAction,
   validateRegistrationReceipt: validateRegistrationReceiptAction,
 })(RegistrationReceipt);

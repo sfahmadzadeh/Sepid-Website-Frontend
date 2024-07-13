@@ -8,39 +8,36 @@ import {
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { loginAction } from 'redux/slices/account';
-import appendPreviousParams from 'utils/AppendPreviousParams';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GoogleLogin from 'components/molecules/GoogleLogin';
+import { useLoginMutation } from 'redux/features/user/UserSlice';
+import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 type LoginPagePropsType = {
   isFetching: boolean;
-  login: any;
   accessToken: string;
 };
 
 const LoginPage: FC<LoginPagePropsType> = ({
   isFetching,
-  login,
   accessToken,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [data, setData] = useState({
     password: '',
     username: '',
   });
-  const urlParams = new URLSearchParams(window.location.search);
-  const programId = urlParams.get('private_program_id');
+  const { data: website } = useGetWebsiteQuery();
+  const [login, result] = useLoginMutation();
 
   useEffect(() => {
     if (accessToken) {
-      if (programId) {
-        navigate(`/program/${programId}/`);
-      } else {
-        navigate('/programs/');
-      }
+      const previousLocation = location.state?.from?.pathname
+      const destinationLocation = previousLocation || '/programs/';
+      navigate(destinationLocation, { replace: true });
     }
-  }, [programId, navigate, accessToken])
+  }, [accessToken])
 
   const putData = (event) => {
     setData({
@@ -113,16 +110,18 @@ const LoginPage: FC<LoginPagePropsType> = ({
             fullWidth>
             بزن بریم
           </Button>
-          <GoogleLogin />
+          {website?.has_login_with_google &&
+            <GoogleLogin />
+          }
         </Stack>
         <Stack>
           <Typography gutterBottom align='center'>
-            <Link style={{ textDecoration: 'none' }} to={appendPreviousParams('/reset-password')}>
+            <Link style={{ textDecoration: 'none' }} to={'/reset-password'}>
               {'گذروازه‌ام را فراموش کرده‌ام :('}
             </Link>
           </Typography>
           <Typography align='center'>
-            <Link style={{ textDecoration: 'none' }} to={appendPreviousParams('/create-account')}>
+            <Link style={{ textDecoration: 'none' }} to={'/create-account'}>
               {'می‌خواهم یک حساب کاربری جدید بسازم...'}
             </Link>
           </Typography>
@@ -139,5 +138,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  login: loginAction,
 })(LoginPage);

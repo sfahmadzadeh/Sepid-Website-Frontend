@@ -2,7 +2,9 @@ FROM node:latest as build
 WORKDIR /app
 
 ARG SENTRY_AUTH_TOKEN
-ARG REACT_APP_BACKEND_URL
+ARG REACT_APP_MCS_URL
+ARG REACT_APP_MPS_URL
+ARG REACT_APP_MWS_URL
 ARG REACT_APP_SENTRY_DNS
 ARG REACT_APP_GOOGLE_ANALYTICS_MEASUREMENT_ID
 ARG REACT_APP_GTM_ID
@@ -16,10 +18,10 @@ ARG REACT_APP_METABASE_SECRET_KEY
 
 
 COPY ./package.json ./
-RUN npm i --legacy-peer-deps
+RUN yarn
 ENV PATH="./node_modules/.bin:$PATH"
 COPY . .
-RUN npm run build
+RUN yarn build
 
 FROM nginx:latest as production
 ENV SERVER_NAME = _

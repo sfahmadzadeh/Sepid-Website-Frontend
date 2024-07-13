@@ -1,45 +1,51 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 import { Add as AddIcon } from '@mui/icons-material';
 import React, { useState, FC, Fragment } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import Widget, { WidgetModes } from 'components/organisms/Widget';
 import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog';
+import NoDataFound from 'components/molecules/NoDataFound';
+import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
+import { WidgetType } from 'types/global';
 
 type EditPaperPropsType = {
-  widgets: any[];
-  paperId: number | null;
+  paperId: string;
   mode?: 'contents' | 'problems' | 'all';
-  collectWidgetDataToolkit?: any;
 }
 
 const EditPaper: FC<EditPaperPropsType> = ({
-  widgets,
   paperId,
   mode = 'all',
-  collectWidgetDataToolkit,
 }) => {
   const t = useTranslate();
   const [openCreateWidgetDialog, setOpenCreateWidgetDialog] = useState(false);
+  const { data: paper } = useGetPaperQuery({ paperId }, { skip: !paperId });
 
-  if (!paperId && !collectWidgetDataToolkit) {
-    throw Error('Invalid Props In Editing Paper');
+  let widgets: WidgetType[];
+  if (mode === 'all') {
+    widgets = paper?.widgets;
+  } else if (mode === 'contents') {
+    widgets = paper?.widgets.filter(
+      (widget) => !widget.widget_type.includes('Problem')
+    );
+  } else if (mode === 'problems') {
+    widgets = paper?.widgets.filter(
+      (widget) => widget.widget_type.includes('Problem')
+    );
   }
 
   return (
     <Fragment>
-      <Stack
-        spacing={2}
-        justifyContent="center">
-        {widgets.length === 0 ?
-          <Typography align="center">{t('thereIsNoItem')}</Typography> :
+      <Stack spacing={4} justifyContent="center">
+        {(widgets && widgets.length === 0) ?
+          <NoDataFound variant={4} message={'ویجتی وجود ندارد'} /> :
           <Fragment>
-            {widgets.map((widget, index) => (
+            {widgets?.map((widget, index) => (
               <Widget
-                key={index}
+                key={widget.id}
                 paperId={paperId}
                 widget={widget}
                 mode={WidgetModes.Edit}
-                collectWidgetDataToolkit={collectWidgetDataToolkit}
               />
             ))}
           </Fragment>
@@ -59,7 +65,6 @@ const EditPaper: FC<EditPaperPropsType> = ({
         paperId={paperId}
         open={openCreateWidgetDialog}
         handleClose={() => setOpenCreateWidgetDialog(false)}
-        collectWidgetDataToolkit={collectWidgetDataToolkit}
       />
     </Fragment>
   );

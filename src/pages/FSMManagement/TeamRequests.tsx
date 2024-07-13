@@ -9,14 +9,14 @@ import {
   createRequestMentorAction,
   getRequestMentorAction,
   removeRequestMentorAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 
-import { Team } from "types/models";
 import TeamsTab from './TeamsTab';
+import { TeamType } from 'types/models';
 
 const Teams: FC<TeamPropsType> = ({
   teamsRequests,
-  eventTeams = [],
+  programTeams = [],
   getRequestMentor = undefined,
   createRequestMentor = undefined,
   removeRequestMentor = undefined,
@@ -61,7 +61,7 @@ const Teams: FC<TeamPropsType> = ({
     setStarredTeams(JSON.parse(localStorage.getItem('starredTeams')) || [])
   }, [])
 
-  const teams = eventTeams?.map(team =>
+  const teams = programTeams?.map(team =>
     starredTeams.indexOf(team.id) === -1
       ? { ...team, isStarred: false }
       : { ...team, isStarred: true });
@@ -78,7 +78,7 @@ const Teams: FC<TeamPropsType> = ({
   useEffect(() => {
     localStorage.setItem('starredTeams', JSON.stringify(starredTeams))
 
-  }, [eventTeams, starredTeams])
+  }, [programTeams, starredTeams])
 
   if (!teamsRequests) {
     return null;
@@ -143,10 +143,9 @@ const Teams: FC<TeamPropsType> = ({
   );
 }
 
-const mapStateToProps = (state) =>
-({
-  eventTeams: state.events.allEventTeams,
-  teamsRequests: state.events.teamsRequests,
+const mapStateToProps = (state) => ({
+  programTeams: state.programs.allProgramTeams,
+  teamsRequests: state.programs.teamsRequests,
 });
 
 export default connect(mapStateToProps, {
@@ -191,7 +190,7 @@ function a11yProps(index: number) {
 
 type TeamPropsType = {
   teamsRequests: string[],
-  eventTeams: Team[],
+  programTeams: TeamType[],
   getRequestMentor: Function,
   createRequestMentor: Function,
   removeRequestMentor: Function,

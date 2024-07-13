@@ -7,7 +7,7 @@ import React, { useEffect, useState, FC, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import {
-  makeAnswerFileEmptyAction,
+  clearQuestionAnswerAction,
 } from 'redux/slices/Answer';
 import UploadFileProblemEditWidget from './edit';
 import { WidgetModes } from 'components/organisms/Widget';
@@ -17,7 +17,7 @@ type UploadFileProblemWidgetPropsType = {
   onAnswerChange: any;
   onAnswerSubmit: any;
 
-  makeAnswerFileEmpty: any;
+  clearQuestionAnswer: any;
   id: number;
   text: string;
   last_submitted_answer: any;
@@ -29,8 +29,8 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
   onAnswerChange,
   onAnswerSubmit,
 
-  makeAnswerFileEmpty,
-  id: widgetId,
+  clearQuestionAnswer,
+  id: questionId,
   text = 'محل بارگذاری فایل:',
   last_submitted_answer,
   isFetching,
@@ -60,23 +60,22 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
       return;
     }
     onAnswerSubmit({
-      problemId: widgetId,
+      questionId,
       // fileName: file.name,
       answerFile: selectedFile,
-    }).then((response) => {
-      if (response.type?.endsWith('fulfilled')) {
-        setFileLink(response.payload?.response?.answer_file);
-        onAnswerChange({ upload_file_answer: response.payload?.response?.id });
+      onSuccess: (response) => {
+        setFileLink(response.answer_file);
+        onAnswerChange({ upload_file_answer: response.id });
       }
     })
   };
 
   const clearFile = (e) => {
     e.preventDefault();
-    makeAnswerFileEmpty({ widgetId }).then((response) => {
+    clearQuestionAnswer({ question_id: questionId }).then((response) => {
       if (response.type?.endsWith('fulfilled')) {
         setFileLink(null);
-        onAnswerChange({ 'upload_file_answer': null });
+        onAnswerChange({ upload_file_answer: null });
       }
     });
   }
@@ -85,11 +84,11 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
     <Stack alignItems='center' justifyContent='space-between' direction='row' spacing={1}>
       <Typography>{text}</Typography>
       <Stack justifyContent='flex-end' spacing={1}>
-        {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
+        {(mode === WidgetModes.View || mode === WidgetModes.InForm) &&
           <Fragment>
             <Button
               component="label"
-              htmlFor={'raised-button-file' + widgetId}
+              htmlFor={'raised-button-file' + questionId}
               disabled={isFetching}
               variant="outlined"
               color="primary"
@@ -101,7 +100,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
             <input
               accept="application/pdf,image/*,.zip,.rar"
               style={{ display: 'none' }}
-              id={'raised-button-file' + widgetId}
+              id={'raised-button-file' + questionId}
               type="file"
               onChange={changeFile}
             />
@@ -137,12 +136,8 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  isFetching: state.paper.isFetching,
-});
-
-export default connect(mapStateToProps, {
-  makeAnswerEmpty: makeAnswerFileEmptyAction,
+export default connect(null, {
+  clearQuestionAnswer: clearQuestionAnswerAction,
 })(UploadFileProblemWidget);
 
 export { UploadFileProblemEditWidget };

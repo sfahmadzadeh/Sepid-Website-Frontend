@@ -1,101 +1,83 @@
 import {
-  Button,
   Grid,
+  Stack,
   Typography,
 } from '@mui/material';
 import { Pagination } from '@mui/material';
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useState, Fragment, FC } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import MentorFSMCard from 'components/organisms/cards/MentorFSMCard';
-import CreateWorkshopDialog from 'components/organisms/dialogs/CreateWorkshopDialog';
+import CreateFSMDialog from 'components/organisms/dialogs/CreateFSMDialog';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
-import {
-  getEventWorkshopsAction,
-} from 'redux/slices/events';
-import { addMentorToWorkshopAction } from 'redux/slices/events';
+import { addMentorToWorkshopAction } from 'redux/slices/programs';
+import AddNewThingButton from 'components/atoms/AddNewThingButton';
+import { useGetFSMsQuery } from 'redux/features/fsm/FSMSlice';
+import NoDataFound from 'components/molecules/NoDataFound';
 
-function Index({
-  getEventWorkshops,
-  workshopsCount,
-  allEventWorkshops,
-}) {
+type ProgramManagementFsmTabPropsType = {}
+
+const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({ }) => {
   const { programId } = useParams();
-  const [openCreateWorkshopDialog, setOpenCreateWorkshopDialog] = useState(false);
+  const [openCreateFSMDialog, setOpenCreateFSMDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-
-  useEffect(() => {
-    getEventWorkshops({ programId, pageNumber });
-  }, [pageNumber]);
+  const { data: fsmsData, isLoading } = useGetFSMsQuery({ programId, pageNumber });
 
   return (
     <Fragment>
-      <Grid
-        container
-        item
-        spacing={2}
-        alignItems="center"
-        justifyContent="center"
-        direction="row">
+      <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
 
-        <Grid item container justifyContent='space-between' xs={12} spacing={2} style={{ marginTop: 2 }}>
-          <Grid item>
-            <Typography variant='h2'>
+        <Stack padding={2} spacing={2}>
+          <Stack direction={'row'} justifyContent={'space-between'} alignItems={'center'}>
+            <Typography variant='h2' gutterBottom>
               {'کارگاه‌ها'}
             </Typography>
-          </Grid>
-          <Grid item>
-            <Button variant='outlined' onClick={() => setOpenCreateWorkshopDialog(true)}>
-              {'افزودن کارگاه جدید'}
-            </Button>
-          </Grid>
-        </Grid>
+            <AddNewThingButton label={'افزودن کارگاه جدید'} onClick={() => setOpenCreateFSMDialog(true)} />
+          </Stack>
+          <Stack spacing={2}>
+            {(!isLoading && fsmsData.fsms.length > 0) &&
+              <Pagination
+                variant="outlined"
+                color="primary"
+                shape='rounded'
+                count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
+                page={pageNumber}
+                onChange={(e, value) => setPageNumber(value)}
+              />
+            }
+            <Stack>
+              <Grid container spacing={2}
+                alignItems='stretch'
+                justifyContent="center"
+                sx={(theme) => ({
+                  justifyContent: 'start',
+                  [theme.breakpoints.down('sm')]: {
+                    justifyContent: 'center',
+                    marginRight: "0px",
+                  },
+                })}>
+                {fsmsData?.fsms?.map((fsm) => (
+                  <Grid item xs={12} sm={6} md={4} key={fsm.id}>
+                    <MentorFSMCard {...fsm} />
+                  </Grid>
+                ))}
+              </Grid>
+            </Stack>
+            {(!isLoading && fsmsData.fsms.length == 0) &&
+              <NoDataFound variant={3} />
+            }
+          </Stack>
+        </Stack>
 
-        <Grid container spacing={2}
-          alignItems='stretch'
-          margin='10px 5px'
-          justifyContent="center"
-          sx={(theme) => ({
-            height: '100%',
-            justifyContent: 'start',
-            [theme.breakpoints.down('sm')]: {
-              justifyContent: 'center',
-              marginRight: "0px",
-            },
-          })}>
-          {allEventWorkshops?.map((workshop) => (
-            <Grid container item xs={12} sm={6} md={4} key={workshop.id} alignItems='center' justifyContent='center'>
-              <MentorFSMCard {...workshop} />
-            </Grid>
-          ))}
-        </Grid>
-
-        <Grid item container>
-          <Grid item>
-            <Pagination
-              variant="outlined"
-              color="primary"
-              shape='rounded'
-              count={Math.ceil(workshopsCount / ITEMS_PER_PAGE_NUMBER)}
-              page={pageNumber}
-              onChange={(e, value) => setPageNumber(value)}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <CreateWorkshopDialog
-        open={openCreateWorkshopDialog}
-        handleClose={() => setOpenCreateWorkshopDialog(false)}
+      </Stack>
+      <CreateFSMDialog
+        open={openCreateFSMDialog}
+        handleClose={() => setOpenCreateFSMDialog(false)}
       />
     </Fragment>
   );
 }
-const mapStateToProps = (state) => ({
-  workshopsCount: state.events.workshopsCount,
-  allEventWorkshops: state.events.workshops,
-});
 
-export default connect(mapStateToProps, {
+export default connect(null, {
   addMentorToWorkshop: addMentorToWorkshopAction,
-  getEventWorkshops: getEventWorkshopsAction,
-})(Index);
+})(ProgramManagementFsmTab);

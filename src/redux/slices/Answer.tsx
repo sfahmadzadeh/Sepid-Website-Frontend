@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { Apis } from 'redux/apis';
 import { createAsyncThunkApi } from 'redux/apis/cerateApiAsyncThunk';
 import {
-  makeAnswerEmptyUrl,
+  clearQuestionAnswerUrl,
   sendWidgetAnswerUrl,
   uploadFileUrl,
 } from 'redux/constants/urls';
@@ -33,42 +33,45 @@ const _sendWidgetAnswerAction = createAsyncThunkApi(
   sendWidgetAnswerUrl,
   {
     defaultNotification: {
-      success: 'پاسخ شما با موفقیت ثبت شد.',
       error: 'مشکلی در ثبت پاسخ وجود داشت.',
     },
   }
 );
 
-export const sendBigAnswerAction = ({ widgetId, text, onSuccess }) =>
+export const sendBigAnswerAction = ({ questionId, text, onSuccess, onFailure }) =>
   _sendWidgetAnswerAction({
-    widgetId,
+    question_id: questionId,
     text,
     answer_type: 'BigAnswer',
     onSuccess,
+    onFailure,
   });
 
-export const sendSmallAnswerAction = ({ widgetId, text, onSuccess }) =>
+export const sendSmallAnswerAction = ({ questionId, text, onSuccess, onFailure }) =>
   _sendWidgetAnswerAction({
-    widgetId,
+    question_id: questionId,
     text,
     answer_type: 'SmallAnswer',
     onSuccess,
+    onFailure,
   });
 
-export const sendInviteeUsernameResponseAction = ({ widgetId, username, onSuccess }) =>
+export const sendInviteeUsernameResponseAction = ({ questionId, username, onSuccess, onFailure }) =>
   _sendWidgetAnswerAction({
-    widgetId,
+    question_id: questionId,
     username,
     answer_type: 'InviteeUsernameResponse',
     onSuccess,
+    onFailure,
   });
 
-export const sendMultiChoiceAnswerAction = ({ problemId, selectedChoices, onSuccess }) =>
+export const sendMultiChoiceAnswerAction = ({ questionId, selectedChoices, onSuccess, onFailure }) =>
   _sendWidgetAnswerAction({
-    widgetId: problemId,
+    question_id: questionId,
     choices: selectedChoices,
     answer_type: 'MultiChoiceAnswer',
     onSuccess,
+    onFailure,
   });
 
 
@@ -77,26 +80,25 @@ export const uploadFileAnswerAction = createAsyncThunkApi(
   Apis.POST_FORM_DATA,
   uploadFileUrl,
   {
-    bodyCreator: ({ problemId, answerFile, onSuccess }) => ({
-      problem: problemId,
+    bodyCreator: ({ questionId, answerFile, onSuccess, onFailure }) => ({
+      problem: questionId,
       answer_file: answerFile,
       is_final_answer: true,
       onSuccess,
+      onFailure,
     }),
     defaultNotification: {
-      success: 'پاسخ شما با موفقیت ثبت شد.',
       error: 'مشکلی در ثبت پاسخ وجود داشت.',
     },
   }
 );
 
-export const makeAnswerFileEmptyAction = createAsyncThunkApi(
-  'widget/makeAnswerFileEmptyAction',
-  Apis.GET,
-  makeAnswerEmptyUrl,
+export const clearQuestionAnswerAction = createAsyncThunkApi(
+  'widget/clearQuestionAnswerAction',
+  Apis.POST,
+  clearQuestionAnswerUrl,
   {
     defaultNotification: {
-      success: 'پاسخ شما با موفقیت حذف شد.',
       error: 'مشکلی در حذف‌کردن پاسخ وجود داشت.',
     },
   }
@@ -108,9 +110,7 @@ const AnswerSlice = createSlice({
   reducers: {},
   extraReducers: {
     [_sendWidgetAnswerAction.pending.toString()]: isFetching,
-    [_sendWidgetAnswerAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg } }) => {
-      state.isFetching = false;
-    },
+    [_sendWidgetAnswerAction.fulfilled.toString()]: isNotFetching,
     [_sendWidgetAnswerAction.rejected.toString()]: isNotFetching,
 
 

@@ -14,38 +14,22 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import UploadFile from 'components/molecules/UploadFile';
 
 
-function AudioEditWidget({
-  onEdit,
+const AudioEditWidget = ({
+  onMutate,
   handleClose,
 
   paperId,
   open,
-  link: oldLink,
+  link: previousLink,
   id: widgetId,
-  file: previousFile,
-}) {
+}) => {
   const t = useTranslate();
-  const [link, setLink] = useState<string>(oldLink);
-  const [file, setFile] = useState<any>(null);
+  const [link, setLink] = useState<string>(previousLink || '');
 
   const handleClick = () => {
-    let payload: any = {
+    onMutate({
       paper: paperId,
-    };
-    if (file) {
-      payload = {
-        ...payload,
-        file,
-      }
-    }
-    if (link) {
-      payload = {
-        ...payload,
-        link,
-      }
-    }
-    onEdit({
-      ...payload,
+      link,
       widgetId,
       onSuccess: handleClose,
     });
@@ -56,7 +40,7 @@ function AudioEditWidget({
       <DialogTitle>صوت</DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
-          <UploadFile widgetId={widgetId} paperId={paperId} file={file} setFile={setFile} previousFile={previousFile} />
+          <UploadFile setFileLink={setLink} />
           <Divider>یا</Divider>
           <DialogContentText>{t('uploadFileFillUrl')}</DialogContentText>
           <TextField

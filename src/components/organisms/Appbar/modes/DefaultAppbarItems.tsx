@@ -1,13 +1,13 @@
 import React from 'react';
-import Brand from '../components/Brand';
+import WebsiteLogo from '../components/logos/WebsiteLogo';
 
 const DefaultAppbarItems = ({ }) => {
 
-  const brand = <Brand />
+  const websiteLogo = <WebsiteLogo />
 
   return {
     desktopLeftItems: [],
-    desktopRightItems: [brand],
+    desktopRightItems: [websiteLogo],
     mobileLeftItems: [],
     mobileRightItems: [],
     mobileMenuListItems: [],

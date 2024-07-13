@@ -1,14 +1,16 @@
 import { useDispatch } from 'react-redux';
 import { WidgetModes } from 'components/organisms/Widget';
 import WIDGET_TYPE_MAPPER from './WidgetTypeMapper';
-import { deleteWidgetAction } from 'redux/slices/widget';
+import { useCreateWidgetMutation, useDeleteWidgetMutation, useUpdateWidgetMutation } from 'redux/features/widget/WidgetSlice';
+import { runConfetti } from 'components/molecules/confetti'
+import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 type WidgetFactoryType = {
-  widgetId?: number;
-  paperId?: number;
-  widgetType: string;
+  widgetId?: string;
+  paperId?: string;
+  widgetType?: string;
   mode: WidgetModes;
-  collectWidgetDataToolkit?: any;
   collectAnswerData?: any;
 }
 
@@ -17,44 +19,68 @@ const useWidgetFactory = ({
   paperId,
   widgetType,
   mode,
-  collectWidgetDataToolkit,
   collectAnswerData,
 }: WidgetFactoryType) => {
+  // skip fetch is initially true, means it doesnot need to fetch the widget data for the first time
+  // the widget data should be fetched after each update
+  const [skipFetch, setSkipFetch] = useState(true);
   const dispatcher = useDispatch();
-  let onDelete, onEdit, onAnswerChange, onViwe, onAnswerSubmit;
+  const [deleteWidget] = useDeleteWidgetMutation();
+  const [createWidget] = useCreateWidgetMutation();
+  const [updateWidget] = useUpdateWidgetMutation();
+
+  let onDelete, onMutate, onAnswerChange, onQuery, onAnswerSubmit;
+
+  if (!widgetType) {
+    return null;
+  }
+
   const {
     WidgetComponent,
     EditWidgetDialog,
-    createAction,
-    updateAction,
     submitAnswerAction,
   } = WIDGET_TYPE_MAPPER[widgetType];
 
-  onEdit = paperId ?
-    (widgetId ?
-      (arg) => dispatcher(updateAction(arg)) :
-      (arg) => dispatcher(createAction(arg))) :
-    // todo: fix TOF. لزوماً نباید با ?. هندلش کرد و لزوماً نباید اینجا صداش زد. اینجا صرفاً باید پاسش داد
-    (widgetId ?
-      collectWidgetDataToolkit?.updateWidget :
-      collectWidgetDataToolkit?.addWidget?.({ widgetType }));
+  onMutate =
+    widgetId ?
+      (props) => {
+        updateWidget({ widgetType, paperId: paperId, widgetId, ...props });
+        setSkipFetch(false);
+      } :
+      (props) => {
+        createWidget({ widgetType, paperId: paperId, ...props });
+        setSkipFetch(false);
+      }
 
-  onAnswerChange = collectAnswerData;
+  onAnswerChange = collectAnswerData ? collectAnswerData : () => { };
 
-  onAnswerSubmit = (arg) => dispatcher(submitAnswerAction(arg));
+  // todo refactor: this peace of code should be extracted as a separate method
+  onAnswerSubmit = (props) => dispatcher(submitAnswerAction(props)).then((response) => {
+    const CORRECTNESS_THRESHOLD = 50;
+    if (response.error) return;
+    if (response.payload?.response?.correctness_percentage >= 0) {
+      if (response.payload.response.correctness_percentage > CORRECTNESS_THRESHOLD) {
+        runConfetti();
+        toast.success('آفرین! پاسخ شما درست بود.')
+      } else {
+        toast.error('پاسخ شما اشتباه بود')
+      }
+    } else {
+      toast.success('پاسخ شما با موفقیت ثبت شد.');
+    }
+  });
 
-  onDelete = paperId ?
-    (arg) => dispatcher<any>(deleteWidgetAction(arg)) :
-    collectWidgetDataToolkit?.removeWidget;
+  onDelete = (props) => deleteWidget(props);
 
   return {
     onDelete,
-    onEdit,
+    onMutate,
     onAnswerChange,
-    onViwe,
+    onQuery,
     onAnswerSubmit,
     WidgetComponent,
     EditWidgetDialog,
+    skipFetch,
   };
 }
 

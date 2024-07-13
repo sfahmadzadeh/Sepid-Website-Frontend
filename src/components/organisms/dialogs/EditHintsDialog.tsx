@@ -7,12 +7,13 @@ const EditHintsDialog = ({
   handleClose,
   hints,
   open,
-  referenceId
+  referenceId,
+  paperId,
 }) => {
   return (
     <Dialog disableScrollLock open={open} onClose={handleClose} fullWidth>
       <DialogContent>
-        <EditHints referenceId={referenceId} type='widget' hints={hints} />
+        <EditHints paperId={paperId} referenceId={referenceId} type='widget' hints={hints} />
       </DialogContent>
     </Dialog>
   );

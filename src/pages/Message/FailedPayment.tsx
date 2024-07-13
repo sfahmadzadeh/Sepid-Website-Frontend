@@ -32,7 +32,7 @@ const FailedPayment = () => {
           </Grid>
           <Grid item>
             <Button
-              onClick={() => navigate('/programs/')}
+              onClick={() => navigate('/')}
               variant="contained"
               color="primary">
               حله

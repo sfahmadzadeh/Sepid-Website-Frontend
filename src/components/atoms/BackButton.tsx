@@ -12,7 +12,7 @@ type BackButtonPropsType = {
   inwardEdges: any[];
   goBackward: any;
   mentorMoveBackward: any;
-  playerId: number;
+  playerId: string;
 }
 
 const BackButton: FC<BackButtonPropsType> = ({

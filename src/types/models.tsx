@@ -1,9 +1,25 @@
-type AudienceTypeType = "All" | "Student" | "Academic";
-type EventTypeType = "Team" | "Individual";
+import { SchoolStudentshipType, UserInfoType } from "./profile";
 
-export type Workshop = any
+type AudienceTypeType = "All" | "Student" | "Academic";
+type ProgramTypeType = "Team" | "Individual";
+
+export type ProgramContactInfoType = {
+  phone_number: string;
+  eitaa_link: string;
+  bale_link: string;
+  instagram_link: string;
+  shad_link: string;
+  telegram_link: string;
+}
 
 export type ProgramType = {
+  is_free: boolean;
+  site_help_paper_id: number;
+  FAQs_paper_id: number;
+  is_manager: boolean;
+  show_scores: boolean;
+  program_contact_info: ProgramContactInfoType;
+  is_visible: boolean;
   accessible_after_closure: boolean;
   audience_type: AudienceTypeType;
   certificates_ready: boolean
@@ -11,25 +27,50 @@ export type ProgramType = {
   creator: string;
   description: string;
   end_date: string | null;
-  event_type: EventTypeType;
+  program_type: ProgramTypeType;
   has_certificate: boolean
   holder: number;
   id: number;
   is_active: boolean;
   is_approved: boolean;
-  is_paid: boolean;
   is_user_participating: boolean;
   maximum_participant: number | null;
   merchandise: Merchandise | null;
   name: string;
   participants_count: number;
-  registration_form: number;
-  registration_receipt: string | null;
+  registration_form: string;
   registration_since: string | null;
   registration_till: string | null;
   start_date: string | null;
   team_size: number;
-  user_registration_status:
+}
+
+export type AnswerSheetType = 'RegistrationReceipt' | 'StateAnswerSheet';
+
+export type Invitation = any
+export type CertificateType = any;
+export type TeamType = {
+  chat_room: string;
+  id: string;
+  members: RegistrationReceiptType[]
+  name: string;
+  registration_form: number;
+  team_head: number;
+};
+export type AnswerType = any;
+
+export type RegistrationReceiptType = {
+  profile_picture: string;
+  id: number;
+  is_paid: boolean;
+  user: UserInfoType;
+  school_studentship: SchoolStudentshipType;
+  is_participating: boolean;
+  answer_sheet_type: AnswerSheetType;
+  certificate: CertificateType;
+  team: TeamType;
+  answers: AnswerType[];
+  status:
   'Waiting' |
   'Rejected' |
   'Accepted' |
@@ -41,17 +82,31 @@ export type ProgramType = {
   'StudentshipDataIncomplete';
 }
 
-export type Invitation = any
-export type RegistrationReceipt = any
 export type Widget = any
-export type Team = any
 export type Request = any
 
 type PaperType = 'RegistrationForm';
 type AcceptingStatus = 'AutoAccept' | 'Manual';
 type AudienceType = 'Student' | 'Academic' | 'All';
+type FSMLearningType = 'Supervised' | 'Unsupervised';
+type FSMPType = 'Individual' | 'Team' | 'Hybrid';
 
-export type FSMType = any;
+export type FSMType = {
+  players_count: number;
+  is_mentor: boolean;
+  id: number;
+  name: string;
+  first_state: FSMStateType;
+  description: string;
+  fsm_learning_type: FSMLearningType | '';
+  fsm_p_type: FSMPType | '';
+  program: string;
+  cover_page: string;
+  lock: string;
+  is_active: boolean;
+  is_visible: boolean;
+  order_in_program: number;
+};
 
 export type RegistrationFormType = {
   accepting_status: AcceptingStatus;
@@ -61,10 +116,10 @@ export type RegistrationFormType = {
   conditions: any;
   creator: string;
   duration: string;
-  event: number;
+  program: number;
   fsm: FSMType;
   has_certificate: boolean;
-  id: number;
+  id: string;
   is_exam: boolean;
   max_grade: number;
   min_grade: number;
@@ -78,12 +133,21 @@ export type Article = any
 export type Problem = any
 export type Submission = any
 export type SubmissionIsLoading = boolean
-export type State = any
+export type FSMStateType = any;
+export type FSMEdgeType = any;
 export type Answer = any
 export type WorkshopEdge = any
 export type Player = any
 export type Token = any
-export type Mentor = { id: string, first_name: string, last_name: string, email: string, phone_number: string, profilePicturePath?: string }
+export type UserMinimalType = {
+  username: string;
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  profilePicturePath?: string;
+}
 export type UploadedFile = { link: string, name: string, id: string }
 
 export type LogoType = {

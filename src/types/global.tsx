@@ -1,8 +1,24 @@
 import { BannerType } from "./redux/WebSiteAppearance";
 
+export type DashboardTabType = {
+  name: string;
+  label: string;
+  icon: any;
+  component: any;
+  isActive?: boolean;
+}
+
 export type directionType = 'rtl' | 'ltr';
 
-export type AppbarModes = 'DASHBOARD' | 'FSM' | 'MENTOR_FSM' | 'PROGRAM' | 'GENERAL' | 'ARTICLE' | 'None';
+export type AppbarModes =
+  'DASHBOARD' |
+  'FSM' |
+  'MENTOR_FSM' |
+  'PROGRAM' |
+  'GENERAL' |
+  'ARTICLE' |
+  'WEBSITE' |
+  'None';
 
 export type AppbarItemsType = {
   desktopLeftItems: any[];
@@ -10,6 +26,7 @@ export type AppbarItemsType = {
   mobileLeftItems: any[];
   mobileRightItems: any[];
   mobileMenuListItems: any[];
+  toolbarItems?: any[];
 }
 
 export type WidgetTypes =
@@ -17,11 +34,13 @@ export type WidgetTypes =
   'Image' |
   'Video' |
   'Aparat' |
-  'Game' |
+  'Iframe' |
   'SmallAnswerProblem' |
   'BigAnswerProblem' |
   'MultiChoiceProblem' |
   'UploadFileProblem';
+
+export type WidgetType = any;
 
 export type RegistrationStepType = {
   name: RegistrationStepNameType;
@@ -31,22 +50,33 @@ export type RegistrationStepType = {
 };
 
 export type RegistrationStepLabelType =
-  'تکمیل مشخصات شخصی' |
-  'تکمیل مشخصات دانش‌آموزی' |
-  'تکمیل مشخصات دانشجویی' |
+  'تکمیل اطلاعات شخصی' |
+  'تکمیل اطلاعات دانش‌آموزی' |
+  'تکمیل اطلاعات دانشجویی' |
   'ثبت‌نام در دوره' |
   'وضعیت ثبت‌نام' |
   'پرداخت هزینه' |
   'ورود به دوره'
 
 export type RegistrationStepNameType =
-  'personal-profile' |
-  'student-profile' |
-  'academic-profile' |
+  'user-setting' |
+  'school-setting' |
+  'university-setting' |
   'form' |
   'status' |
   'payment' |
   'program'
+
+export type WebsiteType = {
+  website_type: 'academy';
+  name: string;
+  display_name: string;
+  logo: LogoType;
+  appbar: { body: BackendAppbarType };
+  header: HeaderMetaData;
+  og_metadata: OpenGraphMetaData;
+  has_login_with_google: boolean;
+}
 
 export type PartyType = {
   party_type: 'individual' | 'company';
@@ -58,7 +88,7 @@ export type PartyType = {
 
 export type PageMetadataType = {
   address_pattern: string;
-  header_data: HeaderData;
+  header_data: HeaderMetaData;
   og_metadata: OpenGraphMetaData;
   banners: BannerType[];
   appbar: { body: BackendAppbarType };
@@ -74,7 +104,7 @@ export type LogoType = {
   mobile_image: string;
 }
 
-export type HeaderData = {
+export type HeaderMetaData = {
   title: string;
   description: string;
   theme_color: string;
@@ -95,3 +125,6 @@ export type AppbarMenuItemType = {
   items: AppbarMenuItemType[];
   position: 'right' | 'left';
 }
+
+
+export type HintType = any;

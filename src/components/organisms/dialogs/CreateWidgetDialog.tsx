@@ -5,7 +5,6 @@ import {
   Select,
 } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import React, { FC, useState } from 'react';
@@ -16,44 +15,43 @@ import useWidgetFactory from 'components/organisms/Widget/useWidgetFactory';
 import { WidgetModes } from 'components/organisms/Widget';
 
 type CreateWidgetDialogPropsType = {
-  collectWidgetDataToolkit?: any;
   handleClose: any;
 
   open: boolean;
-  paperId: number;
+  paperId: string;
   showContent?: boolean;
   showProblems?: boolean;
 }
 
 
 const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
-  collectWidgetDataToolkit,
   open,
   handleClose,
   paperId,
   showContent = true,
   showProblems = false,
 }) => {
-  const [type, setType] = useState('');
+  const [widgetType, setWidgetType] = useState('');
   const t = useTranslate();
+  const widgetProperties = useWidgetFactory({
+    paperId,
+    widgetType,
+    mode: WidgetModes.Create,
+  });
 
-  if (type) {
+  if (widgetType) {
     const {
-      onEdit,
+      onMutate,
       EditWidgetDialog,
-    } = useWidgetFactory({
-      paperId,
-      widgetType: type,
-      mode: WidgetModes.Create,
-      collectWidgetDataToolkit,
-    });
+    } = widgetProperties;
+
     return (
       <EditWidgetDialog
         paperId={paperId}
         open={open}
-        onEdit={onEdit}
+        onMutate={onMutate}
         handleClose={() => {
-          setType('');
+          setWidgetType('');
           handleClose();
         }}
       />
@@ -61,15 +59,15 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
   }
 
   return (
-    <Dialog disableScrollLock open={open} maxWidth='sm' onClose={handleClose}>
+    <Dialog disableScrollLock open={open} onClose={handleClose}>
       <DialogTitle>{t('createWidget')}</DialogTitle>
       <DialogContent>
-        <FormControl size='small' fullWidth style={{ width: '200px' }} variant="outlined">
+        <FormControl size='small' fullWidth sx={{ width: 200, marginTop: 1 }} variant="outlined">
           <InputLabel>{t('widgetType')}</InputLabel>
           <Select
-            onChange={(e) => setType(e.target.value)}
+            onChange={(e) => setWidgetType(e.target.value)}
             name='fsmId'
-            value={type}
+            value={widgetType}
             label={t('widgetType')}>
             {Object.keys(WIDGET_TYPE_MAPPER)
               .filter((option, index) => (!option.includes('Problem') && showContent) || (option.includes('Problem') && showProblems))
@@ -81,9 +79,6 @@ const CreateWidgetDialog: FC<CreateWidgetDialogPropsType> = ({
           </Select>
         </FormControl >
       </DialogContent>
-      <DialogActions>
-
-      </DialogActions>
     </Dialog>
   );
 }

@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navigate, Outlet, useParams } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-const PrivateRoute = ({  accessToken }) => {
-  const { programId } = useParams();
+const PrivateRoute = ({ accessToken }) => {
+  const location = useLocation();
+
   if (!accessToken) {
-    return <Navigate to={programId ? `/?private_program_id=${programId}` : '/'} />
+    return <Navigate state={{ from: location }} to={'/login/'} />
   }
   return <Outlet />
 };

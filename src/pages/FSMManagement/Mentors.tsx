@@ -4,182 +4,133 @@ import {
   Grid,
   IconButton,
   Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   TextField,
   Tooltip,
   Typography,
 } from '@mui/material';
-import React, { useEffect, useState, FC, Fragment } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
-import {
-  getEventWorkshopsAction,
-} from 'redux/slices/events';
-import { addMentorToWorkshopAction } from 'redux/slices/events';
+import { addMentorToWorkshopAction } from 'redux/slices/programs';
 import { getAllWorkshopMentorsAction, removeMentorFromWorkshopAction } from 'redux/slices/workshop';
-import { Mentor } from 'types/models';
-import { toEnglishNumber } from 'utils/translateNumber';
+import { UserMinimalType } from 'types/models';
+import InfoIcon from '@mui/icons-material/Info';
+import SimpleTable from 'components/organisms/tables/SimpleTable';
 
 type MentorsPropsType = {
   addMentorToWorkshop: Function,
-  getEventWorkshops: Function,
   getAllWorkshopMentors: Function,
   removeMentorFromWorkshop: Function,
-  fsmId: number,
-  workshopMentors: Mentor[],
+  fsmMentors: UserMinimalType[],
 }
 
 const Mentors: FC<MentorsPropsType> = ({
   addMentorToWorkshop,
-  getEventWorkshops,
   getAllWorkshopMentors,
   removeMentorFromWorkshop,
-  fsmId,
-  workshopMentors = []
+  fsmMentors = []
 }) => {
-  const { programId } = useParams();
-  const [pageNumber, setPageNumber] = useState(1);
-  const [properties, setProperties] = useState({
-    username: '',
-    fsmId: fsmId,
-  });
+  const { fsmId } = useParams();
+  const [username, setUsername] = useState<string>('');
 
   useEffect(() => {
-    if (fsmId) {
-      getAllWorkshopMentors({ fsmId })
-    }
-  }, [fsmId])
+    getAllWorkshopMentors({ fsmId })
+  }, [])
 
-  useEffect(() => {
-    getEventWorkshops({ programId, pageNumber });
-  }, [pageNumber]);
-
-  const putData = (e) => {
-    setProperties({
-      ...properties,
-      [e.target.name]: toEnglishNumber(e.target.value),
+  const addMentor = () => {
+    addMentorToWorkshop({
+      username,
+      fsmId,
+      onSuccess: () => {
+        setUsername('');
+        getAllWorkshopMentors({ fsmId })
+      }
     });
   };
 
-  const addMentor = async () => {
-    await addMentorToWorkshop(properties);
-    setProperties(prevProps => ({ ...prevProps, username: '' }))
-    getAllWorkshopMentors({ fsmId })
-  };
+  const removeMentor = (username) => {
+    removeMentorFromWorkshop({
+      fsmId,
+      username,
+      onSuccess: () => getAllWorkshopMentors({ fsmId })
+    });
+  }
 
   return (
-    <Stack>
-      <Grid
-        padding={2}
-        container
-        item
-        spacing={2}
-        alignItems="center"
-        justifyContent="center"
-        direction="row">
+    <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
+      <Stack padding={2} spacing={2}>
+        <Stack direction={'row'} alignItems={'center'}>
+          <Typography variant='h2'>
+            {'همیاران کارگاه'}
+          </Typography>
+          <Tooltip title='همیار کارگاه تنها به تنظیمات یک کارگاه دسترسی دارد؛ از جمله می‌تواند محتوای کارگاه را ویرایش کند، پاسخ‌های شرکت‌کنندگان را تصحیح کند یا به درخواست آن‌ها پاسخ دهد.'>
+            <IconButton>
+              <InfoIcon />
+            </IconButton>
+          </Tooltip>
+        </Stack>
 
-        <Grid item container xs={12} spacing={2}>
-          <Grid item>
-            <Typography variant='h2'>
-              {'افزودن همیار به کارگاه'}
-            </Typography>
+        <Stack>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                value={username}
+                size="small"
+                fullWidth
+                variant="outlined"
+                label="نام کاربری"
+                name="username"
+                inputProps={{ className: 'ltr-input' }}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Button
+                disabled={!username}
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={addMentor}>
+                {'افزودن همیار جدید'}
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
+        </Stack>
+      </Stack>
 
-        <Grid item container xs spacing={1} justifyContent="space-evenly">
-          <Grid item xs={12} sm={6}>
-            <TextField
-              value={properties.username}
-              size="small"
-              fullWidth
-              variant="outlined"
-              label="نام کاربری"
-              name="username"
-              inputProps={{ className: 'ltr-input' }}
-              onChange={putData}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Button
-              disabled={!properties.username || !properties.fsmId}
-              fullWidth
-              variant="contained"
-              color="primary"
-              onClick={addMentor}>
-              {'بیافزا'}
-            </Button>
-          </Grid>
-        </Grid>
+      <Divider />
 
-      </Grid>
+      <SimpleTable
+        headers={[
+          { name: 'first_name', label: 'نام' },
+          { name: 'last_name', label: 'نام خانوادگی' },
+          { name: 'phone_number', label: 'شماره تماس' },
+          { name: 'email', label: 'ایمیل' },
+          { name: 'activities', label: 'عملیات' },
+        ]}
 
-      <Divider sx={{ margin: '30px auto' }}></Divider>
-
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell align='center'>ردیف</TableCell>
-              <TableCell align='center'>نام</TableCell>
-              <TableCell align='center'>نام خانوادگی</TableCell>
-              <TableCell align='center'>شماره تماس</TableCell>
-              <TableCell align='center'>ایمیل</TableCell>
-              <TableCell align='center'>عملیات</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {workshopMentors.map((mentor, index) =>
-              <TableRow key={index}>
-                <TableCell align='center'>
-                  {index + 1}
-                </TableCell>
-                <TableCell align='center'>
-                  {mentor.first_name || '-'}
-                </TableCell>
-                <TableCell align='center'>
-                  {mentor.last_name || '-'}
-                </TableCell>
-                <TableCell align='center'>
-                  {mentor.phone_number || '-'}
-                </TableCell>
-                <TableCell align='center'>
-                  {mentor.email || '-'}
-                </TableCell>
-                <TableCell align='center'>
-                  <Tooltip title='حذف همیار' arrow>
-                    <IconButton size='small'
-                      onClick={async () => {
-                        // TODO: Hashem
-                        await removeMentorFromWorkshop({ fsmId, mentor: { username: mentor.phone_number } })
-                        getAllWorkshopMentors({ fsmId })
-                      }}>
-                      <ClearIcon />
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+        rows={fsmMentors.map(mentor => ({
+          ...mentor,
+          activities:
+            <Tooltip title='حذف همیار' arrow>
+              <IconButton size='small'
+                onClick={() => removeMentor(mentor.username)}>
+                <ClearIcon />
+              </IconButton>
+            </Tooltip>
+        }))}
+      />
     </Stack>
   );
 }
 
 const mapStateToProps = (state) => ({
-  fsmId: state.workshop.workshop?.id,
-  workshopMentors: state.workshop.allWorkshopMentors,
+  fsmMentors: state.workshop.allWorkshopMentors,
 });
 
 export default connect(mapStateToProps, {
   addMentorToWorkshop: addMentorToWorkshopAction,
-  getEventWorkshops: getEventWorkshopsAction,
   getAllWorkshopMentors: getAllWorkshopMentorsAction,
   removeMentorFromWorkshop: removeMentorFromWorkshopAction,
 })(Mentors);

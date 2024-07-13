@@ -3,50 +3,33 @@ import { Add as AddIcon } from '@mui/icons-material';
 import React, { useState, FC } from 'react';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
-import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import {
-  createHintAction,
-  deleteHintAction,
-  createWidgetHintAction,
-  deleteWidgetHintAction,
-} from 'redux/slices/Paper';
 
-import Widget, { WidgetModes } from 'components/organisms/Widget';
 import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog';
 import { toPersianNumber } from 'utils/translateNumber';
+import { EditPaper } from './Paper';
+import { useCreateFSMStateHintMutation, useCreateWidgetHintMutation, useDeleteFSMStateHintMutation, useDeleteWidgetHintMutation } from 'redux/features/hint/HintSlice';
 
 type EditHintsPropsType = {
   type: 'widget' | 'state';
-  papers: any[];
   hints: any[];
-  referenceId: number;
-  createHint: any;
-  deleteHint: any;
-  createWidgetHint: any,
-  deleteWidgetHint: any,
+  referenceId: string;
+  paperId: string;
 }
 
 const EditHints: FC<EditHintsPropsType> = ({
   type = 'state',
-  papers,
   referenceId,
-  createHint,
-  deleteHint,
-  createWidgetHint,
-  deleteWidgetHint,
+  hints = [],
+  paperId,
 }) => {
   const t = useTranslate();
-  const [hintId, setHintId] = useState<number>(null);
-  const [deleteDialogId, setDeleteDialogId] = useState<number>(null);
-
-  const hints = [];
-  for (const key in papers) {
-    const paper = papers[key];
-    if (paper.reference === referenceId) {
-      hints.push(paper);
-    }
-  }
+  const [hintId, setHintId] = useState<string>(null);
+  const [deleteDialogId, setDeleteDialogId] = useState<string>(null);
+  const [createHint] = useCreateFSMStateHintMutation();
+  const [deleteHint] = useDeleteFSMStateHintMutation();
+  const [createWidgetHint] = useCreateWidgetHintMutation();
+  const [deleteWidgetHint] = useDeleteWidgetHintMutation();
 
   return (
     <Stack spacing={2} width='100%'>
@@ -54,7 +37,7 @@ const EditHints: FC<EditHintsPropsType> = ({
         {'راهنمایی‌ها'}
       </Typography>
       <Divider />
-      {hints.length > 0 ?
+      {hints?.length > 0 ?
         <Stack>
           <Grid container alignItems='stretch' spacing={2}>
             {hints.map((hint, index) => (
@@ -71,26 +54,11 @@ const EditHints: FC<EditHintsPropsType> = ({
                         </Tooltip>
                       </Box>
                     </Stack>
-                    {hint.widgets.map((widget) => (
-                      <Widget
-                        key={widget.id}
-                        paperId={hint.id}
-                        widget={widget}
-                        mode={WidgetModes.Edit}
-                      />
-                    ))}
-                    <Button
-                      startIcon={<AddIcon />}
-                      variant="contained"
-                      color="primary"
-                      onClick={() => setHintId(hint.id)}>
-                      {t('createWidget')}
-                    </Button>
+                    <EditPaper paperId={hint.id} />
                   </Stack>
                 </Paper>
               </Grid>
-            ))
-            }
+            ))}
           </Grid>
         </Stack>
         :
@@ -103,7 +71,7 @@ const EditHints: FC<EditHintsPropsType> = ({
         startIcon={<AddIcon />}
         variant="contained"
         color="primary"
-        onClick={() => type === 'state' ? createHint({ referenceId }) : createWidgetHint({ referenceId })}>
+        onClick={() => type === 'state' ? createHint({ fsmStateId: referenceId }) : createWidgetHint({ paperId, widgetId: referenceId })}>
         {t('createHelp')}
       </Button>
       <CreateWidgetDialog
@@ -114,20 +82,10 @@ const EditHints: FC<EditHintsPropsType> = ({
       <AreYouSure
         open={!!deleteDialogId}
         handleClose={() => setDeleteDialogId(null)}
-        callBackFunction={() => type === 'state' ? deleteHint({ referenceId, hintId: deleteDialogId }) : deleteWidgetHint({ hintId: deleteDialogId })}
+        callBackFunction={() => type === 'state' ? deleteHint({ fsmStateId: referenceId, hintId: deleteDialogId }) : deleteWidgetHint({ paperId, hintId: deleteDialogId })}
       />
     </Stack>
   );
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  papers: state.paper.papers,
-})
-
-export default connect(mapStateToProps, {
-  // todo: TOFF
-  createHint: createHintAction,
-  deleteHint: deleteHintAction,
-  createWidgetHint: createWidgetHintAction,
-  deleteWidgetHint: deleteWidgetHintAction,
-})(EditHints);
+export default EditHints;

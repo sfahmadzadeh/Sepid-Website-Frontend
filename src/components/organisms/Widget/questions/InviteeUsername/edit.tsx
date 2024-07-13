@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 
 function InviteeUsernameEdit({
-  onEdit,
+  onMutate,
   handleClose,
 
   open,
@@ -27,7 +27,7 @@ function InviteeUsernameEdit({
   const [solution, setSolution] = useState<string>(oldSolution || '');
 
   const handleSubmit = () => {
-    onEdit({
+    onMutate({
       widgetId,
       paper: paperId,
       text: text,

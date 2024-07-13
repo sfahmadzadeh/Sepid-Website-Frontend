@@ -47,14 +47,19 @@ function Meeting({ handleClose, displayName }) {
           height: 40,
         }}>
 
-        <Box>
+        <Stack direction={'row'}>
+          <Tooltip title='بستن' arrow>
+            <IconButton size='small' onClick={handleClose}>
+              <CancelIcon />
+            </IconButton>
+          </Tooltip>
           <Stack display={showWarning ? 'flex' : 'none'} direction={'row'} alignItems={'center'} spacing={0.5}>
             <WarningIcon color='warning' />
             <Typography fontWeight={400} >
               {'ممکن است اتصال کمی طول بکشد'}
             </Typography>
           </Stack>
-        </Box>
+        </Stack>
 
         <Stack direction={'row'}>
           <Tooltip title='اگر در اتصال به اتاق گفتگو دچار مشکل شدید، ابتدا وضعیت اتصال خود به اینترنت را بررسی کنید. اگر وضعیت اتصال شما مطلوب بود، با استفاده از گزینه‌ی سمت چپ اتاق را refresh کنید. چنانچه مشکل حل نشد، به پشتیبانی سایت اطلاع دهید.' arrow leaveDelay={0}>
@@ -62,16 +67,9 @@ function Meeting({ handleClose, displayName }) {
               <HelpIcon />
             </IconButton>
           </Tooltip>
-
           <Tooltip title='refresh' arrow>
             <IconButton size='small' onClick={refresh}>
               <RefreshIcon />
-            </IconButton>
-          </Tooltip>
-
-          <Tooltip sx={{ display: { xs: 'inherit', sm: 'none' } }} title='بستن' arrow>
-            <IconButton size='small' onClick={handleClose}>
-              <CancelIcon />
             </IconButton>
           </Tooltip>
         </Stack>

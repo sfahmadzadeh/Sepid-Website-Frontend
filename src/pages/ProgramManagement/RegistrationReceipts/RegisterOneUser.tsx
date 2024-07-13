@@ -2,24 +2,53 @@ import {
   Typography,
   IconButton,
   Stack,
+  Grid,
+  Button,
+  TextField,
 } from '@mui/material';
-import React, { useState, FC } from 'react';
+import React, { useState, FC, Fragment } from 'react';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import RegisterOneUserDialog from 'components/organisms/dialogs/RegisterOneUserDialog';
+import { toast } from 'react-toastify';
 
 type AddOneUserPropsType = {}
 
 const RegisterOneUser: FC<AddOneUserPropsType> = ({ }) => {
-  const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState<string>('');
+
+
   return (
-    <Stack direction='row' alignItems='center' spacing={1}>
-      <Typography variant='h4' component='h2'>
-        {'افزودن کاربر جدید'}
+    <Stack spacing={2}>
+      <Typography variant='h2'>
+        {'ثبت‌نام کاربر جدید'}
       </Typography>
-      <IconButton onClick={() => setOpen(open => !open)}>
-        <AddCircleOutlineIcon />
-      </IconButton>
-      <RegisterOneUserDialog open={open} handleClose={() => setOpen(open => !open)} />
+
+      <Stack>
+        <Grid container spacing={1}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              value={username}
+              size="small"
+              fullWidth
+              variant="outlined"
+              label="نام کاربری"
+              name="username"
+              inputProps={{ className: 'ltr-input' }}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Button
+              disabled={!username}
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => toast.info('این فیچر در دست پیاده‌سازی است!')}>
+              {'ثبت‌نام کاربر جدید'}
+            </Button>
+          </Grid>
+        </Grid>
+      </Stack>
     </Stack>
   );
 }

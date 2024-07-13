@@ -1,30 +1,28 @@
 import {
-    State,
+    FSMStateType,
     WorkshopEdge,
-    Team,
-    Workshop,
+    TeamType,
     Widget,
     Answer,
     Player,
-    Mentor
-} 
-from '../models'
+    UserMinimalType,
+    FSMType
+} from '../models'
 
 export type InitialStateType = {
     currentState: CurrentState,
     isFetching: boolean,
-    allStates: State[],
+    allStates: FSMStateType[],
     allWorkshopEdges: WorkshopEdge[],
-    fetchedTeamsObjects: Team[],
-    requestedTeams: Team[],
-    getWorkshopsLoading: boolean,
-    registrableWorkshops: Workshop[],
-    workshop: Workshop,
+    fetchedTeamsObjects: TeamType[],
+    requestedTeams: TeamType[],
+    registrableWorkshops: FSMType[],
+    workshop: FSMType,
     answers: Answer[],
-    allWorkshops: Workshop[],
+    allWorkshops: FSMType[],
     players: Player,
-    allWorkshopMentors: Mentor[],
-  };
+    allWorkshopMentors: UserMinimalType[],
+};
 
 type CurrentState = {
     widgets: Widget[]

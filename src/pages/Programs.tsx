@@ -3,27 +3,25 @@ import React from 'react';
 import ProgramCard from 'components/organisms/cards/ProgramCard';
 import Layout from 'components/template/Layout';
 import { ProgramType } from 'types/models';
-import ProgramSkeletonCard from 'components/organisms/cards/EventSkeletonCard';
+import ProgramCardSkeleton from 'components/organisms/cards/ProgramCardSkeleton';
 import Banner from 'components/molecules/Banner';
-import { useGetProgramsQuery } from 'redux/features/ProgramSlice';
-import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetProgramsQuery } from 'redux/features/program/ProgramSlice';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import NoDataFound from 'components/molecules/NoDataFound';
 
-
 const Programs = ({ }) => {
-  const { data: party } = useGetPartyQuery();
-  const { data: pageMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
-
-  const banners = pageMetadata?.banners || [];
-
+  const { data: website } = useGetWebsiteQuery();
+  const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
   const {
-    data: programs = [],
+    data: programsData,
     isLoading,
     isSuccess,
-  } = useGetProgramsQuery({ partyUuid: party?.uuid }, { skip: !Boolean(party) });
+  } = useGetProgramsQuery({ websiteName: website?.name }, { skip: !Boolean(website) });
+  const programs = programsData?.programs.filter(program => program.is_visible) || [];
+  const visiblePrograms = programs.filter(program => program.is_visible)
 
-  const activePrograms: ProgramType[] = programs.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
-  const inactivePrograms: ProgramType[] = programs.filter((program: ProgramType) => !program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
+  const activePrograms: ProgramType[] = visiblePrograms.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
+  const inactivePrograms: ProgramType[] = visiblePrograms.filter((program: ProgramType) => !program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
 
   const activeProgramsElement = (
     <Grid item container spacing={2} xs={12}>
@@ -59,7 +57,7 @@ const Programs = ({ }) => {
     <Grid item container spacing={2} xs={12}>
       {[...Array(6)].map((_, index) => (
         <Grid key={index} container item xs={12} sm={6} md={4} justifyContent='center' alignItems='flex-start' >
-          <ProgramSkeletonCard />
+          <ProgramCardSkeleton />
         </Grid>
       ))}
     </Grid>
@@ -68,7 +66,7 @@ const Programs = ({ }) => {
   return (
     <Layout appbarMode='DASHBOARD'>
       <Stack width={'100%'} spacing={4} justifyContent='center'>
-        <Banner banners={banners} />
+        <Banner banners={pageMetadata?.banners} />
         <Typography variant="h1" align='center'>
           {'دوره‌‌ها'}
         </Typography>

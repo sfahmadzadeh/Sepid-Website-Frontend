@@ -18,7 +18,7 @@ import {
   deleteRequestMentorAction,
   getRequestMentorAction,
   removeRequestMentorAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import {
   getFSMPlayersAction,
 } from 'redux/slices/workshop';
@@ -151,7 +151,7 @@ const Teams: FC<InfoPropsType> = ({
 const mapStateToProps = (state) => ({
   accessToken: state.account.accessToken,
   players: state.workshop.players,
-  requests: state.events.teamsRequests || {},
+  requests: state.programs.teamsRequests || {},
 });
 
 export default connect(

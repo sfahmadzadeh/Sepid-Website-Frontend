@@ -1,5 +1,5 @@
-import { serialize } from 'object-to-formdata';
+import { serialize } from 'object-to-formdata'
 
-export default function jsonToFormData(object) {
-  return serialize(object);
+export default function jsonToFormData (object) {
+  return serialize(object)
 }

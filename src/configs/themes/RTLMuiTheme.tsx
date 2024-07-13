@@ -10,7 +10,6 @@ import iranyekanwebmedium from '../fonts/iranyekanwebmedium.woff';
 import iranyekanwebextrabold from '../fonts/iranyekanwebextrabold.woff';
 import iranyekanwebblack from '../fonts/iranyekanwebblack.woff';
 import iranyekanwebextrablack from '../fonts/iranyekanwebextrablack.woff';
-import Lalezar from '../fonts/Lalezar.woff2'
 
 const RTLMuiTheme = createTheme({
   direction: 'rtl',
@@ -19,13 +18,6 @@ const RTLMuiTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: `
-
-      @font-face {
-        font-family: Lalezar;
-        src: url(${Lalezar}) format("woff2");
-        font-weight: 400;
-        font-style: normal;
-      }
 
       @font-face {
         font-family: iranyekan;

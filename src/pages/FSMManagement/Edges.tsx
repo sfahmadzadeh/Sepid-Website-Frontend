@@ -2,7 +2,6 @@ import {
   Button,
   Checkbox,
   FormControl,
-  Grid,
   IconButton,
   InputLabel,
   MenuItem,
@@ -16,52 +15,27 @@ import {
   TableRow,
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
-import React, { useEffect, useState, FC } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, FC } from 'react';
 import { useParams } from 'react-router';
-import {
-  addEdgeAction,
-  getAllWorkshopEdgesAction,
-  getAllWorkshopStatesInfoAction,
-  removeEdgeAction,
-  updateEdgeAction,
-} from 'redux/slices/workshop';
-import { WorkshopEdge, State } from 'types/models';
-import CustomJoyrideButton from 'components/atoms/CustomJoyrideButton';
+import { useGetFSMEdgesQuery, useGetFSMStatesQuery } from 'redux/features/fsm/FSMSlice';
+import { useCreateFSMEdgeMutation, useDeleteFSMEdgeMutation, useUpdateFSMEdgeMutation } from 'redux/features/fsm/EdgeSlice';
 
-type IndexPropsType = {
-  addNotification: Function,
-  getAllWorkshopEdges: Function,
-  getAllWorkshopStatesInfo: Function,
-  addEdge: Function,
-  updateEdge: Function,
-  removeEdge: Function,
-  allWorkshopEdges: WorkshopEdge[],
-  allStates: State[],
-}
+type IndexPropsType = {}
 
-const Index: FC<IndexPropsType> = ({
-  getAllWorkshopEdges,
-  getAllWorkshopStatesInfo,
-  addEdge,
-  updateEdge,
-  removeEdge,
-  allWorkshopEdges,
-  allStates,
-}) => {
-  const [stateName, setStateName] = useState();
-  const [newEdge, setNewEdge] = useState({
+const Edges: FC<IndexPropsType> = ({ }) => {
+  const { fsmId } = useParams()
+  const newEdgeInitialValue = {
     tail: '',
     head: '',
     is_visible: false,
     is_back_enabled: true,
-  });
-  const { fsmId } = useParams()
-
-  useEffect(() => {
-    getAllWorkshopEdges({ fsmId });
-    getAllWorkshopStatesInfo({ fsmId });
-  }, [])
+  }
+  const [newEdge, setNewEdge] = useState(newEdgeInitialValue);
+  const { data: fsmStates = [] } = useGetFSMStatesQuery({ fsmId });
+  const { data: fsmEdges = [] } = useGetFSMEdgesQuery({ fsmId });
+  const [createFSMEdge] = useCreateFSMEdgeMutation();
+  const [updateFSMEdge] = useUpdateFSMEdgeMutation();
+  const [deleteFSMEdge] = useDeleteFSMEdgeMutation();
 
   return (
     <Stack>
@@ -89,9 +63,8 @@ const Index: FC<IndexPropsType> = ({
                         tail: e.target.value,
                       })
                     }}
-                    label='شروع'
-                  >
-                    {allStates?.map((state) => (
+                    label='شروع'>
+                    {fsmStates.map((state) => (
                       <MenuItem key={state.id} value={state.id}>{state.name}</MenuItem>
                     ))}
                   </Select>
@@ -108,9 +81,8 @@ const Index: FC<IndexPropsType> = ({
                         head: e.target.value,
                       })
                     }}
-                    label='پایان'
-                  >
-                    {allStates?.map((state) => (
+                    label='پایان'>
+                    {fsmStates.map((state) => (
                       <MenuItem key={state.id} value={state.id}>{state.name}</MenuItem>
                     ))}
                   </Select>
@@ -143,14 +115,14 @@ const Index: FC<IndexPropsType> = ({
               <TableCell align='center'>
                 <Button
                   onClick={() => {
-                    addEdge(newEdge)
+                    createFSMEdge(newEdge);
                   }}
                   variant='contained' color='primary'>
                   {'ایجاد'}
                 </Button>
               </TableCell>
             </TableRow>
-            {allWorkshopEdges?.map((edge, index) =>
+            {fsmEdges?.map((edge, index) =>
               <TableRow key={index}>
                 <TableCell align='center'>
                   {edge.tail?.name}
@@ -162,8 +134,8 @@ const Index: FC<IndexPropsType> = ({
                   <Checkbox
                     checked={edge.is_visible}
                     onChange={() => {
-                      updateEdge({
-                        edgeId: edge.id,
+                      updateFSMEdge({
+                        fsmEdgeId: edge.id,
                         is_visible: !edge.is_visible,
                         is_back_enabled: edge.is_back_enabled,
                         head: edge.head?.id,
@@ -177,8 +149,8 @@ const Index: FC<IndexPropsType> = ({
                   <Checkbox
                     checked={edge.is_back_enabled}
                     onChange={() => {
-                      updateEdge({
-                        edgeId: edge.id,
+                      updateFSMEdge({
+                        fsmEdgeId: edge.id,
                         is_visible: edge.is_visible,
                         is_back_enabled: !edge.is_back_enabled,
                         head: edge.head?.id,
@@ -191,7 +163,7 @@ const Index: FC<IndexPropsType> = ({
                 <TableCell align='center'>
                   <IconButton size='small'
                     onClick={() => {
-                      removeEdge({ edgeId: edge.id })
+                      deleteFSMEdge({ fsmEdgeId: edge.id })
                     }}>
                     <ClearIcon />
                   </IconButton>
@@ -205,15 +177,4 @@ const Index: FC<IndexPropsType> = ({
   );
 }
 
-const mapStateToProps = (state) => ({
-  allWorkshopEdges: state.workshop.allWorkshopEdges,
-  allStates: state.workshop.allStates,
-});
-
-export default connect(mapStateToProps, {
-  addEdge: addEdgeAction,
-  getAllWorkshopEdges: getAllWorkshopEdgesAction,
-  getAllWorkshopStatesInfo: getAllWorkshopStatesInfoAction,
-  removeEdge: removeEdgeAction,
-  updateEdge: updateEdgeAction,
-})(Index);
+export default Edges;

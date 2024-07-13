@@ -5,7 +5,6 @@ import { Slide, ToastContainer } from 'react-toastify';
 import React, { Fragment, useEffect } from 'react';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
-import { SnackbarProvider } from 'notistack';
 import { CacheProvider } from "@emotion/react";
 import { connect } from 'react-redux';
 import { IntlProvider } from 'react-redux-multilingual';
@@ -15,37 +14,40 @@ import { socket } from 'socket.io';
 
 import createEmotionCache from './configs/CreateEmotionCache'
 import selectTheme from './configs/themes';
-import Notifier from './components/molecules/Notifications';
 import { initParseServer } from './parse/init';
 import { resetRedirectAction } from './redux/slices/redirect';
-import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import Root from './routes';
 import translations from './translations';
 import LinearLoading from 'components/atoms/LinearLoading';
 import { useGetThirdPartiesQuery } from 'redux/features/ThirdPartySlice';
 import { initSupportingThirdPartyApps } from 'configs/SupportingThirdPartyApps';
+import { ConfettiContainer } from 'components/molecules/confetti';
+import { useCheckAuthenticationQuery } from 'redux/features/user/UserSlice';
 
 const App = ({
   dir,
   redirectTo,
   resetRedirect,
   loading,
+  accessToken,
 }) => {
   const navigate = useNavigate();
+  // check token expiration:
+  useCheckAuthenticationQuery(null, { skip: !accessToken });
+  const { data: website, refetch } = useGetWebsiteQuery();
+  const { data: websiteMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
+  const { data: thirdPartiesTokens } = useGetThirdPartiesQuery({ partyName: website?.name }, { skip: !Boolean(website) })
 
   useEffect(() => {
-    socket.on('connection', (e) => { console.log(e) });
-  }, [])
-
-  const { data: party } = useGetPartyQuery();
-  const { data: websiteMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
-  const { data: thridPartiesTokens } = useGetThirdPartiesQuery({ partyUuid: party?.uuid }, { skip: !Boolean(party) })
+    refetch();
+  }, [accessToken])
 
   useEffect(() => {
-    if (thridPartiesTokens) {
-      initSupportingThirdPartyApps(thridPartiesTokens);
+    if (thirdPartiesTokens) {
+      initSupportingThirdPartyApps(thirdPartiesTokens);
     }
-  }, [thridPartiesTokens])
+  }, [thirdPartiesTokens])
 
   useEffect(() => {
     if (redirectTo !== null) {
@@ -89,25 +91,23 @@ const App = ({
       <IntlProvider translations={translations}>
         <CacheProvider value={createEmotionCache(dir)}>
           <ThemeProvider theme={selectTheme(dir)}>
-            <SnackbarProvider>
-              <ToastContainer
-                rtl
-                position="top-right"
-                autoClose={3000}
-                transition={Slide}
-                newestOnTop
-                hideProgressBar={false}
-                pauseOnHover={false}
-                pauseOnFocusLoss={false}
-                closeOnClick
-                limit={3}
-                draggable={false}
-              />
-              <LinearLoading loading={loading} />
-              <Notifier />
-              <CssBaseline />
-              <Root />
-            </SnackbarProvider>
+            <ToastContainer
+              rtl
+              position="top-right"
+              autoClose={3000}
+              transition={Slide}
+              newestOnTop
+              hideProgressBar={false}
+              pauseOnHover={false}
+              pauseOnFocusLoss={false}
+              closeOnClick
+              limit={3}
+              draggable={false}
+            />
+            <ConfettiContainer />
+            <LinearLoading loading={loading} />
+            <CssBaseline />
+            <Root />
           </ThemeProvider>
         </CacheProvider>
       </IntlProvider>
@@ -121,9 +121,9 @@ const mapStateToProps = (state) => ({
   forceRedirect: state.redirect.force,
   loading:
     state.account.isFetching ||
-    state.events.isFetching ||
-    state.currentState.isFetching ||
-    state.paper.isFetching,
+    state.programs.isFetching ||
+    state.currentState.isFetching,
+  accessToken: state.account?.accessToken,
 });
 
 export default connect(mapStateToProps, {

@@ -1,0 +1,49 @@
+.tox.tox-tinymce {
+  direction: rtl !important;
+}
+
+.tox.tox-tinymce {
+  direction: rtl;
+}
+
+.tox-editor-header {
+  padding: 0px !important;
+}
+
+.tox-notifications-container {
+  display: none;
+}
+
+.tox-statusbar {
+  border: none !important;
+  direction: ltr !important;
+}
+
+.tox-statusbar a {
+  display: none;
+}
+
+.tox .tox-tbtn--bespoke .tox-tbtn__select-label {
+  direction: ltr;
+}
+
+.tox .tox-tbtn--bespoke[title='اندازه فونت'] .tox-tbtn__select-label {
+  width: 35px;
+}
+
+.tox .tox-tbtn--bespoke[title='فونت‌ها'] .tox-tbtn__select-label {
+  width: 50px;
+}
+
+.tox .tox-tbtn--bespoke[title='Formats'] .tox-tbtn__select-label {
+  width: 50px;
+}
+
+.tox .tox-dialog {
+  direction: rtl;
+}
+
+.tox-dialog__body .tox-textarea {
+  direction: ltr;
+  text-align: left;
+}

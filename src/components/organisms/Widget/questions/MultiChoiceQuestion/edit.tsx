@@ -1,27 +1,29 @@
 import {
-  Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   IconButton,
   Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import {
   AddCircle as AddCircleIcon,
 } from '@mui/icons-material';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 
-import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 import { toPersianNumber } from 'utils/translateNumber';
 import { ChoiceType } from 'types/widgets';
-import MultiChoiceQuestionChoice from 'components/molecules/MultiChoiceQuestionChoice';
+import Choice from 'components/molecules/Choice';
+import { toast } from 'react-toastify';
+import { WidgetModes } from '../..';
 
 type MultiChoiceQuestionEditWidgetPropsType = {
-  onEdit: any;
+  onMutate: any;
 
   text: string;
   open: boolean;
@@ -29,10 +31,11 @@ type MultiChoiceQuestionEditWidgetPropsType = {
   choices: any[];
   paperId: any;
   id: string;
+  maximum_choices_could_be_chosen: number;
 }
 
 const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> = ({
-  onEdit,
+  onMutate,
 
   text: previousQuestionText,
   choices: previousQuestionChoices,
@@ -40,29 +43,32 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
   id: widgetId,
   handleClose,
   open,
+  maximum_choices_could_be_chosen,
 }) => {
   const t = useTranslate();
-
+  const [maximumChoicesCouldBeChosen, setMaximumChoicesCouldBeChosen] = useState(maximum_choices_could_be_chosen || 1);
   const [questionText, setQuestionText] = useState(previousQuestionText);
   const [questionChoices, setQuestionChoices] = useState<ChoiceType[]>(
-    previousQuestionChoices
-      ? previousQuestionChoices
-      : [
+    previousQuestionChoices ?
+      previousQuestionChoices :
+      [
         { text: 'گزینه ۱' },
         { text: 'گزینه ۲' }
-      ]);
+      ]
+  );
 
   const handleSubmit = () => {
-    onEdit({
+    onMutate({
       paper: paperId,
       text: questionText,
       choices: questionChoices,
       widgetId,
       onSuccess: handleClose,
+      maximum_choices_could_be_chosen: maximumChoicesCouldBeChosen,
     });
   };
 
-  const changeChoiceText = (newValue, choiceIndex) => {
+  const changeText = (newValue, choiceIndex) => {
     const newChoices = [...questionChoices];
     newChoices[choiceIndex] = {
       ...newChoices[choiceIndex],
@@ -71,11 +77,11 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
     setQuestionChoices(newChoices);
   };
 
-  const changeChoiceIsCorrect = (choiceIndex: number) => {
+  const changeIsCorrect = (choiceIndex: number) => {
     const newChoices = [...questionChoices];
     newChoices[choiceIndex] = {
       ...newChoices[choiceIndex],
-      is_correct: newChoices[choiceIndex].is_correct ? false : true
+      is_correct: !newChoices[choiceIndex].is_correct,
     };
     setQuestionChoices(newChoices);
   }
@@ -85,6 +91,10 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
   }
 
   const deleteChoice = (choiceIndex: number) => {
+    if (questionChoices.length === 1) {
+      toast.error('حداقل یک گزینه باید وجود داشته باشد.');
+      return;
+    }
     const newChoices = [...questionChoices];
     newChoices.splice(choiceIndex, 1);
     setQuestionChoices(newChoices);
@@ -101,28 +111,59 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
       disableEnforceFocus>
       <DialogTitle>{t('multipleChoiceQuestions')}</DialogTitle>
       <DialogContent>
-        <Stack spacing={1}>
-          <DialogContentText>
-            {'صورت سوال و گزینه‌های آن را وارد کنید.'}
-          </DialogContentText>
-          <label>{'صورت سوال'}</label>
-          <TinyEditorComponent content={questionText} onChange={(val) => setQuestionText(val)} />
+        <Stack spacing={4}>
+          <Stack>
+            <label>{'صورت سوال:'}</label>
+            <TinyEditorComponent content={questionText} onChange={(val) => setQuestionText(val)} />
+          </Stack>
 
-          <label>{t('options')}</label>
-          {questionChoices.map((choice, index) => (
-            <Box key={index}>
-              <MultiChoiceQuestionChoice
-                choice={choice}
-                changeChoiceIsCorrect={() => changeChoiceIsCorrect(index)}
-                deleteChoice={() => deleteChoice(index)}
-                changeChoiceText={(event) => changeChoiceText(event.target.value, index)}
-              />
-            </Box>
-          ))}
+          <Stack>
+            <Typography gutterBottom>
+              {'گزینه‌ها:'}
+            </Typography>
+            <Stack spacing={2}>
+              {questionChoices.map((choice, index) => (
+                <Choice
+                  key={index}
+                  isSelected={choice.is_correct}
+                  onSelectionChange={() => changeIsCorrect(index)}
+                  variant={maximumChoicesCouldBeChosen > 1 ? 'checkbox' : 'radio'}
+                  choice={choice}
+                  onDelete={() => deleteChoice(index)}
+                  onTextChange={(event) => changeText(event.target.value, index)}
+                  mode={WidgetModes.Edit}
+                />
+              ))}
+            </Stack>
+            <IconButton color="primary" onClick={addNewChoice} sx={{ alignSelf: 'start', padding: 0, marginTop: 1 }}>
+              <AddCircleIcon fontSize='large' />
+            </IconButton>
+          </Stack>
 
-          <IconButton color="primary" onClick={addNewChoice} sx={{ alignSelf: 'start', padding: 0 }}>
-            <AddCircleIcon fontSize='large' />
-          </IconButton>
+          <TextField
+            label='حداکثر تعداد گزینه‌هایی که کاربر بتواند انتخاب کند'
+            variant='outlined'
+            fullWidth
+            onChange={(event) => {
+              let value = parseInt(event.target.value);
+              if (isNaN(value)) {
+                value = 1;
+              }
+              if (value < 1) {
+                value = 1;
+              }
+              if (value >= questionChoices.length) {
+                value = questionChoices.length;
+              }
+              setMaximumChoicesCouldBeChosen(value);
+            }}
+            type='number'
+            inputMode='numeric'
+            inputProps={{ min: 1, max: questionChoices.length, step: 1 }}
+            error={!maximumChoicesCouldBeChosen}
+            value={maximumChoicesCouldBeChosen}
+          />
+
         </Stack>
       </DialogContent>
       <DialogActions>

@@ -2,7 +2,7 @@ import { Stack } from '@mui/material';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import NotificationButton from './NotificationButton';
-import Avatar from './Avatar';
+import Avatar from './UserAvatar';
 import DashboardButton from './DashboardButton';
 
 type UserInfoPropsType = {
@@ -12,16 +12,16 @@ type UserInfoPropsType = {
 function UserInfo({ isUserAuthenticated }: UserInfoPropsType) {
 
   return (
-    <Stack direction={'row'} alignItems={'center'} justifyContent={'center'} spacing={1}>
+    <Stack direction={'row'} alignItems={'center'} justifyContent={'center'}>
       {isUserAuthenticated ?
         <Fragment>
           <NotificationButton />
           <Avatar />
         </Fragment> :
-        <Fragment>
+        <Stack direction={'row'} spacing={1}>
           <DashboardButton variant='outlined' label='ورود' to={'/login/'} onClick={null} />
           <DashboardButton variant='contained' label='عضویت' to={'/create-account/'} onClick={null} />
-        </Fragment>
+        </Stack>
       }
     </Stack>
   )

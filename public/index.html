@@ -2,70 +2,82 @@
 
 <html lang="fa" dir="rtl">
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>در حال بارگیری</title>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>در حال بارگیری</title>
 
-  <script>
-    const setOpenGraphMetaData = (openGraphGMetaData) => {
-      document.title = openGraphGMetaData.title;
+    <script>
+      const setOpenGraphMetaData = (openGraphGMetaData) => {
+        document.title = openGraphGMetaData.title;
 
-      var ogUrl = document.createElement('meta');
-      ogUrl.setAttribute('property', 'og:url');
-      ogUrl.content = openGraphGMetaData.url;
-      document.getElementsByTagName('head')[0].appendChild(ogUrl);
+        var ogUrl = document.createElement('meta');
+        ogUrl.setAttribute('property', 'og:url');
+        ogUrl.content = openGraphGMetaData.url;
+        document
+          .getElementsByTagName('head')[0]
+          .appendChild(ogUrl);
 
-      var ogType = document.createElement('meta');
-      ogType.setAttribute('property', 'og:type');
-      ogType.content = openGraphGMetaData.type;
-      document.getElementsByTagName('head')[0].appendChild(ogType);
+        var ogType = document.createElement('meta');
+        ogType.setAttribute('property', 'og:type');
+        ogType.content = openGraphGMetaData.type;
+        document
+          .getElementsByTagName('head')[0]
+          .appendChild(ogType);
 
-      var ogTitle = document.createElement('meta');
-      ogTitle.setAttribute('property', 'og:title');
-      ogTitle.content = openGraphGMetaData.title;
-      document.getElementsByTagName('head')[0].appendChild(ogTitle);
+        var ogTitle = document.createElement('meta');
+        ogTitle.setAttribute('property', 'og:title');
+        ogTitle.content = openGraphGMetaData.title;
+        document
+          .getElementsByTagName('head')[0]
+          .appendChild(ogTitle);
 
-      var ogDescription = document.createElement('meta');
-      ogDescription.setAttribute('property', 'og:description');
-      ogDescription.content = openGraphGMetaData.description;
-      document.getElementsByTagName('head')[0].appendChild(ogDescription);
+        var ogDescription = document.createElement('meta');
+        ogDescription.setAttribute('property', 'og:description');
+        ogDescription.content = openGraphGMetaData.description;
+        document
+          .getElementsByTagName('head')[0]
+          .appendChild(ogDescription);
 
-      var ogImage = document.createElement('meta');
-      ogImage.setAttribute('property', 'og:image');
-      ogImage.content = openGraphGMetaData.image;
-      document.getElementsByTagName('head')[0].appendChild(ogImage);
+        var ogImage = document.createElement('meta');
+        ogImage.setAttribute('property', 'og:image');
+        ogImage.content = openGraphGMetaData.image;
+        document
+          .getElementsByTagName('head')[0]
+          .appendChild(ogImage);
 
-    }
-    fetch('https://mps.sepid.org/api/party/get-og_metadata/')
-      .then(response => response.json())
-      .then(data => {
-        setOpenGraphMetaData(data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        setOpenGraphMetaData({
-          title: 'پلتفرم سپید',
-          type: 'website',
-          image: '%PUBLIC_URL%/logo.png',
-          description: 'نسل بعدی تولید و عرضه‌ی محتوا',
-          url: 'https://sepid.org/',
-        })
-      });
-  </script>
+      }
+      // fetch('https://mps.sepid.org/api/party/get-og_metadata/')
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     setOpenGraphMetaData(data);
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error:', error);
+      //     setOpenGraphMetaData({
+      //       title: 'پلتفرم سپید',
+      //       type: 'website',
+      //       image: '%PUBLIC_URL%/logo.png',
+      //       description: 'نسل بعدی تولید و عرضه‌ی محتوا',
+      //       url: 'https://sepid.org/',
+      //     })
+      //   });
+    </script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.1.2/es5/tex-svg.min.js"
+    <link rel='stylesheet' href='/styles/font.css'/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.1.2/es5/tex-svg.min.js"
     integrity="sha512-9irB0qyXMAf4xUF5UEVOhb4NMCWo7xeKakVbl0lfJ09HyhrplRCqTFMtaW6lP7G0IbHfIcmSo3dFZrWcrsGnOA=="
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous" async></script>
 
-</head>
+  </head>
 
-<body class="iranyekan">
+  <body>
 
-  <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
 
-  <div id="root"></div>
+    <div id="root"></div>
 
-</body>
+  </body>
 
 </html>

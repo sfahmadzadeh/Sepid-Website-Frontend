@@ -3,7 +3,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import {
   respondInvitationAction,
-} from 'redux/slices/events';
+} from 'redux/slices/programs';
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
 import {
   IconButton

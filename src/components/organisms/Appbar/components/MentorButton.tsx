@@ -5,6 +5,7 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { StatePageContext } from 'pages/FSM';
 import { requestMentorAction } from 'redux/slices/currentState';
 import useWidth from 'utils/UseWidth';
+import { toast } from 'react-toastify';
 
 
 function MentorButton({ callMentor }) {
@@ -15,13 +16,14 @@ function MentorButton({ callMentor }) {
 
   return (
     <Button
-      size={width == 'xs' ? 'small' : 'medium'}
+      size={'small'}
       variant="contained"
       color="primary"
       disabled={!isEnable}
-      sx={{ marginLeft: 1, fontSize: width == 'xs' ? 12 : 18 }}
+      sx={{ fontSize: width == 'xs' ? 12 : 14 }}
       onClick={() => {
         callMentor({ playerId, teamId, fsmId: +fsmId })
+        toast.success('درخواست شما با موفقیت ثبت شد.')
         setEnable(false);
         setTimeout(() => {
           setEnable(true);

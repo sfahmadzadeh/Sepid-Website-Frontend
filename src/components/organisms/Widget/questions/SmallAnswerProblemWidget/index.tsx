@@ -1,12 +1,9 @@
 import { Button, Stack, TextField, Typography } from '@mui/material';
 import React, { FC, Fragment, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
+import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
 import { WidgetModes } from 'components/organisms/Widget';
 import SmallAnswerProblemEditWidget from './edit';
-import { toast } from 'react-toastify';
-import Confetti from 'react-confetti'
-import CostDialog from 'components/organisms/dialogs/CostDialog';
 
 type SmallAnswerProblemWidgetPropsType = {
   onAnswerChange: any;
@@ -28,7 +25,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
 
   reward,
   cost,
-  id: paperId,
+  id: questionId,
   mode,
   text: problemText,
   last_submitted_answer,
@@ -37,12 +34,12 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
 }) => {
   const t = useTranslate();
   const [answer, setAnswer] = useState<string>(last_submitted_answer ? last_submitted_answer.text : '');
-  const [disableSubmitButton, setDisableSubmitButton] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasAnswered, setHasAnswered] = useState(false);
   const [hasAnsweredCorrectly, setHasAnsweredCorrectly] = useState(false);
 
   const changeText = (e) => {
-    if (mode === WidgetModes.InAnswerSheet) {
+    if (mode === WidgetModes.InForm) {
       onAnswerChange({ text: e.target.value });
     }
     setAnswer(e.target.value);
@@ -52,7 +49,17 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
     if (!answer) {
       return;
     }
-    onAnswerSubmit({ widgetId: paperId, text: answer });
+    setIsSubmitting(true);
+    onAnswerSubmit({
+      questionId,
+      text: answer,
+      onSuccess: () => {
+        setIsSubmitting(false);
+      },
+      onFailure: () => {
+        setIsSubmitting(false);
+      },
+    });
   }
 
   return (
@@ -71,7 +78,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
           justifyContent='flex-start'
           alignItems='stretch'
           spacing={1}>
-          {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
+          {(mode === WidgetModes.View || mode === WidgetModes.InForm) &&
             <Fragment>
               <TextField
                 fullWidth
@@ -89,7 +96,7 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
                   variant='outlined'
                   color='primary'
                   sx={{ whiteSpace: 'nowrap' }}
-                  disabled={disableSubmitButton || hasAnsweredCorrectly}
+                  disabled={isSubmitting || hasAnsweredCorrectly}
                   onClick={submit}>
                   {t('submit')}
                 </Button>

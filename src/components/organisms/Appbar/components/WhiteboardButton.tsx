@@ -8,8 +8,8 @@ import {
 import { Brush as BrushIcon } from '@mui/icons-material';
 import React, { Fragment, useEffect, useState } from 'react';
 
-import CustomDraggable from 'components/Whiteboard/CustomDraggable';
-import Whiteboard from 'components/Whiteboard';
+import CustomDraggable from 'components/organisms/Whiteboard/CustomDraggable';
+import Whiteboard from 'components/organisms/Whiteboard';
 import useWidth from 'utils/UseWidth';
 
 function WhiteboardButton() {

@@ -10,10 +10,10 @@ import {
 } from '@mui/material';
 import React, { useState, FC } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 
 type UploadFileProblemEditWidgetPropsType = {
-  onEdit: any;
+  onMutate: any;
   handleClose: any;
 
   open: boolean;
@@ -24,7 +24,7 @@ type UploadFileProblemEditWidgetPropsType = {
 }
 
 const UploadFileProblemEditWidget: FC<UploadFileProblemEditWidgetPropsType> = ({
-  onEdit,
+  onMutate,
   handleClose,
 
   open,
@@ -38,7 +38,7 @@ const UploadFileProblemEditWidget: FC<UploadFileProblemEditWidgetPropsType> = ({
   const [solution, setSolution] = useState<string>(oldSolution || '');
 
   const handleSubmit = () => {
-    onEdit({
+    onMutate({
       paper: paperId,
       text: text,
       widgetId,
@@ -48,7 +48,7 @@ const UploadFileProblemEditWidget: FC<UploadFileProblemEditWidgetPropsType> = ({
   };
 
   return (
-    <Dialog disableScrollLock open={open} onClose={handleClose}>
+    <Dialog disableScrollLock open={open} onClose={handleClose} maxWidth='md'>
       <DialogTitle>{'ارسال فایل'}</DialogTitle>
       <DialogContent>
         <Stack spacing={1}>

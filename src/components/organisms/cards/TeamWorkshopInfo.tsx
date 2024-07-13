@@ -14,7 +14,6 @@ import {
   Tooltip,
   Typography,
   SvgIcon,
-  IconButton,
 } from '@mui/material';
 import { NotificationsActive } from '@mui/icons-material';
 import React, { FC, useEffect, useState, useRef, Fragment } from 'react';
@@ -26,27 +25,23 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import {
   deleteRequestMentorAction,
   getPlayerFromTeamAction,
-} from 'redux/slices/events';
-import { useNavigate, useParams } from 'react-router-dom'
-import { Mentor } from 'types/models';
+} from 'redux/slices/programs';
+import { useParams } from 'react-router-dom'
+import { UserMinimalType, RegistrationReceiptType } from 'types/models';
 import { stringToColor } from 'utils/stringToColor'
 import { getTeamStateSubscription, getTeamState } from 'parse/team';
 import { e2p } from 'utils/translateNumber';
-import {
-  announceMentorDeparture, getMentorsInRoom,
-  getMentorsInRoomSubscription
-} from 'parse/mentorsInRoom';
 var moment = require('moment');
 
 type TeamWorkshopInfoPropsType = {
   name: string,
-  members: any[],
+  members: RegistrationReceiptType[],
   teamId: number,
   playerId: number,
   playerIdFromRedux: number,
   deleteRequestMentor: Function,
   getPlayerFromTeam: Function,
-  mentorsInRoom: Mentor[],
+  mentorsInRoom: UserMinimalType[],
   startProblemTime: string,
   teamStage: String,
   isStarred: Boolean,
@@ -72,7 +67,6 @@ const TeamWorkshopInfo: FC<TeamWorkshopInfoPropsType> = ({
   const [currentStateName, setCurrentStateName] = useState('')
   const [mentorsInRoom, setMentorsInRoom] = useState([]);
   const [showStarAnimation, setShowStarAnimation] = useState(false)
-
 
   useEffect(() => setShowStarAnimation(false), [])
 
@@ -252,10 +246,10 @@ available playerId field, otherwise we fetch one team members Id and use it to a
             <Grid container direction="row" justifyContent="start">
               {members.length > 0 ? <ul>
                 {members.map((member) => (
-                  (member?.first_name || member?.last_name) ?
+                  (member?.user.first_name || member?.user.last_name) ?
                     <li key={member.id}>
                       <Typography>
-                        {`${member?.first_name} ${member?.last_name}`}
+                        {`${member?.user.first_name} ${member?.user.last_name}`}
                       </Typography>
                     </li>
                     :
@@ -353,7 +347,7 @@ const TimeChip: FC<TimeChipPropsType> = (props) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  playerIdFromRedux: state.events.playerId[ownProps.teamId],
+  playerIdFromRedux: state.programs.playerId[ownProps.teamId],
 });
 
 export default connect(mapStateToProps, {

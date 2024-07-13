@@ -5,14 +5,18 @@ import BackButton from 'components/atoms/BackButton';
 import NextButton from 'components/atoms/NextButton';
 import FSMStateRoadMap from 'components/organisms/FSMStateRoadMap';
 import FSMStateHelpButton from 'components/molecules/FSMStateHelpButton';
+import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
+import { FSMStateType } from 'types/models';
 
 type FSMStateTemplatePropsType = {
-  state: any;
-  playerId: number;
+  state: FSMStateType;
+  playerId: string;
 }
 
-const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state = {}, playerId }) => {
-  const widgets = [...state.widgets];
+const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state, playerId }) => {
+  const { data: paper } = useGetPaperQuery({ paperId: state.id }, { skip: !state.id });
+
+  const widgets = [...(paper?.widgets || [])];
   const hints = [...state.hints];
 
   const { inward_edges, outward_edges } = state;
@@ -72,7 +76,7 @@ const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state = {}, playerId 
                 </Grid>
               </Stack>
             </Stack>
-            <FSMStateRoadMap currentNodeId={state.name} playerId={playerId} fsmId={state.fsm} />
+            <FSMStateRoadMap currentNodeName={state.name} playerId={playerId} fsmId={state.fsm} />
             {notQuestions.length === 0 &&
               <Stack sx={{ display: { xs: 'inherit', md: 'none' } }} >
                 <Grid container spacing={2}>

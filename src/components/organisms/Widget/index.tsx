@@ -1,7 +1,6 @@
 import { Box, Divider, IconButton, Paper, Stack, Typography, Tooltip } from '@mui/material';
 import { Delete as DeleteIcon, Edit as EditIcon, Help as HelpIcon } from '@mui/icons-material';
 import React, { FC, Fragment, useMemo, useState } from 'react';
-import Confetti from 'react-confetti'
 
 import DeleteWidgetDialog from 'components/organisms/dialogs/DeleteWidgetDialog';
 import EditHintsDialog from 'components/organisms/dialogs/EditHintsDialog';
@@ -14,7 +13,7 @@ export enum WidgetModes {
   View,
   Edit,
   Review,
-  InAnswerSheet,
+  InForm,
 };
 
 export enum WidgetTypes {
@@ -27,7 +26,7 @@ export enum WidgetTypes {
   DetailBoxWidget = 'DetailBoxWidget',
   Image = 'Image',
   Video = 'Video',
-  Game = 'Game',
+  Iframe = 'Iframe',
 }
 
 enum AnswerType2WidgetType {
@@ -39,15 +38,14 @@ enum AnswerType2WidgetType {
   DetailBoxWidget = WidgetTypes.DetailBoxWidget,
   Image = WidgetTypes.Image,
   Video = WidgetTypes.Video,
-  Game = WidgetTypes.Game,
+  Iframe = WidgetTypes.Iframe,
 }
 
 type WidgetPropsType = {
   widget: any;
   mode?: WidgetModes;
-  paperId: number | null;
+  paperId: string;
   coveredWithPaper?: boolean;
-  collectWidgetDataToolkit?: any;
   collectAnswerData?: any;
 }
 
@@ -56,7 +54,6 @@ const Widget: FC<WidgetPropsType> = ({
   mode = WidgetModes.View,
   paperId,
   coveredWithPaper = true,
-  collectWidgetDataToolkit,
   collectAnswerData,
 }) => {
   const [openDeleteWidgetDialog, setOpenDeleteWidgetDialog] = useState(false);
@@ -68,18 +65,17 @@ const Widget: FC<WidgetPropsType> = ({
   const widgetType = widget.widget_type || AnswerType2WidgetType[widget.answer_type];
   const {
     onDelete,
-    onEdit,
+    onMutate,
     onAnswerChange,
     onAnswerSubmit,
-    onViwe,
     WidgetComponent,
     EditWidgetDialog,
+    skipFetch,
   } = useWidgetFactory({
     widgetId: widget.id,
     paperId,
     widgetType,
     mode,
-    collectWidgetDataToolkit,
     collectAnswerData,
   });
 
@@ -101,12 +97,12 @@ const Widget: FC<WidgetPropsType> = ({
 
   const Cover = useMemo(() =>
     coveredWithPaper
-      ? (props) =>
+      ? ({ children }) =>
         <Paper elevation={2} sx={{ padding: 1 }}>
-          {props.children}
+          {children}
         </Paper>
-      : (props) => props.children
-    , [widget])
+      : ({ children }) => children
+    , [coveredWithPaper])
 
   return (
     <Fragment>
@@ -144,16 +140,16 @@ const Widget: FC<WidgetPropsType> = ({
                 paperId={paperId}
                 open={openEditDialog}
                 handleClose={() => setOpenEditDialog(false)}
-                onEdit={onEdit}
+                onMutate={onMutate}
               />
               <DeleteWidgetDialog
-                paperId={paperId}
                 widgetId={widget.id}
                 open={openDeleteWidgetDialog}
                 handleClose={() => setOpenDeleteWidgetDialog(false)}
                 onDelete={onDelete}
               />
               <EditHintsDialog
+                paperId={paperId}
                 hints={widget.hints}
                 referenceId={widget.id}
                 open={openEditHintDialog}
@@ -165,9 +161,6 @@ const Widget: FC<WidgetPropsType> = ({
         </Stack>
         <WidgetComponent {...widget} mode={mode} onAnswerSubmit={onAnswerSubmitWrapper || onAnswerSubmit} onAnswerChange={onAnswerChange} />
       </Cover>
-      {false &&
-        <Confetti recycle={false} tweenDuration={6000} numberOfPieces={800} />
-      }
       {cost &&
         <CostDialog cost={cost} callBackFunction={onSubmit} open={showCostDialog} handleClose={() => setShowCostDialog(showCostDialog => !showCostDialog)} />
       }

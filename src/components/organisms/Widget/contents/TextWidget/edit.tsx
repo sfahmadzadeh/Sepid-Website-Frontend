@@ -8,10 +8,10 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
-import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 
 function TextEditWidget({
-  onEdit,
+  onMutate,
 
   open,
   handleClose,
@@ -23,7 +23,7 @@ function TextEditWidget({
   const [text, setText] = useState(oldText);
 
   const handleClick = () => {
-    onEdit({
+    onMutate({
       paper: paperId,
       text,
       widgetId,
@@ -32,20 +32,19 @@ function TextEditWidget({
   };
 
   return (
-    <Dialog disableScrollLock
-      open={open}
-      onClose={handleClose}
-      disableAutoFocus
-      disableEnforceFocus>
+    <Dialog disableScrollLock fullWidth open={open} maxWidth='md'>
       <DialogTitle>{t('text')}</DialogTitle>
       <DialogContent>
-        <DialogContentText>متن مورد نظر خود را وارد کنید.</DialogContentText>
+        <DialogContentText gutterBottom>متن مورد نظر خود را وارد کنید.</DialogContentText>
         <TinyEditorComponent
           content={text}
           onChange={(text) => setText(text)}
         />
       </DialogContent>
       <DialogActions>
+        <Button onClick={handleClose} color="primary" variant="outlined">
+          {'انصراف'}
+        </Button>
         <Button onClick={handleClick} color="primary" variant="contained">
           {t('submit')}
         </Button>

@@ -1,5 +1,4 @@
 import {
-  Chip,
   Button,
   Card,
   CardActions,
@@ -20,19 +19,18 @@ import { Link, useParams } from 'react-router-dom';
 
 import { enterWorkshopAction } from 'redux/slices/currentState';
 import PasswordDialog from 'components/organisms/dialogs/PasswordDialog';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import { toPersianNumber } from 'utils/translateNumber';
+import { FSMType } from 'types/models';
 
 type FSMCardPropsType = {
-  fsm: any;
+  fsm: Partial<FSMType>;
+  enterFSM: any;
   isLoading?: boolean;
-  enterFSM?: any;
 }
 
 export const FSMCard: FC<FSMCardPropsType> = ({
   fsm,
-  isLoading = false,
   enterFSM,
+  isLoading = false,
 }) => {
   const { programId } = useParams();
   const [openPassword, setOpenPassword] = useState(false);
@@ -68,8 +66,10 @@ export const FSMCard: FC<FSMCardPropsType> = ({
               }}>
 
               <Stack direction='row' alignSelf='center' marginTop='7px'>
-                <Box marginLeft='5px' marginRight='5px'>{fsm?.has_lock ? <Lock /> : <LockOpen />}</Box>
-                <Typography>{fsm?.fsm_p_type == 'Team' ? 'گروهی' : 'فردی'}</Typography>
+                <Box marginLeft='5px' marginRight='5px'>{fsm?.lock ? <Lock /> : <LockOpen />}</Box>
+                {fsm?.fsm_p_type &&
+                  <Typography>{fsm.fsm_p_type == 'Team' ? 'گروهی' : 'فردی'}</Typography>
+                }
               </Stack>
 
               <Box>
@@ -109,14 +109,6 @@ export const FSMCard: FC<FSMCardPropsType> = ({
                 <Typography gutterBottom variant="h4" component="h2">
                   {fsm.name}
                 </Typography>
-                {/* <Tooltip title='تعداد کسانی که کارگاه را شروع کرده‌اند' arrow>
-                  <Chip
-                    size='small'
-                    sx={{ userSelect: 'none' }}
-                    icon={<PeopleAltIcon fontSize='small' />}
-                    label={toPersianNumber(workshop.players_count)}
-                  />
-                </Tooltip> */}
               </Stack>
               <Typography variant="body2" color="textSecondary" component="p">
                 {fsm.description}
@@ -134,9 +126,11 @@ export const FSMCard: FC<FSMCardPropsType> = ({
             variant="outlined"
             color="primary"
             onClick={
-              fsm?.has_lock
-                ? () => setOpenPassword(true)
-                : () => enterFSM({ fsmId: fsm.id, programId })
+              fsm.id ?
+                fsm?.lock
+                  ? () => setOpenPassword(true)
+                  : () => enterFSM({ fsmId: fsm.id, programId })
+                : null
             }>
             {'بزن بریم!'}
           </Button>

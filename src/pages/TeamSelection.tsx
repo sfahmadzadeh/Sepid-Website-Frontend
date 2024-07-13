@@ -29,16 +29,16 @@ import {
   deleteInvitationAction,
   deleteTeamAction,
   getMyInvitationsAction,
-  getOneEventInfoAction,
-  getOneRegistrationReceiptAction,
   getTeamAction,
   getTeamInvitationsAction,
   inviteSomeoneAction,
-} from 'redux/slices/events';
-import { addNotificationAction } from 'redux/slices/notifications';
+} from 'redux/slices/programs';
 import Layout from 'components/template/Layout';
-import { Team, ProgramType } from 'types/models';
 import RespondInvitation from 'components/molecules/RespondInvitation';
+import { toast } from 'react-toastify';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
+import { useGetMyReceiptQuery, useGetReceiptQuery } from 'redux/features/form/ReceiptSlice';
+import { TeamType } from 'types/models';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
@@ -52,59 +52,42 @@ type TeamSelectionPropsType = {
   getMyInvitations: any;
   deleteTeam: any;
   deleteInvitation: any;
-  addNotification: any;
-  getOneEventInfo: any;
   getTeam: any;
   getTeamInvitations: any;
-  getOneRegistrationReceipt: any;
   inviteSomeone: any;
   createTeamAndJoin: any;
 
-  event: ProgramType;
-  team: Team;
+  team: TeamType;
   myInvitations: any[],
   teamInvitations: any[],
-  registrationReceipt: any,
-  isFetching: boolean;
 }
 
 const TeamSelection: FC<TeamSelectionPropsType> = ({
   getMyInvitations,
   deleteTeam,
   deleteInvitation,
-  addNotification,
-  getOneEventInfo,
   getTeam,
   getTeamInvitations,
-  getOneRegistrationReceipt,
   inviteSomeone,
   createTeamAndJoin,
 
-  event,
   team,
   myInvitations,
   teamInvitations,
-  registrationReceipt,
-  isFetching,
 }) => {
   const navigate = useNavigate();
   const { programId } = useParams();
   const [isCreateInvitationDialogOpen, changeCreateInvitationDialogStatus] = useState(false);
   const [isDeleteTeamDialogOpen, changeDeleteTeamDialogStatus] = useState(false);
+  const { data: program } = useGetProgramQuery({ programId });
+  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
   const [newTeamName, setNewTeamName] = useState('');
 
   useEffect(() => {
-    getOneEventInfo({ programId });
-  }, []);
-
-  useEffect(() => {
-    if (event?.registration_receipt) {
-      getOneRegistrationReceipt({ registrationReceiptId: event.registration_receipt });
+    if (program?.registration_form) {
+      getMyInvitations({ registrationFormId: program.registration_form });
     }
-    if (event?.registration_form) {
-      getMyInvitations({ registrationFormId: event.registration_form });
-    }
-  }, [event]);
+  }, [program]);
 
   useEffect(() => {
     if (registrationReceipt?.team) {
@@ -114,23 +97,20 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
     }
   }, [registrationReceipt]);
 
-  if (event?.user_registration_status == 'NotRegistered') {
-    navigate(`/program/${programId}/registration/`);
+  if (!registrationReceipt?.is_participating) {
+    navigate(`/program/${programId}/form/`);
   }
 
   const isHead = registrationReceipt?.id === team?.team_head
 
   const submitCreateTeam = () => {
     if (!newTeamName) {
-      addNotification({
-        message: 'لطفاً نام گروه را وارد کنید.',
-        type: 'error',
-      });
+      toast.error('لطفاً نام گروه را وارد کنید.');
       return;
     }
     createTeamAndJoin({
       name: newTeamName,
-      registration_form: event?.registration_form,
+      registration_form: program?.registration_form,
     });
   };
 
@@ -224,7 +204,7 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
                             height="200px"
                           />
                           <Typography align="center">
-                            {`${member.first_name} ${member.last_name}`}
+                            {/* {`${member.first_name} ${member.last_name}`} */}
                           </Typography>
                         </Stack>
                       );
@@ -367,29 +347,22 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
 };
 
 const mapStateToProps = (state) => ({
-  event: state.events.event,
-  registrationReceipt: state.events.registrationReceipt,
-  team: state.events.team,
+  registrationReceipt: state.programs.registrationReceipt,
+  team: state.programs.team,
   //todo: handle not showing self invitation, in back:
-  myInvitations: state.events.myInvitations.filter(
+  myInvitations: state.programs.myInvitations.filter(
     (invitation) => invitation.head_phone_number !== invitation.phone_number
   ),
-  teamInvitations: state.events.teamInvitations,
-  isFetching: state.events.isFetching,
+  teamInvitations: state.programs.teamInvitations,
+  isFetching: state.programs.isFetching,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    getMyInvitations: getMyInvitationsAction,
-    deleteTeam: deleteTeamAction,
-    deleteInvitation: deleteInvitationAction,
-    createTeamAndJoin: createTeamAndJoinAction,
-    inviteSomeone: inviteSomeoneAction,
-    getTeamInvitations: getTeamInvitationsAction,
-    getOneEventInfo: getOneEventInfoAction,
-    addNotification: addNotificationAction,
-    getOneRegistrationReceipt: getOneRegistrationReceiptAction,
-    getTeam: getTeamAction,
-  }
-)(TeamSelection);
+export default connect(mapStateToProps, {
+  getMyInvitations: getMyInvitationsAction,
+  deleteTeam: deleteTeamAction,
+  deleteInvitation: deleteInvitationAction,
+  createTeamAndJoin: createTeamAndJoinAction,
+  inviteSomeone: inviteSomeoneAction,
+  getTeamInvitations: getTeamInvitationsAction,
+  getTeam: getTeamAction,
+})(TeamSelection);

@@ -5,67 +5,112 @@ import {
   DialogContent,
   DialogContentText,
   Typography,
+  MobileStepper,
+  useTheme,
 } from '@mui/material';
-import React, { useState } from 'react';
-import { useTranslate } from 'react-redux-multilingual/lib/context';
-
-import TinyEditorComponent from 'components/tiny_editor/react_tiny/TinyEditorComponent';
+import React, { Fragment, useState } from 'react';
+import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 import { EditPaper } from 'components/template/Paper';
-import useCollectWidgetsData from 'components/hooks/useCollectWidgetsData';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 const DetailBoxEditDialog = ({
-  onEdit,
-
   paperId,
   id: widgetId,
-  open,
-  handleClose,
   title: previousTitle,
   details,
-}) => {
-  const t = useTranslate();
-  const [title, setTitle] = useState(previousTitle);
-  const { widgets, ...collectWidgetDataToolkit } = useCollectWidgetsData(details?.widgets || []);
+  onMutate,
 
-  const onSubmitWrapper = () => {
-    onEdit({
-      paperId,
-      widgetId,
-      title,
-      details: {
-        paper_type: 'General',
-        widgets,
-      },
-      onSuccess: handleClose,
-    })
+  open,
+  handleClose,
+}) => {
+  const theme = useTheme();
+  const [title, setTitle] = useState(previousTitle);
+  const [activeStep, setActiveStep] = useState(0);
+  const [detailsId, setDetailsId] = useState<string>(details?.id);
+
+  const handleNext = () => {
+    if (activeStep === 0) {
+      onMutate({
+        paperId,
+        widgetId,
+        title,
+        onSuccess: (result) => {
+          const widget = result.data;
+          setDetailsId(widget.details.id);
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        },
+      });
+    }
+    if (activeStep === 1) {
+      handleClose();
+    }
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   return (
-    <Dialog disableScrollLock
+    <Dialog
+      maxWidth='md'
+      disableScrollLock
       open={open}
       onClose={handleClose}
       disableAutoFocus
       disableEnforceFocus>
       <DialogContent>
-        <Typography variant='h5' gutterBottom>{'عنوان'}</Typography>
-        <DialogContentText gutterBottom>متن مورد نظر خود را وارد کنید.</DialogContentText>
-        <TinyEditorComponent
-          content={title}
-          onChange={(text) => setTitle(text)}
-        />
-        <Typography mt={2} variant='h5' gutterBottom>{'جزئیات بیشتر'}</Typography>
-        <DialogContentText gutterBottom>ویجت‌هایی را که می‌خواهید به‌صورت پنهان‌شونده باشند، اینجا بگذارید.</DialogContentText>
-        <EditPaper
-          paperId={details?.id}
-          collectWidgetDataToolkit={collectWidgetDataToolkit}
-          widgets={widgets}
-          mode='contents'
-        />
+        {activeStep === 0 &&
+          <Fragment>
+            <Typography variant='h5' gutterBottom>{'عنوان'}</Typography>
+            <DialogContentText gutterBottom>متن مورد نظر خود را وارد کنید.</DialogContentText>
+            <TinyEditorComponent
+              content={title}
+              onChange={(text) => setTitle(text)}
+            />
+          </Fragment>
+        }
+        {activeStep === 1 &&
+          <Fragment>
+            <Typography mt={2} variant='h5' gutterBottom>{'جزئیات بیشتر'}</Typography>
+            <DialogContentText gutterBottom>ویجت‌هایی را که می‌خواهید به‌صورت پنهان‌شونده باشند، اینجا بگذارید.</DialogContentText>
+            {detailsId &&
+              <EditPaper
+                paperId={detailsId}
+                mode='contents'
+              />
+            }
+          </Fragment>
+        }
       </DialogContent>
       <DialogActions>
-        <Button onClick={onSubmitWrapper} color="primary" variant="contained">
-          {t('submit')}
-        </Button>
+        <MobileStepper
+          sx={{ width: '100%' }}
+          variant="dots"
+          steps={2}
+          position="static"
+          activeStep={activeStep}
+          nextButton={
+            <Button size="small" onClick={handleNext}>
+              {activeStep === 0 ? 'بعدی' : 'تمام'}
+              {theme.direction === 'rtl' ? (
+                <KeyboardArrowLeft />
+              ) : (
+                <KeyboardArrowRight />
+              )}
+            </Button>
+          }
+          backButton={
+            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+              {theme.direction === 'rtl' ? (
+                <KeyboardArrowRight />
+              ) : (
+                <KeyboardArrowLeft />
+              )}
+              {'قبلی'}
+            </Button>
+          }
+        />
       </DialogActions>
     </Dialog>
   );

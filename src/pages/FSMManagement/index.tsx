@@ -19,24 +19,22 @@ import InfoIcon from '@mui/icons-material/Info';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import {
-  getEventTeamsAction,
-  getOneEventInfoAction,
-} from 'redux/slices/events';
-import {
-  getOneWorkshopsInfoAction,
-} from 'redux/slices/workshop';
+  getProgramTeamsAction,
+} from 'redux/slices/programs';
 import Layout from 'components/template/Layout';
-import Design from './Design';
+import DesignStates from './DesignStates';
 import Edges from './Edges';
 import Statistics from './Statistics';
 import IndividualRequests from './IndividualRequests';
 import Info from './Info';
 import TeamRequests from './TeamRequests';
-import { Workshop, ProgramType } from 'types/models';
 import Mentors from './Mentors';
 import GoToAnswer from './GoToAnswer';
+import { DashboardTabType } from 'types/global';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
+import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
-const initialTabs = [
+const initialTabs: DashboardTabType[] = [
   {
     name: 'info',
     label: 'اطلاعات کلی',
@@ -44,10 +42,10 @@ const initialTabs = [
     component: Info,
   },
   {
-    name: 'design',
-    label: 'طراحی',
+    name: 'states',
+    label: 'گام‌ها',
     icon: DesignServicesIcon,
-    component: Design,
+    component: DesignStates,
   },
   {
     name: 'edges',
@@ -66,6 +64,7 @@ const initialTabs = [
     label: 'تصحیح',
     icon: BorderColorIcon,
     component: GoToAnswer,
+    isActive: false,
   },
   {
     name: 'statistics',
@@ -75,24 +74,18 @@ const initialTabs = [
   },
 ]
 
-type EventPropsType = {
-  getEventTeams: Function,
-  getOneEventInfo: Function,
-  getOneWorkshopsInfo: Function,
-  fsm: Workshop,
-  program: ProgramType,
+type FSMManagementPropsType = {
+  getProgramTeams: Function,
 }
 
-const FSMManagement: FC<EventPropsType> = ({
-  getEventTeams,
-  getOneEventInfo,
-  getOneWorkshopsInfo,
-  fsm,
-  program,
+const FSMManagement: FC<FSMManagementPropsType> = ({
+  getProgramTeams: getProgramTeams,
 }) => {
   const t = useTranslate();
   const navigate = useNavigate();
   const { fsmId, programId, section } = useParams();
+  const { data: fsm } = useGetFSMQuery({ fsmId });
+  const { data: program } = useGetProgramQuery({ programId });
 
   useEffect(() => {
     if (!section) {
@@ -100,7 +93,7 @@ const FSMManagement: FC<EventPropsType> = ({
     }
   }, [section])
 
-  const tabs: any[] = (fsm && fsm.id == fsmId && fsm.fsm_learning_type == 'Supervised') ?
+  const tabs: DashboardTabType[] = (fsm && fsm.id == parseInt(fsmId) && fsm.fsm_learning_type == 'Supervised') ?
     (fsm.fsm_p_type == 'Team') ?
       [
         ...initialTabs,
@@ -122,19 +115,14 @@ const FSMManagement: FC<EventPropsType> = ({
         ] : initialTabs : initialTabs
 
   useEffect(() => {
-    getOneEventInfo({ programId });
-    getOneWorkshopsInfo({ fsmId });
-  }, []);
-
-  useEffect(() => {
     if (program && program.registration_form) {
-      getEventTeams({ registrationFormId: program.registration_form });
+      getProgramTeams({ registrationFormId: program.registration_form });
     }
   }, [program]);
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab) return null;
-  const TabComponent = useMemo(() => <currentTab.component />, [fsm, section]);
+  const TabComponent = <currentTab.component />;
 
   return (
     <Layout appbarMode='PROGRAM'>
@@ -145,6 +133,7 @@ const FSMManagement: FC<EventPropsType> = ({
               {tabs.map((tab, index) => (
                 <Button
                   key={index}
+                  disabled={tab.isActive === false}
                   onClick={() => {
                     navigate(`/program/${programId}/fsm/${fsmId}/manage/${tabs[index].name}/`)
                   }}
@@ -168,7 +157,7 @@ const FSMManagement: FC<EventPropsType> = ({
                 component={Link}
                 to={`/program/${programId}/`}
                 startIcon={<ExitToAppIcon />}>
-                {t('back')}
+                {'بازگشت به دوره'}
               </Button>
             </ButtonGroup>
           </Stack>
@@ -183,13 +172,6 @@ const FSMManagement: FC<EventPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  program: state.events.event,
-  fsm: state.workshop.workshop,
-});
-
-export default connect(mapStateToProps, {
-  getEventTeams: getEventTeamsAction,
-  getOneEventInfo: getOneEventInfoAction,
-  getOneWorkshopsInfo: getOneWorkshopsInfoAction,
+export default connect(null, {
+  getProgramTeams: getProgramTeamsAction,
 })(FSMManagement);

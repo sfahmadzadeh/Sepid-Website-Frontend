@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 
-import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
+import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
 import DetailBoxEditDialog from './EditDialog';
 import Paper from 'components/template/Paper';
 import { Box, Collapse, IconButton, Stack } from '@mui/material';
@@ -28,8 +28,8 @@ const DetailBoxWidget = ({ title, details }) => {
           />
         </Box>
       </Stack>
-      <Collapse in={openRoadMap}>
-        <Paper paper={details} />
+      <Collapse in={openRoadMap} sx={{ paddingLeft: 2 }}>
+        <Paper paperId={details?.id} />
       </Collapse>
     </Fragment>
   );

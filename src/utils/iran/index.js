@@ -1,9 +1,9 @@
-import Cities from './cities';
-import Provinces from './province';
+import Cities from './cities'
+import Provinces from './province'
 
 const Iran = {
   Cities,
-  Provinces,
+  Provinces
 }
 
-export default Iran;
+export default Iran

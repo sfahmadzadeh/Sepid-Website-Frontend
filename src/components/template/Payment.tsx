@@ -1,25 +1,33 @@
 import { Button, Grid, Paper, Stack, TextField, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import {
   applyDiscountCodeAction,
-  getOneRegistrationFormAction,
-  purchaseEventAction,
+  purchaseProgramAction,
   submitRegistrationFormAction,
-} from 'redux/slices/events';
-import { addNotificationAction } from 'redux/slices/notifications';
+} from 'redux/slices/programs';
+import removeBlankAttributes from 'utils/removeBlankAttributes';
 import { toPersianNumber } from 'utils/translateNumber';
 
-const Payment = ({
-  purchaseEvent,
-  addNotification,
+type PaymentPropsType = {
+  purchaseProgram: any;
+  applyDiscountCode: any;
+  discountedPrice: any;
+}
+
+const Payment: FC<PaymentPropsType> = ({
+  purchaseProgram: purchaseProgram,
   applyDiscountCode,
 
   discountedPrice,
-  program,
 }) => {
+  const { programId } = useParams();
   const [discountCode, setDiscountCode] = useState(null);
   const [price, setPrice] = useState(0);
+  const { data: program } = useGetProgramQuery({ programId });
 
   useEffect(() => {
     setPrice(program.merchandise.price);
@@ -32,15 +40,12 @@ const Payment = ({
   }, [discountedPrice]);
 
   const goForPurchase = () => {
-    purchaseEvent({ merchandise: program.merchandise.id, code: discountCode });
+    purchaseProgram(removeBlankAttributes({ merchandise: program.merchandise.id, code: discountCode }));
   };
 
   const submitDiscount = () => {
     if (!discountCode) {
-      addNotification({
-        message: 'کد تخفیفت را وارد کن!',
-        type: 'error',
-      });
+      toast.error('کد تخفیفت را وارد کن!');
       return;
     }
     applyDiscountCode({
@@ -114,14 +119,11 @@ const Payment = ({
 };
 
 const mapStateToProps = (state) => ({
-  program: state.events.event,
-  discountedPrice: state.events.discountedPrice,
+  discountedPrice: state.programs.discountedPrice,
 });
 
 export default connect(mapStateToProps, {
-  getOneRegistrationForm: getOneRegistrationFormAction,
-  purchaseEvent: purchaseEventAction,
+  purchaseProgram: purchaseProgramAction,
   submitRegistrationForm: submitRegistrationFormAction,
-  addNotification: addNotificationAction,
   applyDiscountCode: applyDiscountCodeAction,
 })(Payment);

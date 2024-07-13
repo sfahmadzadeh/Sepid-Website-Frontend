@@ -1,19 +1,22 @@
 import React from 'react';
 import { useParams, useLocation } from 'react-router-dom'
 
-import UserAvatar from '../components/Avatar';
+import UserAvatar from '../components/UserAvatar';
 import DashboardButton from '../components/DashboardButton';
 import ChatRoomButton from '../components/ChatRoomButton';
-import TeamAvatar from '../components/UsersAvatar';
+import TeamAvatar from '../components/TeamAvatar';
 import WhiteboardButton from '../components/WhiteboardButton';
 import { announceMentorDeparture } from 'parse/mentorsInRoom';
+import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
-const MentorFSMAppbarItems = ({ fsm, mentorId }) => {
+const MentorFSMAppbarItems = ({ mentorId }) => {
   const { programId, fsmId } = useParams();
+  const { data: fsm } = useGetFSMQuery({ fsmId });
+
   const search = useLocation().search;
   let teamId = new URLSearchParams(search).get('teamId');
   const chatRoomButton = <ChatRoomButton />;
-  const backToEventButton = <DashboardButton onClick={() => { announceMentorDeparture(teamId, mentorId) }} label={'بازگشت'} to={`/program/${programId}/fsm/${fsmId}/manage/requests/`} />;
+  const backToProgramButton = <DashboardButton onClick={() => { announceMentorDeparture(teamId, mentorId) }} label={'بازگشت'} to={`/program/${programId}/fsm/${fsmId}/manage/requests/`} />;
   const whiteboardButton = <WhiteboardButton />;
   const teamAvatar = <TeamAvatar />;
   const userAvatar = <UserAvatar />;
@@ -31,13 +34,13 @@ const MentorFSMAppbarItems = ({ fsm, mentorId }) => {
   }
   desktopRightItems.push([chatRoomButton]);
   desktopLeftItems.push([whiteboardButton,]);
-  desktopLeftItems.push([backToEventButton]);
+  desktopLeftItems.push([backToProgramButton]);
 
 
   mobileRightItems.push([chatRoomButton]);
   mobileRightItems.push([whiteboardButton,]);
 
-  mobileLeftItems.push(backToEventButton);
+  mobileLeftItems.push(backToProgramButton);
 
   return {
     desktopLeftItems,

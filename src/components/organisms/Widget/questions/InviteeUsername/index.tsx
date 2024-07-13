@@ -10,7 +10,7 @@ import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { checkUsernameAction } from 'redux/slices/Question';
-import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
+import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
 import { WidgetModes } from '../..';
 import InviteeUsernameEdit from './edit';
 import isPhoneNumber from 'utils/validators/isPhoneNumber';
@@ -35,7 +35,7 @@ const InviteeUsername: FC<InviteeUsernamePropsType> = ({
   onAnswerChange,
 
   checkUsername,
-  id: paperId,
+  id: questionId,
   inviteeUserFirstName,
   inviteeUserLastName,
   isFetching,
@@ -67,7 +67,7 @@ const InviteeUsername: FC<InviteeUsernamePropsType> = ({
     setTimeout(() => {
       setDisableSubmitButton(false);
     }, 20000);
-    onAnswerSubmit({ widgetId: paperId, username });
+    onAnswerSubmit({ questionId, username });
   }
 
   return (
@@ -85,7 +85,7 @@ const InviteeUsername: FC<InviteeUsernamePropsType> = ({
         justifyContent='flex-start'
         alignItems="stretch"
         spacing={1}>
-        {(mode === WidgetModes.View || mode === WidgetModes.InAnswerSheet) &&
+        {(mode === WidgetModes.View || mode === WidgetModes.InForm) &&
           <Fragment>
             <TextField
               InputProps={{

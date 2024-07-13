@@ -15,20 +15,17 @@ import {
 } from '@mui/material';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 
 import {
   createInstitutesAction,
   getInstitutesAction,
 } from 'redux/slices/account';
-import {
-  addNotificationAction,
-} from 'redux/slices/notifications';
 
 const AddInstituteDialog = ({
   open,
   handleClose,
   createInstitutes,
-  addNotification,
 
   province,
   city,
@@ -45,10 +42,7 @@ const AddInstituteDialog = ({
 
   const handleButtonClick = () => {
     if (!data?.name || !data.school_type || !data.gender_type) {
-      addNotification({
-        message: 'لطفاً همه‌ی موارد ستاره‌دار را تکمیل کنید.',
-        type: 'error',
-      });
+      toast.error('لطفاً همه‌ی موارد ستاره‌دار را تکمیل کنید.');
       return;
     }
     createInstitutes({
@@ -234,7 +228,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  addNotification: addNotificationAction,
   createInstitutes: createInstitutesAction,
   getInstitutes: getInstitutesAction,
 })(AddInstituteDialog);

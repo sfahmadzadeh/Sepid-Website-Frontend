@@ -1,52 +1,38 @@
-import { Box, Button, Paper, Stack, Typography } from '@mui/material';
-import React, { FC, useEffect, useState } from 'react';
+import { Button, Paper as MUIPaper, Stack, Typography } from '@mui/material';
+import React, { FC, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
-import Widget from 'components/organisms/Widget';
 import {
-  getOneRegistrationFormAction,
   submitRegistrationFormAction,
-  getOneEventInfoAction,
-} from 'redux/slices/events';
-import { WidgetModes } from 'components/organisms/Widget';
+} from 'redux/slices/programs';
 import ProgramInfo from 'components/organisms/ProgramInfo';
-import { ProgramType, RegistrationFormType } from 'types/models';
+import { RegistrationFormType } from 'types/models';
 import useCollectWidgetsAnswers from 'components/hooks/useCollectWidgetsAnswers';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
+import Paper from './Paper';
+import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
+import { useGetFormQuery } from 'redux/features/form/FormSlice';
 
-const ANSWER_TYPES = {
-  SmallAnswerProblem: 'SmallAnswer',
-  BigAnswerProblem: 'BigAnswer',
-  UploadFileProblem: 'UploadFileAnswer',
-  MultiChoiceProblem: 'MultiChoiceAnswer',
-  TextWidget: 'TextWidget',
-  Image: 'Image',
-  Video: 'Video',
-  Game: 'Game',
-  InviteeUsernameQuestion: 'InviteeUsernameResponse',
-};
 
 type RegistrationFormPropsType = {
-  getOneEventInfo: any;
-  program: ProgramType;
-  registrationForm: RegistrationFormType;
   submitRegistrationForm: any;
   onSuccess?: any;
   onFailure?: any;
 }
 
 const RegistrationForm: FC<RegistrationFormPropsType> = ({
-  getOneEventInfo,
-  program,
-  registrationForm,
   submitRegistrationForm,
   onSuccess,
   onFailure,
 }) => {
   const { programId } = useParams();
   const [isDialogOpen, setDialogStatus] = useState(false);
-  const { answers, setAnswers, collectAnswers } = useCollectWidgetsAnswers([]);
+  const { answers } = useCollectWidgetsAnswers([]);
+  const { data: program } = useGetProgramQuery({ programId });
+  const { data: registrationForm } = useGetFormQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
+  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program.registration_form });
 
   const submit = () => {
     submitRegistrationForm({
@@ -58,46 +44,29 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
     });
   };
 
-  // TODO: this redundant fetching should exist
-  // (because the user-registrationt-status is in
-  // the event fetched data, and should be updated)
-  useEffect(() => {
-    getOneEventInfo({ programId });
-  }, []);
-
   const isSubmitButtonDisabled = (): { isDisabled: boolean; message: string; } => {
     return {
       isDisabled:
-        program.user_registration_status == 'DeadlineMissed' ||
-        program.user_registration_status == 'NotPermitted' ||
-        program.user_registration_status == 'GradeNotAvailable' ||
-        program.user_registration_status == 'StudentshipDataIncomplete',
+        registrationReceipt.status == 'DeadlineMissed' ||
+        registrationReceipt.status == 'NotPermitted' ||
+        registrationReceipt.status == 'GradeNotAvailable' ||
+        registrationReceipt.status == 'StudentshipDataIncomplete',
       message:
-        program.user_registration_status == 'DeadlineMissed' ? 'مهلت ثبت‌نام تمام شده است' :
-          program.user_registration_status == 'NotPermitted' ? 'با توجه به پایه تحصیلیتان، شما مجاز به شرکت در این رویداد نیستید' :
-            program.user_registration_status == 'GradeNotAvailable' ? 'ابتدا پایه‌ی تحصیلی خود را انتخاب کنید' :
-              program.user_registration_status == 'StudentshipDataIncomplete' ? 'مشخصات دانش‌آموزی‌تان کامل نیست' :
+        registrationReceipt.status == 'DeadlineMissed' ? 'مهلت ثبت‌نام تمام شده است' :
+          registrationReceipt.status == 'NotPermitted' ? 'با توجه به پایه تحصیلیتان، شما مجاز به شرکت در این رویداد نیستید' :
+            registrationReceipt.status == 'GradeNotAvailable' ? 'ابتدا پایه‌ی تحصیلی خود را انتخاب کنید' :
+              registrationReceipt.status == 'StudentshipDataIncomplete' ? 'مشخصات دانش‌آموزی‌تان کامل نیست' :
                 'خبری نیست، سلامتی!'
     }
   }
 
-  if (!program || !registrationForm) return null;
+  if (!program || !registrationForm || !registrationReceipt) return null;
 
   return (
     <Stack spacing={2}>
       <ProgramInfo program={program} />
-      <Stack width={'100%'} component={Paper} padding={2} spacing={2}>
-        {registrationForm.widgets.map((widget) => (
-          <Box key={widget.id}>
-            <Widget
-              paperId={registrationForm.id}
-              coveredWithPaper={false}
-              mode={WidgetModes.InAnswerSheet}
-              collectAnswerData={collectAnswers({ widgetId: widget.id, widgetType: ANSWER_TYPES[widget.widget_type] })}
-              widget={widget}
-            />
-          </Box>
-        ))}
+      <Stack width={'100%'} component={MUIPaper} padding={2} spacing={2}>
+        <Paper paperId={registrationForm.id} />
         {isSubmitButtonDisabled().isDisabled &&
           <Typography color={'red'} textAlign={'center'} fontSize={24} fontWeight={400}>
             {isSubmitButtonDisabled().message}
@@ -124,13 +93,9 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
 
 const mapStateToProps = (state) => ({
   userInfo: state.account.userInfo,
-  program: state.events.event,
-  registrationForm: state.events.registrationForm,
-  isFetching: state.events.isFetching,
+  isFetching: state.programs.isFetching,
 });
 
 export default connect(mapStateToProps, {
-  getOneEventInfo: getOneEventInfoAction,
-  getOneRegistrationForm: getOneRegistrationFormAction,
   submitRegistrationForm: submitRegistrationFormAction,
 })(RegistrationForm);

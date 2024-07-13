@@ -1,15 +1,15 @@
 import React from 'react';
 
 import DashboardButton from '../components/DashboardButton';
-import { useGetPageMetadataQuery, useGetPartyQuery } from 'redux/features/PartySlice';
-import Brand from '../components/Brand';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
+import WebsiteLogo from '../components/logos/WebsiteLogo';
 import DefaultAppbarItems from './DefaultAppbarItems';
 import UserInfo from '../components/UserInfo';
 
 const DashboardAppbarItems = ({ }) => {
 
-  const { data: party } = useGetPartyQuery();
-  const { data: pageMetadata } = useGetPageMetadataQuery({ partyUuid: party?.uuid, pageAddress: window.location.pathname }, { skip: !Boolean(party) });
+  const { data: website } = useGetWebsiteQuery();
+  const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
   if (!pageMetadata?.appbar?.body) {
     return DefaultAppbarItems({})
@@ -27,12 +27,12 @@ const DashboardAppbarItems = ({ }) => {
       <DashboardButton key={index} label={item.label} to={item.to} items={item.items} />
     );
   })
-  const brand = <Brand />;
+  const websiteLogo = <WebsiteLogo />;
   const userInfo = <UserInfo />
 
   return {
     desktopLeftItems: [...desktopLeftItems, userInfo],
-    desktopRightItems: [brand, ...desktopRightItems],
+    desktopRightItems: [websiteLogo, ...desktopRightItems],
     mobileLeftItems: [userInfo],
     mobileRightItems: [],
     mobileMenuListItems: [...desktopLeftItems, ...desktopRightItems],

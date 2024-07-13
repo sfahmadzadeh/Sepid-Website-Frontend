@@ -1,10 +1,12 @@
-import React, { FC, Fragment, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { Button, Stack } from '@mui/material';
+import React, { FC, useState } from 'react';
+import { Button, Stack, Typography } from '@mui/material';
 
-import TinyPreview from 'components/tiny_editor/react_tiny/Preview';
+import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
 import { WidgetModes } from 'components/organisms/Widget';
 import MultiChoiceQuestionEditWidget from './edit';
+import Choice from 'components/molecules/Choice';
+import { toast } from 'react-toastify';
+import { toPersianNumber } from 'utils/translateNumber';
 export { MultiChoiceQuestionEditWidget };
 
 type MultiChoiceQuestionWidgetPropsType = {
@@ -13,35 +15,57 @@ type MultiChoiceQuestionWidgetPropsType = {
   id: string;
   text: string;
   choices: any[];
-  last_submitted_answer: any;
   mode: WidgetModes;
+  maximum_choices_could_be_chosen: number,
 }
 
 const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
   onAnswerSubmit,
   onAnswerChange,
 
-  id: widgetId,
+  id: questionId,
   text: questionText,
   choices: questionChoices,
-  last_submitted_answer,
   mode,
+  maximum_choices_could_be_chosen: maximumChoicesCouldBeChosen,
 }) => {
-  const [selectedChoices, setSelectedChoices] = useState<any[]>([]);
+  const [selectedChoices, _setSelectedChoices] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (last_submitted_answer?.choices)
-      setSelectedChoices(last_submitted_answer.choices)
-  }, [last_submitted_answer?.choices])
+  const setSelectedChoices = (newSelectedChoices) => {
+    onAnswerChange({ choices: newSelectedChoices });
+    _setSelectedChoices(newSelectedChoices);
+  }
 
-  const onAnswerSubmitWrapper = (choice) => {
+  const onChoiceSelect = (choice) => {
     if (mode === WidgetModes.Edit) return;
-    setSelectedChoices([choice])
-    onAnswerSubmit({ problemId: widgetId, selectedChoices: [choice] });
+    if (maximumChoicesCouldBeChosen === 1) {
+      setSelectedChoices([choice])
+      submitAnswer([choice]);
+    } else {
+      const choiceIndex = selectedChoices.indexOf(choice);
+      if (choiceIndex === -1) {
+        if (selectedChoices.length === maximumChoicesCouldBeChosen) {
+          toast.error(`حداکثر ${toPersianNumber(maximumChoicesCouldBeChosen)} گزینه را می‌توانید انتخاب کنید.`)
+          return;
+        }
+        setSelectedChoices([
+          ...selectedChoices,
+          choice,
+        ]);
+      } else {
+        const selectedChoicesCopy = [...selectedChoices]
+        selectedChoicesCopy.splice(choiceIndex, 1);
+        setSelectedChoices(selectedChoicesCopy);
+      }
+    }
+  }
+
+  const submitAnswer = (selectedChoices) => {
+    onAnswerSubmit({ questionId, selectedChoices });
   }
 
   return (
-    <Fragment>
+    <Stack spacing={1}>
       <TinyPreview
         frameProps={{
           frameBorder: '0',
@@ -51,31 +75,28 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
         content={questionText}
       />
       <Stack spacing={1}>
-        {questionChoices.map((choice, index) =>
-          <Button
-            key={index}
-            fullWidth
-            variant="contained"
-            sx={{
-              ...(mode === WidgetModes.View && selectedChoices.map(choice => choice.id).includes(choice.id) ? {
-                border: '2px dashed white',
-              } : {}),
-              ...(choice?.is_correct ? {
-                color: '#fff',
-                borderColor: '#337766',
-                margin: 1,
-                backgroundColor: '#337766',
-                '&:hover': {
-                  color: 'black',
-                }
-              } : {})
-            }}
-            onClick={() => onAnswerSubmitWrapper(choice)}>
-            {choice.text}
-          </Button>
+        {questionChoices.map((choice) =>
+          <Choice
+            key={choice.id}
+            choice={choice}
+            mode={WidgetModes.View}
+            isSelected={selectedChoices.includes(choice)}
+            onSelectionChange={() => onChoiceSelect(choice)}
+            variant={maximumChoicesCouldBeChosen > 1 ? 'checkbox' : 'radio'}
+          />
         )}
       </Stack>
-    </Fragment>
+      {mode === WidgetModes.View && maximumChoicesCouldBeChosen > 1 && selectedChoices.length > 0 &&
+        <Button
+          sx={{ width: 80, alignSelf: 'end' }}
+          variant='contained'
+          onClick={() => submitAnswer(selectedChoices)}>
+          <Typography fontWeight={400}>
+            {'ثبت'}
+          </Typography>
+        </Button>
+      }
+    </Stack>
   );
 };
 
