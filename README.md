@@ -4,7 +4,7 @@
 دستورات زیر را به ترتیب در پوشه‌ای که می‌خواهید پروژه قرار گیرد، وارد کنید:
 
 - `git clone git@github.com:sepid-org/Sepid-Website-Frontend.git`
-- `cd Sepid Platform Frontend`
+- `cd Sepid Website Frontend`
 - `yarn`
 - `yarn start`
 
