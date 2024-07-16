@@ -1,9 +1,9 @@
-# Sepid Platform Frontend
+# Sepid Website Frontend
 
 ## نحوه‌ی راه‌اندازی پروژه
 دستورات زیر را به ترتیب در پوشه‌ای که می‌خواهید پروژه قرار گیرد، وارد کنید:
 
-- `git clone git@github.com:sepid-org/Sepid-Platform-Frontend.git`
+- `git clone git@github.com:sepid-org/Sepid-Website-Frontend.git`
 - `cd Sepid Platform Frontend`
 - `yarn`
 - `yarn start`
