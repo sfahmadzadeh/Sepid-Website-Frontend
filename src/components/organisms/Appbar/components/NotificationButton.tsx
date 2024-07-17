@@ -7,9 +7,12 @@ import {
   Notifications as NotificationsIcon,
 } from '@mui/icons-material';
 import React, { FC, Fragment, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import NotificationsList from 'components/organisms/lists/NotificationsList';
 import { MessageType } from 'types/models';
+import useWebSocket from 'components/hooks/useWebsocket';
+import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
 type NotificationButtonPropsType = {
 }
@@ -17,6 +20,16 @@ type NotificationButtonPropsType = {
 const NotificationButton: FC<NotificationButtonPropsType> = ({
 }) => {
   const t = useTranslate();
+  // TODO: get userdata by rtk
+  const { data: website } = useGetWebsiteQuery();
+  const [message, setMessage] = useState('');
+  const sendMessage = useWebSocket({
+    room: `sepid-${website.name}-${'ehsan'}`
+  });
+  const messages = useSelector((state: any) => state.websocket.messages);
+  const status = useSelector((state: any) => state.websocket.status);
+
+  console.log(messages)
 
   const notifications: MessageType[] = [];
   // [
@@ -32,8 +45,8 @@ const NotificationButton: FC<NotificationButtonPropsType> = ({
   //     recipient: null,
   //     title: 'احسنت! پاسخ شما درست بود',
   //     content: 'به خاطر پاسخ درست شما به پرسش فلان، صد سکه‌ی تمام بهار آزادی در خیال به شما اضافه شد',
-  //     seen: false,
-  //     received_datetime: 'erfedgrf',
+  //     sent_datetime: '',
+  //     received_datetime: '',
   //   },
   //   {
   //     id: 2,
@@ -158,3 +171,4 @@ const NotificationButton: FC<NotificationButtonPropsType> = ({
 };
 
 export default NotificationButton;
+
