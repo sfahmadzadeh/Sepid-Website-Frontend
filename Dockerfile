@@ -1,4 +1,4 @@
-FROM node:latest as build
+FROM node:18-alpine as build
 WORKDIR /app
 
 ARG SENTRY_AUTH_TOKEN
@@ -23,7 +23,7 @@ ENV PATH="./node_modules/.bin:$PATH"
 COPY . .
 RUN yarn build
 
-FROM nginx:latest as production
+FROM nginx:alpine as production
 ENV SERVER_NAME = _
 ENV NGINX_ENVSUBST_OUTPUT_DIR=/etc/nginx
 COPY ./nginx.conf.template /etc/nginx/templates/

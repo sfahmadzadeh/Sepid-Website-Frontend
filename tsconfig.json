@@ -5,6 +5,8 @@
     // Set `sourceRoot` to  "/" to strip the build path prefix from
     // generated source code references. This will improve issue grouping in Sentry.
     // This improves issue grouping in Sentry.
+    // Set `sourceRoot` to  "/" to strip the build path prefix
+    // from generated source code references.
     "sourceRoot": "/",
     "baseUrl": "src",
     "target": "es5",
