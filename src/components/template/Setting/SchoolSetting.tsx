@@ -22,6 +22,7 @@ import {
 } from 'redux/slices/account';
 import Iran from 'utils/iran';
 import { toast } from 'react-toastify';
+import { useGetPartyProfileQuery } from 'redux/features/user/ProfileSlice';
 
 const GRADES = [
   { value: 1, name: 'اول' },
@@ -69,16 +70,17 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
 }) => {
   const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: string; grade: number; }>(null);
   const [addInstituteDialog, setAddInstituteDialogStatus] = useState(false);
+  const { data: userProfile } = useGetPartyProfileQuery({ partyId: userInfo.id });
 
   useEffect(() => {
-    if (userInfo?.school_studentship) {
+    if (userProfile?.school_studentship) {
       setSchoolStudentship({
-        id: userInfo.school_studentship.id,
-        school: userInfo.school_studentship.school,
-        grade: userInfo.school_studentship.grade,
+        id: userProfile.school_studentship.id,
+        school: userProfile.school_studentship.school,
+        grade: userProfile.school_studentship.grade,
       })
     }
-  }, [userInfo?.school_studentship])
+  }, [userProfile?.school_studentship])
 
   useEffect(() => {
     if (newlyAddedInstitute) {
@@ -90,12 +92,12 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
   }, [newlyAddedInstitute])
 
   useEffect(() => {
-    if (userInfo?.city) {
-      getInstitutes({ cityTitle: Iran.Cities.find(city => userInfo.city == city.title).title });
+    if (userProfile?.city) {
+      getInstitutes({ cityTitle: Iran.Cities.find(city => userProfile.city == city.title).title });
     }
-  }, [userInfo?.city]);
+  }, [userProfile?.city]);
 
-  if (!userInfo || !schoolStudentship) return null;
+  if (!userProfile || !schoolStudentship) return null;
 
   const handleFieldsChange = (event) => {
     setSchoolStudentship({
@@ -114,10 +116,10 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
 
   const AddSchoolInstituteIcon = () => {
     return (
-      <Tooltip title={userInfo.city ? 'افزودن مدرسه‌ی جدید' : 'لطفاً ابتدا شهر خود را تعیین کنید.'} arrow>
+      <Tooltip title={userProfile.city ? 'افزودن مدرسه‌ی جدید' : 'لطفاً ابتدا شهر خود را تعیین کنید.'} arrow>
         <IconButton
           size="small"
-          onClick={userInfo.city ? () => setAddInstituteDialogStatus(true) : () => { }}>
+          onClick={userProfile.city ? () => setAddInstituteDialogStatus(true) : () => { }}>
           <AddCircleOutlineIcon />
         </IconButton>
       </Tooltip>
@@ -194,8 +196,8 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
       </Grid>
 
       <AddInstitute
-        province={userInfo.province}
-        city={userInfo.city}
+        province={userProfile.province}
+        city={userProfile.city}
         open={addInstituteDialog}
         handleClose={() => {
           setAddInstituteDialogStatus(false);

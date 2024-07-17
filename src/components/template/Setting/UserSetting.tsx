@@ -29,6 +29,7 @@ import { UserInfoType } from 'types/profile';
 import isNumber from 'utils/validators/isNumber';
 import { toast } from 'react-toastify';
 import ChangePhoneNumberDialog from 'components/organisms/dialogs/ChangePhoneNumberDialog';
+import { useGetPartyProfileQuery } from 'redux/features/user/ProfileSlice';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
@@ -49,13 +50,14 @@ const UserSetting: FC<UserSettingPropsType> = ({
   onSuccessfulSubmission,
 }) => {
   const [userInfo, setUserInfo] = useState(null);
+  const { data: userProfile } = useGetPartyProfileQuery({ partyId: initialUserInfo.id });
   const [isChangePhoneNumberDialogOpen, setIsChangePhoneNumberDialogOpen] = useState(false);
 
   useEffect(() => {
-    if (initialUserInfo) {
-      setUserInfo(initialUserInfo);
+    if (userProfile) {
+      setUserInfo(userProfile);
     }
-  }, [initialUserInfo])
+  }, [userProfile])
 
   if (!userInfo) return null;
 
@@ -79,7 +81,7 @@ const UserSetting: FC<UserSettingPropsType> = ({
     const newProfile = {};
     for (const key in userInfo) {
       const newVal = userInfo[key];
-      const oldVal = initialUserInfo[key];
+      const oldVal = userProfile[key];
       if (oldVal !== newVal) {
         newProfile[key] = newVal;
       }
