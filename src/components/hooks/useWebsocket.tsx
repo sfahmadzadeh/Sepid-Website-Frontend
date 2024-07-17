@@ -20,9 +20,21 @@ const useWebSocket = ({ room }) => {
         console.log('WebSocket connected');
       };
 
-      websocket.current.onclose = () => {
+      websocket.current.onclose = (event) => {
         dispatch(disconnect());
-        console.log('WebSocket disconnected');
+
+        switch (event.code) {
+          case 1000: // Normal closure
+            console.log('Normal closure');
+            break;
+          case 1006: // Abnormal closure (network issues)
+            console.log('Network issues');
+            break;
+          default:
+            console.log(`WebSocket closed with code: ${event.code}`);
+            break;
+        }
+
         if (shouldReconnect) {
           reconnectTimeout = setTimeout(connectWebSocket, 5000); // Reconnect after 5 seconds
         }
