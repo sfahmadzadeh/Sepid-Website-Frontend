@@ -20,7 +20,7 @@ const websocketSlice = createSlice({
       state.room = response.room;
       state.messages = [
         ...state.messages,
-        ...response.messages[0],
+        ...response.messages,
       ];
     },
   },
