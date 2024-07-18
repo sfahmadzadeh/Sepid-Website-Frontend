@@ -22,6 +22,7 @@ export const ManageContentServiceApi = createApi({
     'forms',
     'receipt',
     'player',
+    'player-transited-path',
   ],
   baseQuery: CustomBaseQuery({ baseUrl: MCS_URL + 'api/' }),
   endpoints: build => ({

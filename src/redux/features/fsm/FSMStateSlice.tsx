@@ -36,7 +36,11 @@ export const FSMStateSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     updateFSMState: builder.mutation<UpdateFSMStateOutputType, UpdateFSMStateInputType>({
-      invalidatesTags: (result) => [{ type: 'fsm-state', id: result.id }, 'fsm-states'],
+      invalidatesTags: (result) => [
+        { type: 'fsm-state', id: result.id },
+        'fsm-states',
+        'player-transited-path',
+      ],
       query: ({ fsmStateId, ...body }) => ({
         url: `/fsm/state/${fsmStateId}/`,
         method: 'PATCH',
@@ -56,7 +60,7 @@ export const FSMStateSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     deleteFSMState: builder.mutation<any, { fsmStateId: string }>({
-      invalidatesTags: ['fsm-states'],
+      invalidatesTags: ['fsm-states', 'player-transited-path'],
       query: ({ fsmStateId }) => ({
         url: `/fsm/state/${fsmStateId}/`,
         method: 'DELETE',

@@ -20,7 +20,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
 
     getPlayerTransitedPath: builder.query<GetPlayerTransitedPathOutputType, GetPlayerTransitedPathInputType>({
-      providesTags: ['player'],
+      providesTags: ['player', 'player-transited-path'],
       query: ({ playerId }) => `/roadmap/get_player_transited_path/?player=${playerId}`,
       transformResponse: (response: any): GetPlayerTransitedPathOutputType => {
         return response;
