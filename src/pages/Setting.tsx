@@ -1,14 +1,9 @@
 import { Grid, Tab, Tabs } from '@mui/material';
 import React, { FC, useEffect } from 'react';
-import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import Layout from 'components/template/Layout';
 import SettingTemplate from 'components/template/Setting';
-import {
-  getUserProfileAction,
-} from 'redux/slices/account';
 import { DashboardTabType } from 'types/global';
-import { UserInfoType } from 'types/profile';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 let tabs: DashboardTabType[] = [
@@ -36,14 +31,9 @@ let tabs: DashboardTabType[] = [
 ];
 
 type SettingPropsType = {
-  getUserProfile: any;
-  userInfo: UserInfoType;
 }
 
-const Setting: FC<SettingPropsType> = ({
-  getUserProfile,
-  userInfo,
-}) => {
+const Setting: FC<SettingPropsType> = ({ }) => {
   const navigate = useNavigate();
   const { programId, section } = useParams();
   const { data: program } = useGetProgramQuery({ programId }, { skip: !Boolean(programId) });
@@ -57,12 +47,6 @@ const Setting: FC<SettingPropsType> = ({
       }
     }
   }, [section])
-
-  useEffect(() => {
-    if (userInfo?.id) {
-      getUserProfile({ id: userInfo.id });
-    }
-  }, [userInfo?.id]);
 
   if (program?.audience_type == 'Student') {
     tabs = [tabs[0], tabs[1]];
@@ -107,10 +91,4 @@ const Setting: FC<SettingPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  userInfo: state.account.userInfo,
-});
-
-export default connect(mapStateToProps, {
-  getUserProfile: getUserProfileAction,
-})(Setting);
+export default Setting;

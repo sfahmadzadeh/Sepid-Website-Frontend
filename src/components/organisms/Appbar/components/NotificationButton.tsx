@@ -13,6 +13,7 @@ import NotificationsList from 'components/organisms/lists/NotificationsList';
 import { MessageType } from 'types/models';
 import useWebSocket from 'components/hooks/useWebsocket';
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
+import { useGetPartyProfileSummaryQuery } from 'redux/features/user/ProfileSlice';
 
 type NotificationButtonPropsType = {
 }
@@ -20,12 +21,12 @@ type NotificationButtonPropsType = {
 const NotificationButton: FC<NotificationButtonPropsType> = ({
 }) => {
   const t = useTranslate();
-  // TODO: get userdata by rtk
   const { data: website } = useGetWebsiteQuery();
+  const userInfo = useSelector((state: any) => state.account.userInfo);
+  const { data: userProfileSummary } = useGetPartyProfileSummaryQuery({ partyId: userInfo.id });
+  const room = (website.name && userProfileSummary?.id) ? `sepid-${website.name}-${userProfileSummary?.id}` : null;
+  const sendMessage = useWebSocket({ room });
   const [message, setMessage] = useState('');
-  const sendMessage = useWebSocket({
-    room: `sepid-${website.name}-${'ehsan'}`
-  });
   const messages = useSelector((state: any) => state.websocket.messages);
   const status = useSelector((state: any) => state.websocket.status);
 

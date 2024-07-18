@@ -8,7 +8,6 @@ import {
   submitRegistrationFormAction,
 } from 'redux/slices/programs';
 import ProgramInfo from 'components/organisms/ProgramInfo';
-import { RegistrationFormType } from 'types/models';
 import useCollectWidgetsAnswers from 'components/hooks/useCollectWidgetsAnswers';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import Paper from './Paper';
@@ -91,11 +90,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  userInfo: state.account.userInfo,
-  isFetching: state.programs.isFetching,
-});
 
-export default connect(mapStateToProps, {
+export default connect(null, {
   submitRegistrationForm: submitRegistrationFormAction,
 })(RegistrationForm);

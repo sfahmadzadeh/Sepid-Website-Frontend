@@ -7,7 +7,6 @@ import {
   institutesUrl,
   discountCRUDUrl,
   merchandiseDiscountCodeUrl,
-  profileCRUDUrl,
   studentshipCRUDUrl,
   verificationCodeUrl,
 } from '../constants/urls';
@@ -112,13 +111,6 @@ export const updateUserInfoAction = createAsyncThunkApi(
   }
 );
 
-// user profile includes user full info
-export const getUserProfileAction = createAsyncThunkApi(
-  'account/getUserProfileAction',
-  Apis.GET,
-  profileCRUDUrl
-);
-
 export const createDiscountCodeAction = createAsyncThunkApi(
   'account/createDiscountCodeAction',
   Apis.POST,
@@ -146,11 +138,6 @@ export const getAllMerchandiseDiscountCodesAction = createAsyncThunkApi(
   Apis.GET,
   merchandiseDiscountCodeUrl,
 );
-
-
-// end of actions for mentors
-
-
 
 const isFetching = (state) => {
   state.isFetching = true;
@@ -194,14 +181,6 @@ const accountSlice = createSlice({
         state.id = response.account.id;
         state.accessToken = response.access;
         state.refreshToken = response.refresh;
-        state.isFetching = false;
-      }
-    );
-
-    builder.addCase(
-      getUserProfileAction.fulfilled,
-      (state, { payload: { response } }) => {
-        state.userInfo = { ...state.userInfo, ...response };
         state.isFetching = false;
       }
     );
@@ -313,7 +292,6 @@ const accountSlice = createSlice({
       isAnyOf(
         createAccountAction.pending,
         changePasswordAction.pending,
-        getUserProfileAction.pending,
         getInstitutesAction.pending,
         createInstitutesAction.pending,
         updateUserInfoAction.pending,
@@ -334,7 +312,6 @@ const accountSlice = createSlice({
         createAccountAction.rejected,
         changePasswordAction.fulfilled,
         changePasswordAction.rejected,
-        getUserProfileAction.rejected,
         getInstitutesAction.rejected,
         createInstitutesAction.rejected,
         updateUserInfoAction.rejected,

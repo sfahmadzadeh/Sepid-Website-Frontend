@@ -5,8 +5,6 @@ export const changePasswordUrl = 'auth/accounts/change_pass/';
 export const verificationCodeUrl = 'auth/accounts/verification_code/';
 export const accountCRUDUrl = ({ id }) => id ? `auth/accounts/${id}/` : 'auth/accounts/';
 
-export const profileCRUDUrl = ({ id }) => id ? `auth/profile/${id}/` : 'auth/profile/';
-
 export const studentShipUrl = 'auth/studentship/';
 export const studentshipCRUDUrl = ({ id }) => `auth/studentship/${id}/`;
 

@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -29,12 +29,12 @@ import { UserInfoType } from 'types/profile';
 import isNumber from 'utils/validators/isNumber';
 import { toast } from 'react-toastify';
 import ChangePhoneNumberDialog from 'components/organisms/dialogs/ChangePhoneNumberDialog';
+import { useGetPartyProfileQuery } from 'redux/features/user/ProfileSlice';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
 type UserSettingPropsType = {
   updateUserInfo: any;
-  userInfo: UserInfoType;
   onSuccessfulSubmission?: any;
 }
 
@@ -45,17 +45,18 @@ const hasUserCompletedPrimaryInformation = (userInfo) => {
 
 const UserSetting: FC<UserSettingPropsType> = ({
   updateUserInfo,
-  userInfo: initialUserInfo,
   onSuccessfulSubmission,
 }) => {
+  const initialUserInfo = useSelector((state: any) => state.account.userInfo);
   const [userInfo, setUserInfo] = useState(null);
+  const { data: userProfile } = useGetPartyProfileQuery({ partyId: initialUserInfo.id });
   const [isChangePhoneNumberDialogOpen, setIsChangePhoneNumberDialogOpen] = useState(false);
 
   useEffect(() => {
-    if (initialUserInfo) {
-      setUserInfo(initialUserInfo);
+    if (userProfile) {
+      setUserInfo(userProfile);
     }
-  }, [initialUserInfo])
+  }, [userProfile])
 
   if (!userInfo) return null;
 
@@ -79,7 +80,7 @@ const UserSetting: FC<UserSettingPropsType> = ({
     const newProfile = {};
     for (const key in userInfo) {
       const newVal = userInfo[key];
-      const oldVal = initialUserInfo[key];
+      const oldVal = userProfile[key];
       if (oldVal !== newVal) {
         newProfile[key] = newVal;
       }
@@ -348,7 +349,6 @@ const UserSetting: FC<UserSettingPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  userInfo: state.account.userInfo,
   isFetching: state.account.isFetching,
   payments: state.account.payments,
   institutes: state.account.institutes,

@@ -24,6 +24,7 @@ export type UserInfoType = {
   province: string;
   userPermissions: UserPermissions[];
   username: string;
+  school_studentship: SchoolStudentshipType;
 }
 
 type GroupType = any;
@@ -47,9 +48,9 @@ export type SchoolStudentshipType = {
   start_date: string;
   end_date: string;
   grade: number;
-  id: number;
+  id: string;
   is_document_verified: boolean;
   major: string;
-  school: number;
+  school: string;
   studentship_type: StudentshipType;
 };
