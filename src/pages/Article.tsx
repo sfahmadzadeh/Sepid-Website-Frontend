@@ -22,7 +22,7 @@ const Article: FC<ArticlePropsType> = ({ }) => {
           gutterBottom>
           {article?.name}
         </Typography>
-        <Paper paperId={articleId} />
+        <Paper mode='general' paperId={articleId} />
       </Stack>
     </Layout >
   );

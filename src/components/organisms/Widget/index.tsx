@@ -7,6 +7,7 @@ import EditHintsDialog from 'components/organisms/dialogs/EditHintsDialog';
 import WidgetHint from 'components/molecules/WidgetHint';
 import useWidgetFactory from './useWidgetFactory';
 import CostDialog from '../dialogs/CostDialog';
+import { AnswerType } from 'types/models';
 
 export enum WidgetModes {
   Create,
@@ -29,24 +30,13 @@ export enum WidgetTypes {
   Iframe = 'Iframe',
 }
 
-enum AnswerType2WidgetType {
-  SmallAnswer = WidgetTypes.SmallAnswerProblem,
-  BigAnswer = WidgetTypes.BigAnswerProblem,
-  UploadFileAnswer = WidgetTypes.UploadFileProblem,
-  MultiChoiceAnswer = WidgetTypes.MultiChoiceProblem,
-  TextWidget = WidgetTypes.TextWidget,
-  DetailBoxWidget = WidgetTypes.DetailBoxWidget,
-  Image = WidgetTypes.Image,
-  Video = WidgetTypes.Video,
-  Iframe = WidgetTypes.Iframe,
-}
-
 type WidgetPropsType = {
   widget: any;
   mode?: WidgetModes;
   paperId: string;
   coveredWithPaper?: boolean;
-  collectAnswerData?: any;
+  collectAnswer?: any;
+  submittedAnswers?: AnswerType[];
 }
 
 const Widget: FC<WidgetPropsType> = ({
@@ -54,7 +44,8 @@ const Widget: FC<WidgetPropsType> = ({
   mode = WidgetModes.View,
   paperId,
   coveredWithPaper = true,
-  collectAnswerData,
+  collectAnswer,
+  submittedAnswers,
 }) => {
   const [openDeleteWidgetDialog, setOpenDeleteWidgetDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
@@ -62,7 +53,6 @@ const Widget: FC<WidgetPropsType> = ({
   const [showCostDialog, setShowCostDialog] = useState(false);
   const [answerBody, setAnswerBody] = useState({});
 
-  const widgetType = widget.widget_type || AnswerType2WidgetType[widget.answer_type];
   const {
     onDelete,
     onMutate,
@@ -74,9 +64,9 @@ const Widget: FC<WidgetPropsType> = ({
   } = useWidgetFactory({
     widgetId: widget.id,
     paperId,
-    widgetType,
+    widgetType: widget.widget_type,
     mode,
-    collectAnswerData,
+    collectAnswer,
   });
 
   const beCorrected = widget.be_corrected;

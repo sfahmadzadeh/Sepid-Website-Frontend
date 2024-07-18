@@ -28,7 +28,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
 }) => {
   const { programId } = useParams();
   const [isDialogOpen, setDialogStatus] = useState(false);
-  const { answers } = useCollectWidgetsAnswers([]);
+  const { answers, getAnswerCollector } = useCollectWidgetsAnswers([]);
   const { data: program } = useGetProgramQuery({ programId });
   const { data: registrationForm } = useGetFormQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
   const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program.registration_form });
@@ -65,7 +65,12 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
     <Stack spacing={2}>
       <ProgramInfo program={program} />
       <Stack width={'100%'} component={MUIPaper} padding={2} spacing={2}>
-        <Paper paperId={registrationForm.id} />
+        <Paper
+          mode='form'
+          paperId={registrationForm.id}
+          answers={answers}
+          getAnswerCollector={getAnswerCollector}
+        />
         {isSubmitButtonDisabled().isDisabled &&
           <Typography color={'red'} textAlign={'center'} fontSize={24} fontWeight={400}>
             {isSubmitButtonDisabled().message}

@@ -1,14 +1,25 @@
 import { useState } from "react";
+import { WidgetTypes } from "types/global";
 
 type collectAnswersPropsType = {
   widgetId: number;
-  widgetType: string;
+  widgetType: WidgetTypes;
+}
+
+export type GetAnswerCollectorType = ({ widgetId, widgetType }: collectAnswersPropsType) => (data: object) => void
+
+const WidgetType2AnswerType = {
+  SmallAnswerProblem: 'SmallAnswer',
+  BigAnswerProblem: 'BigAnswer',
+  UploadFileProblem: 'UploadFileAnswer',
+  MultiChoiceProblem: 'MultiChoiceAnswer',
 }
 
 const useCollectWidgetsAnswers = (initialAnswers: any[]) => {
-  const [answers, setAnswers] = useState(initialAnswers);
+  const [answers, _setAnswers] = useState(initialAnswers);
 
-  const collectAnswers = ({ widgetId, widgetType, }: collectAnswersPropsType) => (data: object) => {
+
+  const getAnswerCollector = ({ widgetId, widgetType }: collectAnswersPropsType) => (data: object) => {
     let isFound = false;
     const tempAnswers = [...answers];
     for (let i = 0; i < tempAnswers.length; i++) {
@@ -30,14 +41,14 @@ const useCollectWidgetsAnswers = (initialAnswers: any[]) => {
     if (!isFound) {
       tempAnswers.push({
         ...data,
-        answer_type: widgetType,
+        answer_type: WidgetType2AnswerType[widgetType],
         problem: widgetId,
       });
     }
-    setAnswers(tempAnswers);
+    _setAnswers(tempAnswers);
   };
 
-  return { answers, setAnswers, collectAnswers };
+  return { answers, getAnswerCollector };
 }
 
 export default useCollectWidgetsAnswers;

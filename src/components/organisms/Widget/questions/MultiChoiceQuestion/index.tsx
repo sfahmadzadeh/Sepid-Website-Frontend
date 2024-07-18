@@ -40,7 +40,9 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
     if (mode === WidgetModes.Edit) return;
     if (maximumChoicesCouldBeChosen === 1) {
       setSelectedChoices([choice])
-      submitAnswer([choice]);
+      if (mode === WidgetModes.View) {
+        submitAnswer([choice]);
+      }
     } else {
       const choiceIndex = selectedChoices.indexOf(choice);
       if (choiceIndex === -1) {
@@ -61,7 +63,9 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
   }
 
   const submitAnswer = (selectedChoices) => {
-    onAnswerSubmit({ questionId, selectedChoices });
+    if (mode === WidgetModes.View) {
+      onAnswerSubmit({ questionId, selectedChoices });
+    }
   }
 
   return (

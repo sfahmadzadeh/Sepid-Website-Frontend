@@ -11,7 +11,7 @@ type WidgetFactoryType = {
   paperId?: string;
   widgetType?: string;
   mode: WidgetModes;
-  collectAnswerData?: any;
+  collectAnswer?: any;
 }
 
 const useWidgetFactory = ({
@@ -19,7 +19,7 @@ const useWidgetFactory = ({
   paperId,
   widgetType,
   mode,
-  collectAnswerData,
+  collectAnswer,
 }: WidgetFactoryType) => {
   // skip fetch is initially true, means it doesnot need to fetch the widget data for the first time
   // the widget data should be fetched after each update
@@ -52,7 +52,7 @@ const useWidgetFactory = ({
         setSkipFetch(false);
       }
 
-  onAnswerChange = collectAnswerData ? collectAnswerData : () => { };
+  onAnswerChange = collectAnswer ? collectAnswer : () => { };
 
   // todo refactor: this peace of code should be extracted as a separate method
   onAnswerSubmit = (props) => dispatcher(submitAnswerAction(props)).then((response) => {
