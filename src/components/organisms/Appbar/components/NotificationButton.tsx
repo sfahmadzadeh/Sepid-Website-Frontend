@@ -12,8 +12,7 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import NotificationsList from 'components/organisms/lists/NotificationsList';
 import { MessageType } from 'types/models';
 import useWebSocket from 'components/hooks/useWebsocket';
-import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
-import { useGetPartyProfileSummaryQuery } from 'redux/features/user/ProfileSlice';
+import { useGetUserProfileSummaryQuery, useGetWebsiteProfileSummaryQuery } from 'redux/features/party/ProfileSlice';
 
 type NotificationButtonPropsType = {
 }
@@ -21,15 +20,16 @@ type NotificationButtonPropsType = {
 const NotificationButton: FC<NotificationButtonPropsType> = ({
 }) => {
   const t = useTranslate();
-  const { data: website } = useGetWebsiteQuery();
+  const { data: website } = useGetWebsiteProfileSummaryQuery({});
   const userInfo = useSelector((state: any) => state.account.userInfo);
-  const { data: userProfileSummary } = useGetPartyProfileSummaryQuery({ partyId: userInfo.id });
+  const { data: userProfileSummary } = useGetUserProfileSummaryQuery({ partyId: userInfo.id });
   const room = (website?.name && userProfileSummary?.id) ? `sepid-${website.name}-${userProfileSummary?.id}` : null;
-  // const sendMessage = useWebSocket({ room });
+  const sendMessage = useWebSocket({ room });
   const [message, setMessage] = useState('');
   const messages = useSelector((state: any) => state.websocket.messages);
   const status = useSelector((state: any) => state.websocket.status);
 
+  console.log(website)
   console.log(messages)
 
   const notifications: MessageType[] = [];

@@ -22,7 +22,7 @@ import {
 } from 'redux/slices/account';
 import Iran from 'utils/iran';
 import { toast } from 'react-toastify';
-import { useGetPartyProfileQuery } from 'redux/features/user/ProfileSlice';
+import { useGetUserProfileQuery } from 'redux/features/party/ProfileSlice';
 
 const GRADES = [
   { value: 1, name: 'اول' },
@@ -69,7 +69,7 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
   const userInfo = useSelector((state: any) => state.account.userInfo);
   const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: string; grade: number; }>(null);
   const [addInstituteDialog, setAddInstituteDialogStatus] = useState(false);
-  const { data: userProfile } = useGetPartyProfileQuery({ partyId: userInfo.id });
+  const { data: userProfile } = useGetUserProfileQuery({ partyId: userInfo.id });
 
   useEffect(() => {
     if (userProfile?.school_studentship) {

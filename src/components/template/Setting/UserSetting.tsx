@@ -29,7 +29,7 @@ import { UserInfoType } from 'types/profile';
 import isNumber from 'utils/validators/isNumber';
 import { toast } from 'react-toastify';
 import ChangePhoneNumberDialog from 'components/organisms/dialogs/ChangePhoneNumberDialog';
-import { useGetPartyProfileQuery } from 'redux/features/user/ProfileSlice';
+import { useGetUserProfileQuery } from 'redux/features/party/ProfileSlice';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
@@ -49,7 +49,7 @@ const UserSetting: FC<UserSettingPropsType> = ({
 }) => {
   const initialUserInfo = useSelector((state: any) => state.account.userInfo);
   const [userInfo, setUserInfo] = useState(null);
-  const { data: userProfile } = useGetPartyProfileQuery({ partyId: initialUserInfo.id });
+  const { data: userProfile } = useGetUserProfileQuery({ partyId: initialUserInfo.id });
   const [isChangePhoneNumberDialogOpen, setIsChangePhoneNumberDialogOpen] = useState(false);
 
   useEffect(() => {
