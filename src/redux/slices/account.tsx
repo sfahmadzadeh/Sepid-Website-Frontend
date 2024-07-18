@@ -7,7 +7,6 @@ import {
   institutesUrl,
   discountCRUDUrl,
   merchandiseDiscountCodeUrl,
-  studentshipCRUDUrl,
   verificationCodeUrl,
 } from '../constants/urls';
 import { UserSlice } from 'redux/features/user/UserSlice';
@@ -68,16 +67,6 @@ export const changePasswordAction = createAsyncThunkApi(
 
 ////////////////
 
-export const updateStudentShipAction = createAsyncThunkApi(
-  'account/updateStudentShipAction',
-  Apis.PATCH_FORM_DATA,
-  studentshipCRUDUrl,
-  {
-    defaultNotification: {
-      success: 'اطلاعات دانش‌آموزی با موفقیت به‌روز شدند.',
-    },
-  }
-);
 
 export const createInstitutesAction = createAsyncThunkApi(
   'account/createInstitutesAction',
@@ -188,20 +177,6 @@ const accountSlice = createSlice({
     );
 
     builder.addCase(
-      updateStudentShipAction.fulfilled,
-      (state, { payload: { response } }) => {
-        state.userInfo = {
-          ...state.userInfo,
-          school_studentship: {
-            ...state.userInfo.school_studentship,
-            ...response,
-          }
-        }
-        state.isFetching = false;
-      }
-    );
-
-    builder.addCase(
       createDiscountCodeAction.fulfilled,
       (state, { payload: { response } }) => {
         state.discountCodes = [...state.discountCodes, response]
@@ -271,7 +246,6 @@ const accountSlice = createSlice({
         changePasswordAction.pending,
         getInstitutesAction.pending,
         createInstitutesAction.pending,
-        updateStudentShipAction.pending,
         createDiscountCodeAction.pending,
         deleteDiscountCodeAction.pending,
         getAllMerchandiseDiscountCodesAction.pending,
@@ -290,7 +264,6 @@ const accountSlice = createSlice({
         changePasswordAction.rejected,
         getInstitutesAction.rejected,
         createInstitutesAction.rejected,
-        updateStudentShipAction.rejected,
         createDiscountCodeAction.rejected,
         deleteDiscountCodeAction.rejected,
         getAllMerchandiseDiscountCodesAction.rejected,

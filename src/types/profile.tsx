@@ -44,13 +44,13 @@ export type AcademicStudentshipType = {
 };
 
 export type SchoolStudentshipType = {
-  document: string;
-  start_date: string;
-  end_date: string;
+  document?: string;
+  start_date?: string;
+  end_date?: string;
   grade: number;
   id: string;
-  is_document_verified: boolean;
-  major: string;
+  is_document_verified?: boolean;
+  major?: string;
   school: string;
-  studentship_type: StudentshipType;
+  studentship_type?: StudentshipType;
 };

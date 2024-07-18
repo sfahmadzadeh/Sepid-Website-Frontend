@@ -41,7 +41,7 @@ const hasUserCompletedPrimaryInformation = (userInfo) => {
 const UserSetting: FC<UserSettingPropsType> = ({
   onSuccessfulSubmission,
 }) => {
-  const [updateUserProfile, result] = useUpdateUserProfileMutation();
+  const [updateUserProfile, updateUserProfileResult] = useUpdateUserProfileMutation();
   const initialUserInfo = useSelector((state: any) => state.account.userInfo);
   const [userInfo, setUserInfo] = useState(initialUserInfo);
   const { data: userProfile } = useGetUserProfileQuery({ userId: initialUserInfo.id });
@@ -57,10 +57,10 @@ const UserSetting: FC<UserSettingPropsType> = ({
   }, [userProfile])
 
   useEffect(() => {
-    if (result?.isSuccess) {
+    if (updateUserProfileResult?.isSuccess) {
       onSuccessfulSubmission()
     }
-  }, [result])
+  }, [updateUserProfileResult])
 
   if (!userInfo) return null;
 
@@ -81,6 +81,11 @@ const UserSetting: FC<UserSettingPropsType> = ({
   };
 
   const submitUserInfo = () => {
+    if (!hasUserCompletedPrimaryInformation(userInfo)) {
+      toast.error('لطفاً همه‌ی اطلاعات خواسته‌شده را وارد کنید');
+      return;
+    }
+
     const newProfile = {};
     for (const key in userInfo) {
       const newVal = userInfo[key];
@@ -88,10 +93,6 @@ const UserSetting: FC<UserSettingPropsType> = ({
       if (oldVal !== newVal) {
         newProfile[key] = newVal;
       }
-    }
-    if (!hasUserCompletedPrimaryInformation(userInfo)) {
-      toast.error('لطفاً همه‌ی اطلاعات خواسته‌شده را وارد کنید');
-      return;
     }
 
     updateUserProfile({

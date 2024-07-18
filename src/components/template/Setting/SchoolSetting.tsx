@@ -17,12 +17,12 @@ import { connect, useSelector } from 'react-redux';
 import { getInstitutesAction } from 'redux/slices/account';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddInstitute from 'components/organisms/dialogs/AddInstitute';
-import {
-  updateStudentShipAction,
-} from 'redux/slices/account';
 import Iran from 'utils/iran';
 import { toast } from 'react-toastify';
-import { useGetUserProfileQuery } from 'redux/features/party/ProfileSlice';
+import {
+  useGetUserProfileQuery,
+  useUpdateUserStudentshipMutation,
+} from 'redux/features/party/ProfileSlice';
 
 const GRADES = [
   { value: 1, name: 'اول' },
@@ -48,7 +48,6 @@ const SCHOOL_TYPES = {
 
 type SchoolSettingPropsType = {
   getInstitutes: any;
-  updateStudentShip: any;
   institutes: any[];
   newlyAddedInstitute?: any;
   onSuccessfulSubmission?: any;
@@ -61,13 +60,13 @@ const hasUserCompletedStudentshipInformation = (schoolStudentship) => {
 
 const SchoolSetting: FC<SchoolSettingPropsType> = ({
   getInstitutes,
-  updateStudentShip,
   institutes,
   newlyAddedInstitute,
   onSuccessfulSubmission,
 }) => {
+  const [updateUserStudentship, updateUserStudentshipResult] = useUpdateUserStudentshipMutation();
   const userInfo = useSelector((state: any) => state.account.userInfo);
-  const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: string; grade: number; }>(null);
+  const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: string; grade: number; }>(userInfo.school_studentship);
   const [addInstituteDialog, setAddInstituteDialogStatus] = useState(false);
   const { data: userProfile } = useGetUserProfileQuery({ userId: userInfo.id });
 
@@ -79,7 +78,7 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
         grade: userProfile.school_studentship.grade,
       })
     }
-  }, [userProfile?.school_studentship])
+  }, [userProfile])
 
   useEffect(() => {
     if (newlyAddedInstitute) {
@@ -91,10 +90,16 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
   }, [newlyAddedInstitute])
 
   useEffect(() => {
+    if (updateUserStudentshipResult?.isSuccess) {
+      onSuccessfulSubmission()
+    }
+  }, [updateUserStudentshipResult])
+
+  useEffect(() => {
     if (userProfile?.city) {
       getInstitutes({ cityTitle: Iran.Cities.find(city => userProfile.city == city.title).title });
     }
-  }, [userProfile?.city]);
+  }, [userProfile]);
 
   if (!userProfile || !schoolStudentship) return null;
 
@@ -106,11 +111,16 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
   };
 
   const submitSchoolStudentship = () => {
+
     if (!hasUserCompletedStudentshipInformation(schoolStudentship)) {
       toast.error('لطفاً همه‌ی اطلاعات خواسته‌شده را وارد کنید');
       return;
     }
-    updateStudentShip({ ...schoolStudentship, onSuccess: onSuccessfulSubmission });
+
+    updateUserStudentship({
+      userStudentshipId: schoolStudentship.id,
+      ...schoolStudentship,
+    });
   };
 
   const AddSchoolInstituteIcon = () => {
@@ -213,5 +223,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getInstitutes: getInstitutesAction,
-  updateStudentShip: updateStudentShipAction,
 })(SchoolSetting);

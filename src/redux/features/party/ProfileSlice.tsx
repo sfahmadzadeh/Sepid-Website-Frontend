@@ -1,4 +1,4 @@
-import { UserInfoType } from 'types/profile';
+import { SchoolStudentshipType, UserInfoType } from 'types/profile';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 import { WebsiteType } from 'types/global';
 import { MWS_URL } from 'configs/Constants';
@@ -12,7 +12,13 @@ type UpdateUserProfileInputType = {
   userId: string;
 } & Partial<UserInfoType>;
 
-type GetUserProfileOutputType = Partial<UserInfoType>;
+type GetUserProfileOutputType = UserInfoType;
+
+type UpdateUserStudentshipInputType = {
+  userStudentshipId: string;
+} & Partial<SchoolStudentshipType>;
+
+type GetUserStudentshipOutputType = SchoolStudentshipType;
 
 type GetWebsiteProfileInputType = {}
 
@@ -33,7 +39,17 @@ export const ProfileSlice = ManageContentServiceApi.injectEndpoints({
       query: ({ userId, ...body }) => ({
         url: `auth/profile/${userId}/`,
         method: 'PATCH',
+        // todo: remove jsonToFormData. instead, make profile_pic type to URLField
         body: jsonToFormData(body),
+      }),
+    }),
+
+    updateUserStudentship: builder.mutation<GetUserStudentshipOutputType, UpdateUserStudentshipInputType>({
+      invalidatesTags: ['user-profile'],
+      query: ({ userStudentshipId, ...body }) => ({
+        url: `auth/studentship/${userStudentshipId}/`,
+        method: 'PATCH',
+        body,
       }),
     }),
 
@@ -63,4 +79,5 @@ export const {
   useGetUserProfileSummaryQuery,
   useGetWebsiteProfileSummaryQuery,
   useUpdateUserProfileMutation,
+  useUpdateUserStudentshipMutation,
 } = ProfileSlice;
