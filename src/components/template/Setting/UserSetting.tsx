@@ -20,21 +20,16 @@ import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from "moment";
-import {
-  updateUserInfoAction,
-} from 'redux/slices/account';
 import Iran from 'utils/iran';
 import { toEnglishNumber } from 'utils/translateNumber';
-import { UserInfoType } from 'types/profile';
 import isNumber from 'utils/validators/isNumber';
 import { toast } from 'react-toastify';
 import ChangePhoneNumberDialog from 'components/organisms/dialogs/ChangePhoneNumberDialog';
-import { useGetUserProfileQuery } from 'redux/features/party/ProfileSlice';
+import { useGetUserProfileQuery, useUpdateUserProfileMutation } from 'redux/features/party/ProfileSlice';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
 type UserSettingPropsType = {
-  updateUserInfo: any;
   onSuccessfulSubmission?: any;
 }
 
@@ -44,26 +39,35 @@ const hasUserCompletedPrimaryInformation = (userInfo) => {
 }
 
 const UserSetting: FC<UserSettingPropsType> = ({
-  updateUserInfo,
   onSuccessfulSubmission,
 }) => {
+  const [updateUserProfile, result] = useUpdateUserProfileMutation();
   const initialUserInfo = useSelector((state: any) => state.account.userInfo);
-  const [userInfo, setUserInfo] = useState(null);
-  const { data: userProfile } = useGetUserProfileQuery({ partyId: initialUserInfo.id });
+  const [userInfo, setUserInfo] = useState(initialUserInfo);
+  const { data: userProfile } = useGetUserProfileQuery({ userId: initialUserInfo.id });
   const [isChangePhoneNumberDialogOpen, setIsChangePhoneNumberDialogOpen] = useState(false);
 
   useEffect(() => {
     if (userProfile) {
-      setUserInfo(userProfile);
+      setUserInfo({
+        ...userInfo,
+        ...userProfile,
+      });
     }
   }, [userProfile])
+
+  useEffect(() => {
+    if (result?.isSuccess) {
+      onSuccessfulSubmission()
+    }
+  }, [result])
 
   if (!userInfo) return null;
 
   const handleProfilePictureChange = (event) => {
     if (event.target.files?.[0]) {
-      updateUserInfo({
-        id: userInfo.id,
+      updateUserProfile({
+        userId: userInfo.id,
         profile_picture: event.target.files[0],
       });
     }
@@ -89,10 +93,10 @@ const UserSetting: FC<UserSettingPropsType> = ({
       toast.error('لطفاً همه‌ی اطلاعات خواسته‌شده را وارد کنید');
       return;
     }
-    updateUserInfo({
-      id: userInfo.id,
+
+    updateUserProfile({
+      userId: userInfo.id,
       ...newProfile,
-      onSuccess: onSuccessfulSubmission,
     });
   };
 
@@ -354,6 +358,4 @@ const mapStateToProps = (state) => ({
   institutes: state.account.institutes,
 });
 
-export default connect(mapStateToProps, {
-  updateUserInfo: updateUserInfoAction,
-})(UserSetting);
+export default connect(mapStateToProps)(UserSetting);

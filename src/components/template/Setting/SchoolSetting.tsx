@@ -69,7 +69,7 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
   const userInfo = useSelector((state: any) => state.account.userInfo);
   const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: string; grade: number; }>(null);
   const [addInstituteDialog, setAddInstituteDialogStatus] = useState(false);
-  const { data: userProfile } = useGetUserProfileQuery({ partyId: userInfo.id });
+  const { data: userProfile } = useGetUserProfileQuery({ userId: userInfo.id });
 
   useEffect(() => {
     if (userProfile?.school_studentship) {

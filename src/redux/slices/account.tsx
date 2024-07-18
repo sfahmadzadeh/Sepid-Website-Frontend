@@ -66,9 +66,7 @@ export const changePasswordAction = createAsyncThunkApi(
   }
 );
 
-
 ////////////////
-
 
 export const updateStudentShipAction = createAsyncThunkApi(
   'account/updateStudentShipAction',
@@ -96,19 +94,6 @@ export const getInstitutesAction = createAsyncThunkApi(
   'account/getInstitutesAction',
   Apis.GET,
   institutesUrl
-);
-
-// todo: what is difference between this and updateProfile?
-export const updateUserInfoAction = createAsyncThunkApi(
-  'account/updateUserInfoAction',
-  Apis.PATCH_FORM_DATA,
-  accountCRUDUrl,
-  {
-    defaultNotification: {
-      success: 'اطلاعات فردی با موفقیت به‌روز شدند.',
-      error: 'مشکلی در به‌روز‌رسانی اطلاعات وجود داشت.',
-    },
-  }
 );
 
 export const createDiscountCodeAction = createAsyncThunkApi(
@@ -203,14 +188,6 @@ const accountSlice = createSlice({
     );
 
     builder.addCase(
-      updateUserInfoAction.fulfilled,
-      (state, { payload: { response } }) => {
-        state.userInfo = { ...state.userInfo, ...response }
-        state.isFetching = false;
-      }
-    );
-
-    builder.addCase(
       updateStudentShipAction.fulfilled,
       (state, { payload: { response } }) => {
         state.userInfo = {
@@ -294,7 +271,6 @@ const accountSlice = createSlice({
         changePasswordAction.pending,
         getInstitutesAction.pending,
         createInstitutesAction.pending,
-        updateUserInfoAction.pending,
         updateStudentShipAction.pending,
         createDiscountCodeAction.pending,
         deleteDiscountCodeAction.pending,
@@ -314,7 +290,6 @@ const accountSlice = createSlice({
         changePasswordAction.rejected,
         getInstitutesAction.rejected,
         createInstitutesAction.rejected,
-        updateUserInfoAction.rejected,
         updateStudentShipAction.rejected,
         createDiscountCodeAction.rejected,
         deleteDiscountCodeAction.rejected,
