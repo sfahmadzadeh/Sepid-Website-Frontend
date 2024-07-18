@@ -24,13 +24,10 @@ const NotificationButton: FC<NotificationButtonPropsType> = ({
   const userInfo = useSelector((state: any) => state.account.userInfo);
   const { data: userProfileSummary } = useGetUserProfileSummaryQuery({ userId: userInfo.id });
   const room = (website?.name && userProfileSummary?.id) ? `sepid-${website.name}-${userProfileSummary?.id}` : null;
-  const sendMessage = useWebSocket({ room });
+  // const sendMessage = useWebSocket({ room });
   const [message, setMessage] = useState('');
   const messages = useSelector((state: any) => state.websocket.messages);
   const status = useSelector((state: any) => state.websocket.status);
-
-  console.log(website)
-  console.log(messages)
 
   const notifications: MessageType[] = [];
   // [
