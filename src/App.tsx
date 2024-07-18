@@ -23,6 +23,7 @@ import { useGetThirdPartiesQuery } from 'redux/features/ThirdPartySlice';
 import { initSupportingThirdPartyApps } from 'configs/SupportingThirdPartyApps';
 import { ConfettiContainer } from 'components/molecules/confetti';
 import { useCheckAuthenticationQuery } from 'redux/features/user/UserSlice';
+import GlobalStyles from 'configs/styles/GlobalStyles';
 
 const App = ({
   dir,
@@ -89,6 +90,7 @@ const App = ({
       }
       <IntlProvider translations={translations}>
         <CacheProvider value={createEmotionCache(dir)}>
+          <GlobalStyles />
           <ThemeProvider theme={selectTheme(dir)}>
             <ToastContainer
               rtl
