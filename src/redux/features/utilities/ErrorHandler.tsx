@@ -19,7 +19,7 @@ const handleError = ({
   }
 
   if (error.data?.code) {
-    if (error.data.code === 'token_not_valid') {
+    if (['user_not_found', 'token_not_valid'].includes(error.data.code)) {
       dispatch({ type: 'account/logout' });
       toast.error('نشست شما به پایان رسیده. لطفاً دوباره وارد سامانه شوید.');
       return;
