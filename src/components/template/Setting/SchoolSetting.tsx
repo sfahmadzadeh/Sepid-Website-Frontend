@@ -13,7 +13,7 @@ import {
   FormHelperText,
 } from '@mui/material';
 import React, { FC, Fragment, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { getInstitutesAction } from 'redux/slices/account';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddInstitute from 'components/organisms/dialogs/AddInstitute';
@@ -49,7 +49,6 @@ const SCHOOL_TYPES = {
 type SchoolSettingPropsType = {
   getInstitutes: any;
   updateStudentShip: any;
-  userInfo: any;
   institutes: any[];
   newlyAddedInstitute?: any;
   onSuccessfulSubmission?: any;
@@ -63,11 +62,11 @@ const hasUserCompletedStudentshipInformation = (schoolStudentship) => {
 const SchoolSetting: FC<SchoolSettingPropsType> = ({
   getInstitutes,
   updateStudentShip,
-  userInfo,
   institutes,
   newlyAddedInstitute,
   onSuccessfulSubmission,
 }) => {
+  const userInfo = useSelector((state: any) => state.account.userInfo);
   const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: string; grade: number; }>(null);
   const [addInstituteDialog, setAddInstituteDialogStatus] = useState(false);
   const { data: userProfile } = useGetPartyProfileQuery({ partyId: userInfo.id });
@@ -209,7 +208,6 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
 
 const mapStateToProps = (state) => ({
   newlyAddedInstitute: state.account.newlyAddedInstitute,
-  userInfo: state.account.userInfo,
   institutes: state.account.institutes || [],
 });
 

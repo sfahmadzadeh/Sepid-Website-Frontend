@@ -15,9 +15,17 @@ export const ProfileSlice = ManageContentServiceApi.injectEndpoints({
         method: 'GET',
       }),
     }),
+
+    getPartyProfileSummary: builder.query<GetPartyProfileOutputType, GetPartyProfileInputType>({
+      query: ({ partyId }) => ({
+        url: `auth/profile/${partyId}/profile_summary/`,
+        method: 'GET',
+      }),
+    }),
   })
 });
 
 export const {
   useGetPartyProfileQuery,
+  useGetPartyProfileSummaryQuery
 } = ProfileSlice;

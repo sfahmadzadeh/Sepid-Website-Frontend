@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -35,7 +35,6 @@ const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
 type UserSettingPropsType = {
   updateUserInfo: any;
-  userInfo: UserInfoType;
   onSuccessfulSubmission?: any;
 }
 
@@ -46,9 +45,9 @@ const hasUserCompletedPrimaryInformation = (userInfo) => {
 
 const UserSetting: FC<UserSettingPropsType> = ({
   updateUserInfo,
-  userInfo: initialUserInfo,
   onSuccessfulSubmission,
 }) => {
+  const initialUserInfo = useSelector((state: any) => state.account.userInfo);
   const [userInfo, setUserInfo] = useState(null);
   const { data: userProfile } = useGetPartyProfileQuery({ partyId: initialUserInfo.id });
   const [isChangePhoneNumberDialogOpen, setIsChangePhoneNumberDialogOpen] = useState(false);
@@ -350,7 +349,6 @@ const UserSetting: FC<UserSettingPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  userInfo: state.account.userInfo,
   isFetching: state.account.isFetching,
   payments: state.account.payments,
   institutes: state.account.institutes,

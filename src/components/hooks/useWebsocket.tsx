@@ -10,6 +10,8 @@ const useWebSocket = ({ room }) => {
   const [shouldReconnect, setShouldReconnect] = useState(true);
 
   useEffect(() => {
+    if (!room) return;
+
     let reconnectTimeout;
 
     const connectWebSocket = () => {
@@ -23,6 +25,7 @@ const useWebSocket = ({ room }) => {
       websocket.current.onclose = (event) => {
         dispatch(disconnect());
 
+        console.log('WebSocket disconnected');
         switch (event.code) {
           case 1000: // Normal closure
             console.log('Normal closure');
