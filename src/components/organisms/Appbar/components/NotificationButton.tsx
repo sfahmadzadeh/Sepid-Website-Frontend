@@ -24,7 +24,7 @@ const NotificationButton: FC<NotificationButtonPropsType> = ({
   const { data: website } = useGetWebsiteQuery();
   const userInfo = useSelector((state: any) => state.account.userInfo);
   const { data: userProfileSummary } = useGetPartyProfileSummaryQuery({ partyId: userInfo.id });
-  const room = (website.name && userProfileSummary?.id) ? `sepid-${website.name}-${userProfileSummary?.id}` : null;
+  const room = (website?.name && userProfileSummary?.id) ? `sepid-${website.name}-${userProfileSummary?.id}` : null;
   // const sendMessage = useWebSocket({ room });
   const [message, setMessage] = useState('');
   const messages = useSelector((state: any) => state.websocket.messages);
