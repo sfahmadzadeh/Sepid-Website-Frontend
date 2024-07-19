@@ -1,28 +1,22 @@
 import { Button, Paper as MUIPaper, Stack, Typography } from '@mui/material';
-import React, { FC, useState } from 'react';
-import { connect } from 'react-redux';
+import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
-import {
-  submitRegistrationFormAction,
-} from 'redux/slices/programs';
 import ProgramInfo from 'components/organisms/ProgramInfo';
 import useCollectWidgetsAnswers from 'components/hooks/useCollectWidgetsAnswers';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import Paper from './Paper';
 import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
-import { useGetFormQuery } from 'redux/features/form/FormSlice';
-
+import { useGetFormQuery, useSubmitFormMutation } from 'redux/features/form/FormSlice';
+import { AnswerType } from 'types/models';
 
 type RegistrationFormPropsType = {
-  submitRegistrationForm: any;
   onSuccess?: any;
   onFailure?: any;
 }
 
 const RegistrationForm: FC<RegistrationFormPropsType> = ({
-  submitRegistrationForm,
   onSuccess,
   onFailure,
 }) => {
@@ -32,16 +26,24 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   const { data: program } = useGetProgramQuery({ programId });
   const { data: registrationForm } = useGetFormQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
   const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program.registration_form });
+  const [submitRegistrationForm, submitRegistrationFormResult] = useSubmitFormMutation();
 
   const submit = () => {
     submitRegistrationForm({
-      id: registrationForm.id,
+      answer_sheet_type: 'RegistrationReceipt',
+      formId: registrationForm.id,
       answers,
-      programId,
-      onSuccess,
-      onFailure,
     });
   };
+
+  useEffect(() => {
+    if (submitRegistrationFormResult?.isSuccess) {
+      onSuccess();
+    }
+    if (submitRegistrationFormResult?.isError) {
+      onFailure();
+    }
+  }, [submitRegistrationFormResult])
 
   const isSubmitButtonDisabled = (): { isDisabled: boolean; message: string; } => {
     return {
@@ -95,7 +97,4 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   );
 };
 
-
-export default connect(null, {
-  submitRegistrationForm: submitRegistrationFormAction,
-})(RegistrationForm);
+export default RegistrationForm;

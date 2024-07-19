@@ -17,7 +17,6 @@ import {
   purchaseProgramUrl,
   respondInvitationUrl,
   submitDiscountCodeUrl,
-  submitRegistrationFormUrl,
   TeamCRUDUrl,
   addMentorToWorkshopUrl,
   registerUsersViaCSVUrl,
@@ -28,7 +27,6 @@ import {
   getTeamsUrl,
   makeTeamHeadUrl,
   removeFromTeamUrl,
-  registrationFormCRUDUrl,
   validateRegistrationReceiptUrl,
   workshopCRUDUrl,
   createTeamAndJoinActionUrl,
@@ -64,23 +62,6 @@ export const getProgramsAction = createAsyncThunkApi(
   'programs/getProgramsAction',
   Apis.GET,
   getProgramsUrl
-);
-
-export const submitRegistrationFormAction = createAsyncThunkApi(
-  'programs/submitRegistrationFormAction',
-  Apis.POST,
-  submitRegistrationFormUrl,
-  {
-    bodyCreator: ({ answers, onSuccess, onFailure }) => ({
-      answer_sheet_type: 'RegistrationReceipt',
-      answers,
-      onSuccess,
-      onFailure,
-    }),
-    defaultNotification: {
-      success: 'فرم ثبت‌نام با موفقیت ثبت شد!',
-    },
-  }
 );
 
 export const applyDiscountCodeAction = createAsyncThunkApi(
@@ -447,17 +428,14 @@ const programSlice = createSlice({
     },
     [getProgramsAction.rejected.toString()]: isNotFetching,
 
-    
+
     [getOneMerchandiseAction.pending.toString()]: isFetching,
     [getOneMerchandiseAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.merchandise = response;
     },
     [getOneMerchandiseAction.rejected.toString()]: isNotFetching,
 
-    [submitRegistrationFormAction.pending.toString()]: isFetching,
-    [submitRegistrationFormAction.fulfilled.toString()]: isNotFetching,
-    [submitRegistrationFormAction.rejected.toString()]: isNotFetching,
-
+    
     [purchaseProgramAction.pending.toString()]: isFetching,
     [purchaseProgramAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.isFetching = false;
@@ -633,7 +611,7 @@ const programSlice = createSlice({
       state.isFetching = false;
     },
     [addUserToTeamAction.rejected.toString()]: isNotFetching,
-    
+
 
     [registerUsersViaCSVAction.pending.toString()]: isFetching,
     [registerUsersViaCSVAction.fulfilled.toString()]: isNotFetching,

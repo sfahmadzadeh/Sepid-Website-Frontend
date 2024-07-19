@@ -7,7 +7,6 @@ import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import {
   applyDiscountCodeAction,
   purchaseProgramAction,
-  submitRegistrationFormAction,
 } from 'redux/slices/programs';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 import { toPersianNumber } from 'utils/translateNumber';
@@ -124,6 +123,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   purchaseProgram: purchaseProgramAction,
-  submitRegistrationForm: submitRegistrationFormAction,
   applyDiscountCode: applyDiscountCodeAction,
 })(Payment);
