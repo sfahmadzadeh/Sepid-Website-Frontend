@@ -25,7 +25,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   const { answers, getAnswerCollector } = useCollectWidgetsAnswers([]);
   const { data: program } = useGetProgramQuery({ programId });
   const { data: registrationForm } = useGetFormQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
-  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program.registration_form });
+  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
   const [submitRegistrationForm, submitRegistrationFormResult] = useSubmitFormMutation();
 
   const submit = () => {

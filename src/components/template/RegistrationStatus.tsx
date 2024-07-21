@@ -13,7 +13,7 @@ const RegistrationStatus: FC<RegistrationStatusPropsType> = ({
 }) => {
   const { programId } = useParams();
   const { data: program } = useGetProgramQuery({ programId });
-  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program.registration_form });
+  const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
 
   return (
     <Stack spacing={4}>
