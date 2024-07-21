@@ -61,10 +61,12 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
     }
   }
 
-  // todo: when registration form is editable, this "if" should be removed
-  if (registrationReceipt?.is_participating) {
-    navigate(`/program/${programId}/`);
-  }
+  useEffect(() => {
+    // todo: when registration form is editable, this "if" should be removed
+    if (registrationReceipt?.is_participating) {
+      navigate(`/program/${programId}/`);
+    }
+  }, [registrationReceipt])
 
   if (!program || !registrationForm || !registrationReceipt) return null;
 

@@ -1,5 +1,5 @@
 import { Stack, Grid } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Stepper from 'components/organisms/Stepper';
@@ -20,9 +20,11 @@ const RegistrationProcess: FC<RegistrationProcessPropsType> = ({ }) => {
     steps,
   } = useRegistrationSteps({ program });
 
-  if (currentStepNameIndex === steps.length - 1) {
-    navigate(`/program/${programId}/`);
-  }
+  useEffect(() => {
+    if (currentStepNameIndex === steps.length - 1) {
+      navigate(`/program/${programId}/`);
+    }
+  }, [currentStepNameIndex])
 
   return (
     <Layout appbarMode='PROGRAM'>
