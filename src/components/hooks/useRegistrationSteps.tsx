@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import Form from 'components/template/RegistrationForm';
+import RegistrationForm from 'components/template/RegistrationForm';
 import RegistrationStatus from 'components/template/RegistrationStatus';
 import Payment from 'components/template/Payment';
 import { RegistrationStepNameType, RegistrationStepType } from 'types/global';
@@ -45,8 +45,8 @@ const useRegistrationSteps = ({
     steps.push({
       name: 'form',
       label: 'ثبت‌نام در دوره',
-      component: <Form onSuccess={() => goToNextStep()} />,
-      onClick: () => goToStep(getStepIndex('form'))
+      component: <RegistrationForm onSuccess={() => goToNextStep()} />,
+      onClick: () => { }
     })
 
     steps.push({

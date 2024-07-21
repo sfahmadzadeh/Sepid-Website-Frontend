@@ -1,6 +1,6 @@
 import { Button, Paper as MUIPaper, Stack, Typography } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import AreYouSure from 'components/organisms/dialogs/AreYouSure';
 import ProgramInfo from 'components/organisms/ProgramInfo';
@@ -9,7 +9,6 @@ import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import Paper from './Paper';
 import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 import { useGetFormQuery, useSubmitFormMutation } from 'redux/features/form/FormSlice';
-import { AnswerType } from 'types/models';
 
 type RegistrationFormPropsType = {
   onSuccess?: any;
@@ -21,6 +20,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   onFailure,
 }) => {
   const { programId } = useParams();
+  const navigate = useNavigate();
   const [isDialogOpen, setDialogStatus] = useState(false);
   const { answers, getAnswerCollector } = useCollectWidgetsAnswers([]);
   const { data: program } = useGetProgramQuery({ programId });
@@ -59,6 +59,11 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
               registrationReceipt.status == 'StudentshipDataIncomplete' ? 'مشخصات دانش‌آموزی‌تان کامل نیست' :
                 'خبری نیست، سلامتی!'
     }
+  }
+
+  // todo: when registration form is editable, this "if" should be removed
+  if (registrationReceipt?.is_participating) {
+    navigate(`/program/${programId}/`);
   }
 
   if (!program || !registrationForm || !registrationReceipt) return null;

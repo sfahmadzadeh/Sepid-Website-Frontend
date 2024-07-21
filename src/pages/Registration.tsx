@@ -13,6 +13,7 @@ const RegistrationProcess: FC<RegistrationProcessPropsType> = ({ }) => {
   const navigate = useNavigate();
   const { programId } = useParams();
   const { data: program } = useGetProgramQuery({ programId });
+
   const {
     currentStepNameIndex,
     lastActiveStepIndex,
@@ -21,7 +22,6 @@ const RegistrationProcess: FC<RegistrationProcessPropsType> = ({ }) => {
 
   if (currentStepNameIndex === steps.length - 1) {
     navigate(`/program/${programId}/`);
-    window.location.reload();
   }
 
   return (
