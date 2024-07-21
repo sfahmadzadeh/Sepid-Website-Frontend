@@ -13,7 +13,6 @@ export const ManageContentServiceApi = createApi({
     'fsm-states',
     'fsm-state',
     'fsm-edges',
-    'fsm-edge',
     'widget',
     'paper',
     'articles',

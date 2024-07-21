@@ -8,12 +8,13 @@ import FSMStateHelpButton from 'components/molecules/FSMStateHelpButton';
 import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
 import { FSMStateType } from 'types/models';
 
-type FSMStateTemplatePropsType = {
+export type WorkshopFSMStatePropsType = {
+  type: 'workshop'; // | 'exam' | 'form' | 'game' | 'roadmap';
   state: FSMStateType;
   playerId: string;
 }
 
-const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state, playerId }) => {
+const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ state, playerId }) => {
   const { data: paper } = useGetPaperQuery({ paperId: state.id }, { skip: !state.id });
 
   const widgets = [...(paper?.widgets || [])];
@@ -115,4 +116,4 @@ const FSMStateTemplate: FC<FSMStateTemplatePropsType> = ({ state, playerId }) =>
   );
 }
 
-export default FSMStateTemplate;
+export default WorkshopFSMState;

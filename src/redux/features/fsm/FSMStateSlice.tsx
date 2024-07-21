@@ -51,20 +51,20 @@ export const FSMStateSlice = ManageContentServiceApi.injectEndpoints({
       },
     }),
 
-    getFSMState: builder.query<GetFSMStateOutputType, { fsmStateId: string }>({
-      providesTags: (result) => [{ type: 'fsm-state', id: result.id }],
-      query: ({ fsmStateId }) => `fsm/state/${fsmStateId}/`,
-      transformResponse: (response: any): GetFSMStateOutputType => {
-        return response;
-      },
-    }),
-
     deleteFSMState: builder.mutation<any, { fsmStateId: string }>({
       invalidatesTags: ['fsm-states', 'player-transited-path'],
       query: ({ fsmStateId }) => ({
         url: `/fsm/state/${fsmStateId}/`,
         method: 'DELETE',
       }),
+    }),
+
+    getFSMState: builder.query<GetFSMStateOutputType, { fsmStateId: string }>({
+      providesTags: (result) => [{ type: 'fsm-state', id: result.id }],
+      query: ({ fsmStateId }) => `fsm/state/${fsmStateId}/`,
+      transformResponse: (response: any): GetFSMStateOutputType => {
+        return response;
+      },
     }),
   })
 });

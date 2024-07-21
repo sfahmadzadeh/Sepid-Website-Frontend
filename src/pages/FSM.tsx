@@ -4,7 +4,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
 import { initParseServer } from 'parse/init';
-import FSMStateTemplate from 'components/template/FSMStateTemplate';
+import FSMState from 'components/template/FSMState';
 import { createTeamState, getChangeTeamStateSubscription, getTeamState } from '../parse/team';
 import {
   enterWorkshopAction,
@@ -14,7 +14,7 @@ import {
 import { addMentorToRoom, updateMentorTime } from 'parse/mentorsInRoom';
 import DraggableChatRoom from 'components/organisms/DraggableMeeting';
 import Layout from 'components/template/Layout';
-import { FSMType, TeamType } from 'types/models';
+import { TeamType } from 'types/models';
 import { toast } from 'react-toastify';
 import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
@@ -38,6 +38,7 @@ type FSMPagePropsType = {
   mentorId: string;
   teamId: string;
 }
+
 const FSM: FC<FSMPagePropsType> = ({
   currentState,
   needUpdateState,
@@ -172,7 +173,7 @@ const FSM: FC<FSMPagePropsType> = ({
       }
       <StatePageContext.Provider value={{ fsmId, paperId, playerId, teamId, isMentor, myTeam, teamRoom }}>
         <Layout appbarMode={isMentor ? 'MENTOR_FSM' : 'FSM'}>
-          <FSMStateTemplate state={currentState} playerId={playerId} />
+          <FSMState type='workshop' state={currentState} playerId={playerId} />
         </Layout>
         {(fsm.fsm_p_type == 'Team' || fsm.fsm_learning_type == 'Supervised') &&
           <DraggableChatRoom open={openChatRoom} handleClose={() => changeOpenChatRoom()} />

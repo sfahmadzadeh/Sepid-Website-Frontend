@@ -28,7 +28,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     getFSMRoadmapAction: builder.query<GetFSMRoadmapOutputType, GetFSMRoadmapInputType>({
-      providesTags: ['fsm'],
+      providesTags: ['fsm-states', 'fsm-edges'],
       query: ({ fsmId }) => `/roadmap/get_fsm_roadmap/?fsm=${fsmId}`,
       transformResponse: (response: any): GetFSMRoadmapOutputType => {
         return {
