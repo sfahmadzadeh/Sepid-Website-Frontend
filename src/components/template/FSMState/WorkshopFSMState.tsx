@@ -65,7 +65,9 @@ const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ state, playerId }) =>
                 {state.name}
               </Typography>
               {questionWidgets}
-              <Divider sx={{ display: { xs: 'none', md: 'inherit' } }} />
+              {!(inward_edges?.length === 0 && outward_edges?.length === 0) &&
+                <Divider sx={{ display: { xs: 'none', md: 'inherit' } }} />
+              }
               <Stack sx={{ display: { xs: 'none', md: 'inherit' } }}>
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
