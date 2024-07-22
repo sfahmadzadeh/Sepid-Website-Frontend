@@ -1,5 +1,7 @@
 import { SchoolStudentshipType, UserInfoType } from "./profile";
 
+export type InstituteType = any;
+
 type AudienceTypeType = "All" | "Student" | "Academic";
 type ProgramTypeType = "Team" | "Individual";
 

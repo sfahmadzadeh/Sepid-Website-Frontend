@@ -58,7 +58,8 @@ const UserSetting: FC<UserSettingPropsType> = ({
 
   useEffect(() => {
     if (updateUserProfileResult?.isSuccess) {
-      onSuccessfulSubmission()
+      toast.success('اطلاعات با موفقیت ثبت شد');
+      onSuccessfulSubmission?.()
     }
   }, [updateUserProfileResult])
 

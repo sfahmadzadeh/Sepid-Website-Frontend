@@ -1,11 +1,11 @@
 import { SchoolStudentshipType } from "types/profile";
 
-const isUserSchoolStudentshipProfileComplete = (userSchoolStudentshipProfile: SchoolStudentshipType) => {
-  if (!userSchoolStudentshipProfile.grade ||
-    !userSchoolStudentshipProfile.school) {
+const isSchoolStudentshipProfileComplete = (SchoolStudentshipProfile: SchoolStudentshipType) => {
+  if (!SchoolStudentshipProfile.grade ||
+    !SchoolStudentshipProfile.school) {
     return false;
   }
   return true;
 }
 
-export default isUserSchoolStudentshipProfileComplete;
+export default isSchoolStudentshipProfileComplete;

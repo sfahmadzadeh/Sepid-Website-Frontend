@@ -24,6 +24,7 @@ export const ManageContentServiceApi = createApi({
     'player-transited-path',
     'website-profile',
     'user-profile',
+    'institutes',
   ],
   baseQuery: CustomBaseQuery({ baseUrl: MCS_URL + 'api/' }),
   endpoints: build => ({

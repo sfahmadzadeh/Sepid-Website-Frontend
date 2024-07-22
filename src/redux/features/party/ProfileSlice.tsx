@@ -14,11 +14,9 @@ type UpdateUserProfileInputType = {
 
 type GetUserProfileOutputType = UserInfoType;
 
-type UpdateUserStudentshipInputType = {
-  userStudentshipId: string;
-} & Partial<SchoolStudentshipType>;
+type UpdateSchoolStudentshipInputType = Partial<SchoolStudentshipType>;
 
-type GetUserStudentshipOutputType = SchoolStudentshipType;
+type GetSchoolStudentshipOutputType = SchoolStudentshipType;
 
 type GetWebsiteProfileInputType = {}
 
@@ -44,10 +42,10 @@ export const ProfileSlice = ManageContentServiceApi.injectEndpoints({
       }),
     }),
 
-    updateUserStudentship: builder.mutation<GetUserStudentshipOutputType, UpdateUserStudentshipInputType>({
+    updateSchoolStudentship: builder.mutation<GetSchoolStudentshipOutputType, UpdateSchoolStudentshipInputType>({
       invalidatesTags: ['user-profile'],
-      query: ({ userStudentshipId, ...body }) => ({
-        url: `auth/studentship/${userStudentshipId}/`,
+      query: ({ id, ...body }) => ({
+        url: `auth/studentship/${id}/`,
         method: 'PATCH',
         body,
       }),
@@ -79,5 +77,5 @@ export const {
   useGetUserProfileSummaryQuery,
   useGetWebsiteProfileSummaryQuery,
   useUpdateUserProfileMutation,
-  useUpdateUserStudentshipMutation,
+  useUpdateSchoolStudentshipMutation,
 } = ProfileSlice;

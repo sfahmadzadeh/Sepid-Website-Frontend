@@ -13,25 +13,27 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import React, { FC, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useCreateInstituteMutation } from 'redux/features/party/InstituteSlice';
 
-import {
-  createInstitutesAction,
-  getInstitutesAction,
-} from 'redux/slices/account';
+type AddInstituteDialogPropsType = {
+  open: boolean;
+  handleClose: any;
+  onSuccess?: (result: any) => void;
+  province: string;
+  city: string;
+}
 
-const AddInstituteDialog = ({
+const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
   open,
   handleClose,
-  createInstitutes,
-
+  onSuccess,
   province,
   city,
-  isFetching,
 }) => {
   const [data, setData] = useState(null);
+  const [createInstitute, result] = useCreateInstituteMutation();
 
   const doSetData = (event) => {
     setData({
@@ -45,24 +47,27 @@ const AddInstituteDialog = ({
       toast.error('لطفاً همه‌ی موارد ستاره‌دار را تکمیل کنید.');
       return;
     }
-    createInstitutes({
+    createInstitute({
       institute_type: 'School',
       ...data,
       province,
       city,
-    }).then(() => {
-      handleClose(false);
     });
   };
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      handleClose(false);
+      onSuccess(result);
+    }
+  }, [result])
 
   return (
     <Dialog disableScrollLock maxWidth="sm" fullWidth open={open} onClose={handleClose}>
       <DialogTitle>
-        <Typography variant="h2" gutterBottom align="center">
-          {'افزودن مدرسه‌ی جدید'}
-        </Typography>
-        <Divider />
+        {'افزودن مدرسه‌ی جدید'}
       </DialogTitle>
+      <Divider />
       <DialogContent>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
 
@@ -72,6 +77,7 @@ const AddInstituteDialog = ({
               fullWidth>
               <InputLabel>نوع</InputLabel>
               <Select
+                value={data?.school_type || ''}
                 onChange={doSetData}
                 name="school_type"
                 label="پایه">
@@ -97,6 +103,7 @@ const AddInstituteDialog = ({
               fullWidth>
               <InputLabel>دخترانه یا پسرانه</InputLabel>
               <Select
+                value={data?.gender_type || ''}
                 onChange={doSetData}
                 name="gender_type"
                 label="دخترانه یا پسرانه">
@@ -210,7 +217,7 @@ const AddInstituteDialog = ({
       <DialogActions>
         <Grid item xs={12}>
           <Button
-            disabled={isFetching}
+            disabled={result.isLoading}
             onClick={handleButtonClick}
             fullWidth
             variant="contained"
@@ -223,11 +230,4 @@ const AddInstituteDialog = ({
   );
 }
 
-const mapStateToProps = (state) => ({
-  isFetching: state.account.isFetching,
-});
-
-export default connect(mapStateToProps, {
-  createInstitutes: createInstitutesAction,
-  getInstitutes: getInstitutesAction,
-})(AddInstituteDialog);
+export default AddInstituteDialog;

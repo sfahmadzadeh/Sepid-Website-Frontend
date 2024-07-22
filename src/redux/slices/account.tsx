@@ -68,23 +68,6 @@ export const changePasswordAction = createAsyncThunkApi(
 ////////////////
 
 
-export const createInstitutesAction = createAsyncThunkApi(
-  'account/createInstitutesAction',
-  Apis.POST,
-  institutesUrl,
-  {
-    defaultNotification: {
-      success: 'مدرسه با موفقیت ایجاد شد.',
-    },
-  }
-);
-
-export const getInstitutesAction = createAsyncThunkApi(
-  'account/getInstitutesAction',
-  Apis.GET,
-  institutesUrl
-);
-
 export const createDiscountCodeAction = createAsyncThunkApi(
   'account/createDiscountCodeAction',
   Apis.POST,
@@ -160,23 +143,6 @@ const accountSlice = createSlice({
     );
 
     builder.addCase(
-      getInstitutesAction.fulfilled,
-      (state, { payload: { response } }) => {
-        state.institutes = response;
-        state.isFetching = false;
-      },
-    );
-
-    builder.addCase(
-      createInstitutesAction.fulfilled,
-      (state, { payload: { response } }) => {
-        state.institutes = [...state.institutes, response];
-        state.newlyAddedInstitute = response;
-        state.isFetching = false;
-      },
-    );
-
-    builder.addCase(
       createDiscountCodeAction.fulfilled,
       (state, { payload: { response } }) => {
         state.discountCodes = [...state.discountCodes, response]
@@ -244,8 +210,6 @@ const accountSlice = createSlice({
       isAnyOf(
         createAccountAction.pending,
         changePasswordAction.pending,
-        getInstitutesAction.pending,
-        createInstitutesAction.pending,
         createDiscountCodeAction.pending,
         deleteDiscountCodeAction.pending,
         getAllMerchandiseDiscountCodesAction.pending,
@@ -262,8 +226,6 @@ const accountSlice = createSlice({
         createAccountAction.rejected,
         changePasswordAction.fulfilled,
         changePasswordAction.rejected,
-        getInstitutesAction.rejected,
-        createInstitutesAction.rejected,
         createDiscountCodeAction.rejected,
         deleteDiscountCodeAction.rejected,
         getAllMerchandiseDiscountCodesAction.rejected,

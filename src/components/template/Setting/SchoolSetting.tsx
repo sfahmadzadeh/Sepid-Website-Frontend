@@ -4,25 +4,25 @@ import {
   Divider,
   FormControl,
   Grid,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
-  Tooltip,
   Typography,
-  FormHelperText,
+  Autocomplete,
+  TextField,
 } from '@mui/material';
 import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { getInstitutesAction } from 'redux/slices/account';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddInstitute from 'components/organisms/dialogs/AddInstitute';
 import Iran from 'utils/iran';
 import { toast } from 'react-toastify';
 import {
   useGetUserProfileQuery,
-  useUpdateUserStudentshipMutation,
+  useUpdateSchoolStudentshipMutation,
 } from 'redux/features/party/ProfileSlice';
+import { useGetInstitutesQuery } from 'redux/features/party/InstituteSlice';
+import removeBlankAttributes from 'utils/removeBlankAttributes';
 
 const GRADES = [
   { value: 1, name: 'اول' },
@@ -46,10 +46,12 @@ const SCHOOL_TYPES = {
   'SchoolOfArt': 'هنرستان',
 }
 
+const GENDER_TYPE = {
+  'Male': 'پسرانه',
+  'Female': 'دخترانه',
+}
+
 type SchoolSettingPropsType = {
-  getInstitutes: any;
-  institutes: any[];
-  newlyAddedInstitute?: any;
   onSuccessfulSubmission?: any;
 }
 
@@ -59,47 +61,30 @@ const hasUserCompletedStudentshipInformation = (schoolStudentship) => {
 }
 
 const SchoolSetting: FC<SchoolSettingPropsType> = ({
-  getInstitutes,
-  institutes,
-  newlyAddedInstitute,
   onSuccessfulSubmission,
 }) => {
-  const [updateUserStudentship, updateUserStudentshipResult] = useUpdateUserStudentshipMutation();
   const userInfo = useSelector((state: any) => state.account.userInfo);
   const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: string; grade: number; }>(userInfo.school_studentship);
-  const [addInstituteDialog, setAddInstituteDialogStatus] = useState(false);
+  const [isAddInstituteDialogOpen, setIsAddInstituteDialogOpen] = useState(false);
   const { data: userProfile } = useGetUserProfileQuery({ userId: userInfo.id });
+  const userCityTitle = Iran.Cities.find(city => userProfile?.city == city.title)?.title;
+  const { data: institutes } = useGetInstitutesQuery({ city: userCityTitle }, { skip: !userCityTitle });
+  const [updateSchoolStudentship, updateUserStudentshipResult] = useUpdateSchoolStudentshipMutation();
 
   useEffect(() => {
     if (userProfile?.school_studentship) {
-      setSchoolStudentship({
-        id: userProfile.school_studentship.id,
-        school: userProfile.school_studentship.school,
-        grade: userProfile.school_studentship.grade,
-      })
+      setSchoolStudentship(userProfile.school_studentship)
     }
   }, [userProfile])
 
-  useEffect(() => {
-    if (newlyAddedInstitute) {
-      setSchoolStudentship({
-        ...schoolStudentship,
-        school: newlyAddedInstitute.id,
-      })
-    }
-  }, [newlyAddedInstitute])
+  console.log(schoolStudentship)
 
   useEffect(() => {
     if (updateUserStudentshipResult?.isSuccess) {
-      onSuccessfulSubmission()
+      toast.success('اطلاعات با موفقیت ثبت شد');
+      onSuccessfulSubmission?.()
     }
   }, [updateUserStudentshipResult])
-
-  useEffect(() => {
-    if (userProfile?.city) {
-      getInstitutes({ cityTitle: Iran.Cities.find(city => userProfile.city == city.title).title });
-    }
-  }, [userProfile]);
 
   if (!userProfile || !schoolStudentship) return null;
 
@@ -111,33 +96,21 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
   };
 
   const submitSchoolStudentship = () => {
-
     if (!hasUserCompletedStudentshipInformation(schoolStudentship)) {
       toast.error('لطفاً همه‌ی اطلاعات خواسته‌شده را وارد کنید');
       return;
     }
-
-    updateUserStudentship({
-      userStudentshipId: schoolStudentship.id,
-      ...schoolStudentship,
-    });
+    updateSchoolStudentship(removeBlankAttributes(schoolStudentship));
   };
 
-  const AddSchoolInstituteIcon = () => {
-    return (
-      <Tooltip title={userProfile.city ? 'افزودن مدرسه‌ی جدید' : 'لطفاً ابتدا شهر خود را تعیین کنید.'} arrow>
-        <IconButton
-          size="small"
-          onClick={userProfile.city ? () => setAddInstituteDialogStatus(true) : () => { }}>
-          <AddCircleOutlineIcon />
-        </IconButton>
-      </Tooltip>
-    );
-  };
+  const institutes_reps = institutes?.map((institute) => ({
+    id: institute.id,
+    name: `${SCHOOL_TYPES[institute.school_type]} ${GENDER_TYPE[institute.gender_type]} ${institute.name}`,
+  })) || []
 
   return (
     <Fragment>
-      <Grid container item spacing={2}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant="h2" gutterBottom>اطلاعات دانش‌آموزی</Typography>
           <Divider />
@@ -145,34 +118,32 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
 
         <Grid item container spacing={2}>
           <Grid item xs={12} sm={6}>
-            <FormControl
-              required
-              fullWidth>
-              <InputLabel>مدرسه</InputLabel>
-              <Select
-                IconComponent={AddSchoolInstituteIcon}
-                onChange={handleFieldsChange}
-                name="school"
-                value={institutes.find((institute) => institute.id === schoolStudentship.school) ? schoolStudentship.school : ''}
-                label="مدرسه">
-                {institutes.length > 0 ?
-                  institutes.slice().sort((a, b) => {
-                    let firstLabel = (a.school_type ? SCHOOL_TYPES[a.school_type] + ' ' : '') + a.name
-                    let secondLabel = (b.school_type ? SCHOOL_TYPES[b.school_type] + ' ' : '') + b.name
-                    return firstLabel.localeCompare(secondLabel)
-                  }).map((school) => (
-                    <MenuItem key={school.id} value={school.id}>
-                      {(school.school_type ? SCHOOL_TYPES[school.school_type] + ' ' : '') + school.name}
-                    </MenuItem>
-                  )) :
-                  <MenuItem disabled>
-                    {'موردی وجود ندارد.'}
-                  </MenuItem>}
-              </Select>
-              <FormHelperText>
-                {'چنانچه مدرسه‌ی شما در لیست نیست، می‌توانید با زدن دکمه‌ی + مدرسه‌ی خود را اضافه کنید.'}
-              </FormHelperText>
-            </FormControl>
+            <Autocomplete
+              fullWidth
+              disabled={!userCityTitle}
+              getOptionLabel={(option) => option.name}
+              onChange={(event, newValue) => {
+                setSchoolStudentship({
+                  ...schoolStudentship,
+                  school: newValue.id,
+                })
+              }}
+              value={institutes_reps.find(institute => institute.id === schoolStudentship.school) || null}
+              renderInput={(params) =>
+                <TextField
+                  {...params}
+                  label="مدرسه"
+                  error={!userCityTitle}
+                  helperText={!userCityTitle ? 'لطفاً ابتدا شهر خود را انتخاب کنید' : ''}
+                />
+              }
+              options={institutes_reps}
+              noOptionsText={
+                <Button size='small' color='info' startIcon={<AddCircleOutlineIcon />} onClick={() => setIsAddInstituteDialogOpen(true)}>
+                  {'مدرسه‌ای وجود ندارد. برای افزودن کلیک کنید'}
+                </Button>
+              }
+            />
           </Grid>
 
           <Grid item xs={12} sm={6}>
@@ -207,20 +178,19 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
       <AddInstitute
         province={userProfile.province}
         city={userProfile.city}
-        open={addInstituteDialog}
+        open={isAddInstituteDialogOpen}
+        onSuccess={(result) => {
+          setSchoolStudentship({
+            ...schoolStudentship,
+            school: result.data.id
+          });
+        }}
         handleClose={() => {
-          setAddInstituteDialogStatus(false);
+          setIsAddInstituteDialogOpen(false);
         }}
       />
     </Fragment>
   );
 }
 
-const mapStateToProps = (state) => ({
-  newlyAddedInstitute: state.account.newlyAddedInstitute,
-  institutes: state.account.institutes || [],
-});
-
-export default connect(mapStateToProps, {
-  getInstitutes: getInstitutesAction,
-})(SchoolSetting);
+export default SchoolSetting;
