@@ -77,8 +77,6 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
     }
   }, [userProfile])
 
-  console.log(schoolStudentship)
-
   useEffect(() => {
     if (updateUserStudentshipResult?.isSuccess) {
       toast.success('اطلاعات با موفقیت ثبت شد');
