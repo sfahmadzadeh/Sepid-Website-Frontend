@@ -85,7 +85,7 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
 
     login: builder.mutation<LoginOutputType, LoginInput>({
       // todo: this invalidation should be deleted (after separating permission and programs)
-      invalidatesTags: ['programs'],
+      invalidatesTags: ['programs', 'program', 'fsms', 'fsm', 'paper', 'player'],
       query: (body) => ({
         url: 'auth/accounts/login/',
         method: 'POST',

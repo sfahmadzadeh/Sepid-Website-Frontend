@@ -35,13 +35,9 @@ const App = ({
   const navigate = useNavigate();
   // check token expiration:
   useCheckAuthenticationQuery(null, { skip: !accessToken });
-  const { data: website, refetch } = useGetWebsiteQuery();
+  const { data: website } = useGetWebsiteQuery();
   const { data: websiteMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
   const { data: thirdPartiesTokens } = useGetThirdPartiesQuery({ partyName: website?.name }, { skip: !Boolean(website) })
-
-  useEffect(() => {
-    refetch();
-  }, [accessToken])
 
   useEffect(() => {
     if (thirdPartiesTokens) {

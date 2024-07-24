@@ -1,15 +1,14 @@
 import { Button, Icon, Typography } from '@mui/material';
 import React from 'react';
-import { connect } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
 import { logoutAction } from 'redux/slices/account';
 
-function LogoutButton({ logout }) {
-
+function LogoutButton({ }) {
+  const dispatch = useDispatch();
   return (
     <Button
       variant="outlined"
-      onClick={logout}
+      onClick={() => dispatch(logoutAction)}
       endIcon={
         <Icon>
           <img
@@ -27,4 +26,4 @@ function LogoutButton({ logout }) {
   );
 }
 
-export default connect(null, { logout: logoutAction })(LogoutButton);
+export default LogoutButton;

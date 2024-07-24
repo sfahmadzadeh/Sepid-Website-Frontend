@@ -1,15 +1,12 @@
 import { Stack } from '@mui/material';
 import React, { Fragment } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import NotificationButton from './NotificationButton';
 import Avatar from './UserAvatar';
 import DashboardButton from './DashboardButton';
 
-type UserInfoPropsType = {
-  isUserAuthenticated: boolean;
-}
-
-function UserInfo({ isUserAuthenticated }: UserInfoPropsType) {
+const UserInfo = ({ }) => {
+  const isUserAuthenticated = useSelector((state: any) => state.account.accessToken);
 
   return (
     <Stack direction={'row'} alignItems={'center'} justifyContent={'center'}>
@@ -24,8 +21,4 @@ function UserInfo({ isUserAuthenticated }: UserInfoPropsType) {
   )
 }
 
-const mapStateToProps = (state) => ({
-  isUserAuthenticated: Boolean(state.account.accessToken),
-});
-
-export default connect(mapStateToProps)(UserInfo);
+export default UserInfo;

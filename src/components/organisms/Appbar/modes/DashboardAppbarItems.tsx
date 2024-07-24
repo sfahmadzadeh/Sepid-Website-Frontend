@@ -6,11 +6,13 @@ import WebsiteLogo from '../components/logos/WebsiteLogo';
 import DefaultAppbarItems from './DefaultAppbarItems';
 import UserInfo from '../components/UserInfo';
 import NotificationButton from '../components/NotificationButton';
+import { useSelector } from 'react-redux';
 
 const DashboardAppbarItems = ({ }) => {
 
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
+  const isUserAuthenticated = useSelector((state: any) => state.account.accessToken);
 
   if (!pageMetadata?.appbar?.body) {
     return DefaultAppbarItems({})
@@ -33,11 +35,24 @@ const DashboardAppbarItems = ({ }) => {
   const notificationButton = <NotificationButton />
 
   return {
-    desktopLeftItems: [...desktopLeftItems, userInfo, notificationButton],
-    desktopRightItems: [websiteLogo, ...desktopRightItems],
-    mobileLeftItems: [userInfo, notificationButton],
+    desktopLeftItems: [
+      ...desktopLeftItems,
+      userInfo,
+      isUserAuthenticated ? notificationButton : null,
+    ],
+    desktopRightItems: [
+      websiteLogo,
+      ...desktopRightItems,
+    ],
+    mobileLeftItems: [
+      userInfo,
+      isUserAuthenticated ? notificationButton : null,
+    ],
     mobileRightItems: [],
-    mobileMenuListItems: [...desktopLeftItems, ...desktopRightItems],
+    mobileMenuListItems: [
+      ...desktopLeftItems,
+      ...desktopRightItems,
+    ],
   };
 };
 
