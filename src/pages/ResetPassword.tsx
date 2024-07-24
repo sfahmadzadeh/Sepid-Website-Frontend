@@ -1,4 +1,5 @@
 import { Button, TextField, Container, Paper, Typography, Stack } from '@mui/material';
+import WebsiteLogo from 'components/atoms/logos/WebsiteLogo';
 import React, { useState, FC } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -95,39 +96,14 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Stack width={400} component={Paper} sx={{ padding: 2 }} spacing={1.5}>
-        <Typography gutterBottom variant='h2' align='center'>
-          {'بازنشانی رمز عبور'}
-        </Typography>
+      <Stack spacing={2}>
+        <WebsiteLogo size='normal' />
 
-        <TextField
-          autoComplete="on"
-          variant="outlined"
-          fullWidth
-          onChange={(e) => {
-            if (isNumber(e.target.value)) {
-              putData(e);
-            }
-          }}
-          value={data.phoneNumber}
-          name="phoneNumber"
-          label="شماره تلفن همراه"
-          placeholder='09...'
-          inputProps={{ className: 'ltr-input' }}
-          type="tel"
-          inputMode='tel'
-        />
+        <Stack width={400} component={Paper} sx={{ padding: 2 }} spacing={1.5}>
+          <Typography gutterBottom component='h1' variant='h3' align='center'>
+            {'بازنشانی رمز عبور'}
+          </Typography>
 
-        <Stack
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              doChangePassword();
-            }
-          }}
-          direction='row'
-          alignItems='stretch'
-          justifyContent='space-between'
-          spacing={1}>
           <TextField
             autoComplete="on"
             variant="outlined"
@@ -137,65 +113,94 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
                 putData(e);
               }
             }}
-            value={data.code}
-            name="code"
+            value={data.phoneNumber}
+            name="phoneNumber"
+            label="شماره تلفن همراه"
+            placeholder='09...'
             inputProps={{ className: 'ltr-input' }}
-            label="کد تایید پیامک‌شده"
-            type='number'
-            inputMode='numeric'
+            type="tel"
+            inputMode='tel'
           />
-          <Button
-            sx={{
-              width: '40%',
-              whiteSpace: 'nowrap',
+
+          <Stack
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                doChangePassword();
+              }
             }}
+            direction='row'
+            alignItems='stretch'
+            justifyContent='space-between'
+            spacing={1}>
+            <TextField
+              autoComplete="on"
+              variant="outlined"
+              fullWidth
+              onChange={(e) => {
+                if (isNumber(e.target.value)) {
+                  putData(e);
+                }
+              }}
+              value={data.code}
+              name="code"
+              inputProps={{ className: 'ltr-input' }}
+              label="کد تایید پیامک‌شده"
+              type='number'
+              inputMode='numeric'
+            />
+            <Button
+              sx={{
+                width: '40%',
+                whiteSpace: 'nowrap',
+              }}
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={doGetVerificationCode}
+              disabled={buttonText !== 'دریافت کد'}>
+              {buttonText}
+            </Button>
+          </Stack>
+
+          <TextField
+            autoComplete="on"
+            variant="outlined"
             fullWidth
+            onChange={putData}
+            label="رمز عبور جدید"
+            name="password"
+            inputProps={{ className: 'ltr-input' }}
+            type="password"
+            inputMode='text'
+          />
+
+          <TextField
+            autoComplete="on"
+            variant="outlined"
+            fullWidth
+            onChange={putData}
+            label="تکرار رمز عبور جدید"
+            inputProps={{ className: 'ltr-input' }}
+            name="confirmationPassword"
+            type="password"
+            inputMode='text'
+          />
+
+          <Button
+            onClick={doChangePassword}
             variant="contained"
             color="primary"
-            onClick={doGetVerificationCode}
-            disabled={buttonText !== 'دریافت کد'}>
-            {buttonText}
+            disabled={isFetching}
+            fullWidth>
+            تغییر
           </Button>
+
+          <Typography align="center">
+            <Link style={{ textDecoration: 'none' }} to={'/login'}>
+              {'می‌خواهم وارد حسابم شوم...'}
+            </Link>
+          </Typography>
         </Stack>
-
-        <TextField
-          autoComplete="on"
-          variant="outlined"
-          fullWidth
-          onChange={putData}
-          label="رمز عبور جدید"
-          name="password"
-          inputProps={{ className: 'ltr-input' }}
-          type="password"
-          inputMode='text'
-        />
-
-        <TextField
-          autoComplete="on"
-          variant="outlined"
-          fullWidth
-          onChange={putData}
-          label="تکرار رمز عبور جدید"
-          inputProps={{ className: 'ltr-input' }}
-          name="confirmationPassword"
-          type="password"
-          inputMode='text'
-        />
-
-        <Button
-          onClick={doChangePassword}
-          variant="contained"
-          color="primary"
-          disabled={isFetching}
-          fullWidth>
-          تغییر
-        </Button>
-
-        <Typography align="center">
-          <Link style={{ textDecoration: 'none' }} to={'/login'}>
-            {'می‌خواهم وارد حسابم شوم...'}
-          </Link>
-        </Typography>
       </Stack>
     </Container>
   )

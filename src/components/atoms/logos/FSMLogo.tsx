@@ -1,7 +1,6 @@
-import { IconButton, Stack, Tooltip, Typography } from '@mui/material';
+import { IconButton, Skeleton, Stack, Tooltip, Typography } from '@mui/material';
 import React, { FC } from 'react';
 import useWidth from 'utils/UseWidth';
-import LogoSkeleton from './LogoSkeleton';
 import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 import { useParams } from 'react-router-dom';
 
@@ -13,7 +12,7 @@ const FSMLogo: FC<FSMLogoPropsType> = ({ }) => {
   const { data: fsm } = useGetFSMQuery({ fsmId });
 
   if (!fsm) {
-    return <LogoSkeleton />
+    return <Skeleton variant="circular" width={50} height={50} />
   }
 
   return (

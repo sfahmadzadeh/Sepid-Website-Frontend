@@ -42,7 +42,7 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
     <Stack justifyContent={'space-between'} spacing={2}>
       <Stack spacing={1} sx={{ userSelect: 'none' }}>
         <img src={program.cover_page} alt='program-cover-page' width={'100%'} style={{ borderRadius: 8 }} />
-        <Typography textAlign={'center'} variant='h1'>
+        <Typography textAlign={'center'} component="h1" fontWeight={700} fontSize={32} gutterBottom>
           {program.name}
         </Typography>
       </Stack>

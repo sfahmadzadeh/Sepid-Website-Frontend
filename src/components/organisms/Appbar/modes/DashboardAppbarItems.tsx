@@ -2,7 +2,7 @@ import React from 'react';
 
 import DashboardButton from '../components/DashboardButton';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
-import WebsiteLogo from '../components/logos/WebsiteLogo';
+import WebsiteLogo from 'components/atoms/logos/WebsiteLogo';
 import DefaultAppbarItems from './DefaultAppbarItems';
 import UserInfo from '../components/UserInfo';
 import NotificationButton from '../components/NotificationButton';

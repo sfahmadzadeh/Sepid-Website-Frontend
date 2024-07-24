@@ -47,7 +47,7 @@ const Program: FC<ProgramPropsType> = ({ }) => {
           </Box>
           <Stack width={{ xs: '100%', sm: '75%', md: '80%' }} spacing={2}>
             {/* <Banner banners={pageMetadata?.banners} /> */}
-            <Typography component="h1" fontWeight={700} fontSize={32} gutterBottom>
+            <Typography component="h1" fontWeight={700} fontSize={28} gutterBottom>
               {'کارگاه‌ها'}
             </Typography>
             <FSMsGrid programId={programId} />

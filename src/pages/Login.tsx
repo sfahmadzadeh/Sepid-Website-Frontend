@@ -12,6 +12,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import GoogleLogin from 'components/molecules/GoogleLogin';
 import { useLoginMutation } from 'redux/features/user/UserSlice';
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
+import WebsiteLogo from 'components/atoms/logos/WebsiteLogo';
 
 type LoginPagePropsType = {
   isFetching: boolean;
@@ -62,72 +63,74 @@ const LoginPage: FC<LoginPagePropsType> = ({
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Stack width={400} spacing={2}>
-        <Stack
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              regularLogin();
+      <Stack spacing={2}>
+        <WebsiteLogo size='normal' />
+        <Stack width={400} spacing={2}>
+          <Stack
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                regularLogin();
+              }
+            }}
+            width='md' sx={{ marginTop: 5, padding: 2, width: '100%' }} spacing={1.5} component={Paper}>
+            <Typography
+              gutterBottom
+              component="h1"
+              variant="h3"
+              textAlign={'center'}>
+              {'ورود به سامانه'}
+            </Typography>
+
+            <TextField
+              autoComplete="on"
+              variant="outlined"
+              fullWidth
+              onChange={putData}
+              value={data.username}
+              name="username"
+              label="شماره تلفن همراه، ایمیل یا نام کاربری"
+              inputProps={{ className: 'ltr-input' }}
+              type='text'
+              inputMode='text'
+            />
+
+            <TextField
+              autoComplete="on"
+              variant="outlined"
+              fullWidth
+              onChange={putData}
+              label="گذرواژه"
+              name="password"
+              inputProps={{ className: 'ltr-input' }}
+              type="password"
+              inputMode='text'
+            />
+            <Button
+              onClick={regularLogin}
+              variant="contained"
+              color="primary"
+              disabled={isFetching}
+              fullWidth>
+              بزن بریم
+            </Button>
+            {website?.has_login_with_google &&
+              <GoogleLogin />
             }
-          }}
-          width='md' sx={{ marginTop: 5, padding: 2, width: '100%' }} spacing={1.5} component={Paper}>
-          <Typography
-            gutterBottom
-            component="h1"
-            variant="h2"
-            align="center">
-            {'ورود'}
-          </Typography>
-
-          <TextField
-            autoComplete="on"
-            variant="outlined"
-            fullWidth
-            onChange={putData}
-            value={data.username}
-            name="username"
-            label="شماره تلفن همراه، ایمیل یا نام کاربری"
-            inputProps={{ className: 'ltr-input' }}
-            type='text'
-            inputMode='text'
-          />
-
-          <TextField
-            autoComplete="on"
-            variant="outlined"
-            fullWidth
-            onChange={putData}
-            label="گذرواژه"
-            name="password"
-            inputProps={{ className: 'ltr-input' }}
-            type="password"
-            inputMode='text'
-          />
-          <Button
-            onClick={regularLogin}
-            variant="contained"
-            color="primary"
-            disabled={isFetching}
-            fullWidth>
-            بزن بریم
-          </Button>
-          {website?.has_login_with_google &&
-            <GoogleLogin />
-          }
-        </Stack>
-        <Stack>
-          <Typography gutterBottom align='center'>
-            <Link style={{ textDecoration: 'none' }} to={'/reset-password'}>
-              {'گذروازه‌ام را فراموش کرده‌ام :('}
-            </Link>
-          </Typography>
-          <Typography align='center'>
-            <Link style={{ textDecoration: 'none' }} to={'/create-account'}>
-              {'می‌خواهم یک حساب کاربری جدید بسازم...'}
-            </Link>
-          </Typography>
+          </Stack>
+          <Stack>
+            <Typography gutterBottom align='center'>
+              <Link style={{ textDecoration: 'none' }} to={'/reset-password'}>
+                {'گذروازه‌ام را فراموش کرده‌ام :('}
+              </Link>
+            </Typography>
+            <Typography align='center'>
+              <Link style={{ textDecoration: 'none' }} to={'/create-account'}>
+                {'می‌خواهم یک حساب کاربری جدید بسازم...'}
+              </Link>
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
-
     </Container>
   );
 };

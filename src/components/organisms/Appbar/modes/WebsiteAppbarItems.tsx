@@ -1,5 +1,5 @@
 import React from 'react';
-import WebsiteLogo from '../components/logos/WebsiteLogo';
+import WebsiteLogo from 'components/atoms/logos/WebsiteLogo';
 
 const WebsiteAppbarItems = () => {
   const websiteLogo = <WebsiteLogo />;

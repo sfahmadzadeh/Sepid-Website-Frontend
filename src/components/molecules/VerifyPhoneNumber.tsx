@@ -56,7 +56,7 @@ const VerifyPhoneNumber: FC<VerifyPhoneNumberPropsType> = ({
   };
 
   return (
-    <Stack spacing={1} paddingTop={1}>
+    <Stack spacing={1}>
       <TextField
         variant="outlined"
         fullWidth
@@ -108,10 +108,6 @@ const VerifyPhoneNumber: FC<VerifyPhoneNumberPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-
-})
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   getVerificationCode: getVerificationCodeAction,
 })(VerifyPhoneNumber);

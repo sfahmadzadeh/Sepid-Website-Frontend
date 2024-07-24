@@ -7,7 +7,7 @@ import TeamAvatar from '../components/TeamAvatar';
 import WhiteboardButton from '../components/WhiteboardButton';
 import ScoresDialogButton from '../components/ScoresDialogButton';
 import DashboardButton from '../components/DashboardButton';
-import FSMLogo from '../components/logos/FSMLogo';
+import FSMLogo from '../../../atoms/logos/FSMLogo';
 import UserAvatar from '../components/UserAvatar';
 import { useParams } from 'react-router-dom';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';

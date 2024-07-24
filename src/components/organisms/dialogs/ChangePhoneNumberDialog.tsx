@@ -54,7 +54,7 @@ const ChangePhoneNumberDialog: FC<ChangePhoneNumberDialogPropsType> = ({
   return (
     <Dialog disableScrollLock open={open} onClose={handleClose}>
       <DialogTitle>{'تغییر شماره تلفن همراه'}</DialogTitle>
-      <DialogContent>
+      <DialogContent sx={{ paddingTop: '8px !important' }}>
         <VerifyPhoneNumber
           verifyType='on-change-phone-number'
           data={data}
