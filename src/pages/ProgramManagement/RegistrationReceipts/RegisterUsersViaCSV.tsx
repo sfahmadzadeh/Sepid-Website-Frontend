@@ -48,7 +48,7 @@ const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
 
       <Stack direction='row' spacing={1} alignItems='flex-end'>
         <Typography variant='h2'>
-          {'افزودن کاربران از طریق فایل .xlsx'}
+          {'افزودن کاربران از طریق فایل اکسل'}
         </Typography>
         <Typography>
           <Link style={{ textDecoration: 'none' }} target="_blank" download to={"/register-participants-sample.xlsx"}>{'(نمونه فایل)'}</Link>

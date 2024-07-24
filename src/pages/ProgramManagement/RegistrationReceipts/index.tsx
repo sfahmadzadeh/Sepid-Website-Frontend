@@ -59,7 +59,7 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
 
       <Stack spacing={2}>
         <Typography padding={2} variant='h2' gutterBottom>
-          {'تیم‌ها'}
+          {'شرکت‌کنندگان'}
         </Typography>
         <SimpleTable
           headers={[
