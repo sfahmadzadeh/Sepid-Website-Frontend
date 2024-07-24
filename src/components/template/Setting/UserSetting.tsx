@@ -176,24 +176,24 @@ const UserSetting: FC<UserSettingPropsType> = ({
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <TextField
-            fullWidth
-            value={userInfo.national_code || ''}
-            name="national_code"
-            onChange={(e) => {
-              if (isNumber(e.target.value)) {
-                handleFieldsChange(e);
-              }
-            }}
-            inputProps={{ className: 'ltr-input' }}
-            label="کد ملی"
-          />
+          <FormControl required fullWidth>
+            <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+              <DatePicker
+                label={'تاریخ تولد*'}
+                openTo='year'
+                views={['year', 'month', 'day']}
+                value={userInfo.birth_date ? new Date(userInfo.birth_date) : null}
+                onChange={(date) => setUserInfo({ ...userInfo, birth_date: moment(date).format('YYYY-MM-DD') })}
+              />
+            </LocalizationProvider>
+          </FormControl>
         </Grid>
 
         <Grid item xs={12} sm={6}>
           <Stack direction={'row'} spacing={1}>
             <TextField
               fullWidth
+              required
               disabled={true}
               value={userInfo.phone_number || ''}
               onChange={(e) => {
@@ -222,19 +222,20 @@ const UserSetting: FC<UserSettingPropsType> = ({
           </Stack>
         </Grid>
 
-        <Grid item xs={12} sm={6}>
-          <FormControl required fullWidth>
-            <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-              <DatePicker
-                label={'تاریخ تولد*'}
-                openTo='year'
-                views={['year', 'month', 'day']}
-                value={userInfo.birth_date ? new Date(userInfo.birth_date) : null}
-                onChange={(date) => setUserInfo({ ...userInfo, birth_date: moment(date).format('YYYY-MM-DD') })}
-              />
-            </LocalizationProvider>
-          </FormControl>
-        </Grid>
+        {/* <Grid item xs={12} sm={6}>
+          <TextField
+            fullWidth
+            value={userInfo.national_code || ''}
+            name="national_code"
+            onChange={(e) => {
+              if (isNumber(e.target.value)) {
+                handleFieldsChange(e);
+              }
+            }}
+            inputProps={{ className: 'ltr-input' }}
+            label="کد ملی"
+          />
+        </Grid> */}
 
         {/* todo: hide email temporarily */}
         {/* <Grid item xs={12} sm={6}>

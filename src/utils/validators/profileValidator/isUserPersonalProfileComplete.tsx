@@ -1,10 +1,12 @@
 import { UserInfoType } from "types/profile";
 
 const isUserPersonalProfileComplete = (userInfo: UserInfoType) => {
-  if (!userInfo.first_name ||
+  if (
+    !userInfo.first_name ||
     !userInfo.last_name ||
     !userInfo.gender ||
-    !userInfo.national_code) {
+    !userInfo.phone_number
+  ) {
     return false;
   }
   return true;
