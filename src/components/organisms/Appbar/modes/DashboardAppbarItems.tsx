@@ -5,6 +5,7 @@ import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/Webs
 import WebsiteLogo from '../components/logos/WebsiteLogo';
 import DefaultAppbarItems from './DefaultAppbarItems';
 import UserInfo from '../components/UserInfo';
+import NotificationButton from '../components/NotificationButton';
 
 const DashboardAppbarItems = ({ }) => {
 
@@ -29,11 +30,12 @@ const DashboardAppbarItems = ({ }) => {
   })
   const websiteLogo = <WebsiteLogo />;
   const userInfo = <UserInfo />
+  const notificationButton = <NotificationButton />
 
   return {
-    desktopLeftItems: [...desktopLeftItems, userInfo],
+    desktopLeftItems: [...desktopLeftItems, userInfo, notificationButton],
     desktopRightItems: [websiteLogo, ...desktopRightItems],
-    mobileLeftItems: [userInfo],
+    mobileLeftItems: [userInfo, notificationButton],
     mobileRightItems: [],
     mobileMenuListItems: [...desktopLeftItems, ...desktopRightItems],
   };

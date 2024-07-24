@@ -40,11 +40,7 @@ const Setting: FC<SettingPropsType> = ({ }) => {
 
   useEffect(() => {
     if (!section) {
-      if (programId) {
-        navigate(`/program/${programId}/setting/user/`);
-      } else {
-        navigate('/setting/user/');
-      }
+      navigate('/setting/user/');
     }
   }, [section])
 
@@ -72,7 +68,7 @@ const Setting: FC<SettingPropsType> = ({ }) => {
               orientation="vertical"
               variant="scrollable"
               value={tabs.indexOf(tab)}
-              onChange={(event, newValue) => navigate(programId ? `/program/${programId}/setting/${tabs[newValue].name}/` : `/setting/${tabs[newValue].name}/`)}>
+              onChange={(event, newValue) => navigate(`/setting/${tabs[newValue].name}/`)}>
               {
                 tabs.map((tab, index) => {
                   return (

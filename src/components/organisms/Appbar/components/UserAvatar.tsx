@@ -1,7 +1,7 @@
 import { Avatar, IconButton, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { stringToColor } from 'utils/stringToColor';
 import { logoutAction } from 'redux/slices/account';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -16,7 +16,6 @@ type UserAvatarPropsType = {
 
 const UserAvatar = ({ name = 'بی‌نام', logout }: UserAvatarPropsType) => {
   const navigate = useNavigate();
-  const { programId } = useParams();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -48,11 +47,7 @@ const UserAvatar = ({ name = 'بی‌نام', logout }: UserAvatarPropsType) => 
           {name || 'بی‌نام بی‌نام‌زاده'}
         </Typography>
         <MenuItem onClick={() => {
-          if (programId) {
-            navigate(`/program/${programId}/setting/`);
-          } else {
-            navigate('/setting/');
-          }
+          navigate('/setting/');
         }}>
           <Stack direction='row' spacing={1} alignItems={'center'}>
             <AccountCircleIcon />

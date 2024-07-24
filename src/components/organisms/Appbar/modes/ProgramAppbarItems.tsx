@@ -1,22 +1,22 @@
 import React from 'react';
-import UserInfo from '../components/UserInfo';
 import WebsiteLogo from '../components/logos/WebsiteLogo';
 import DashboardButton from '../components/DashboardButton';
+import NotificationButton from '../components/NotificationButton';
 
 const ProgramAppbarItems = ({ }) => {
   const websiteLogo = <WebsiteLogo />
-  const userInfo = <UserInfo />
+  const notificationButton = <NotificationButton />
   const backButton = <DashboardButton label={'بازگشت به دوره‌ها'} to={'/programs/'} />
 
   const desktopLeftItems = [];
   const desktopRightItems = [websiteLogo];
   const mobileRightItems = [websiteLogo];
-  desktopLeftItems.push(userInfo, backButton);
+  desktopLeftItems.push(notificationButton, backButton);
 
   return {
     desktopLeftItems,
     desktopRightItems,
-    mobileLeftItems: [userInfo, backButton],
+    mobileLeftItems: [notificationButton, backButton],
     mobileRightItems,
     mobileMenuListItems: [],
   };
