@@ -5,6 +5,7 @@ import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
 import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 import { WidgetModes } from 'components/organisms/Widget';
 import BigAnswerProblemEditWidget from './edit';
+import { AnswerType } from 'types/models';
 
 export { BigAnswerProblemEditWidget as BigAnswerQuestionEditWidget };
 
@@ -14,7 +15,7 @@ type BigAnswerProblemWidgetPropsType = {
   id: number;
   text: string;
   mode: WidgetModes;
-  last_submitted_answer?: any;
+  submittedAnswer: AnswerType;
 }
 
 const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
@@ -23,10 +24,10 @@ const BigAnswerProblemWidget: FC<BigAnswerProblemWidgetPropsType> = ({
   id: questionId,
   text,
   mode,
-  last_submitted_answer,
+  submittedAnswer,
 }) => {
   const t = useTranslate();
-  const [answer, setAnswer] = useState<string>(last_submitted_answer?.text);
+  const [answer, setAnswer] = useState<string>(submittedAnswer?.text || '');
   const [isButtonDisabled, setButtonDisable] = useState(false);
 
   const onChangeWrapper = (val: string) => {

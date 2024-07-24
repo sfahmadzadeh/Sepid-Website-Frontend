@@ -24,6 +24,8 @@ import Layout from 'components/template/Layout';
 import { toast } from 'react-toastify';
 import { RegistrationReceiptType } from 'types/models';
 import { useGetReceiptQuery } from 'redux/features/form/ReceiptSlice';
+import { useGetFormQuery } from 'redux/features/form/FormSlice';
+import AnswerSheet from 'components/template/AnswerSheet';
 
 type RegistrationReceiptPropsType = {
   validateRegistrationReceipt: any;
@@ -60,15 +62,7 @@ const RegistrationReceipt: FC<RegistrationReceiptPropsType> = ({
       <Grid container spacing={2} alignItems='flex-start'>
         <Grid xs={12} sm={8} container item>
           <Stack component={Paper} spacing={2} sx={{ padding: 1, width: '100%' }}>
-            {answers?.length > 0 ?
-              answers.map((answer, index) => (
-                // todo: bug: answer should not use <Widget/> component
-                <Widget paperId={null} key={index} coveredWithPaper={false} mode={WidgetModes.Review} widget={{ last_submitted_answer: answer, ...answer }} />
-              )) :
-              <Typography variant='h4' sx={{ padding: 2 }} textAlign='center'>
-                {'پاسخی در این رسید ثبت‌نام وجود ندارد!'}
-              </Typography>
-            }
+            <AnswerSheet answerSheetId={receiptId} />
           </Stack>
         </Grid>
         <Grid item xs={12} sm={4}>

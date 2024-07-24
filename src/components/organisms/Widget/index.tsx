@@ -36,7 +36,7 @@ type WidgetPropsType = {
   paperId: string;
   coveredWithPaper?: boolean;
   collectAnswer?: any;
-  submittedAnswers?: AnswerType[];
+  submittedAnswer?: AnswerType;
 }
 
 const Widget: FC<WidgetPropsType> = ({
@@ -45,7 +45,7 @@ const Widget: FC<WidgetPropsType> = ({
   paperId,
   coveredWithPaper = true,
   collectAnswer,
-  submittedAnswers,
+  submittedAnswer,
 }) => {
   const [openDeleteWidgetDialog, setOpenDeleteWidgetDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
@@ -149,7 +149,7 @@ const Widget: FC<WidgetPropsType> = ({
           }
           {(mode === WidgetModes.View && widget?.hints?.length) ? <WidgetHint hints={widget.hints} /> : null}
         </Stack>
-        <WidgetComponent {...widget} mode={mode} onAnswerSubmit={onAnswerSubmitWrapper || onAnswerSubmit} onAnswerChange={onAnswerChange} />
+        <WidgetComponent submittedAnswer={submittedAnswer} {...widget} mode={mode} onAnswerSubmit={onAnswerSubmitWrapper || onAnswerSubmit} onAnswerChange={onAnswerChange} />
       </Cover>
       {cost &&
         <CostDialog cost={cost} callBackFunction={onSubmit} open={showCostDialog} handleClose={() => setShowCostDialog(showCostDialog => !showCostDialog)} />

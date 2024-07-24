@@ -4,7 +4,7 @@ import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 export const ReceiptSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getReceipt: builder.query<RegistrationReceiptType, { receiptId: string }>({
-      providesTags: (result) => [{ type: 'receipt', id: result.id }],
+      providesTags: (result) => [{ type: 'receipt', id: result?.id }],
       query: ({ receiptId }) => `fsm/receipts/${receiptId}/`,
       transformResponse: (response: any): RegistrationReceiptType => {
         return response;

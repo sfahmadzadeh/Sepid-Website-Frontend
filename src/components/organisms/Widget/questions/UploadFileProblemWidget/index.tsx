@@ -9,6 +9,7 @@ import {
 import UploadFileProblemEditWidget from './edit';
 import { WidgetModes } from 'components/organisms/Widget';
 import UploadFile from 'components/molecules/UploadFile';
+import { AnswerType } from 'types/models';
 
 type UploadFileProblemWidgetPropsType = {
   onAnswerChange: any;
@@ -19,6 +20,7 @@ type UploadFileProblemWidgetPropsType = {
   text: string;
   answer_file: string;
   mode: WidgetModes;
+  submittedAnswer: AnswerType;
 }
 
 const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
@@ -28,17 +30,11 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
   clearQuestionAnswer,
   id: questionId,
   text = 'محل بارگذاری فایل:',
-  answer_file,
   mode,
+  submittedAnswer,
 }) => {
   const t = useTranslate();
-  const [fileLink, setFileLink] = useState<string>('');
-
-  useEffect(() => {
-    if (answer_file) {
-      setFileLink(answer_file)
-    }
-  }, [answer_file])
+  const [fileLink, setFileLink] = useState<string>(submittedAnswer?.answer_file || '');
 
   useEffect(() => {
     if (fileLink) {
@@ -57,7 +53,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
     clearQuestionAnswer({ question_id: questionId }).then((response) => {
       if (response.type?.endsWith('fulfilled')) {
         setFileLink('');
-        onAnswerChange({ answer_file: null });
+        onAnswerChange({ answer_file: '' });
       }
     });
   }

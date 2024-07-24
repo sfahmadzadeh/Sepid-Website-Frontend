@@ -13,10 +13,12 @@ import { useSelector } from 'react-redux';
 
 type UploadFilePropsType = {
   setFileLink: any;
+  id?: string;
 }
 
 const UploadFile: FC<UploadFilePropsType> = ({
   setFileLink,
+  id = Math.ceil(Math.random() * 1000)
 }) => {
   const [uploadFile, result] = useUploadFileMutation();
   const { uploadProgress } = useSelector((state) => (state as any).global);
@@ -51,7 +53,7 @@ const UploadFile: FC<UploadFilePropsType> = ({
         }
         disabled={result.isLoading}
         component="label"
-        htmlFor={'upload-widget-file'}
+        htmlFor={`upload-widget-file-${id}`}
         variant="contained"
         color="primary"
         size="small"
@@ -61,7 +63,7 @@ const UploadFile: FC<UploadFilePropsType> = ({
       <input
         accept="video/* ,image/*, audio/mp3"
         style={{ display: 'none' }}
-        id={'upload-widget-file'}
+        id={`upload-widget-file-${id}`}
         type="file"
         onChange={handleUploadFile}
       />

@@ -15,7 +15,7 @@ type SmallAnswerProblemWidgetPropsType = {
   mode: WidgetModes;
   text: string;
   correct_answer: any;
-  last_submitted_answer: any;
+  submittedAnswer: any;
   be_corrected: boolean;
 }
 
@@ -28,12 +28,10 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
   id: questionId,
   mode,
   text: problemText,
-  last_submitted_answer,
-  correct_answer: correctAnswer,
-  be_corrected: beCorrected,
+  submittedAnswer,
 }) => {
   const t = useTranslate();
-  const [answer, setAnswer] = useState<string>(last_submitted_answer ? last_submitted_answer.text : '');
+  const [answer, setAnswer] = useState<string>(submittedAnswer?.text || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasAnswered, setHasAnswered] = useState(false);
   const [hasAnsweredCorrectly, setHasAnsweredCorrectly] = useState(false);

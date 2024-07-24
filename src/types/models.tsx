@@ -62,6 +62,7 @@ export type TeamType = {
 export type AnswerType = any;
 
 export type RegistrationReceiptType = {
+  answer_sheet_of: string
   profile_picture: string;
   id: number;
   is_paid: boolean;

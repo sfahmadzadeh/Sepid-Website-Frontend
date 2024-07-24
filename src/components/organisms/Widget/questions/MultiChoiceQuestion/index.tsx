@@ -7,6 +7,8 @@ import MultiChoiceQuestionEditWidget from './edit';
 import Choice from 'components/molecules/Choice';
 import { toast } from 'react-toastify';
 import { toPersianNumber } from 'utils/translateNumber';
+import { AnswerType } from 'types/models';
+import { ChoiceType } from 'types/widgets';
 export { MultiChoiceQuestionEditWidget };
 
 type MultiChoiceQuestionWidgetPropsType = {
@@ -14,9 +16,10 @@ type MultiChoiceQuestionWidgetPropsType = {
   onAnswerChange: any;
   id: string;
   text: string;
-  choices: any[];
+  choices: ChoiceType[];
   mode: WidgetModes;
-  maximum_choices_could_be_chosen: number,
+  maximum_choices_could_be_chosen: number;
+  submittedAnswer: AnswerType;
 }
 
 const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
@@ -28,9 +31,9 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
   choices: questionChoices,
   mode,
   maximum_choices_could_be_chosen: maximumChoicesCouldBeChosen,
+  submittedAnswer,
 }) => {
-  const [selectedChoices, _setSelectedChoices] = useState<any[]>([]);
-
+  const [selectedChoices, _setSelectedChoices] = useState<ChoiceType[]>(submittedAnswer?.choices || []);
   const setSelectedChoices = (newSelectedChoices) => {
     onAnswerChange({ choices: newSelectedChoices });
     _setSelectedChoices(newSelectedChoices);
@@ -81,10 +84,11 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
       <Stack spacing={1}>
         {questionChoices.map((choice) =>
           <Choice
+            disabled={mode === WidgetModes.Review}
             key={choice.id}
             choice={choice}
             mode={WidgetModes.View}
-            isSelected={selectedChoices.includes(choice)}
+            isSelected={selectedChoices.map(choice => choice.id).includes(choice.id)}
             onSelectionChange={() => onChoiceSelect(choice)}
             variant={maximumChoicesCouldBeChosen > 1 ? 'checkbox' : 'radio'}
           />

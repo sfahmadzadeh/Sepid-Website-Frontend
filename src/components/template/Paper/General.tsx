@@ -2,7 +2,6 @@ import React, { FC, Fragment } from 'react';
 
 import { WidgetModes } from 'components/organisms/Widget';
 import Widget from 'components/organisms/Widget';
-import EditPaper from './EditPaper';
 import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
 import { WidgetType } from 'types/global';
 
@@ -45,5 +44,4 @@ const GeneralPaper: FC<GeneralPaperPropsType> = ({
   );
 };
 
-export { EditPaper };
 export default GeneralPaper;
