@@ -15,10 +15,10 @@ const sizes = {
     maxHeight: 50,
   },
   normal: {
-    width: 80,
-    height: 80,
-    maxWidth: 300,
-    maxHeight: 80,
+    width: 75,
+    height: 75,
+    maxWidth: 250,
+    maxHeight: 75,
   },
   large: {
     width: 100,
