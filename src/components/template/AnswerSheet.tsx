@@ -17,7 +17,7 @@ const AnswerSheet: FC<AnswerSheetPaperPropsType> = ({
   const { data: answers } = useGetAnswerSheetAnswersQuery({ answerSheetId });
 
   return (
-    <Paper mode='answer_sheet' paperId={answerSheet?.answer_sheet_of} answers={answers} />
+    <Paper mode='answer_sheet' paperId={answerSheet?.form} answers={answers} />
   );
 };
 

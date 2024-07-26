@@ -11,6 +11,14 @@ export const ReceiptSlice = ManageContentServiceApi.injectEndpoints({
       },
     }),
 
+    deleteReceipt: builder.mutation<RegistrationReceiptType, { receiptId: string }>({
+      invalidatesTags: ['receipts'],
+      query: ({ receiptId }) => ({
+        url: `fsm/receipts/${receiptId}/`,
+        method: 'DELETE',
+      }),
+    }),
+
     getMyReceipt: builder.query<RegistrationReceiptType, { formId: string }>({
       providesTags: (result, error, item) => [{ type: 'receipt', id: item.formId }],
       query: ({ formId }) => `fsm/receipts/my_receipt/?form=${formId}`,
@@ -23,5 +31,6 @@ export const ReceiptSlice = ManageContentServiceApi.injectEndpoints({
 
 export const {
   useGetReceiptQuery,
+  useDeleteReceiptMutation,
   useGetMyReceiptQuery,
 } = ReceiptSlice;

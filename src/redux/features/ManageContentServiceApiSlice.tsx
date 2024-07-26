@@ -20,6 +20,7 @@ export const ManageContentServiceApi = createApi({
     'form',
     'forms',
     'receipt',
+    'receipts',
     'player',
     'player-transited-path',
     'website-profile',

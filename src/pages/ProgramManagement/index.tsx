@@ -115,7 +115,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab || !program) return null;
-  const TabComponent = <currentTab.component registrationFormId={program.registration_form} />;
+  const TabComponent = <currentTab.component formId={program.registration_form} />;
 
   return (
     <Layout appbarMode='PROGRAM'>
@@ -150,7 +150,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
                 variant='outlined'
                 color="primary"
                 component={Link}
-                to={`/program/${program?.id}`}
+                to={`/program/${program?.id}/`}
                 startIcon={<ExitToAppIcon />}>
                 {'بازگشت به دوره'}
               </Button>

@@ -11,12 +11,25 @@ type SubmitFormInputType = {
 
 type SubmitFormOutputType = RegistrationReceiptType;
 
+type GetFormAnswerSheetOutputType = {
+  count: number;
+  results: RegistrationReceiptType[];
+}
+
 export const FormSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getForm: builder.query<GetFormOutputType, { formId: string }>({
       providesTags: (result) => [{ type: 'form', id: result.id }],
       query: ({ formId }) => `fsm/form/${formId}/`,
       transformResponse: (response: any): GetFormOutputType => {
+        return response;
+      },
+    }),
+
+    getFormAnswerSheets: builder.query<GetFormAnswerSheetOutputType, { formId: string, pageNumber: string }>({
+      providesTags: ['receipts'],
+      query: ({ formId, pageNumber }) => `fsm/form/${formId}/receipts/?page=${pageNumber}`,
+      transformResponse: (response: any): GetFormAnswerSheetOutputType => {
         return response;
       },
     }),
@@ -35,5 +48,6 @@ export const FormSlice = ManageContentServiceApi.injectEndpoints({
 
 export const {
   useGetFormQuery,
+  useGetFormAnswerSheetsQuery,
   useSubmitFormMutation,
 } = FormSlice;

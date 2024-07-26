@@ -17,7 +17,7 @@ import {
 } from 'redux/slices/programs';
 
 type TeamMemberListItemPropsType = {
-  memberId: number;
+  memberId: string;
   firstName: string;
   lastName: string;
   teamId: string;
@@ -60,7 +60,7 @@ const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
         <FormControlLabel
           control={
             <Checkbox
-              checked={teamHead == memberId}
+              checked={teamHead.toString() == memberId}
               onClick={() => {
                 makeTeamHead({ receipt: memberId, teamId })
               }}

@@ -62,7 +62,7 @@ const TeamAvatar = () => {
                 vertical: 'top',
                 horizontal: 'left',
               }}
-              invisible={myTeam?.team_head !== member.id}
+              invisible={myTeam?.team_head.toString() !== member.id}
               badgeContent={<OfflineBolt style={{ color: 'gold' }} />}>
               <Avatar
                 style={{

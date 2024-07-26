@@ -62,9 +62,9 @@ export type TeamType = {
 export type AnswerType = any;
 
 export type RegistrationReceiptType = {
-  answer_sheet_of: string
+  form: string
   profile_picture: string;
-  id: number;
+  id: string;
   is_paid: boolean;
   user: UserInfoType;
   school_studentship: SchoolStudentshipType;

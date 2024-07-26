@@ -101,7 +101,7 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
     navigate(`/program/${programId}/form/`);
   }
 
-  const isHead = registrationReceipt?.id === team?.team_head
+  const isHead = registrationReceipt?.id === team?.team_head.toString()
 
   const submitCreateTeam = () => {
     if (!newTeamName) {

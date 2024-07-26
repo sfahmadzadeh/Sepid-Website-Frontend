@@ -21,7 +21,6 @@ import {
   addMentorToWorkshopUrl,
   registerUsersViaCSVUrl,
   addUserToTeamUrl,
-  allRegistrationReceiptsUrl,
   programInfoUrl,
   getPlayerFromTeamUrl,
   getTeamsUrl,
@@ -285,11 +284,6 @@ export const editOneProgramInfoAction = createAsyncThunkApi(
   }
 );
 
-export const getAllRegistrationReceiptsAction = createAsyncThunkApi(
-  'programs/getAllRegistrationReceiptsAction',
-  Apis.GET,
-  allRegistrationReceiptsUrl
-);
 
 export const validateRegistrationReceiptAction = createAsyncThunkApi(
   'programs/validateRegistrationReceiptAction',
@@ -435,7 +429,7 @@ const programSlice = createSlice({
     },
     [getOneMerchandiseAction.rejected.toString()]: isNotFetching,
 
-    
+
     [purchaseProgramAction.pending.toString()]: isFetching,
     [purchaseProgramAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.isFetching = false;
@@ -563,13 +557,6 @@ const programSlice = createSlice({
     [deleteRequestMentorAction.fulfilled.toString()]: (state, { meta: { arg } }) => {
       delete state.teamsRequests[arg.teamId + '.' + arg.fsmId];
     },
-
-    [getAllRegistrationReceiptsAction.pending.toString()]: isFetching,
-    [getAllRegistrationReceiptsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.allRegistrationReceipts = response;
-      state.isFetching = false;
-    },
-    [getAllRegistrationReceiptsAction.rejected.toString()]: isNotFetching,
 
     [getProgramTeamsAction.pending.toString()]: isFetching,
     [getProgramTeamsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
