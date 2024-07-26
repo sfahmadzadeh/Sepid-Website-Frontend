@@ -1,4 +1,4 @@
-import { Button, TextField, Container, Paper, Typography, Stack } from '@mui/material';
+import { Button, TextField, Container, Paper, Typography, Stack, Box } from '@mui/material';
 import WebsiteLogo from 'components/atoms/logos/WebsiteLogo';
 import React, { useState, FC } from 'react';
 import { connect } from 'react-redux';
@@ -96,10 +96,19 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Stack spacing={2}>
-        <WebsiteLogo size='normal' />
 
-        <Stack width={400} component={Paper} sx={{ padding: 2 }} spacing={1.5}>
+      <Stack
+        spacing={2}
+        alignItems={'center'}
+        component={Paper}
+        padding={2}
+        width={400}>
+
+        <Box pb={2}>
+          <WebsiteLogo size='large' />
+        </Box>
+
+        <Stack width={'100%'} spacing={1.5}>
           <Typography gutterBottom component='h1' variant='h3' align='center'>
             {'بازنشانی رمز عبور'}
           </Typography>

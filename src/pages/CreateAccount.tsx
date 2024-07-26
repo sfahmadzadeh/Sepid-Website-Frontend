@@ -6,6 +6,7 @@ import {
   Paper,
   Stack,
   Typography,
+  Box,
 } from '@mui/material';
 import {
   createAccountAction,
@@ -73,15 +74,24 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-      <Stack spacing={2}>
-        <WebsiteLogo size='normal' />
+      <Stack
+        spacing={2}
+        alignItems={'center'}
+        component={Paper}
+        padding={2}
+        width={400}>
+
+        <Box pb={2}>
+          <WebsiteLogo size='large' />
+        </Box>
+
         <Stack
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               handleCreatingAccount();
             }
           }}
-          width={400} component={Paper} sx={{ padding: 2 }} spacing={1.5}>
+          width={'100%'} spacing={1.5}>
 
           <Typography gutterBottom component='h1' variant='h3' align='center'>{'ایجاد حساب کاربری'}</Typography>
 
