@@ -15,21 +15,17 @@ import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router-dom';
-import Widget, { WidgetModes } from 'components/organisms/Widget';
 import {
   validateRegistrationReceiptAction,
 } from 'redux/slices/programs'
 import { faSeri } from '../utils/translateNumber';
 import Layout from 'components/template/Layout';
 import { toast } from 'react-toastify';
-import { RegistrationReceiptType } from 'types/models';
 import { useGetReceiptQuery } from 'redux/features/form/ReceiptSlice';
-import { useGetFormQuery } from 'redux/features/form/FormSlice';
 import AnswerSheet from 'components/template/AnswerSheet';
 
 type RegistrationReceiptPropsType = {
   validateRegistrationReceipt: any;
-  registrationReceipt: RegistrationReceiptType;
 }
 
 const RegistrationReceipt: FC<RegistrationReceiptPropsType> = ({
@@ -125,10 +121,6 @@ const RegistrationReceipt: FC<RegistrationReceiptPropsType> = ({
   );
 }
 
-const mapStateToProps = (state) => ({
-  registrationReceipt: state.programs.registrationReceipt,
-});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   validateRegistrationReceipt: validateRegistrationReceiptAction,
 })(RegistrationReceipt);
