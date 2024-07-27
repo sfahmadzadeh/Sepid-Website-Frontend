@@ -75,10 +75,8 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
         justifyContent: 'center',
       }}>
       <Stack
-        spacing={2}
+        spacing={4}
         alignItems={'center'}
-        component={Paper}
-        padding={2}
         width={400}>
 
         <Box pb={2}>
@@ -86,82 +84,95 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
         </Box>
 
         <Stack
-          onKeyDown={(event) => {
-            if (event.key === 'Enter') {
-              handleCreatingAccount();
-            }
-          }}
-          width={'100%'} spacing={1.5}>
+          width={'100%'}
+          component={Paper}
+          spacing={2}
+          padding={2}
+          alignItems={'center'}>
 
-          <Typography gutterBottom component='h1' variant='h3' align='center'>{'ایجاد حساب کاربری'}</Typography>
-
-          <TextField
-            variant="outlined"
-            fullWidth
-            onChange={setData}
-            value={data.firstName}
-            name="firstName"
-            label="نام"
-            type='text'
-            inputMode='text'
-          />
-
-          <TextField
-            variant="outlined"
-            fullWidth
-            onChange={setData}
-            value={data.lastName}
-            name="lastName"
-            label="نام خانوادگی"
-            type='text'
-            inputMode='text'
-          />
-
-          <VerifyPhoneNumber
-            data={{
-              phoneNumber: data.phoneNumber,
-              verificationCode: data.verificationCode
+          <Stack
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                handleCreatingAccount();
+              }
             }}
-            setData={setData}
-            verifyType='on-create-user-account'
-          />
+            width={'100%'}
+            spacing={1.5}>
 
-          <TextField
-            variant="outlined"
-            fullWidth
-            onChange={setData}
-            label="گذرواژه"
-            name="password"
-            inputProps={{ className: 'ltr-input' }}
-            type="password"
-            inputMode='text'
-          />
+            <Typography
+              paddingBottom={2}
+              component='h1' variant='h3' align='center'>
+              {'ایجاد حساب کاربری'}
+            </Typography>
 
-          <TextField
-            variant="outlined"
-            fullWidth
-            onChange={setData}
-            label="تکرار گذرواژه"
-            inputProps={{ className: 'ltr-input' }}
-            name="confirmationPassword"
-            type="password"
-            inputMode='text'
-          />
+            <TextField
+              variant="outlined"
+              fullWidth
+              onChange={setData}
+              value={data.firstName}
+              name="firstName"
+              label="نام"
+              type='text'
+              inputMode='text'
+            />
 
-          <Button
-            onClick={handleCreatingAccount}
-            variant="contained"
-            color="primary"
-            disabled={isFetching}
-            fullWidth>
-            ثبت
-          </Button>
+            <TextField
+              variant="outlined"
+              fullWidth
+              onChange={setData}
+              value={data.lastName}
+              name="lastName"
+              label="نام خانوادگی"
+              type='text'
+              inputMode='text'
+            />
 
-          <Typography align="center">
-            <Link style={{ textDecoration: 'none' }} to={'/login'}>
-              {'از قبل حساب کاربری داشتم...'}
-            </Link>
-          </Typography>
+            <VerifyPhoneNumber
+              data={{
+                phoneNumber: data.phoneNumber,
+                verificationCode: data.verificationCode
+              }}
+              setData={setData}
+              verifyType='on-create-user-account'
+            />
+
+            <TextField
+              variant="outlined"
+              fullWidth
+              onChange={setData}
+              label="گذرواژه"
+              name="password"
+              inputProps={{ className: 'ltr-input' }}
+              type="password"
+              inputMode='text'
+            />
+
+            <TextField
+              variant="outlined"
+              fullWidth
+              onChange={setData}
+              label="تکرار گذرواژه"
+              inputProps={{ className: 'ltr-input' }}
+              name="confirmationPassword"
+              type="password"
+              inputMode='text'
+            />
+
+            <Button
+              onClick={handleCreatingAccount}
+              variant="contained"
+              color="primary"
+              disabled={isFetching}
+              fullWidth>
+              ثبت
+            </Button>
+
+            <Typography align="center">
+              <Link style={{ textDecoration: 'none' }} to={'/login'}>
+                {'از قبل حساب کاربری داشتم...'}
+              </Link>
+            </Typography>
+          </Stack>
         </Stack>
       </Stack>
     </Container >
