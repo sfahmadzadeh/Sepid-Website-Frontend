@@ -38,10 +38,10 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
 
   useEffect(() => {
     if (submitRegistrationFormResult?.isSuccess) {
-      onSuccess();
+      onSuccess?.();
     }
     if (submitRegistrationFormResult?.isError) {
-      onFailure();
+      onFailure?.();
     }
   }, [submitRegistrationFormResult])
 
