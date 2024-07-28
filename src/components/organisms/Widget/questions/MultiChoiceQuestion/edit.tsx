@@ -21,6 +21,8 @@ import { ChoiceType } from 'types/widgets';
 import Choice from 'components/molecules/Choice';
 import { toast } from 'react-toastify';
 import { WidgetModes } from '../..';
+import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
+import EditQuestionWidgetFields from 'components/template/forms/EditQuestionWidgetFields';
 
 type MultiChoiceQuestionEditWidgetPropsType = {
   onMutate: any;
@@ -44,6 +46,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
   handleClose,
   open,
   maximum_choices_could_be_chosen,
+  ...questionWidgetProps
 }) => {
   const t = useTranslate();
   const [maximumChoicesCouldBeChosen, setMaximumChoicesCouldBeChosen] = useState(maximum_choices_could_be_chosen || 1);
@@ -56,6 +59,8 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
         { text: 'گزینه ۲' }
       ]
   );
+  const [questionWidgetFields, setQuestionWidgetFields] = useState<Partial<QuestionWidgetType>>({ ...questionWidgetProps });
+
 
   const handleSubmit = () => {
     onMutate({
@@ -65,6 +70,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
       widgetId,
       onSuccess: handleClose,
       maximum_choices_could_be_chosen: maximumChoicesCouldBeChosen,
+      ...questionWidgetFields
     });
   };
 
@@ -111,13 +117,13 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
       disableEnforceFocus>
       <DialogTitle>{t('multipleChoiceQuestions')}</DialogTitle>
       <DialogContent>
-        <Stack spacing={4}>
+        <Stack spacing={4} alignItems={'start'}>
           <Stack>
             <label>{'صورت سوال:'}</label>
             <TinyEditorComponent content={questionText} onChange={(val) => setQuestionText(val)} />
           </Stack>
 
-          <Stack>
+          <Stack width={'100%'}>
             <Typography gutterBottom>
               {'گزینه‌ها:'}
             </Typography>
@@ -164,6 +170,10 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
             value={maximumChoicesCouldBeChosen}
           />
 
+          <EditQuestionWidgetFields
+            fields={questionWidgetFields}
+            setFields={setQuestionWidgetFields}
+          />
         </Stack>
       </DialogContent>
       <DialogActions>

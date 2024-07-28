@@ -4,11 +4,15 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControlLabel,
   Stack,
+  Switch,
 } from '@mui/material';
 import React, { FC, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
+import EditQuestionWidgetFields from 'components/template/forms/EditQuestionWidgetFields';
+import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
 
 type BigAnswerProblemEditWidgetPropsType = {
   handleClose: any;
@@ -30,13 +34,13 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
   text: oldText,
   solution: previousSolution,
   paperId,
-  is_required: previousIsRequired,
   id: widgetId,
+  ...questionWidgetProps
 }) => {
   const t = useTranslate();
   const [text, setText] = useState<string>(oldText);
   const [solution, setSolution] = useState<string>(previousSolution || '');
-  const [isRequired, setIsRequired] = useState<boolean>(previousIsRequired || false);
+  const [questionWidgetFields, setQuestionWidgetFields] = useState<Partial<QuestionWidgetType>>({ ...questionWidgetProps });
 
   const handleClick = () => {
     onMutate({
@@ -45,6 +49,7 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
       text: text,
       solution,
       onSuccess: handleClose,
+      ...questionWidgetFields
     })
   };
 
@@ -59,7 +64,7 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
       disableEnforceFocus>
       <DialogTitle>{'سوال تشریحی'}</DialogTitle>
       <DialogContent>
-        <Stack spacing={1}>
+        <Stack alignItems={'start'} spacing={1}>
           <label>{'صورت سوال'}</label>
           <TinyEditorComponent
             content={text}
@@ -70,8 +75,10 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
             content={solution}
             onChange={(val: string) => setSolution(val)}
           />
-          <label>{'راه‌حل'}</label>
-
+          <EditQuestionWidgetFields
+            fields={questionWidgetFields}
+            setFields={setQuestionWidgetFields}
+          />
         </Stack>
       </DialogContent>
       <DialogActions>

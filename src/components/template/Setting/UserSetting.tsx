@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -355,10 +355,4 @@ const UserSetting: FC<UserSettingPropsType> = ({
   );
 }
 
-const mapStateToProps = (state) => ({
-  isFetching: state.account.isFetching,
-  payments: state.account.payments,
-  institutes: state.account.institutes,
-});
-
-export default connect(mapStateToProps)(UserSetting);
+export default UserSetting;

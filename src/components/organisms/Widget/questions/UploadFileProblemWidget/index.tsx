@@ -10,6 +10,8 @@ import UploadFileProblemEditWidget from './edit';
 import { WidgetModes } from 'components/organisms/Widget';
 import UploadFile from 'components/molecules/UploadFile';
 import { AnswerType } from 'types/models';
+import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
+import IsRequired from 'components/atoms/IsRequired';
 
 type UploadFileProblemWidgetPropsType = {
   onAnswerChange: any;
@@ -21,7 +23,7 @@ type UploadFileProblemWidgetPropsType = {
   answer_file: string;
   mode: WidgetModes;
   submittedAnswer: AnswerType;
-}
+} & QuestionWidgetType;
 
 const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
   onAnswerChange,
@@ -32,6 +34,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
   text = 'محل بارگذاری فایل:',
   mode,
   submittedAnswer,
+  ...questionWidgetProps
 }) => {
   const t = useTranslate();
   const [fileLink, setFileLink] = useState<string>(submittedAnswer?.answer_file || '');
@@ -60,7 +63,9 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
 
   return (
     <Stack alignItems='center' justifyContent='space-between' direction='row' spacing={1}>
-      <Typography>{text}</Typography>
+      <IsRequired disabled={!questionWidgetProps.is_required}>
+        <Typography>{text}</Typography>
+      </IsRequired>
       <Stack justifyContent='flex-end' spacing={1}>
         {(mode === WidgetModes.View || mode === WidgetModes.InForm) &&
           <UploadFile setFileLink={setFileLink} />

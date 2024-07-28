@@ -11,6 +11,8 @@ import {
 import React, { useState, FC } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
+import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
+import EditQuestionWidgetFields from 'components/template/forms/EditQuestionWidgetFields';
 
 type UploadFileProblemEditWidgetPropsType = {
   onMutate: any;
@@ -32,10 +34,12 @@ const UploadFileProblemEditWidget: FC<UploadFileProblemEditWidgetPropsType> = ({
   solution: oldSolution,
   paperId,
   id: widgetId,
+  ...questionWidgetProps
 }) => {
   const t = useTranslate();
   const [text, setText] = useState(oldText || '');
   const [solution, setSolution] = useState<string>(oldSolution || '');
+  const [questionWidgetFields, setQuestionWidgetFields] = useState<Partial<QuestionWidgetType>>({ ...questionWidgetProps });
 
   const handleSubmit = () => {
     onMutate({
@@ -44,6 +48,7 @@ const UploadFileProblemEditWidget: FC<UploadFileProblemEditWidgetPropsType> = ({
       widgetId,
       solution,
       onSuccess: handleClose,
+      ...questionWidgetFields
     });
   };
 
@@ -51,7 +56,7 @@ const UploadFileProblemEditWidget: FC<UploadFileProblemEditWidgetPropsType> = ({
     <Dialog disableScrollLock open={open} onClose={handleClose} maxWidth='md'>
       <DialogTitle>{'ارسال فایل'}</DialogTitle>
       <DialogContent>
-        <Stack spacing={1}>
+        <Stack spacing={1} alignItems={'start'}>
           <Typography>
             متن درخواستی را که برای ارسال فایل دارید، در قسمت زیر وارد کنید.
           </Typography>
@@ -66,6 +71,10 @@ const UploadFileProblemEditWidget: FC<UploadFileProblemEditWidgetPropsType> = ({
           <TinyEditorComponent
             content={solution}
             onChange={(val: string) => setSolution(val)}
+          />
+          <EditQuestionWidgetFields
+            fields={questionWidgetFields}
+            setFields={setQuestionWidgetFields}
           />
         </Stack>
       </DialogContent>

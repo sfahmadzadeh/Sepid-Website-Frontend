@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 import { toPersianNumber } from 'utils/translateNumber';
 import { AnswerType } from 'types/models';
 import { ChoiceType } from 'types/widgets';
+import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
+import IsRequired from 'components/atoms/IsRequired';
 export { MultiChoiceQuestionEditWidget };
 
 type MultiChoiceQuestionWidgetPropsType = {
@@ -20,7 +22,7 @@ type MultiChoiceQuestionWidgetPropsType = {
   mode: WidgetModes;
   maximum_choices_could_be_chosen: number;
   submittedAnswer: AnswerType;
-}
+} & QuestionWidgetType;
 
 const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
   onAnswerSubmit,
@@ -32,6 +34,7 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
   mode,
   maximum_choices_could_be_chosen: maximumChoicesCouldBeChosen,
   submittedAnswer,
+  ...questionWidgetProps
 }) => {
   const [selectedChoices, _setSelectedChoices] = useState<ChoiceType[]>(submittedAnswer?.choices || []);
   const setSelectedChoices = (newSelectedChoices) => {
@@ -73,14 +76,16 @@ const MultiChoiceQuestionWidget: FC<MultiChoiceQuestionWidgetPropsType> = ({
 
   return (
     <Stack spacing={1}>
-      <TinyPreview
-        frameProps={{
-          frameBorder: '0',
-          scrolling: 'no',
-          width: '100%',
-        }}
-        content={questionText}
-      />
+      <IsRequired disabled={!questionWidgetProps.is_required}>
+        <TinyPreview
+          frameProps={{
+            frameBorder: '0',
+            scrolling: 'no',
+            width: '100%',
+          }}
+          content={questionText}
+        />
+      </IsRequired>
       <Stack spacing={1}>
         {questionChoices.map((choice) =>
           <Choice

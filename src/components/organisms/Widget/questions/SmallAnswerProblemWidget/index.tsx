@@ -4,31 +4,29 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyPreview from 'components/organisms/TinyMCE/ReactTiny/Preview';
 import { WidgetModes } from 'components/organisms/Widget';
 import SmallAnswerProblemEditWidget from './edit';
+import IsRequired from 'components/atoms/IsRequired';
+import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
 
 type SmallAnswerProblemWidgetPropsType = {
   onAnswerChange: any;
   onAnswerSubmit: any;
 
-  reward: any;
-  cost: any,
   id: number;
   mode: WidgetModes;
   text: string;
   correct_answer: any;
   submittedAnswer: any;
-  be_corrected: boolean;
-}
+} & QuestionWidgetType;
 
 const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
   onAnswerChange,
   onAnswerSubmit,
 
-  reward,
-  cost,
   id: questionId,
   mode,
   text: problemText,
   submittedAnswer,
+  ...questionWidgetProps
 }) => {
   const t = useTranslate();
   const [answer, setAnswer] = useState<string>(submittedAnswer?.text || '');
@@ -63,14 +61,16 @@ const SmallAnswerProblemWidget: FC<SmallAnswerProblemWidgetPropsType> = ({
   return (
     <Fragment>
       <Stack spacing={1}>
-        <TinyPreview
-          frameProps={{
-            frameBorder: '0',
-            scrolling: 'no',
-            width: '100%',
-          }}
-          content={problemText}
-        />
+        <IsRequired disabled={!questionWidgetProps.is_required}>
+          <TinyPreview
+            frameProps={{
+              frameBorder: '0',
+              scrolling: 'no',
+              width: '100%',
+            }}
+            content={problemText}
+          />
+        </IsRequired>
         <Stack
           direction='row'
           justifyContent='flex-start'

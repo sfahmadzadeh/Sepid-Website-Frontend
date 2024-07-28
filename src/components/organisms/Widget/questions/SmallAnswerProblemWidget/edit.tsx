@@ -10,6 +10,8 @@ import {
 import React, { useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
+import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
+import EditQuestionWidgetFields from 'components/template/forms/EditQuestionWidgetFields';
 
 function SmallAnswerProblemEditWidget({
   onMutate,
@@ -21,11 +23,13 @@ function SmallAnswerProblemEditWidget({
   correct_answer: oldCorrectAnswer,
   paperId,
   id: widgetId,
+  ...questionWidgetProps
 }) {
   const t = useTranslate();
   const [text, setText] = useState<string>(oldText);
   const [correctAnswer, setCorrectAnswer] = useState<string>(oldCorrectAnswer?.text || '');
   const [solution, setSolution] = useState<string>(oldSolution || '');
+  const [questionWidgetFields, setQuestionWidgetFields] = useState<Partial<QuestionWidgetType>>({ ...questionWidgetProps });
 
   const handleSubmit = () => {
     const body = {
@@ -34,6 +38,7 @@ function SmallAnswerProblemEditWidget({
       text,
       solution,
       onSuccess: handleClose,
+      ...questionWidgetFields
     }
     if (correctAnswer) {
       body['correct_answer'] = {
@@ -54,7 +59,7 @@ function SmallAnswerProblemEditWidget({
       disableEnforceFocus>
       <DialogTitle>{t('shortAnswerQuestion')}</DialogTitle>
       <DialogContent>
-        <Stack spacing={1}>
+        <Stack spacing={1} alignItems={'start'}>
           <label>{'صورت سوال'}</label>
           <TinyEditorComponent
             content={text}
@@ -71,6 +76,10 @@ function SmallAnswerProblemEditWidget({
           <TinyEditorComponent
             content={solution}
             onChange={(val: string) => setSolution(val)}
+          />
+          <EditQuestionWidgetFields
+            fields={questionWidgetFields}
+            setFields={setQuestionWidgetFields}
           />
         </Stack>
       </DialogContent>
