@@ -146,7 +146,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
           </Stack>
 
           <Typography align='center'>
-            {'حساب کاربری ندارید؟ '}
+            {'حساب کاربری ندارید؟'}
             <Link style={{ marginRight: 4, fontWeight: 800, color: '#1361A4' }} to={'/create-account'}>
               {'ثبت‌نام'}
             </Link>

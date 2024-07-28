@@ -168,7 +168,7 @@ const CreateAccount: FC<CreateAccountPropsType> = ({
             </Button>
 
             <Typography align="center" pt={1}>
-              {'حساب کاربری دارید؟  '}
+              {'حساب کاربری دارید؟'}
               <Link style={{ marginRight: 4, fontWeight: 800, color: '#1361A4' }} to={'/login'}>
                 {'ورود'}
               </Link>
