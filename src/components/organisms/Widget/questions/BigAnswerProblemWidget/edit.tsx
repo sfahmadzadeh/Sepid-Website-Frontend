@@ -19,6 +19,7 @@ type BigAnswerProblemEditWidgetPropsType = {
   solution: any;
   paperId: number;
   id: string;
+  is_required?: boolean;
 }
 
 const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
@@ -27,13 +28,15 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
 
   open,
   text: oldText,
-  solution: oldSolution,
+  solution: previousSolution,
   paperId,
+  is_required: previousIsRequired,
   id: widgetId,
 }) => {
   const t = useTranslate();
   const [text, setText] = useState<string>(oldText);
-  const [solution, setSolution] = useState<string>(oldSolution || '');
+  const [solution, setSolution] = useState<string>(previousSolution || '');
+  const [isRequired, setIsRequired] = useState<boolean>(previousIsRequired || false);
 
   const handleClick = () => {
     onMutate({
@@ -67,6 +70,8 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
             content={solution}
             onChange={(val: string) => setSolution(val)}
           />
+          <label>{'راه‌حل'}</label>
+
         </Stack>
       </DialogContent>
       <DialogActions>
