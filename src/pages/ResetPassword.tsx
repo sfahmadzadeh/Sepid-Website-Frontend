@@ -212,9 +212,10 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
               تغییر
             </Button>
 
-            <Typography align="center">
-              <Link style={{ textDecoration: 'none' }} to={'/login'}>
-                {'می‌خواهم وارد حسابم شوم...'}
+            <Typography align="center" pt={1}>
+              {'حساب کاربری دارید؟  '}
+              <Link style={{ marginRight: 4, fontWeight: 800, color: '#1361A4' }} to={'/login'}>
+                {'ورود'}
               </Link>
             </Typography>
           </Stack>
