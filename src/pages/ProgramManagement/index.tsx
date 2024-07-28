@@ -21,7 +21,7 @@ import {
 import Layout from 'components/template/Layout';
 import Financial from './Financial';
 import Info from './Info';
-import RegistrationForm from './RegistrationForm';
+import Registration from './Registration';
 import RegistrationReceipts from './RegistrationReceipts';
 import Teams from './Teams';
 import FSMs from './FSMs';
@@ -42,7 +42,7 @@ const tabs: DashboardTabType[] = [
     name: 'registration-form',
     label: 'فرایند ثبت‌نام',
     icon: ArticleIcon,
-    component: RegistrationForm,
+    component: Registration,
   },
   {
     name: 'merchandise',
@@ -115,6 +115,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab || !program) return null;
+  // todo: it is not necessary to pass formId to other tabs components
   const TabComponent = <currentTab.component formId={program.registration_form} />;
 
   return (

@@ -6,7 +6,7 @@ type GetFSMStateOutputType = FSMStateType;
 export const PaperSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getPaper: builder.query<GetFSMStateOutputType, { paperId: string }>({
-      providesTags: (result) => [{ type: 'paper', id: result.id }],
+      providesTags: (result) => [{ type: 'paper', id: result?.id }],
       query: ({ paperId }) => `fsm/paper/${paperId}/`,
       transformResponse: (response: any): GetFSMStateOutputType => {
         return response;

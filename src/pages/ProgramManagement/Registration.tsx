@@ -1,17 +1,14 @@
 import React, { FC } from 'react';
 import { EditPaper } from 'components/template/Paper';
 import { Divider, Stack, Typography } from '@mui/material';
-import { useGetFormQuery } from 'redux/features/form/FormSlice';
 
-type RegistrationFormPropsType = {
-  registrationFormId: any;
+type RegistrationPropsType = {
+  formId: any;
 }
 
-const RegistrationForm: FC<RegistrationFormPropsType> = ({
-  registrationFormId,
+const Registration: FC<RegistrationPropsType> = ({
+  formId,
 }) => {
-
-  const { data: registrationForm } = useGetFormQuery({ formId: registrationFormId });
 
   return (
     <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
@@ -31,10 +28,10 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
         <Typography variant='h2' gutterBottom>
           {'فرم ثبت‌نام'}
         </Typography>
-        <EditPaper paperId={registrationFormId} />
+        <EditPaper paperId={formId} />
       </Stack>
     </Stack>
   );
 };
 
-export default RegistrationForm;
+export default Registration;
