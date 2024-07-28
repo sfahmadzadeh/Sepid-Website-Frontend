@@ -1,3 +1,4 @@
+import { WidgetModes } from "components/organisms/Widget";
 import { SchoolStudentshipType, UserInfoType } from "./profile";
 
 export type InstituteType = any;

@@ -29,19 +29,6 @@ export type AppbarItemsType = {
   toolbarItems?: any[];
 }
 
-export type WidgetTypes =
-  'TextWidget' |
-  'Image' |
-  'Video' |
-  'Aparat' |
-  'Iframe' |
-  'SmallAnswerProblem' |
-  'BigAnswerProblem' |
-  'MultiChoiceProblem' |
-  'UploadFileProblem';
-
-export type WidgetType = any;
-
 export type RegistrationStepType = {
   name: RegistrationStepNameType;
   label: RegistrationStepLabelType;

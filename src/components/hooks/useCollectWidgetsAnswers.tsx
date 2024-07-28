@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { WidgetTypes } from "types/global";
+import { WidgetTypes } from "types/widgets/widget";
 
 type collectAnswersPropsType = {
   widgetId: number;

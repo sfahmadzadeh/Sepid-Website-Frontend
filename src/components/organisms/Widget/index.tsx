@@ -8,6 +8,8 @@ import WidgetHint from 'components/molecules/WidgetHint';
 import useWidgetFactory from './useWidgetFactory';
 import CostDialog from '../dialogs/CostDialog';
 import { AnswerType } from 'types/models';
+import { WidgetType } from 'types/widgets/widget';
+import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
 
 export enum WidgetModes {
   Create,
@@ -31,7 +33,7 @@ export enum WidgetTypes {
 }
 
 type WidgetPropsType = {
-  widget: any;
+  widget: WidgetType;
   mode?: WidgetModes;
   paperId: string;
   coveredWithPaper?: boolean;
@@ -62,14 +64,14 @@ const Widget: FC<WidgetPropsType> = ({
     EditWidgetDialog,
     skipFetch,
   } = useWidgetFactory({
-    widgetId: widget.id,
+    widgetId: widget.id.toString(),
     paperId,
     widgetType: widget.widget_type,
     mode,
     collectAnswer,
   });
 
-  const beCorrected = widget.be_corrected;
+  const beCorrected = (widget as QuestionWidgetType).be_corrected;
   const cost = widget.cost;
   const reward = widget.reward;
 

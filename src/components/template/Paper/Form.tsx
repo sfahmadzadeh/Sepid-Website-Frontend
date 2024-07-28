@@ -3,9 +3,9 @@ import React, { FC, Fragment } from 'react';
 import { WidgetModes } from 'components/organisms/Widget';
 import Widget from 'components/organisms/Widget';
 import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
-import { WidgetType } from 'types/global';
 import { AnswerType } from 'types/models';
 import { GetAnswerCollectorType } from 'components/hooks/useCollectWidgetsAnswers';
+import { WidgetType } from 'types/widgets/widget';
 
 export type FormPaperPropsType = {
   mode?: 'form';

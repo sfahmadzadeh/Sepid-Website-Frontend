@@ -3,7 +3,7 @@ import React, { FC, Fragment } from 'react';
 import { WidgetModes } from 'components/organisms/Widget';
 import Widget from 'components/organisms/Widget';
 import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
-import { WidgetType } from 'types/global';
+import { WidgetType } from 'types/widgets/widget';
 
 export type GeneralPaperPropsType = {
   mode?: 'general';

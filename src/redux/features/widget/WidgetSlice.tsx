@@ -1,5 +1,6 @@
-import { WidgetType, WidgetTypes } from 'types/global';
+import { WidgetTypes } from 'components/organisms/Widget';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
+import { WidgetType } from 'types/widgets/widget';
 
 type CreateWidgetInputType = {
   paperId: string;

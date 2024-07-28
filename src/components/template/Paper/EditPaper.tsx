@@ -6,7 +6,7 @@ import Widget, { WidgetModes } from 'components/organisms/Widget';
 import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog';
 import NoDataFound from 'components/molecules/NoDataFound';
 import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
-import { WidgetType } from 'types/global';
+import { WidgetType } from 'types/widgets/widget';
 
 type EditPaperPropsType = {
   paperId: string;
