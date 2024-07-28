@@ -19,7 +19,7 @@ type GetFormAnswerSheetOutputType = {
 export const FormSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getForm: builder.query<GetFormOutputType, { formId: string }>({
-      providesTags: (result) => [{ type: 'form', id: result.id }],
+      providesTags: (result) => [{ type: 'form', id: result?.id }],
       query: ({ formId }) => `fsm/form/${formId}/`,
       transformResponse: (response: any): GetFormOutputType => {
         return response;
