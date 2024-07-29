@@ -2,7 +2,7 @@ import { Button, TextField, Container, Paper, Typography, Stack, Box } from '@mu
 import WebsiteLogo from 'components/atoms/logos/WebsiteLogo';
 import React, { useState, FC } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
@@ -23,6 +23,7 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
   getVerificationCode,
   changePassword,
 }) => {
+  const navigate = useNavigate();
   const [buttonText, setButtonText] = useState('دریافت کد');
   const [data, setData] = useState({
     password: '',
@@ -85,7 +86,12 @@ const ResetPassword: FC<ResetPasswordPropsType> = ({
       toast.error('رمزهایی که وارد کردی مشابه هم نیستند');
       return;
     }
-    changePassword(data);
+    changePassword({
+      ...data,
+      onSuccess: () => {
+        navigate('/login/');
+      }
+    });
   };
 
   return (

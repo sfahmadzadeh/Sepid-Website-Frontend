@@ -53,10 +53,11 @@ export const changePasswordAction = createAsyncThunkApi(
   Apis.POST,
   changePasswordUrl,
   {
-    bodyCreator: ({ phoneNumber, password, code }) => ({
+    bodyCreator: ({ phoneNumber, password, code, onSuccess }) => ({
       phone_number: phoneNumber,
       password,
       code,
+      onSuccess,
     }),
     defaultNotification: {
       success: 'گذرواژه با موفقیت تغییر یافت!',
