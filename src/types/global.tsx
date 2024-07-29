@@ -34,6 +34,7 @@ export type RegistrationStepType = {
   label: RegistrationStepLabelType;
   component: any;
   onClick?: any;
+  disabled?: boolean;
 };
 
 export type RegistrationStepLabelType =

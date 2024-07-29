@@ -21,7 +21,7 @@ const MyStepper: FC<MyStepperPropsType> = ({
       alternativeLabel={width === 'xs' || width === 'sm' ? true : false}>
       {
         [...steps].map((step) => (
-          <Step key={step.name}>
+          <Step key={step.name} disabled={step.disabled}>
             <StepButton onClick={step.onClick}>{step.label}</StepButton>
           </Step>
         ))

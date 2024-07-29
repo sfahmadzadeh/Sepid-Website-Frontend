@@ -16,6 +16,7 @@ const Registration: FC<RegistrationPropsType> = ({
         <Typography variant='h2' gutterBottom>
           {'تنظیمات ثبت‌نام'}
         </Typography>
+        
         {/* دکمه‌های سوالات متداول + راهنمای سایت + اپ‌بار و هدر و اوپن‌گراف سایت */}
         <Typography>
           {'todo'}

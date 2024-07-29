@@ -45,6 +45,7 @@ const useRegistrationSteps = ({
     steps.push({
       name: 'form',
       label: 'ثبت‌نام در دوره',
+      disabled: true,
       component: <RegistrationForm onSuccess={() => goToNextStep()} />,
       onClick: () => { }
     })
