@@ -12,7 +12,7 @@ import {
   TextField,
 } from '@mui/material';
 import React, { FC, Fragment, useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddInstitute from 'components/organisms/dialogs/AddInstitute';
 import Iran from 'utils/iran';
@@ -103,14 +103,14 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
 
   const institutes_reps = institutes?.map((institute) => ({
     id: institute.id,
-    name: `${SCHOOL_TYPES[institute.school_type]} ${GENDER_TYPE[institute.gender_type]} ${institute.name}`,
+    name: `${SCHOOL_TYPES[institute.school_type] ? SCHOOL_TYPES[institute.school_type] + ' ' : ''}${GENDER_TYPE[institute.gender_type] ? GENDER_TYPE[institute.gender_type] + ' ' : ''}${institute.name}`,
   })) || []
 
   return (
     <Fragment>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant="h2" gutterBottom>اطلاعات دانش‌آموزی</Typography>
+          <Typography variant="h2" gutterBottom>{'اطلاعات دانش‌آموزی'}</Typography>
           <Divider />
         </Grid>
 
@@ -123,12 +123,13 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
               onChange={(event, newValue) => {
                 setSchoolStudentship({
                   ...schoolStudentship,
-                  school: newValue.id,
+                  school: newValue?.id,
                 })
               }}
               value={institutes_reps.find(institute => institute.id === schoolStudentship.school) || null}
               renderInput={(params) =>
                 <TextField
+                  required
                   {...params}
                   label="مدرسه"
                   error={!userCityTitle}
@@ -137,11 +138,18 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
               }
               options={institutes_reps}
               noOptionsText={
-                <Button size='small' color='info' startIcon={<AddCircleOutlineIcon />} onClick={() => setIsAddInstituteDialogOpen(true)}>
-                  {'مدرسه‌ای وجود ندارد. برای افزودن کلیک کنید'}
+                <Button disableRipple size='small' color='info' startIcon={<AddCircleOutlineIcon />} onClick={() => setIsAddInstituteDialogOpen(true)}>
+                  {'مدرسه‌ای با این مشخصات وجود ندارد. برای افزودن کلیک کنید.'}
                 </Button>
               }
             />
+            <Button
+              disableRipple
+              size='small' color='info'
+              startIcon={<AddCircleOutlineIcon />}
+              onClick={() => setIsAddInstituteDialogOpen(true)}>
+              {'اگر مدرسه شما در لیست بالا نیست، برای افزودن آن کلیک کنید.'}
+            </Button>
           </Grid>
 
           <Grid item xs={12} sm={6}>
