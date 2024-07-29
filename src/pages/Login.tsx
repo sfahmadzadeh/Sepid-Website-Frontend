@@ -123,7 +123,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
                 inputMode='text'
                 helperText={
                   <Typography align='right' mt={0.5}>
-                    <Link to={'/reset-password'}>
+                    <Link style={{ textDecoration: 'none' }} to={'/reset-password'}>
                       {'فراموشی گذرواژه'}
                     </Link>
                   </Typography>
@@ -147,7 +147,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
 
           <Typography align='center'>
             {'حساب کاربری ندارید؟'}
-            <Link style={{ marginRight: 4, fontWeight: 800, color: '#1361A4' }} to={'/create-account'}>
+            <Link style={{ textDecoration: 'none', marginRight: 4, fontWeight: 800, color: '#1361A4' }} to={'/create-account'}>
               {'ثبت‌نام'}
             </Link>
           </Typography>
