@@ -14,11 +14,13 @@ import { useSelector } from 'react-redux';
 type UploadFilePropsType = {
   setFileLink: any;
   id?: string;
+  acceptableFileFormats?: string;
 }
 
 const UploadFile: FC<UploadFilePropsType> = ({
   setFileLink,
-  id = Math.ceil(Math.random() * 1000)
+  id = Math.ceil(Math.random() * 1000),
+  acceptableFileFormats = "video/* ,image/*, audio/mp3, application/pdf",
 }) => {
   const [uploadFile, result] = useUploadFileMutation();
   const { uploadProgress } = useSelector((state) => (state as any).global);
@@ -61,7 +63,7 @@ const UploadFile: FC<UploadFilePropsType> = ({
         {'بارگذاری فایل'}
       </Button>
       <input
-        accept="video/* ,image/*, audio/mp3"
+        accept={acceptableFileFormats}
         style={{ display: 'none' }}
         id={`upload-widget-file-${id}`}
         type="file"
