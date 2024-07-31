@@ -43,14 +43,6 @@ const useRegistrationSteps = ({
     const steps: RegistrationStepType[] = [];
 
     steps.push({
-      name: 'form',
-      label: 'ثبت‌نام در دوره',
-      disabled: true,
-      component: <RegistrationForm onSuccess={() => goToNextStep()} />,
-      onClick: () => { }
-    })
-
-    steps.push({
       name: 'user-setting',
       label: 'تکمیل اطلاعات شخصی',
       component: <SettingTemplate type='user' onSuccessfulSubmission={() => goToNextStep()} />,
@@ -74,6 +66,14 @@ const useRegistrationSteps = ({
         onClick: () => goToStep(getStepIndex('university-setting'))
       })
     }
+
+    steps.push({
+      name: 'form',
+      label: 'ثبت‌نام در دوره',
+      disabled: true,
+      component: <RegistrationForm onSuccess={() => goToNextStep()} />,
+      onClick: () => { }
+    })
 
     if (registrationForm.accepting_status == 'Manual') {
       steps.push({
