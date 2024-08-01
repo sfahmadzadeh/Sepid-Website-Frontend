@@ -1,6 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { EditPaper } from 'components/template/Paper';
-import { Divider, Stack, Typography } from '@mui/material';
+import { Button, Divider, Stack, Typography } from '@mui/material';
+import FormInfo from 'components/organisms/forms/FormInfo';
+import { useGetFormQuery, useUpdateFormMutation } from 'redux/features/form/FormSlice';
+import { toast } from 'react-toastify';
 
 type RegistrationPropsType = {
   formId: any;
@@ -9,18 +12,41 @@ type RegistrationPropsType = {
 const Registration: FC<RegistrationPropsType> = ({
   formId,
 }) => {
+  const { data: registrationForm, isSuccess } = useGetFormQuery({ formId }, { skip: !Boolean(formId) });
+  const [form, setForm] = useState(registrationForm)
+  const [updateForm, result] = useUpdateFormMutation();
+
+  useEffect(() => {
+    setForm(registrationForm);
+  }, [isSuccess])
+
+  const onSubmit = () => {
+    updateForm(form);
+  }
+
+  useEffect(() => {
+    if (result?.isSuccess) {
+      toast.success('فرم ثبت‌نام با موفقیت به‌روز شد.');
+    }
+  }, [result])
 
   return (
     <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
       <Stack padding={2} spacing={2}>
-        <Typography variant='h2' gutterBottom>
-          {'تنظیمات ثبت‌نام'}
-        </Typography>
-        
-        {/* دکمه‌های سوالات متداول + راهنمای سایت + اپ‌بار و هدر و اوپن‌گراف سایت */}
-        <Typography>
-          {'todo'}
-        </Typography>
+        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'start'}>
+          <Typography variant='h2' gutterBottom>
+            {'تنظیمات ثبت‌نام'}
+          </Typography>
+          <Button onClick={onSubmit} variant='contained'>
+            {'به‌روز‌رسانی'}
+          </Button>
+        </Stack>
+
+
+        <Stack>
+          <FormInfo data={form} setData={setForm} />
+        </Stack>
+
       </Stack>
 
       <Divider />

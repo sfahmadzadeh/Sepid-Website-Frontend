@@ -112,8 +112,11 @@ export type FSMType = {
   order_in_program: number;
 };
 
+type GenderPartitionType = 'OnlyMale' | 'OnlyFemale' | 'BothPartitioned' | 'BothNonPartitioned';
+
 export type RegistrationFormType = {
   accepting_status: AcceptingStatus;
+  gender_partition_status: GenderPartitionType;
   audience_type: AudienceType;
   certificate_templates: any;
   certificates_ready: boolean;

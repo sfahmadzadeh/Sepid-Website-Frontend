@@ -16,6 +16,10 @@ type GetFormAnswerSheetOutputType = {
   results: RegistrationReceiptType[];
 }
 
+type UpdateFormInputType = Partial<RegistrationFormType>
+
+type UpdateFormOutputType = any;
+
 export const FormSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getForm: builder.query<GetFormOutputType, { formId: string }>({
@@ -24,6 +28,15 @@ export const FormSlice = ManageContentServiceApi.injectEndpoints({
       transformResponse: (response: any): GetFormOutputType => {
         return response;
       },
+    }),
+
+    updateForm: builder.mutation<UpdateFormOutputType, UpdateFormInputType>({
+      invalidatesTags: (result, error, item) => [{ type: 'form', id: item.id }],
+      query: ({ id, ...body }) => ({
+        url: `fsm/form/${id}/`,
+        method: 'PATCH',
+        body,
+      }),
     }),
 
     getFormAnswerSheets: builder.query<GetFormAnswerSheetOutputType, { formId: string, pageNumber: string }>({
@@ -48,6 +61,7 @@ export const FormSlice = ManageContentServiceApi.injectEndpoints({
 
 export const {
   useGetFormQuery,
+  useUpdateFormMutation,
   useGetFormAnswerSheetsQuery,
   useSubmitFormMutation,
 } = FormSlice;
