@@ -14,8 +14,7 @@ import { useParams } from 'react-router';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 import { toast } from 'react-toastify';
 import { ProgramType } from 'types/models';
-import ProgramInfoForm from 'components/template/forms/ProgramInfoForm';
-import ProgramCard from '../cards/ProgramCard';
+import ProgramInfoForm from 'components/organisms/forms/ProgramInfoForm';
 import { useCreateProgramMutation } from 'redux/features/program/ProgramSlice';
 
 type CreateProgramDialogPropsType = {

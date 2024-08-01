@@ -11,7 +11,7 @@ import {
 import React, { FC, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
-import EditQuestionWidgetFields from 'components/template/forms/EditQuestionWidgetFields';
+import EditQuestionWidgetFields from 'components/organisms/forms/EditQuestionWidgetFields';
 import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
 
 type BigAnswerProblemEditWidgetPropsType = {

@@ -14,7 +14,7 @@ import { useParams } from 'react-router';
 import FSMCard from '../cards/FSMCard';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 import { toast } from 'react-toastify';
-import FSMInfoForm from 'components/template/forms/FSMInfoForm';
+import FSMInfoForm from 'components/organisms/forms/FSMInfoForm';
 import { FSMType } from 'types/models';
 import { useCreateFSMMutation } from 'redux/features/fsm/FSMSlice';
 

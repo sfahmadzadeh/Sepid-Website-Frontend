@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
 import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
-import EditQuestionWidgetFields from 'components/template/forms/EditQuestionWidgetFields';
+import EditQuestionWidgetFields from 'components/organisms/forms/EditQuestionWidgetFields';
 
 function SmallAnswerProblemEditWidget({
   onMutate,

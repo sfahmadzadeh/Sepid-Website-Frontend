@@ -22,7 +22,7 @@ import Choice from 'components/molecules/Choice';
 import { toast } from 'react-toastify';
 import { WidgetModes } from '../..';
 import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
-import EditQuestionWidgetFields from 'components/template/forms/EditQuestionWidgetFields';
+import EditQuestionWidgetFields from 'components/organisms/forms/EditQuestionWidgetFields';
 
 type MultiChoiceQuestionEditWidgetPropsType = {
   onMutate: any;

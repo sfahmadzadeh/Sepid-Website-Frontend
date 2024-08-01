@@ -6,8 +6,8 @@ import {
   Typography,
 } from '@mui/material';
 import SoftDeleteProgramButton from 'components/atoms/SoftDeleteProgramButton';
-import ProgramContactInfoForm from 'components/template/forms/ProgramContactInfoForm';
-import ProgramInfoForm from 'components/template/forms/ProgramInfoForm';
+import ProgramContactInfoForm from 'components/organisms/forms/ProgramContactInfoForm';
+import ProgramInfoForm from 'components/organisms/forms/ProgramInfoForm';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
