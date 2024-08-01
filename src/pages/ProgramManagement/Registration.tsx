@@ -4,6 +4,7 @@ import { Button, Divider, Stack, Typography } from '@mui/material';
 import FormInfo from 'components/organisms/forms/FormInfo';
 import { useGetFormQuery, useUpdateFormMutation } from 'redux/features/form/FormSlice';
 import { toast } from 'react-toastify';
+import { deepEqual } from 'utils/ObjectEqualityChecker';
 
 type RegistrationPropsType = {
   formId: any;
@@ -37,11 +38,10 @@ const Registration: FC<RegistrationPropsType> = ({
           <Typography variant='h2' gutterBottom>
             {'تنظیمات ثبت‌نام'}
           </Typography>
-          <Button onClick={onSubmit} variant='contained'>
+          <Button onClick={onSubmit} disabled={deepEqual(registrationForm, form)} variant='contained'>
             {'به‌روز‌رسانی'}
           </Button>
         </Stack>
-
 
         <Stack>
           <FormInfo data={form} setData={setForm} />

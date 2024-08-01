@@ -2,6 +2,8 @@ import { createTheme } from '@mui/material';
 import { Workshop } from './MuiVariables';
 import theme from './theme';
 import typography from './typography';
+import { faIR } from '@mui/material/locale';
+
 import iranyekanweblight from '../fonts/iranyekanweblight.woff';
 import iranyekanwebthin from '../fonts/iranyekanwebthin.woff';
 import iranyekanwebbold from '../fonts/iranyekanwebbold.woff';
@@ -85,6 +87,6 @@ const RTLMuiTheme = createTheme({
       `,
     },
   },
-});
+}, faIR);
 
 export default RTLMuiTheme;

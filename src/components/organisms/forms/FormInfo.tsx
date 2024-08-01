@@ -5,7 +5,10 @@ import {
   MenuItem,
   Select,
 } from '@mui/material';
+import JalaliDataTimePicker from 'components/molecules/JalaliDataTimePicker';
+import moment from 'moment';
 import React, { FC } from 'react';
+import { toast } from 'react-toastify';
 
 import { RegistrationFormType } from 'types/models';
 
@@ -24,6 +27,40 @@ const FormInfo: FC<FormInfoPropsType> = ({
     setData({
       ...data,
       [event.target.name]: event.target.value,
+    })
+  }
+
+  const setSinceField = (newValue: string) => {
+    if (data?.till) {
+      if (moment(newValue).isAfter(moment(data.till))) {
+        toast.error('تاریخ شروع نمی‌تواند بعد از تاریخ پایان باشد.');
+        setData({
+          ...data,
+          'since': data.till,
+        })
+        return;
+      }
+    }
+    setData({
+      ...data,
+      'since': newValue,
+    })
+  }
+
+  const setTillField = (newValue: string) => {
+    if (data?.since) {
+      if (moment(data.since).isAfter(moment(newValue))) {
+        toast.error('تاریخ پایان نمی‌تواند قبل از تاریخ شروع باشد.');
+        setData({
+          ...data,
+          'till': data.since,
+        })
+        return;
+      }
+    }
+    setData({
+      ...data,
+      'till': newValue,
     })
   }
 
@@ -69,6 +106,18 @@ const FormInfo: FC<FormInfoPropsType> = ({
             <MenuItem value={'OnlyFemale'}>{'فقط دختران'}</MenuItem>
           </Select>
         </FormControl>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <JalaliDataTimePicker
+          label='شروع ثبت‌نام'
+          value={data?.since}
+          setValue={setSinceField} />
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <JalaliDataTimePicker
+          label='پایان ثبت‌نام'
+          value={data?.till}
+          setValue={setTillField} />
       </Grid>
     </Grid>
   );
