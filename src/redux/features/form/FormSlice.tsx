@@ -1,6 +1,7 @@
 import { AnswerType, RegistrationFormType, RegistrationReceiptType } from 'types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
+// todo: should be based on form type
 type GetFormOutputType = RegistrationFormType;
 
 type SubmitFormInputType = {
@@ -16,6 +17,7 @@ type GetFormAnswerSheetOutputType = {
   results: RegistrationReceiptType[];
 }
 
+// todo: should be based on form type
 type UpdateFormInputType = Partial<RegistrationFormType>
 
 type UpdateFormOutputType = any;
