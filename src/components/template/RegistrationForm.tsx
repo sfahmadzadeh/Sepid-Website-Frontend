@@ -9,6 +9,7 @@ import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import Paper from './Paper';
 import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 import { useGetFormQuery, useSubmitFormMutation } from 'redux/features/form/FormSlice';
+import { toast } from 'react-toastify';
 
 type RegistrationFormPropsType = {
   onSuccess?: any;
@@ -38,6 +39,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
 
   useEffect(() => {
     if (submitRegistrationFormResult?.isSuccess) {
+      toast.success('فرم ثبت‌نام با موفقیت تکمیل شد.')
       onSuccess?.();
     }
     if (submitRegistrationFormResult?.isError) {
