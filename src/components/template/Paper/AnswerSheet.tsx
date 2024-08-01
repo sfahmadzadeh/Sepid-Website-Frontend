@@ -21,7 +21,7 @@ const AnswerSheetPaper: FC<AnswerSheetPaperPropsType> = ({
     <Fragment>
       {paper?.widgets?.map((widget) => (
         <Widget
-          submittedAnswer={answers.find(answer => answer.problem === widget.id)}
+          submittedAnswer={answers?.find(answer => answer.problem === widget.id)}
           key={widget.id}
           paperId={paper?.id}
           mode={WidgetModes.Review}
