@@ -3,6 +3,7 @@ import moment, { Moment } from 'moment-jalaali';
 import { AdapterMomentJalaali } from '@mui/x-date-pickers/AdapterMomentJalaali';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import formatMomentWithOffset from 'utils/FormatMomentWithOffset';
 
 type JalaliDataTimePickerPropsType = {
   label: string;
@@ -23,7 +24,7 @@ const JalaliDataTimePicker: FC<JalaliDataTimePickerPropsType> = ({
         views={['year', 'month', 'day', 'hours', 'minutes']}
         label={label}
         value={moment(value)}
-        onChange={(newValue: Moment) => setValue(newValue.toISOString())}
+        onChange={(newValue: Moment) => setValue(formatMomentWithOffset(newValue))}
         sx={{ width: '100%' }}
       />
     </LocalizationProvider>
