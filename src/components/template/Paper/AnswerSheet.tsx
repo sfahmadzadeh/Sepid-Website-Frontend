@@ -6,7 +6,7 @@ import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
 import { AnswerType } from 'types/models';
 
 export type AnswerSheetPaperPropsType = {
-  mode?: 'answer_sheet';
+  mode: 'answer_sheet';
   paperId: string;
   answers: AnswerType[];
 }

@@ -13,7 +13,7 @@ function HelpDialog({ open, handleClose, helps }) {
     <Dialog disableScrollLock open={open} onClose={handleClose} maxWidth="xs" fullWidth >
       <DialogContent>
         <Typography gutterBottom>{t('helpNumber') + " " + (toPersianNumber(index + 1))}</Typography>
-        <Paper paperId={help.id} />
+        <Paper paperId={help.id} mode='general'/>
       </DialogContent>
       <DialogActions>
         <Grid container justifyContent="space-between">

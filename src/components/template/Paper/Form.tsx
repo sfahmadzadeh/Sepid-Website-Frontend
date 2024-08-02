@@ -8,7 +8,7 @@ import { GetAnswerCollectorType } from 'components/hooks/useCollectWidgetsAnswer
 import { WidgetType } from 'types/widgets/widget';
 
 export type FormPaperPropsType = {
-  mode?: 'form';
+  mode: 'form';
   paperId: string;
   widgets_type?: 'contents' | 'problems' | 'all';
   answers: AnswerType[];

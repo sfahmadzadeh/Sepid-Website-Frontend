@@ -6,7 +6,7 @@ import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
 import { WidgetType } from 'types/widgets/widget';
 
 export type GeneralPaperPropsType = {
-  mode?: 'general';
+  mode: 'general';
   paperId: string;
   widgets_type?: 'contents' | 'problems' | 'all';
 }
