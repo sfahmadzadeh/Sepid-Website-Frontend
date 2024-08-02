@@ -118,7 +118,7 @@ const MultiChoiceQuestionEditWidget: FC<MultiChoiceQuestionEditWidgetPropsType> 
       <DialogTitle>{t('multipleChoiceQuestions')}</DialogTitle>
       <DialogContent>
         <Stack spacing={4} alignItems={'start'}>
-          <Stack>
+          <Stack width={'100%'}>
             <label>{'صورت سوال:'}</label>
             <TinyEditorComponent content={questionText} onChange={(val) => setQuestionText(val)} />
           </Stack>
