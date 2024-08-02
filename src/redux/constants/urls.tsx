@@ -28,7 +28,6 @@ export const getRegistrableWorkshopsUrl = 'fsm/fsm/?registrable=true';
 export const reviewAnswersUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/review/`;
 
 export const getProgramsUrl = 'fsm/program/';
-export const uploadFileUrl = 'fsm/upload_answer/';
 export const getTeamUrl = ({ teamId }) => `fsm/team/${teamId}/`;
 export const getTeamInvitationsUrl = ({ teamId }) =>
   `/fsm/team/${teamId}/get_team_invitations/`;

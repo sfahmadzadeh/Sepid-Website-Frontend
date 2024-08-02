@@ -4,7 +4,6 @@ import { createAsyncThunkApi } from 'redux/apis/cerateApiAsyncThunk';
 import {
   clearQuestionAnswerUrl,
   sendWidgetAnswerUrl,
-  uploadFileUrl,
 } from 'redux/constants/urls';
 
 export type InitialStateType = {
@@ -74,24 +73,14 @@ export const sendMultiChoiceAnswerAction = ({ questionId, selectedChoices, onSuc
     onFailure,
   });
 
-
-export const uploadFileAnswerAction = createAsyncThunkApi(
-  'widget/uploadFileAnswerAction',
-  Apis.POST_FORM_DATA,
-  uploadFileUrl,
-  {
-    bodyCreator: ({ questionId, answerFile, onSuccess, onFailure }) => ({
-      problem: questionId,
-      answer_file: answerFile,
-      is_final_answer: true,
-      onSuccess,
-      onFailure,
-    }),
-    defaultNotification: {
-      error: 'مشکلی در ثبت پاسخ وجود داشت.',
-    },
-  }
-);
+export const sendUploadFileAnswerAction = ({ questionId, answerFile, onSuccess, onFailure }) =>
+  _sendWidgetAnswerAction({
+    question_id: questionId,
+    answer_file: answerFile,
+    answer_type: 'UploadFileAnswer',
+    onSuccess,
+    onFailure,
+  });
 
 export const clearQuestionAnswerAction = createAsyncThunkApi(
   'widget/clearQuestionAnswerAction',
@@ -112,11 +101,6 @@ const AnswerSlice = createSlice({
     [_sendWidgetAnswerAction.pending.toString()]: isFetching,
     [_sendWidgetAnswerAction.fulfilled.toString()]: isNotFetching,
     [_sendWidgetAnswerAction.rejected.toString()]: isNotFetching,
-
-
-    [uploadFileAnswerAction.pending.toString()]: isFetching,
-    [uploadFileAnswerAction.fulfilled.toString()]: isNotFetching,
-    [uploadFileAnswerAction.rejected.toString()]: isNotFetching,
   },
 });
 

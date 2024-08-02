@@ -13,9 +13,9 @@ import InviteeUsername, { InviteeUsernameEdit } from '../questions/InviteeUserna
 import {
   sendSmallAnswerAction,
   sendBigAnswerAction,
-  uploadFileAnswerAction,
   sendMultiChoiceAnswerAction,
   sendInviteeUsernameResponseAction,
+  sendUploadFileAnswerAction,
 } from 'redux/slices/Answer';
 
 const WIDGET_TYPE_MAPPER = {
@@ -52,7 +52,7 @@ const WIDGET_TYPE_MAPPER = {
     EditWidgetDialog: UploadFileProblemEditWidget,
     label: 'ارسال فایل',
     backendType: 'UploadFileProblem',
-    submitAnswerAction: uploadFileAnswerAction,
+    submitAnswerAction: sendUploadFileAnswerAction,
   },
   TextWidget: {
     WidgetComponent: TextWidget,
