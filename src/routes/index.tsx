@@ -52,8 +52,6 @@ const Root = () => {
         <Route path="/setting/:section?/" element={<Setting />} />
         <Route path="/articles/" element={<Articles />} />
         <Route path="/program/:programId/fsm/:fsmId/" element={<Workshop />} />
-        {/* todo: setting is not the under the program */}
-        <Route path="/program/:programId/setting/:section?/" element={<Setting />} />
         <Route
           path="/program/:programId/form/"
           element={<Registration />}

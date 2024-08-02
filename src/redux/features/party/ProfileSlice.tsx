@@ -37,8 +37,7 @@ export const ProfileSlice = ManageContentServiceApi.injectEndpoints({
       query: ({ userId, ...body }) => ({
         url: `auth/profile/${userId}/`,
         method: 'PATCH',
-        // todo: remove jsonToFormData. instead, make profile_pic type to URLField
-        body: jsonToFormData(body),
+        body,
       }),
     }),
 

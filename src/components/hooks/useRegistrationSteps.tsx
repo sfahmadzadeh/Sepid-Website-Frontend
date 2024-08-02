@@ -4,10 +4,12 @@ import RegistrationForm from 'components/template/RegistrationForm';
 import RegistrationStatus from 'components/template/RegistrationStatus';
 import Payment from 'components/template/Payment';
 import { RegistrationStepNameType, RegistrationStepType } from 'types/global';
-import SettingTemplate from 'components/template/Setting';
 import { ProgramType } from 'types/models';
 import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 import { useGetFormQuery } from 'redux/features/form/FormSlice';
+import UserSetting from 'components/template/Setting/UserSetting';
+import SchoolSetting from 'components/template/Setting/SchoolSetting';
+import UniversitySetting from 'components/template/Setting/UniversitySetting';
 
 type propsType = {
   program: ProgramType;
@@ -45,7 +47,7 @@ const useRegistrationSteps = ({
     steps.push({
       name: 'user-setting',
       label: 'تکمیل اطلاعات شخصی',
-      component: <SettingTemplate type='user' onSuccessfulSubmission={() => goToNextStep()} />,
+      component: <UserSetting isInForm={true} onSuccessfulSubmission={() => goToNextStep()} />,
       onClick: () => goToStep(getStepIndex('user-setting')),
     })
 
@@ -53,7 +55,7 @@ const useRegistrationSteps = ({
       steps.push({
         name: 'school-setting',
         label: 'تکمیل اطلاعات دانش‌آموزی',
-        component: <SettingTemplate type='school' onSuccessfulSubmission={() => goToNextStep()} />,
+        component: <SchoolSetting isInForm={true} onSuccessfulSubmission={() => goToNextStep()} />,
         onClick: () => goToStep(getStepIndex('school-setting'))
       })
     }
@@ -62,7 +64,7 @@ const useRegistrationSteps = ({
       steps.push({
         name: 'university-setting',
         label: 'تکمیل اطلاعات دانشجویی',
-        component: <SettingTemplate type='university' onSuccessfulSubmission={() => goToNextStep()} />,
+        component: <UniversitySetting onSuccessfulSubmission={() => goToNextStep()} />,
         onClick: () => goToStep(getStepIndex('university-setting'))
       })
     }

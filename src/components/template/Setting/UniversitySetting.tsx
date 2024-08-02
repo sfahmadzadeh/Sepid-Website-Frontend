@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { FC } from 'react';
 
 const hasUserCompletedAcademicInformation = (userInfo) => {
   if (userInfo.academic_studentship) {
@@ -9,7 +9,11 @@ const hasUserCompletedAcademicInformation = (userInfo) => {
   }
 }
 
-function UniversitySetting({ onSuccessfulSubmission }) {
+type UniversitySettingPropsType = {
+  onSuccessfulSubmission?: Function;
+}
+
+const UniversitySetting: FC<UniversitySettingPropsType> = ({ onSuccessfulSubmission }) => {
   return null;
 }
 
