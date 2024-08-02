@@ -31,6 +31,11 @@ const RegistrationStatus: FC<RegistrationStatusPropsType> = ({
             {'شما فرم‌ثبت‌نام در این دوره را پر کرده‌اید! منتظر نتیجه‌ی بررسی از جانب ما باشید.'}
           </Typography>
         )}
+        {registrationReceipt.status == 'Accepted' && (
+          <Typography align="center">
+            {'شما برای شرکت در این رویداد پذیرفته شده‌اید! :)'}
+          </Typography>
+        )}
         {registrationReceipt.status == 'Rejected' && (
           <Typography align="center">
             {'متاسفانه شما برای شرکت در این دوره پذیرفته‌نشده‌اید :('}
