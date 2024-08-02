@@ -101,7 +101,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
                     size='small'
                     sx={{ userSelect: 'none', marginTop: 0.3 }}
                     icon={<PeopleAltIcon fontSize='small' />}
-                    label={toPersianNumber(program.participants_count)}
+                    label={toPersianNumber(program.initial_participants_count)}
                   />
                 </Tooltip>
               </Stack>

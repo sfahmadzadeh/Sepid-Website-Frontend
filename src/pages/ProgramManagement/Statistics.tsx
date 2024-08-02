@@ -46,7 +46,10 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
           {'آمار دوره'}
         </Typography>
         <Typography variant='h5'>
-          {`تعداد افراد ثبت‌نامی : ${toPersianNumber(program?.participants_count)} نفر`}
+          {`تعداد ثبت‌نامی‌های اولیه : ${toPersianNumber(program?.initial_participants_count)} نفر`}
+        </Typography>
+        <Typography variant='h5'>
+          {`تعداد ثبت‌نامی‌های نهایی : ${toPersianNumber(program?.final_participants_count)} نفر`}
         </Typography>
       </Stack>
 
