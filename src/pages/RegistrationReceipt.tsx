@@ -23,6 +23,7 @@ import Layout from 'components/template/Layout';
 import { toast } from 'react-toastify';
 import { useGetReceiptQuery } from 'redux/features/form/ReceiptSlice';
 import AnswerSheet from 'components/template/AnswerSheet';
+import getInstituteFullName from 'utils/getInstituteFullName';
 
 type RegistrationReceiptPropsType = {
   validateRegistrationReceipt: any;
@@ -70,6 +71,9 @@ const RegistrationReceipt: FC<RegistrationReceiptPropsType> = ({
                 </Typography>
                 <Divider />
                 <Grid container spacing={1}>
+                  <Grid item xs={12}>
+                    <Typography >{`مدرسه: ${getInstituteFullName(registrationReceipt.school_studentship?.school)}`}</Typography>
+                  </Grid>
                   <Grid item xs={6}>
                     <Typography >{`پایه: ${registrationReceipt.school_studentship?.grade ? faSeri(registrationReceipt.school_studentship?.grade) : '؟'}`}</Typography>
                   </Grid>
@@ -84,6 +88,9 @@ const RegistrationReceipt: FC<RegistrationReceiptPropsType> = ({
                   </Grid>
                   <Grid item xs={12}>
                     <Typography >{`شماره تماس: ${userInfo.phone_number ? userInfo.phone_number : '؟'}`}</Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography >{`ایمیل: ${userInfo.email ? userInfo.email : '؟'}`}</Typography>
                   </Grid>
                 </Grid>
                 {status &&

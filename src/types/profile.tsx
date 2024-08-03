@@ -43,6 +43,12 @@ export type AcademicStudentshipType = {
   university_major: string;
 };
 
+export type InstituteType = {
+  name: string;
+  gender_type: string;
+  school_type: string;
+}
+
 export type SchoolStudentshipType = {
   document?: string;
   start_date?: string;
@@ -51,6 +57,6 @@ export type SchoolStudentshipType = {
   id: string;
   is_document_verified?: boolean;
   major?: string;
-  school: string;
+  school: InstituteType;
   studentship_type?: StudentshipType;
 };
