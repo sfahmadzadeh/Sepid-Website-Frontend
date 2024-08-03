@@ -1,3 +1,4 @@
+export const MEDIA_BASE_URL = process.env.REACT_APP_MEDIA_BASE_URL || 'http://localhost:8000/';
 export const MCS_URL = process.env.REACT_APP_MCS_URL || 'http://localhost:8000/';
 export const MPS_URL = process.env.REACT_APP_MPS_URL || 'http://localhost:9000/';
 export const MWS_URL = process.env.REACT_APP_MWS_URL || 'http://localhost:10000/';

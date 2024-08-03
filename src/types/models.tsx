@@ -1,6 +1,11 @@
 import { WidgetModes } from "components/organisms/Widget";
 import { SchoolStudentshipType, UserInfoType } from "./profile";
 
+export type FileType = {
+  id: string;
+  file: string;
+};
+
 export type InstituteType = any;
 
 type AudienceTypeType = "All" | "Student" | "Academic";
