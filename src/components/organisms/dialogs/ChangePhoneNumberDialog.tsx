@@ -36,10 +36,6 @@ const ChangePhoneNumberDialog: FC<ChangePhoneNumberDialogPropsType> = ({
   const [loginWithGoogle, result] = useChangePhoneNumberMutation();
 
   useEffect(() => {
-    if (result.isError) {
-      toast.error('تغییر شماره تلفن همراه با خطا رو‌‌به‌رو شد.');
-      return;
-    }
     if (result.isSuccess) {
       toast.success('شماره تلفن همراه با موفقیت تغییر کرد.')
       _setData(initialData);

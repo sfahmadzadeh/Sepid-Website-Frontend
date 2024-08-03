@@ -14,6 +14,7 @@ import MetabaseDashboard from 'components/template/MetabaseDashboard';
 import { useGetFSMsQuery } from 'redux/features/fsm/FSMSlice';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
+import NoDataFound from 'components/molecules/NoDataFound';
 
 type StatisticsTabPropsType = {
 
@@ -62,23 +63,30 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
         <Typography variant='h5'>
           {`مجموع تعداد ورود به کارگاه‌ها : ${toPersianNumber(getTotalParticipantsCountOfAllProgramFSMs(fsmsData.fsms))} نفر`}
         </Typography>
-        <Stack>
-          <Grid container spacing={2} alignItems='center' justifyContent='start'>
-            {fsmsData.fsms?.map((fsm) => (
-              <Grid item xs={12} sm={6} md={4} key={fsm.id} alignItems='center' justifyContent='center'>
-                <MentorStaticsFSMCard {...fsm} />
+        {fsmsData?.fsms?.length > 0 &&
+          <Stack spacing={2}>
+            <Pagination
+              variant="outlined"
+              color="primary"
+              shape='rounded'
+              count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
+              page={pageNumber}
+              onChange={(e, value) => setPageNumber(value)}
+            />
+            <Stack>
+              <Grid container spacing={2} alignItems='center' justifyContent='start'>
+                {fsmsData.fsms?.map((fsm) => (
+                  <Grid item xs={12} sm={6} md={4} key={fsm.id} alignItems='center' justifyContent='center'>
+                    <MentorStaticsFSMCard {...fsm} />
+                  </Grid>
+                ))}
               </Grid>
-            ))}
-          </Grid>
-        </Stack>
-        <Pagination
-          variant="outlined"
-          color="primary"
-          shape='rounded'
-          count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
-          page={pageNumber}
-          onChange={(e, value) => setPageNumber(value)}
-        />
+            </Stack>
+          </Stack>
+        }
+        {fsmsData?.fsms?.length === 0 &&
+          <NoDataFound message='کارگاهی وجود ندارد.' />
+        }
       </Stack>
 
       <Divider />
