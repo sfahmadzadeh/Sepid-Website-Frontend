@@ -33,7 +33,7 @@ const RegistrationStatus: FC<RegistrationStatusPropsType> = ({
         )}
         {registrationReceipt.status == 'Accepted' && (
           <Typography align="center">
-            {'شما برای شرکت در این رویداد پذیرفته شده‌اید! :)'}
+            {'شما برای شرکت در این دوره پذیرفته شده‌اید! :)'}
           </Typography>
         )}
         {registrationReceipt.status == 'Rejected' && (

@@ -56,7 +56,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
         registrationReceipt.status == 'StudentshipDataIncomplete',
       message:
         registrationReceipt.status == 'DeadlineMissed' ? 'مهلت ثبت‌نام تمام شده است' :
-          registrationReceipt.status == 'NotPermitted' ? 'با توجه به پایه تحصیلیتان، شما مجاز به شرکت در این رویداد نیستید' :
+          registrationReceipt.status == 'NotPermitted' ? 'با توجه به پایه تحصیلیتان، شما مجاز به شرکت در این دوره نیستید' :
             registrationReceipt.status == 'GradeNotAvailable' ? 'ابتدا پایه‌ی تحصیلی خود را انتخاب کنید' :
               registrationReceipt.status == 'StudentshipDataIncomplete' ? 'مشخصات دانش‌آموزی‌تان کامل نیست' :
                 'خبری نیست، سلامتی!'
