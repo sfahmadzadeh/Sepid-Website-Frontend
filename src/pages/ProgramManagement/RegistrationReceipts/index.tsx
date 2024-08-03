@@ -11,6 +11,7 @@ import AnswerSheetTable from 'components/organisms/tables/AnswerSheet';
 import { useGetFormRespondentsAnswersMutation } from 'redux/features/report/ReportSlice';
 import downloadFromURL from 'utils/downloadFromURL';
 import { MEDIA_BASE_URL } from 'configs/Constants';
+import isValidURL from 'utils/validators/urlValidator';
 
 type RegistrationReceiptsPropsType = {
   formId: string;
@@ -28,7 +29,11 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
 
   useEffect(() => {
     if (result.isSuccess) {
-      downloadFromURL(`${MEDIA_BASE_URL}${result.data.file}`, `registrants-answers.xlsx`);
+      let url = result.data.file;
+      if (!isValidURL(url)) {
+        url = `${MEDIA_BASE_URL}${result.data.file}`;
+      }
+      downloadFromURL(url, `registrants-answers.xlsx`);
     }
   }, [result])
 
