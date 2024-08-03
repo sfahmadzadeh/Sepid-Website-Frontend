@@ -8,7 +8,7 @@ import React, { FC, useEffect } from 'react';
 import RegisterUsersViaCSV from './RegisterUsersViaCSV';
 import RegisterOneUser from './RegisterOneUser';
 import AnswerSheetTable from 'components/organisms/tables/AnswerSheet';
-import { useGetRegistrationFormAnswersMutation } from 'redux/features/report/ReportSlice';
+import { useGetFormRespondentsAnswersMutation } from 'redux/features/report/ReportSlice';
 import downloadFromURL from 'utils/downloadFromURL';
 import { MEDIA_BASE_URL } from 'configs/Constants';
 
@@ -20,10 +20,10 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
   formId,
 }) => {
 
-  const [getRegistrationFormAnswers, result] = useGetRegistrationFormAnswersMutation();
+  const [getFormRespondentsAnswers, result] = useGetFormRespondentsAnswersMutation();
 
   const downloadCSVExport = () => {
-    getRegistrationFormAnswers({ formId })
+    getFormRespondentsAnswers({ formId })
   }
 
   useEffect(() => {

@@ -1,25 +1,25 @@
 import { FileType, ProgramType } from 'types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
-type GetRegistrationFormRegistrantsInfoInputType = {
+type GetFormRespondentsInfoInputType = {
   formId: string;
 }
 
-type GetRegistrationFormRegistrantsInfoOutputType = FileType;
+type GetFormRespondentsInfoOutputType = FileType;
 
-type GetRegistrationFormAnswersInputType = {
+type GetFormRespondentsAnswersInputType = {
   formId: string;
 }
 
-type GetRegistrationFormAnswersOutputType = FileType;
+type GetFormRespondentsAnswersOutputType = FileType;
 
 export const ReportSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
 
-    getRegistrationFormRegistrantsInfo: builder.mutation<GetRegistrationFormRegistrantsInfoOutputType, GetRegistrationFormRegistrantsInfoInputType>({
+    getFormRespondentsInfo: builder.mutation<GetFormRespondentsInfoOutputType, GetFormRespondentsInfoInputType>({
       invalidatesTags: ['programs'],
       query: ({ formId }) => ({
-        url: `/report/registration-form-registrants/`,
+        url: `/report/form-respondents-info/`,
         method: 'POST',
         body: {
           form_id: formId
@@ -27,10 +27,10 @@ export const ReportSlice = ManageContentServiceApi.injectEndpoints({
       }),
     }),
 
-    getRegistrationFormAnswers: builder.mutation<GetRegistrationFormAnswersOutputType, GetRegistrationFormAnswersInputType>({
+    getFormRespondentsAnswers: builder.mutation<GetFormRespondentsAnswersOutputType, GetFormRespondentsAnswersInputType>({
       invalidatesTags: ['programs'],
       query: ({ formId }) => ({
-        url: `/report/registration-form-answers/`,
+        url: `/report/form-respondents-answers/`,
         method: 'POST',
         body: {
           form_id: formId
@@ -42,6 +42,6 @@ export const ReportSlice = ManageContentServiceApi.injectEndpoints({
 });
 
 export const {
-  useGetRegistrationFormRegistrantsInfoMutation,
-  useGetRegistrationFormAnswersMutation,
+  useGetFormRespondentsInfoMutation,
+  useGetFormRespondentsAnswersMutation,
 } = ReportSlice;
