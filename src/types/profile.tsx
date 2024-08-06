@@ -1,3 +1,5 @@
+import { SchoolType } from "./models";
+
 type StudentshipType = 'Academic' | 'School';
 
 export type UserInfoType = {
@@ -43,12 +45,6 @@ export type AcademicStudentshipType = {
   university_major: string;
 };
 
-export type InstituteType = {
-  name: string;
-  gender_type: string;
-  school_type: string;
-}
-
 export type SchoolStudentshipType = {
   document?: string;
   start_date?: string;
@@ -57,6 +53,6 @@ export type SchoolStudentshipType = {
   id: string;
   is_document_verified?: boolean;
   major?: string;
-  school: InstituteType;
+  school: SchoolType;
   studentship_type?: StudentshipType;
 };

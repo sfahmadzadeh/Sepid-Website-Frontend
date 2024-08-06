@@ -1,4 +1,4 @@
-import { InstituteType } from "types/profile";
+import { InstituteType, SchoolType } from "types/models";
 
 const SCHOOL_TYPES = {
   'Elementary': 'دبستان',
@@ -16,7 +16,10 @@ const getInstituteFullName = (institute: InstituteType) => {
   if (!institute) {
     return 'نامشخص';
   }
-  return (`${SCHOOL_TYPES[institute.school_type] ? SCHOOL_TYPES[institute.school_type] + ' ' : ''}${GENDER_TYPE[institute.gender_type] ? GENDER_TYPE[institute.gender_type] + ' ' : ''}${institute.name}`)
+  if (institute.institute_type === 'School') {
+    const school = institute as SchoolType;
+    return (`${SCHOOL_TYPES[school.school_type] ? SCHOOL_TYPES[school.school_type] + ' ' : ''}${GENDER_TYPE[school.gender_type] ? GENDER_TYPE[school.gender_type] + ' ' : ''}${institute.name}`)
+  }
 }
 
 export default getInstituteFullName;

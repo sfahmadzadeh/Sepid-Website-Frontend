@@ -11,11 +11,12 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
 } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCreateInstituteMutation } from 'redux/features/party/InstituteSlice';
+import { SchoolType } from 'types/models';
+import isNumber from 'utils/validators/isNumber';
 
 type AddInstituteDialogPropsType = {
   open: boolean;
@@ -32,11 +33,11 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
   province,
   city,
 }) => {
-  const [data, setData] = useState(null);
+  const [data, _setData] = useState<SchoolType>(null);
   const [createInstitute, result] = useCreateInstituteMutation();
 
-  const doSetData = (event) => {
-    setData({
+  const setData = (event) => {
+    _setData({
       ...data,
       [event.target.name]: event.target.value,
     });
@@ -78,7 +79,7 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
               <InputLabel>نوع</InputLabel>
               <Select
                 value={data?.school_type || ''}
-                onChange={doSetData}
+                onChange={setData}
                 name="school_type"
                 label="پایه">
                 <MenuItem value={'Elementary'}>
@@ -104,7 +105,7 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
               <InputLabel>دخترانه یا پسرانه</InputLabel>
               <Select
                 value={data?.gender_type || ''}
-                onChange={doSetData}
+                onChange={setData}
                 name="gender_type"
                 label="دخترانه یا پسرانه">
                 <MenuItem value={'Female'}>
@@ -122,7 +123,8 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
               required
               fullWidth
               name="name"
-              onChange={doSetData}
+              value={data?.name || ''}
+              onChange={setData}
               label="نام مدرسه"
             />
           </Grid>
@@ -131,31 +133,22 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
             <TextField
               fullWidth
               name="phone_number"
-              onChange={doSetData}
+              onChange={(event) => {
+                if (isNumber(event.target.value)) {
+                  setData(event);
+                }
+              }}
+              value={data?.phone_number || ''}
               label="شماره‌تلفن مدرسه"
             />
           </Grid>
-
-          {/* <Grid item container xs={12} sm={6}>
-            <FormControl required size='small' sx={{ width: '100%' }}>
-              <InputLabel>نوع</InputLabel>
-              <Select
-                onChange={doSetData}
-                name='institute_type'
-                label='نوع'
-              >
-                <MenuItem value={'School'} >{'مدرسه'}</MenuItem>
-                <MenuItem value={'University'} >{'دانشگاه'}</MenuItem>
-                <MenuItem value={'Other'} >{'غیره'}</MenuItem>
-              </Select>
-            </FormControl >
-          </Grid> */}
 
           <Grid item container xs={12} sm={6}>
             <TextField
               fullWidth
               name="principal_name"
-              onChange={doSetData}
+              value={data?.principal_name || ''}
+              onChange={setData}
               label="نام مدیر"
             />
           </Grid>
@@ -164,7 +157,12 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
             <TextField
               fullWidth
               name="principal_phone"
-              onChange={doSetData}
+              value={data?.principal_phone || ''}
+              onChange={(event) => {
+                if (isNumber(event.target.value)) {
+                  setData(event);
+                }
+              }}
               label="شماره‌تلفن مدیر"
             />
           </Grid>
@@ -195,7 +193,8 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
               rows={2}
               fullWidth
               name="address"
-              onChange={doSetData}
+              value={data?.address || ''}
+              onChange={setData}
               label="آدرس"
             />
           </Grid>
@@ -204,7 +203,12 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
             <TextField
               fullWidth
               name="postal_code"
-              onChange={doSetData}
+              value={data?.postal_code || ''}
+              onChange={(event) => {
+                if (isNumber(event.target.value)) {
+                  setData(event);
+                }
+              }}
               label="کد پستی"
             />
           </Grid>

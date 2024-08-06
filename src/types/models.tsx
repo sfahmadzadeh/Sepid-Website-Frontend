@@ -1,12 +1,9 @@
-import { WidgetModes } from "components/organisms/Widget";
 import { SchoolStudentshipType, UserInfoType } from "./profile";
 
 export type FileType = {
   id: string;
   file: string;
 };
-
-export type InstituteType = any;
 
 type AudienceTypeType = "All" | "Student" | "Academic";
 type ProgramTypeType = "Team" | "Individual";
@@ -182,4 +179,33 @@ export type MessageType = {
   content: string; // todo: change content to Widget
   seen: boolean;
   received_datetime: any;
+}
+
+export type InstituteType = {
+  id: string;
+  name: string;
+  institute_type: 'School' | 'University' | 'Other';
+  address?: string;
+  province?: string;
+  city?: string;
+  postal_code?: number;
+  phone_number?: string;
+  contact_info?: string;
+  description?: string;
+  created_at?: string;
+  is_approved?: boolean;
+  owner?: string;
+  creator?: string;
+  admins?: string[];
+}
+
+export type SchoolType = InstituteType & {
+  school_type: 'Elementary' | 'JuniorHigh' | 'High' | 'SchoolOfArt';
+  gender_type: 'Male' | 'Female';
+  principal_name?: string;
+  principal_phone?: string;
+}
+
+export type UniversityType = InstituteType & {
+
 }

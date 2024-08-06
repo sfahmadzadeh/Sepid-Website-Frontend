@@ -15,7 +15,7 @@ import {
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 import { deepEqual } from 'utils/ObjectEqualityChecker';
 import SchoolSettingInfoForm from 'components/organisms/forms/SchoolSettingInfoForm';
-import { InstituteType } from 'types/profile';
+import { SchoolType } from 'types/models';
 
 type SchoolSettingPropsType = {
   onSuccessfulSubmission?: any;
@@ -32,7 +32,7 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
   isInForm,
 }) => {
   const userInfo = useSelector((state: any) => state.account.userInfo);
-  const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: InstituteType; grade: number; }>(userInfo.school_studentship);
+  const [schoolStudentship, setSchoolStudentship] = useState<{ id: string; school: SchoolType; grade: number; }>(userInfo.school_studentship);
   const { data: userProfile } = useGetUserProfileQuery({ userId: userInfo.id });
   const [updateSchoolStudentship, updateUserStudentshipResult] = useUpdateSchoolStudentshipMutation();
 

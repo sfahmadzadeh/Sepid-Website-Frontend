@@ -78,7 +78,7 @@ const SchoolSettingInfoForm: FC<SchoolSettingInfoFormPropsType> = ({
                 school: newValue?.id,
               })
             }}
-            value={institutes_reps.find(institute => institute.id === data.school) || null}
+            value={institutes_reps.find(institute => institute.id == (data.school as unknown)) || null}
             renderInput={(params) =>
               <TextField
                 required
