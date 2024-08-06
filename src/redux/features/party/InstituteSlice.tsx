@@ -1,11 +1,12 @@
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
-import { InstituteType } from 'types/models';
+import { InstituteType, SchoolType } from 'types/models';
 
 type GetInstitutesInputType = {
   city: string;
+  gender_type: 'Male' | 'Female';
 }
 
-type GetInstitutesOutputType = InstituteType[];
+type GetInstitutesOutputType = SchoolType[];
 
 type CreateInstituteInputType = InstituteType;
 
@@ -13,10 +14,10 @@ type CreateInstituteOutputType = InstituteType;
 
 export const ProfileSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
-    getInstitutes: builder.query<GetInstitutesOutputType, GetInstitutesInputType>({
-      providesTags: ['institutes'],
-      query: ({ city }) => ({
-        url: `auth/institutes/?city=${city}`,
+    getSchools: builder.query<GetInstitutesOutputType, GetInstitutesInputType>({
+      providesTags: ['schools'],
+      query: ({ city, gender_type }) => ({
+        url: `auth/schools/?city=${city}&gender_type=${gender_type}`,
         method: 'GET',
       }),
     }),
@@ -34,6 +35,6 @@ export const ProfileSlice = ManageContentServiceApi.injectEndpoints({
 });
 
 export const {
-  useGetInstitutesQuery,
+  useGetSchoolsQuery,
   useCreateInstituteMutation,
 } = ProfileSlice;

@@ -26,6 +26,7 @@ export const ManageContentServiceApi = createApi({
     'website-profile',
     'user-profile',
     'institutes',
+    'schools',
   ],
   baseQuery: CustomBaseQuery({ baseUrl: MCS_URL + 'api/' }),
   endpoints: build => ({

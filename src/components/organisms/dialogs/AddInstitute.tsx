@@ -16,6 +16,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useCreateInstituteMutation } from 'redux/features/party/InstituteSlice';
 import { SchoolType } from 'types/models';
+import { GenderType } from 'types/profile';
 import isNumber from 'utils/validators/isNumber';
 
 type AddInstituteDialogPropsType = {
@@ -24,6 +25,7 @@ type AddInstituteDialogPropsType = {
   onSuccess?: (result: any) => void;
   province: string;
   city: string;
+  gender_type: GenderType;
 }
 
 const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
@@ -32,6 +34,7 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
   onSuccess,
   province,
   city,
+  gender_type,
 }) => {
   const [data, _setData] = useState<SchoolType>(null);
   const [createInstitute, result] = useCreateInstituteMutation();
@@ -44,15 +47,16 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
   };
 
   const handleButtonClick = () => {
-    if (!data?.name || !data.school_type || !data.gender_type) {
+    if (!data?.name || !data.school_type) {
       toast.error('لطفاً همه‌ی موارد ستاره‌دار را تکمیل کنید.');
       return;
     }
     createInstitute({
       institute_type: 'School',
-      ...data,
       province,
       city,
+      gender_type,
+      ...data,
     });
   };
 
@@ -104,7 +108,8 @@ const AddInstituteDialog: FC<AddInstituteDialogPropsType> = ({
               fullWidth>
               <InputLabel>دخترانه یا پسرانه</InputLabel>
               <Select
-                value={data?.gender_type || ''}
+                value={gender_type}
+                disabled
                 onChange={setData}
                 name="gender_type"
                 label="دخترانه یا پسرانه">

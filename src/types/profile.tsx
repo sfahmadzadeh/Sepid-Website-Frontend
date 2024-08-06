@@ -1,5 +1,7 @@
 import { SchoolType } from "./models";
 
+export type GenderType = 'Female' | 'Male';
+
 type StudentshipType = 'Academic' | 'School';
 
 export type UserInfoType = {
@@ -11,7 +13,7 @@ export type UserInfoType = {
   date_joined: string | null;
   email: string | null;
   first_name: string | null;
-  gender: string | null;
+  gender: GenderType;
   groups: GroupType[];
   id: string;
   is_active: boolean;

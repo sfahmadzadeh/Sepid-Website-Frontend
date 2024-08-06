@@ -17,7 +17,7 @@ import Iran from 'utils/iran';
 import {
   useGetUserProfileQuery,
 } from 'redux/features/party/ProfileSlice';
-import { useGetInstitutesQuery } from 'redux/features/party/InstituteSlice';
+import { useGetSchoolsQuery } from 'redux/features/party/InstituteSlice';
 import { SchoolStudentshipType } from 'types/profile';
 import getInstituteFullName from 'utils/getInstituteFullName';
 
@@ -49,7 +49,7 @@ const SchoolSettingInfoForm: FC<SchoolSettingInfoFormPropsType> = ({
   const userInfo = useSelector((state: any) => state.account.userInfo);
   const { data: userProfile } = useGetUserProfileQuery({ userId: userInfo.id });
   const userCityTitle = Iran.Cities.find(city => userProfile?.city == city.title)?.title;
-  const { data: institutes } = useGetInstitutesQuery({ city: userCityTitle }, { skip: !userCityTitle });
+  const { data: schools } = useGetSchoolsQuery({ city: userCityTitle, gender_type: userProfile.gender }, { skip: !userCityTitle || !userProfile.gender });
 
   const handleChange = (event) => {
     setData({
@@ -58,10 +58,16 @@ const SchoolSettingInfoForm: FC<SchoolSettingInfoFormPropsType> = ({
     });
   };
 
-  const institutes_reps = institutes?.map((institute) => ({
+  const institutes_reps = schools?.map((institute) => ({
     id: institute.id,
     name: getInstituteFullName(institute),
   })) || []
+
+  const getHelperText = () => {
+    if (!userCityTitle) return 'لطفاً ابتدا شهر خود را انتخاب کنید';
+    if (!userProfile.gender) return 'لطفاً ابتدا جنسبت خود را انتخاب کنید';
+    return ''
+  }
 
   return (
     <Fragment>
@@ -70,7 +76,7 @@ const SchoolSettingInfoForm: FC<SchoolSettingInfoFormPropsType> = ({
         <Grid item xs={12} sm={6}>
           <Autocomplete
             fullWidth
-            disabled={!userCityTitle}
+            disabled={!userCityTitle || !userProfile.gender}
             getOptionLabel={(option) => option.name}
             onChange={(event, newValue) => {
               setData({
@@ -84,8 +90,8 @@ const SchoolSettingInfoForm: FC<SchoolSettingInfoFormPropsType> = ({
                 required
                 {...params}
                 label="مدرسه"
-                error={!userCityTitle}
-                helperText={!userCityTitle ? 'لطفاً ابتدا شهر خود را انتخاب کنید' : ''}
+                error={!userCityTitle || !userProfile.gender}
+                helperText={getHelperText()}
               />
             }
             options={institutes_reps}
@@ -125,6 +131,7 @@ const SchoolSettingInfoForm: FC<SchoolSettingInfoFormPropsType> = ({
       <AddInstitute
         province={userProfile.province}
         city={userProfile.city}
+        gender_type={userProfile.gender}
         open={isAddInstituteDialogOpen}
         onSuccess={(result) => {
           setData({
