@@ -7,11 +7,6 @@ export const accountCRUDUrl = ({ id }) => id ? `auth/accounts/${id}/` : 'auth/ac
 
 export const institutesUrl = ({ cityTitle }) => cityTitle ? `auth/institutes?city=${cityTitle}` : 'auth/institutes/';
 
-// payment
-export const getAllUserMerchandisesUrl = ({ id }) => `auth/payment/${id}/`;
-export const purchaseProgramUrl = 'auth/payment/purchase/';
-export const submitDiscountCodeUrl = 'auth/payment/verify_discount/';
-
 // workshop
 export const getOneWorkshopUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/`;
 export const getWorkshopsUrl = ({ programId, pageNumber }) => {
@@ -94,17 +89,16 @@ export const applyDiscountUrl = 'auth/verify-discount/';
 
 export const getScoresUrl = 'fsm/getscores/';
 
-
-
-// for mentors
-
-// auth:
+// sales:
 export const discountCRUDUrl = ({ discountCodeId }) =>
   discountCodeId
-    ? `auth/discount_code/${discountCodeId}/`
-    : 'auth/discount_code/';
+    ? `sales/discount_code/${discountCodeId}/`
+    : 'sales/discount_code/';
 export const merchandiseDiscountCodeUrl = ({ merchandiseId }) =>
-  `/auth/merchandise/${merchandiseId}/discount_codes/`;
+  `/sales/merchandise/${merchandiseId}/discount_codes/`;
+export const getAllUserMerchandisesUrl = ({ id }) => `sales/payment/${id}/`;
+export const purchaseProgramUrl = 'sales/payment/purchase/';
+export const submitDiscountCodeUrl = 'sales/payment/verify_discount/';
 
 // team:
 export const getTeamsUrl = ({ registrationFormId }) => registrationFormId ? `/fsm/team/?registration_form=${registrationFormId}` : '/fsm/team/';
