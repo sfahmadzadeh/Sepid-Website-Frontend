@@ -5,21 +5,21 @@ import React, {
   useState
 } from 'react'
 
-export default function Frame ({
+const Frame = ({
   content,
   frameProps,
   title = '',
   handleUpdateContent
-}) {
+}) => {
   const [contentRef, setContentRef] = useState(null)
   const doc =
     contentRef?.contentDocument ?? contentRef?.contentWindow?.document
 
   const fixHeight = useCallback(() => {
-    if (!contentRef) {
+    if (!contentRef || !doc?.documentElement?.scrollHeight) {
       return
     }
-    contentRef.style.height = doc?.documentElement?.scrollHeight * 1.01 + 'px'
+    contentRef.style.height = doc.documentElement.scrollHeight * 1.01 + 'px'
   }, [contentRef, doc?.documentElement?.scrollHeight])
 
   useEffect(() => {
@@ -53,11 +53,11 @@ export default function Frame ({
   }, [doc, content, fixHeight])
 
   useEffect(() => {
-    if (!contentRef) {
+    if (!doc) {
       return
     }
-    handleUpdateContent?.(doc)
-  }, [content, contentRef, doc, handleUpdateContent])
+    handleUpdateContent(doc)
+  }, [content, doc])
 
   useLayoutEffect(() => {
     window.addEventListener('resize', fixHeight)
@@ -70,3 +70,5 @@ export default function Frame ({
 
   return <iframe title={title} {...frameProps} ref={setContentRef}></iframe>
 }
+
+export default Frame;
