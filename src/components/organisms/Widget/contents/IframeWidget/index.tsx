@@ -21,12 +21,26 @@ const IframeWidget = ({ link = '' }) => {
   }, [iframeRef.current, windowWidth])
 
   const handleFullScreen = () => {
-    if (iframeRef.current.requestFullscreen) {
-      iframeRef.current.requestFullscreen();
-    } else if (iframeRef.current.webkitRequestFullscreen) { /* Safari */
-      iframeRef.current.webkitRequestFullscreen();
-    } else if (iframeRef.current.msRequestFullscreen) { /* IE11 */
-      iframeRef.current.msRequestFullscreen();
+    const iframe = iframeRef.current;
+    if (!iframe) {
+      console.error("Iframe reference is invalid.");
+      return;
+    }
+
+    if (iframe.requestFullscreen) {
+      iframe.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+      });
+    } else if (iframe.webkitRequestFullscreen) { // Safari
+      iframe.webkitRequestFullscreen().catch(err => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+      });
+    } else if (iframe.msRequestFullscreen) { // IE11
+      iframe.msRequestFullscreen().catch(err => {
+        console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+      });
+    } else {
+      console.error("Fullscreen is not supported by this browser.");
     }
   }
 
