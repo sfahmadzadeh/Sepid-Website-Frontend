@@ -29,6 +29,7 @@ import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { useParams } from 'react-router-dom';
 import Merchandise from 'components/organisms/Merchandise';
 import CreateMerchandiseDialog from 'components/organisms/dialogs/CreateMerchandiseDialog';
+import { useGetProgramMerchandisesQuery } from 'redux/features/sales/Merchandise';
 
 type FinancialTabPropsType = {
   createDiscountCode: any;
@@ -49,6 +50,7 @@ const Financial: FC<FinancialTabPropsType> = ({
   const [isCreateMerchandiseOpen, setCreateMerchandiseDialogOpen] = useState(false);
   const [username, setUsername] = useState<string>('');
   const { data: program } = useGetProgramQuery({ programId });
+  const { data: merchandises } = useGetProgramMerchandisesQuery({ programId });
 
   useEffect(() => {
     if (program?.merchandise?.id) {
@@ -96,9 +98,15 @@ const Financial: FC<FinancialTabPropsType> = ({
             </Fragment>
           }
         </Stack>
-        <Stack>
+        <Stack spacing={2}>
+          {merchandises?.map(merchandise =>
+            <Stack>
+              <Merchandise merchandise={merchandise} />
+            </Stack>
+          )}
           {program.merchandise ?
-            <Merchandise merchandiseId={program.merchandise.id} /> :
+            <Stack>
+            </Stack> :
             <Typography>{'بلیطی وجود ندارد.'}</Typography>
           }
         </Stack>

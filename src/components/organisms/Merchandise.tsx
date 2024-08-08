@@ -6,18 +6,24 @@ import { MerchandiseType } from "types/models";
 import { deepEqual } from "utils/ObjectEqualityChecker";
 
 type MerchandisePropsType = {
-  merchandiseId: string;
+  merchandiseId?: string;
+  merchandise?: MerchandiseType;
 };
 
-const Merchandise: FC<MerchandisePropsType> = ({ merchandiseId }) => {
+const Merchandise: FC<MerchandisePropsType> = ({
+  merchandiseId,
+  merchandise: passedMerchandise,
+}) => {
 
-  const [merchandise, setMerchandise] = useState<MerchandiseType>(null);
-  const { data: initialMerchandise, isSuccess } = useGetMerchandiseQuery({ merchandiseId });
+  const [merchandise, setMerchandise] = useState<MerchandiseType>(passedMerchandise);
+  const { data: fetchedMerchandise, isSuccess } = useGetMerchandiseQuery({ merchandiseId }, { skip: Boolean(passedMerchandise) });
   const [updateMerchandise, result] = useUpdateMerchandiseMutation();
+
+  const initialMerchandise = passedMerchandise || fetchedMerchandise;
 
   useEffect(() => {
     if (isSuccess) {
-      setMerchandise(initialMerchandise);
+      setMerchandise(fetchedMerchandise);
     }
   }, [isSuccess])
 

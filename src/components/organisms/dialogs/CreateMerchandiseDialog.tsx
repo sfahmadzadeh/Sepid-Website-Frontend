@@ -7,12 +7,11 @@ import {
   Grid,
   TextField,
 } from "@mui/material";
-import React, { FC, Fragment, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAddMerchandiseToProgramMutation } from "redux/features/sales/Merchandise";
+import { useCreateMerchandiseMutation } from "redux/features/sales/Merchandise";
 import { MerchandiseType } from "types/models";
-import { deepEqual } from "utils/ObjectEqualityChecker";
 
 type CreateMerchandiseDialogPropsType = {
   open: boolean;
@@ -25,12 +24,13 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
 }) => {
   const { programId } = useParams()
   const [merchandise, setMerchandise] = useState<Partial<MerchandiseType>>(null);
-  const [addMerchandiseToProgram, result] = useAddMerchandiseToProgramMutation();
+  const [createMerchandise, result] = useCreateMerchandiseMutation();
 
   useEffect(() => {
     if (result.isSuccess) {
       toast.success('بلیط با موفقیت اضافه شد.')
       handleClose();
+      setMerchandise(null);
     }
   }, [result])
 
@@ -39,7 +39,7 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
       toast.error('قیمت تخفیف‌خورده نباید از قیمت اصلی بیشتر باشد.');
       return;
     }
-    addMerchandiseToProgram({
+    createMerchandise({
       programId,
       ...merchandise,
     });
@@ -64,7 +64,7 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
           <Grid item xs={12} sm={6}>
             <TextField
               size="small"
-              label='قیمت'
+              label='قیمت (ریال)'
               fullWidth
               required
               value={merchandise?.price || ''}
@@ -75,7 +75,7 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
           <Grid item xs={12} sm={6}>
             <TextField
               size="small"
-              label='قیمت تخفیف‌خورده'
+              label='قیمت تخفیف‌خورده (ریال)'
               fullWidth
               required
               value={merchandise?.discounted_price || ''}

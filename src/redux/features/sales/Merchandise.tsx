@@ -1,6 +1,12 @@
 import { MerchandiseType } from 'types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
+type GetProgramMerchandisesInputType = {
+  programId: string;
+}
+
+type GetProgramMerchandisesOutputType = MerchandiseType[];
+
 type GetMerchandiseInputType = {
   merchandiseId: string;
 }
@@ -20,6 +26,14 @@ type UpdateMerchandiseOutputType = MerchandiseType;
 
 export const MerchandiseSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
+    getProgramMerchandises: builder.query<GetProgramMerchandisesOutputType, GetProgramMerchandisesInputType>({
+      providesTags: ['merchandise'],
+      query: ({ programId }) => `sales/merchandise/program/?program=${programId}`,
+      transformResponse: (response: any): GetProgramMerchandisesOutputType => {
+        return response;
+      },
+    }),
+
     getMerchandise: builder.query<GetMerchandiseOutputType, GetMerchandiseInputType>({
       providesTags: ['merchandise'],
       query: ({ merchandiseId }) => `sales/merchandise/${merchandiseId}/`,
@@ -28,13 +42,13 @@ export const MerchandiseSlice = ManageContentServiceApi.injectEndpoints({
       },
     }),
 
-    addMerchandiseToProgram: builder.mutation<AddMerchandiseToProgramOutputType, AddMerchandiseToProgramInputType>({
+    createMerchandise: builder.mutation<AddMerchandiseToProgramOutputType, AddMerchandiseToProgramInputType>({
       invalidatesTags: ['program'],
       query: ({ programId, ...body }) => ({
-        url: `sales/merchandise/add_to_program/`,
+        url: `sales/merchandise/`,
         method: 'POST',
         body: {
-          program_id: programId,
+          program: programId,
           ...body,
         }
       }),
@@ -52,7 +66,8 @@ export const MerchandiseSlice = ManageContentServiceApi.injectEndpoints({
 });
 
 export const {
+  useGetProgramMerchandisesQuery,
   useGetMerchandiseQuery,
-  useAddMerchandiseToProgramMutation,
+  useCreateMerchandiseMutation,
   useUpdateMerchandiseMutation,
 } = MerchandiseSlice;
