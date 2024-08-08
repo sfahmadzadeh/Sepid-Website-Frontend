@@ -49,7 +49,7 @@ const initialState: InitialState = {
   teamsRequests: null,
   myWorkshops: [],
   registrationForm: null,
-  merchandise: {},
+  merchandise: null,
   discountedPrice: 0,
   team: null,
   certificateLink: '',

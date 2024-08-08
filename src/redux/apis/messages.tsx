@@ -18,7 +18,7 @@ export const persianMessages = { //todo: handle english
   '4015': 'college students must enter their studying degree',
   '4016': 'given condition has syntax error',
   '4017': 'given number was not a positive integer',
-  '4018': 'price must be a multiple of 500 Tomans',
+  '4018': 'قیمت باید مضربی از ۵۰۰ تومان باشد.',
   '4019': 'number of selected choices can\'t be bigger than max choices for this problem',
   '4020': 'selected choices can\'t have repetitions',
   '4021': 'selected choices should be indices of choices',

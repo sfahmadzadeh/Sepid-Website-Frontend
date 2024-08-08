@@ -14,7 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import {
@@ -27,6 +27,8 @@ import { toast } from 'react-toastify';
 import { ProgramType } from 'types/models';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { useParams } from 'react-router-dom';
+import Merchandise from 'components/organisms/Merchandise';
+import CreateMerchandiseDialog from 'components/organisms/dialogs/CreateMerchandiseDialog';
 
 type FinancialTabPropsType = {
   createDiscountCode: any;
@@ -44,6 +46,7 @@ const Financial: FC<FinancialTabPropsType> = ({
 }) => {
   const { programId } = useParams();
   const [value, setValue] = useState<string>('');
+  const [isCreateMerchandiseOpen, setCreateMerchandiseDialogOpen] = useState(false);
   const [username, setUsername] = useState<string>('');
   const { data: program } = useGetProgramQuery({ programId });
 
@@ -79,46 +82,63 @@ const Financial: FC<FinancialTabPropsType> = ({
 
   return (
     <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
-      <Stack padding={2}>
-        <Typography variant='h2' gutterBottom>
-          {'هزینه دوره'}
-        </Typography>
-        {'todo'}
+      <Stack padding={2} spacing={2}>
+        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'start'}>
+          <Typography variant='h2' gutterBottom>
+            {'بلیط‌ها'}
+          </Typography>
+          {!program.merchandise &&
+            <Fragment>
+              <Button variant='contained' onClick={() => setCreateMerchandiseDialogOpen(!isCreateMerchandiseOpen)}>
+                {'افزودن بلیط'}
+              </Button>
+              <CreateMerchandiseDialog open={isCreateMerchandiseOpen} handleClose={() => setCreateMerchandiseDialogOpen(false)} />
+            </Fragment>
+          }
+        </Stack>
+        <Stack>
+          {program.merchandise ?
+            <Merchandise merchandiseId={program.merchandise.id} /> :
+            <Typography>{'بلیطی وجود ندارد.'}</Typography>
+          }
+        </Stack>
       </Stack>
 
       <Divider />
 
-      <Stack padding={2}>
+      <Stack padding={2} spacing={2}>
         <Typography variant='h2' gutterBottom>
           {'کدهای تخفیف'}
         </Typography>
-        <Grid container spacing={1}>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              size='small' fullWidth
-              variant='outlined'
-              label='نام کاربری'
-              inputProps={{ className: 'ltr-input' }}
-              value={username} onChange={(e) => setUsername(toEnglishNumber(e.target.value))} />
+        <Stack>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                size='small' fullWidth
+                variant='outlined'
+                label='نام کاربری'
+                inputProps={{ className: 'ltr-input' }}
+                value={username} onChange={(e) => setUsername(toEnglishNumber(e.target.value))} />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                size='small'
+                fullWidth
+                variant='outlined'
+                label='درصد تخفیف'
+                inputProps={{ className: 'ltr-input' }}
+                value={value}
+                onChange={(e) => setValue(toEnglishNumber(e.target.value))} />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <Button
+                fullWidth variant='contained'
+                color='primary'
+                disabled={!username || !value}
+                onClick={handleCreateDiscountCode}>{'ایجاد کد تخفیف'}</Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              size='small'
-              fullWidth
-              variant='outlined'
-              label='درصد تخفیف'
-              inputProps={{ className: 'ltr-input' }}
-              value={value}
-              onChange={(e) => setValue(toEnglishNumber(e.target.value))} />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Button
-              fullWidth variant='contained'
-              color='primary'
-              disabled={!username || !value}
-              onClick={handleCreateDiscountCode}>{'ایجاد کد تخفیف'}</Button>
-          </Grid>
-        </Grid>
+        </Stack>
       </Stack>
 
       <Divider />

@@ -5,9 +5,9 @@ import {
   Widget, 
   TeamType, 
   RegistrationFormType,
-  Merchandise, 
   UploadedFile,
-  FSMType
+  FSMType,
+  MerchandiseType
 } from '../models'
 
 export type InitialState = {
@@ -26,7 +26,7 @@ export type InitialState = {
   teamsRequests: object,
   myWorkshops: FSMType[],
   registrationForm: RegistrationFormType,
-  merchandise: Merchandise,
+  merchandise: MerchandiseType,
   discountedPrice: Number,
   team: TeamType,
   certificateLink: String,

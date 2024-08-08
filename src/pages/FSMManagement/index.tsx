@@ -118,7 +118,7 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
     if (program && program.registration_form) {
       getProgramTeams({ registrationFormId: program.registration_form });
     }
-  }, [program]);
+  }, [program?.registration_form]);
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab) return null;

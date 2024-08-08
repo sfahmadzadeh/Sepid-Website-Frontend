@@ -46,7 +46,7 @@ const tabs: DashboardTabType[] = [
   },
   {
     name: 'merchandise',
-    label: 'اطلاعات مالی',
+    label: 'بلیط‌فروشی',
     icon: AttachMoneyIcon,
     component: Financial,
   },
@@ -111,7 +111,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
     if (program?.registration_form) {
       getProgramTeams({ registrationFormId: program.registration_form });
     }
-  }, [program]);
+  }, [program?.registration_form]);
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab || !program) return null;

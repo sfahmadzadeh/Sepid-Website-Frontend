@@ -40,7 +40,7 @@ export type ProgramType = {
   is_approved: boolean;
   is_user_participating: boolean;
   maximum_participant: number | null;
-  merchandise: Merchandise | null;
+  merchandise: MerchandiseType;
   name: string;
   initial_participants_count: number;
   final_participants_count: number;
@@ -138,7 +138,6 @@ export type RegistrationFormType = {
   till: string;
   widgets: Widget;
 }
-export type Merchandise = any
 export type Article = any
 export type Problem = any
 export type Submission = any
@@ -208,4 +207,12 @@ export type SchoolType = InstituteType & {
 
 export type UniversityType = InstituteType & {
 
+}
+
+
+export type MerchandiseType = {
+  id: string;
+  name: string;
+  price: number;
+  discounted_price: number;
 }

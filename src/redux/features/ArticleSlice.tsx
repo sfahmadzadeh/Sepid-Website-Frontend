@@ -16,10 +16,10 @@ export const ArticleSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getArticles: builder.query<GetArticlesOutputType, GetArticlesInputType>({
       query: ({ websiteName, pageNumber }) => `fsm/article/?website=${websiteName}&page=${pageNumber}`,
-      transformResponse: (respons: any): GetArticlesOutputType => {
+      transformResponse: (response: any): GetArticlesOutputType => {
         return {
-          count: respons.count,
-          articles: respons.results,
+          count: response.count,
+          articles: response.results,
         }
       },
     })

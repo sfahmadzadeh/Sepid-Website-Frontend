@@ -7,21 +7,21 @@ type ProgramInputType = {
 
 type GetProgramAdminsOutputType = UserMinimalType[];
 
-type AddAdmintToProgramInputType = {
+type AddAdminToProgramInputType = {
   programId: string;
   username: string;
 };
 
-type AddAdmintToProgramOutputType = {
+type AddAdminToProgramOutputType = {
 
 }
 
-type RemoveAdmintFromProgramInputType = {
+type RemoveAdminFromProgramInputType = {
   programId: string;
   username: string;
 };
 
-type RemoveAdmintFromProgramOutputType = {
+type RemoveAdminFromProgramOutputType = {
 
 }
 
@@ -31,31 +31,31 @@ export const ProgramAdminsSlice = ManageContentServiceApi.injectEndpoints({
     getProgramAdmins: builder.query<GetProgramAdminsOutputType, ProgramInputType>({
       providesTags: ['program-admins'],
       query: ({ programId }) => `fsm/program/${programId}/get_admins/`,
-      transformResponse: (respons: any): GetProgramAdminsOutputType => {
-        return respons;
+      transformResponse: (response: any): GetProgramAdminsOutputType => {
+        return response;
       },
     }),
 
-    addAdminToProgram: builder.mutation<AddAdmintToProgramOutputType, AddAdmintToProgramInputType>({
+    addAdminToProgram: builder.mutation<AddAdminToProgramOutputType, AddAdminToProgramInputType>({
       invalidatesTags: ['program-admins'],
       query: ({ programId, ...body }) => ({
         url: `/fsm/program/${programId}/add_admin/`,
         method: 'POST',
         body,
       }),
-      transformResponse: (response: any): AddAdmintToProgramOutputType => {
+      transformResponse: (response: any): AddAdminToProgramOutputType => {
         return response;
       },
     }),
 
-    removeAdminFromProgram: builder.mutation<RemoveAdmintFromProgramOutputType, RemoveAdmintFromProgramInputType>({
+    removeAdminFromProgram: builder.mutation<RemoveAdminFromProgramOutputType, RemoveAdminFromProgramInputType>({
       invalidatesTags: ['program-admins'],
       query: ({ programId, ...body }) => ({
         url: `/fsm/program/${programId}/remove_admin/`,
         method: 'POST',
         body,
       }),
-      transformResponse: (response: any): AddAdmintToProgramOutputType => {
+      transformResponse: (response: any): AddAdminToProgramOutputType => {
         return response;
       },
     }),
