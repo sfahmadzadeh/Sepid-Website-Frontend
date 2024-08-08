@@ -98,15 +98,13 @@ const Financial: FC<FinancialTabPropsType> = ({
             </Fragment>
           }
         </Stack>
-        <Stack spacing={2}>
+        <Stack spacing={4}>
           {merchandises?.map(merchandise =>
             <Stack>
               <Merchandise merchandise={merchandise} />
             </Stack>
           )}
-          {program.merchandise ?
-            <Stack>
-            </Stack> :
+          {merchandises && merchandises.length === 0 &&
             <Typography>{'بلیطی وجود ندارد.'}</Typography>
           }
         </Stack>

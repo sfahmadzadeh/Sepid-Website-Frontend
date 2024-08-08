@@ -127,7 +127,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
                       : `${toPersianNumber(program.team_size)} ${t('person')}`
                   }
                 />
-                {!program.is_free &&
+                {program.is_free &&
                   <Chip
                     color='success'
                     sx={{ userSelect: 'none' }}
