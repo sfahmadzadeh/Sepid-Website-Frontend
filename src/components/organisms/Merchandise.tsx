@@ -29,7 +29,7 @@ const Merchandise: FC<MerchandisePropsType> = ({ merchandiseId }) => {
 
   const onSubmit = () => {
     if (merchandise.discounted_price > merchandise.price) {
-      toast.error('قیمت تخفیف‌خورده باید از قیمت اصلی کمتر باشد.')
+      toast.error('قیمت تخفیف‌خورده نباید از قیمت اصلی بیشتر باشد.');
       return;
     }
     updateMerchandise(merchandise);

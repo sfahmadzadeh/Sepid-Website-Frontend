@@ -35,6 +35,10 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
   }, [result])
 
   const onSubmit = () => {
+    if (merchandise.discounted_price > merchandise.price) {
+      toast.error('قیمت تخفیف‌خورده نباید از قیمت اصلی بیشتر باشد.');
+      return;
+    }
     addMerchandiseToProgram({
       programId,
       ...merchandise,
