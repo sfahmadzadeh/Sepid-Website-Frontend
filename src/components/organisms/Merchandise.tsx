@@ -1,4 +1,4 @@
-import { Button, Grid, Stack, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useGetMerchandiseQuery, useUpdateMerchandiseMutation } from "redux/features/sales/Merchandise";
@@ -28,32 +28,48 @@ const Merchandise: FC<MerchandisePropsType> = ({ merchandiseId }) => {
   }, [result])
 
   const onSubmit = () => {
+    if (merchandise.discounted_price > merchandise.price) {
+      toast.error('قیمت تخفیف‌خورده باید از قیمت اصلی کمتر باشد.')
+      return;
+    }
     updateMerchandise(merchandise);
   }
 
   return (
     <Grid container spacing={1}>
-      <Grid item xs={12} sm={4}>
-        <TextField
-          label='نام بلیط'
-          size="small"
-          fullWidth
-          value={merchandise?.name || ''}
-          onChange={(event) =>
-            setMerchandise({ ...merchandise, name: event.target.value })
-          } />
+      <Grid container item xs={12} sm={10} spacing={1.5}>
+        <Grid item xs={12}>
+          <TextField
+            label='نام بلیط'
+            size="small"
+            fullWidth
+            value={merchandise?.name || ''}
+            onChange={(event) =>
+              setMerchandise({ ...merchandise, name: event.target.value })
+            } />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            size="small"
+            label='قیمت (ریال)'
+            fullWidth
+            value={merchandise?.price || ''}
+            onChange={(event) =>
+              setMerchandise({ ...merchandise, price: parseInt(event.target.value) })
+            } />
+        </Grid>
+        <Grid item xs={6}>
+          <TextField
+            size="small"
+            label='قیمت تخفیف‌خورده (ریال)'
+            fullWidth
+            value={merchandise?.discounted_price || ''}
+            onChange={(event) =>
+              setMerchandise({ ...merchandise, discounted_price: parseInt(event.target.value) })
+            } />
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={4}>
-        <TextField
-          size="small"
-          label='قیمت'
-          fullWidth
-          value={merchandise?.price || ''}
-          onChange={(event) =>
-            setMerchandise({ ...merchandise, price: parseInt(event.target.value) })
-          } />
-      </Grid>
-      <Grid item xs={12} sm={4}>
+      <Grid item xs={12} sm={2}>
         <Button fullWidth onClick={onSubmit} disabled={deepEqual(initialMerchandise, merchandise)} variant='contained'>
           {'به‌روز‌رسانی'}
         </Button>

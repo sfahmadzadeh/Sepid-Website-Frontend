@@ -30,6 +30,18 @@ const handleError = ({
     return;
   }
 
+  // form field errors
+  let isAnyErrorShowed = false;
+  for (let field in error.data) {
+    const fieldError = error.data[field]
+    if (fieldError.code) {
+      const message = persianMessages[fieldError.code] || persianMessages[fieldError.detail] || fieldError.detail;
+      toast.error(`فیلد ${Fields[field]}: ${message}`);
+      isAnyErrorShowed = true;
+    }
+  }
+  if (isAnyErrorShowed) return;
+
   switch (error.status) {
     case 500:
       toast.error('ایراد سروری پیش آمده! لطفاً ما را در جریان بگذارید.');
@@ -44,3 +56,9 @@ const handleError = ({
 
 
 export default handleError;
+
+
+const Fields = {
+  'price': 'قیمت',
+  'discounted_price': 'قیمت تخفیف‌خورده',
+}
