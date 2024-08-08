@@ -215,4 +215,5 @@ export type MerchandiseType = {
   name: string;
   price: number;
   discounted_price: number;
+  is_active: boolean;
 }

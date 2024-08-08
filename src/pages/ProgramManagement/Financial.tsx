@@ -100,7 +100,7 @@ const Financial: FC<FinancialTabPropsType> = ({
         </Stack>
         <Stack spacing={4}>
           {merchandises?.map(merchandise =>
-            <Stack>
+            <Stack key={merchandise.id}>
               <Merchandise merchandise={merchandise} />
             </Stack>
           )}

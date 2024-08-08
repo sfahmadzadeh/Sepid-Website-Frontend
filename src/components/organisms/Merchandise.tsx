@@ -1,4 +1,10 @@
-import { Button, Grid, TextField } from "@mui/material";
+import {
+  Button,
+  FormControlLabel,
+  Grid,
+  Switch,
+  TextField,
+} from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useGetMerchandiseQuery, useUpdateMerchandiseMutation } from "redux/features/sales/Merchandise";
@@ -41,14 +47,22 @@ const Merchandise: FC<MerchandisePropsType> = ({
     updateMerchandise(merchandise);
   }
 
+  const setData = ({ fieldName, newValue }) => {
+    setMerchandise({
+      ...merchandise,
+      [fieldName]: newValue,
+    })
+  }
+
   return (
     <Grid container spacing={1}>
-      <Grid container item xs={12} sm={10} spacing={1.5}>
+      <Grid container item xs={12} md={10} spacing={1.5}>
         <Grid item xs={12}>
           <TextField
             label='نام بلیط'
             size="small"
             fullWidth
+            required
             value={merchandise?.name || ''}
             onChange={(event) =>
               setMerchandise({ ...merchandise, name: event.target.value })
@@ -59,10 +73,9 @@ const Merchandise: FC<MerchandisePropsType> = ({
             size="small"
             label='قیمت (ریال)'
             fullWidth
+            required
             value={merchandise?.price || ''}
-            onChange={(event) =>
-              setMerchandise({ ...merchandise, price: parseInt(event.target.value) })
-            } />
+            onChange={(event) => setData({ fieldName: 'price', newValue: parseInt(event.target.value) })} />
         </Grid>
         <Grid item xs={6}>
           <TextField
@@ -70,16 +83,27 @@ const Merchandise: FC<MerchandisePropsType> = ({
             label='قیمت تخفیف‌خورده (ریال)'
             fullWidth
             value={merchandise?.discounted_price || ''}
-            onChange={(event) =>
-              setMerchandise({ ...merchandise, discounted_price: parseInt(event.target.value) })
-            } />
+            onChange={(event) => setData({ fieldName: 'discounted_price', newValue: parseInt(event.target.value) })} />
         </Grid>
       </Grid>
-      <Grid item xs={12} sm={2}>
-        <Button fullWidth onClick={onSubmit} disabled={deepEqual(initialMerchandise, merchandise)} variant='contained'>
-          {'به‌روز‌رسانی'}
-        </Button>
+      <Grid container item xs={12} md={2} spacing={1.5}>
+        <Grid item xs={6} md={12}>
+          <FormControlLabel
+            name='is_active'
+            checked={merchandise.is_active}
+            onChange={() => setData({ fieldName: 'is_active', newValue: !merchandise.is_active })}
+            control={<Switch color="primary" />}
+            label="فعال:"
+            labelPlacement='start'
+          />
+        </Grid>
+        <Grid item xs={6} md={12}>
+          <Button fullWidth onClick={onSubmit} disabled={deepEqual(initialMerchandise, merchandise)} variant='contained'>
+            {'به‌روز‌رسانی'}
+          </Button>
+        </Grid>
       </Grid>
+
     </Grid >
   )
 }
