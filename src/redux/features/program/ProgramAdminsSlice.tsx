@@ -1,11 +1,11 @@
-import { UserMinimalType } from 'types/models';
+import { UserPublicInfoType } from 'types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type ProgramInputType = {
   programId: string;
 }
 
-type GetProgramAdminsOutputType = UserMinimalType[];
+type GetProgramAdminsOutputType = UserPublicInfoType[];
 
 type AddAdminToProgramInputType = {
   programId: string;

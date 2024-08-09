@@ -14,7 +14,7 @@ import { useParams } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
 import { addMentorToWorkshopAction } from 'redux/slices/programs';
 import { getAllWorkshopMentorsAction, removeMentorFromWorkshopAction } from 'redux/slices/workshop';
-import { UserMinimalType } from 'types/models';
+import { UserPublicInfoType } from 'types/models';
 import InfoIcon from '@mui/icons-material/Info';
 import SimpleTable from 'components/organisms/tables/SimpleTable';
 
@@ -22,7 +22,7 @@ type MentorsPropsType = {
   addMentorToWorkshop: Function,
   getAllWorkshopMentors: Function,
   removeMentorFromWorkshop: Function,
-  fsmMentors: UserMinimalType[],
+  fsmMentors: UserPublicInfoType[],
 }
 
 const Mentors: FC<MentorsPropsType> = ({

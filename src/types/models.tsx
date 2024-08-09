@@ -40,7 +40,6 @@ export type ProgramType = {
   is_approved: boolean;
   is_user_participating: boolean;
   maximum_participant: number | null;
-  merchandise: MerchandiseType;
   name: string;
   initial_participants_count: number;
   final_participants_count: number;
@@ -148,7 +147,7 @@ export type Answer = any
 export type WorkshopEdge = any
 export type Player = any
 export type Token = any
-export type UserMinimalType = {
+export type UserPublicInfoType = {
   username: string;
   id: string;
   first_name: string;
@@ -216,4 +215,14 @@ export type MerchandiseType = {
   price: number;
   discounted_price: number;
   is_active: boolean;
+}
+
+export type DiscountCodeType = {
+  id: string;
+  code: string;
+  value: number;
+  expiration_date?: string;
+  remaining: number;
+  user?: UserPublicInfoType;
+  merchandises: MerchandiseType[];
 }

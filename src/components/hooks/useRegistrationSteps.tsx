@@ -86,7 +86,7 @@ const useRegistrationSteps = ({
       })
     }
 
-    if (program.merchandise) {
+    if (!program.is_free) {
       steps.push({
         name: 'payment',
         label: 'پرداخت هزینه',
@@ -108,7 +108,7 @@ const useRegistrationSteps = ({
       if (['Waiting', 'Rejected'].includes(registrationReceipt.status)) {
         goToStep(getStepIndex('status'));
       }
-      if (program?.merchandise && registrationReceipt?.status === 'Accepted') {
+      if (!program?.is_free && registrationReceipt?.status === 'Accepted') {
         goToStep(getStepIndex('payment'));
       }
       setIsFirstRender(false);

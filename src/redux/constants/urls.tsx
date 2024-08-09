@@ -90,12 +90,6 @@ export const applyDiscountUrl = 'auth/verify-discount/';
 export const getScoresUrl = 'fsm/getscores/';
 
 // sales:
-export const discountCRUDUrl = ({ discountCodeId }) =>
-  discountCodeId
-    ? `sales/discount_code/${discountCodeId}/`
-    : 'sales/discount_code/';
-export const merchandiseDiscountCodeUrl = ({ merchandiseId }) =>
-  `/sales/merchandise/${merchandiseId}/discount_codes/`;
 export const getAllUserMerchandisesUrl = ({ id }) => `sales/payment/${id}/`;
 export const purchaseProgramUrl = 'sales/payment/purchase/';
 export const submitDiscountCodeUrl = 'sales/payment/verify_discount/';

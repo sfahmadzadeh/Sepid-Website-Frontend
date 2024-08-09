@@ -28,7 +28,7 @@ export const MerchandiseSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getProgramMerchandises: builder.query<GetProgramMerchandisesOutputType, GetProgramMerchandisesInputType>({
       providesTags: ['merchandises'],
-      query: ({ programId }) => `sales/merchandise/program/?program=${programId}`,
+      query: ({ programId }) => `sales/merchandise/program_merchandises/?program=${programId}`,
       transformResponse: (response: any): GetProgramMerchandisesOutputType => {
         return response;
       },

@@ -53,11 +53,9 @@ const ProgramInfo: FC<ProgramInfoPropsType> = ({
         {program.program_type == 'Individual' && (
           <Typography align="center">{'شرکت در این دوره به صورت فردی است.'}</Typography>
         )}
-        {program.merchandise?.price > 0 ? (
-          <Typography align="center">{`هزینه‌ی ثبت‌نام برای هر نفر ${toPersianNumber(program.merchandise.price)} تومان است.`}</Typography>
-        ) : (
+        {program.is_free &&
           <Typography align="center">{'هزینه‌ی ثبت‌نام رایگان است!'}</Typography>
-        )}
+        }
         <div />
       </Stack>
     </Stack>

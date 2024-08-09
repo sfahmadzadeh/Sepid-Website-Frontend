@@ -4,9 +4,6 @@ import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
 import {
   accountCRUDUrl,
   changePasswordUrl,
-  institutesUrl,
-  discountCRUDUrl,
-  merchandiseDiscountCodeUrl,
   verificationCodeUrl,
 } from '../constants/urls';
 import { UserSlice } from 'redux/features/user/UserSlice';
@@ -69,34 +66,6 @@ export const changePasswordAction = createAsyncThunkApi(
 ////////////////
 
 
-export const createDiscountCodeAction = createAsyncThunkApi(
-  'account/createDiscountCodeAction',
-  Apis.POST,
-  discountCRUDUrl,
-  {
-    defaultNotification: {
-      success: 'کد تخفیف با موفقیت ایجاد شد.',
-    },
-  }
-);
-
-export const deleteDiscountCodeAction = createAsyncThunkApi(
-  'account/deleteDiscountCodeAction',
-  Apis.DELETE,
-  discountCRUDUrl,
-  {
-    defaultNotification: {
-      success: 'کد تخفیف با موفقیت حذف شد.',
-    },
-  }
-);
-
-export const getAllMerchandiseDiscountCodesAction = createAsyncThunkApi(
-  'account/getAllMerchandiseDiscountCodesAction',
-  Apis.GET,
-  merchandiseDiscountCodeUrl,
-);
-
 const isFetching = (state) => {
   state.isFetching = true;
 };
@@ -143,38 +112,6 @@ const accountSlice = createSlice({
       }
     );
 
-    builder.addCase(
-      createDiscountCodeAction.fulfilled,
-      (state, { payload: { response } }) => {
-        state.discountCodes = [...state.discountCodes, response]
-        state.isFetching = false;
-      }
-    );
-
-    builder.addCase(
-      deleteDiscountCodeAction.fulfilled,
-      (state, action) => {
-        const discountCodeId = action?.meta?.arg?.discountCodeId;
-        const newDiscountCodes = [...state.discountCodes]
-        for (let i = 0; i < newDiscountCodes.length; i++) {
-          if (newDiscountCodes[i].id == discountCodeId) {
-            newDiscountCodes.splice(i, 1);
-            break;
-          }
-        }
-        state.discountCodes = newDiscountCodes;
-        state.isFetching = false;
-      }
-    );
-
-    builder.addCase(
-      getAllMerchandiseDiscountCodesAction.fulfilled,
-      (state, { payload: { response } }) => {
-        state.discountCodes = response;
-        state.isFetching = false;
-      },
-    )
-
     builder.addMatcher(
       UserSlice.endpoints.login.matchFulfilled,
       (state, { payload }) => {
@@ -211,9 +148,6 @@ const accountSlice = createSlice({
       isAnyOf(
         createAccountAction.pending,
         changePasswordAction.pending,
-        createDiscountCodeAction.pending,
-        deleteDiscountCodeAction.pending,
-        getAllMerchandiseDiscountCodesAction.pending,
         UserSlice.endpoints.login.matchPending,
         UserSlice.endpoints.getGoogleUserProfile.matchPending,
         UserSlice.endpoints.loginGoogleUser.matchPending,
@@ -227,9 +161,6 @@ const accountSlice = createSlice({
         createAccountAction.rejected,
         changePasswordAction.fulfilled,
         changePasswordAction.rejected,
-        createDiscountCodeAction.rejected,
-        deleteDiscountCodeAction.rejected,
-        getAllMerchandiseDiscountCodesAction.rejected,
         UserSlice.endpoints.login.matchRejected,
         UserSlice.endpoints.getGoogleUserProfile.matchRejected,
         UserSlice.endpoints.loginGoogleUser.matchRejected,
