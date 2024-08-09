@@ -27,7 +27,7 @@ import {
 import NoDataFound from 'components/molecules/NoDataFound';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
-function Teams({
+function Groups({
   addUserToTeam,
   createTeam,
 
@@ -211,4 +211,4 @@ export default connect(mapStateToProps, {
   removeRequestMentor: removeRequestMentorAction,
   createTeam: createTeamAction,
   addUserToTeam: addUserToTeamAction,
-})(Teams);
+})(Groups);

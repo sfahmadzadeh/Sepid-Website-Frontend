@@ -1,9 +1,9 @@
 import { Box, Button, ButtonGroup, Grid, Paper } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import GroupIcon from '@mui/icons-material/Group';
+import GroupsIcon from '@mui/icons-material/Groups';
 import ClassIcon from '@mui/icons-material/Class';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import PaymentsIcon from '@mui/icons-material/Payments';
+import PeopleIcon from '@mui/icons-material/People';
 import ArticleIcon from '@mui/icons-material/Article';
 import InfoIcon from '@mui/icons-material/Info';
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -19,11 +19,11 @@ import {
 } from 'redux/slices/programs';
 
 import Layout from 'components/template/Layout';
-import Financial from './Financial';
+import Tickets from './Tickets';
 import Info from './Info';
 import Registration from './Registration';
 import RegistrationReceipts from './RegistrationReceipts';
-import Teams from './Teams';
+import Groups from './Groups';
 import FSMs from './FSMs';
 import StatisticsTab from './Statistics';
 import Certificates from './Certificates';
@@ -45,15 +45,15 @@ const tabs: DashboardTabType[] = [
     component: Registration,
   },
   {
-    name: 'merchandise',
+    name: 'tickets',
     label: 'بلیط‌فروشی',
-    icon: AttachMoneyIcon,
-    component: Financial,
+    icon: PaymentsIcon,
+    component: Tickets,
   },
   {
     name: 'registration-receipts',
     label: 'شرکت‌کنندگان',
-    icon: ReceiptLongIcon,
+    icon: PeopleIcon,
     component: RegistrationReceipts,
   },
   {
@@ -70,10 +70,10 @@ const tabs: DashboardTabType[] = [
     component: Admins,
   },
   {
-    name: 'teams',
-    label: 'تیم‌ها',
-    icon: GroupIcon,
-    component: Teams,
+    name: 'groups',
+    label: 'گروه‌ها',
+    icon: GroupsIcon,
+    component: Groups,
   },
   {
     name: 'fsms',

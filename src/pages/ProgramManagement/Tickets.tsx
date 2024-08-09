@@ -22,10 +22,10 @@ import { useGetProgramMerchandisesQuery } from 'redux/features/sales/Merchandise
 import { useDeleteDiscountCodeMutation, useGetProgramDiscountCodesQuery } from 'redux/features/sales/DiscountCode';
 import CreateDiscountCodeDialog from 'components/organisms/dialogs/CreateDiscountCodeDialog';
 
-type FinancialTabPropsType = {
+type TicketsTabPropsType = {
 }
 
-const Financial: FC<FinancialTabPropsType> = ({
+const Tickets: FC<TicketsTabPropsType> = ({
 
 }) => {
   const { programId } = useParams();
@@ -131,4 +131,4 @@ const Financial: FC<FinancialTabPropsType> = ({
   );
 }
 
-export default Financial;
+export default Tickets;
