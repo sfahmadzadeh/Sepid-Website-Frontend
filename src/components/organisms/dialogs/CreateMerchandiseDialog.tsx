@@ -77,7 +77,6 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
               size="small"
               label='قیمت تخفیف‌خورده (ریال)'
               fullWidth
-              required
               value={merchandise?.discounted_price || ''}
               onChange={(event) =>
                 setMerchandise({ ...merchandise, discounted_price: parseInt(event.target.value) })
