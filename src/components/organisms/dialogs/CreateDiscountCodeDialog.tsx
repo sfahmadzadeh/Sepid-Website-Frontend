@@ -38,8 +38,6 @@ const CreateDiscountCodeDialog: FC<CreateDiscountCodeDialogType> = ({
     }
   }, [result])
 
-  console.log(discountCode)
-
   return (
     <Dialog disableScrollLock maxWidth="xs" open={open}>
       <DialogTitle>{'افزودن کد تخفیف'}</DialogTitle>

@@ -11,12 +11,12 @@ import { useGetMerchandiseQuery, useUpdateMerchandiseMutation } from "redux/feat
 import { MerchandiseType } from "types/models";
 import { deepEqual } from "utils/ObjectEqualityChecker";
 
-type MerchandisePropsType = {
+type EditMerchandisePropsType = {
   merchandiseId?: string;
   merchandise?: MerchandiseType;
 };
 
-const Merchandise: FC<MerchandisePropsType> = ({
+const EditMerchandise: FC<EditMerchandisePropsType> = ({
   merchandiseId,
   merchandise: passedMerchandise,
 }) => {
@@ -108,4 +108,4 @@ const Merchandise: FC<MerchandisePropsType> = ({
   )
 }
 
-export default Merchandise;
+export default EditMerchandise;

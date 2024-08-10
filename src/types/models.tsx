@@ -226,3 +226,21 @@ export type DiscountCodeType = {
   user?: UserPublicInfoType;
   merchandises: MerchandiseType[];
 }
+
+export type VoucherType = any;
+
+export type PurchaseType = {
+  amount: number;
+  authority?: string;
+  callback_domain: string;
+  created_at: string;
+  discount_code: string;
+  id: string;
+  merchandise: string;
+  payment_link: string;
+  ref_id?: string;
+  status: 'Started' | 'Success' | 'Repetitious' | 'Failed';
+  uniq_code: string;
+  user: string;
+  voucher?: VoucherType;
+}

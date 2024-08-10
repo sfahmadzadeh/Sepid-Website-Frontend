@@ -40,7 +40,7 @@ export const persianMessages = { //todo: handle english
   '4037': 'percentage numbers must be between zero and one',
   '4038': 'given discount code doesn\'t belong to this user',
   '4039': 'given discount code has a merchandise, no merchandise provided',
-  '4040': 'this discount code is not for this merchandise',
+  '4040': 'این کد تخفیف برای این بلیط معتبر نیست.',
   '4041': 'given code is expired',
   '4042': 'given code is not valid, (maybe used)',
   '4043': 'given merchandise is not active',

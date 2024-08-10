@@ -89,11 +89,6 @@ export const applyDiscountUrl = 'auth/verify-discount/';
 
 export const getScoresUrl = 'fsm/getscores/';
 
-// sales:
-export const getAllUserMerchandisesUrl = ({ id }) => `sales/payment/${id}/`;
-export const purchaseProgramUrl = 'sales/payment/purchase/';
-export const submitDiscountCodeUrl = 'sales/payment/verify_discount/';
-
 // team:
 export const getTeamsUrl = ({ registrationFormId }) => registrationFormId ? `/fsm/team/?registration_form=${registrationFormId}` : '/fsm/team/';
 export const makeTeamHeadUrl = ({ teamId }) => `/fsm/team/${teamId}/make_team_head/`;

@@ -5,8 +5,6 @@ import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
 import {
   applyDiscountUrl,
   deleteInvitationUrl,
-  getProgramsUrl,
-  getAllUserMerchandisesUrl,
   getCertificateUrl,
   getMyInvitationsUrl,
   getTeamInvitationsUrl,
@@ -14,9 +12,7 @@ import {
   registerOneUserUrl,
   inviteSomeoneUrl,
   paymentRequestUrl,
-  purchaseProgramUrl,
   respondInvitationUrl,
-  submitDiscountCodeUrl,
   TeamCRUDUrl,
   addMentorToWorkshopUrl,
   registerUsersViaCSVUrl,
@@ -56,42 +52,6 @@ const initialState: InitialState = {
   playerId: {},
   teamCurrentState: null,
 };
-
-export const getProgramsAction = createAsyncThunkApi(
-  'programs/getProgramsAction',
-  Apis.GET,
-  getProgramsUrl
-);
-
-export const applyDiscountCodeAction = createAsyncThunkApi(
-  'programs/applyDiscountCodeAction',
-  Apis.POST,
-  submitDiscountCodeUrl,
-  {
-    defaultNotification: {
-      success: 'کد تخفیف با موفقیت اعمال شد!',
-    },
-  }
-);
-
-export const getOneMerchandiseAction = createAsyncThunkApi(
-  'programs/getOneMerchandiseAction',
-  Apis.GET,
-  getAllUserMerchandisesUrl
-);
-
-export const purchaseProgramAction = createAsyncThunkApi(
-  'programs/purchaseProgramAction',
-  Apis.POST,
-  purchaseProgramUrl,
-  {
-    defaultNotification: {
-      success: 'در حال انتقال به صفحه‌ی پرداخت...',
-      error:
-        'مشکلی در ارتباط با سرور پرداخت وجود دارد. اگر از VPN استفاده می‌کنید، آن را خاموش کن!',
-    },
-  }
-);
 
 export const getTeamAction = createAsyncThunkApi(
   'programs/getTeamAction',
@@ -415,35 +375,6 @@ const programSlice = createSlice({
     },
   },
   extraReducers: {
-    [getProgramsAction.pending.toString()]: isFetching,
-    [getProgramsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.programs = response;
-      state.isFetching = false;
-    },
-    [getProgramsAction.rejected.toString()]: isNotFetching,
-
-
-    [getOneMerchandiseAction.pending.toString()]: isFetching,
-    [getOneMerchandiseAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.merchandise = response;
-    },
-    [getOneMerchandiseAction.rejected.toString()]: isNotFetching,
-
-
-    [purchaseProgramAction.pending.toString()]: isFetching,
-    [purchaseProgramAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.isFetching = false;
-      window.location.href = response.payment_link; //todo
-    },
-    [purchaseProgramAction.rejected.toString()]: isNotFetching,
-
-    [applyDiscountCodeAction.pending.toString()]: isFetching,
-    [applyDiscountCodeAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.isFetching = false;
-      state.discountedPrice = response.new_price;
-    },
-    [applyDiscountCodeAction.rejected.toString()]: isNotFetching,
-
     [getTeamAction.pending.toString()]: isFetching,
     [getTeamAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.isFetching = false;

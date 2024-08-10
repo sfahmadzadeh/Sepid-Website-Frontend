@@ -16,7 +16,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import React, { FC, Fragment, useState } from 'react';
 import { toPersianNumber } from 'utils/translateNumber';
 import { useParams } from 'react-router-dom';
-import Merchandise from 'components/organisms/Merchandise';
+import EditMerchandise from 'components/organisms/EditMerchandise';
 import CreateMerchandiseDialog from 'components/organisms/dialogs/CreateMerchandiseDialog';
 import { useGetProgramMerchandisesQuery } from 'redux/features/sales/Merchandise';
 import { useDeleteDiscountCodeMutation, useGetProgramDiscountCodesQuery } from 'redux/features/sales/DiscountCode';
@@ -56,7 +56,7 @@ const Tickets: FC<TicketsTabPropsType> = ({
         <Stack spacing={4}>
           {merchandises?.map(merchandise =>
             <Stack key={merchandise.id}>
-              <Merchandise merchandise={merchandise} />
+              <EditMerchandise merchandise={merchandise} />
             </Stack>
           )}
           {merchandises && merchandises.length === 0 &&
