@@ -99,7 +99,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
 
     softDeleteProgram: builder.mutation<any, { programId: string }>({
       invalidatesTags: ['programs'],
-      query: ({ programId }) => `fsm/program/${programId}/soft_remove_program/`
+      query: ({ programId }) => `fsm/program/${programId}/soft_delete/`
     }),
 
     getProgramPermission: builder.query<GetProgramPermissionOutputType, GetProgramPermissionInputType>({
