@@ -119,7 +119,7 @@ const CreateDiscountCodeDialog: FC<CreateDiscountCodeDialogType> = ({
                 <TextField
                   required
                   {...params}
-                  label="کالاها"
+                  label="بلیط‌ها"
                 />
               }
               options={programMerchandises}

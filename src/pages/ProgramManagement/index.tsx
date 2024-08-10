@@ -46,7 +46,7 @@ const tabs: DashboardTabType[] = [
   },
   {
     name: 'tickets',
-    label: 'بلیط‌فروشی',
+    label: 'بلیط‌ها',
     icon: PaymentsIcon,
     component: Tickets,
   },
