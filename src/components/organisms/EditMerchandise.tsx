@@ -1,5 +1,6 @@
 import {
   Button,
+  ButtonGroup,
   FormControlLabel,
   Grid,
   Switch,
@@ -7,9 +8,10 @@ import {
 } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useGetMerchandiseQuery, useUpdateMerchandiseMutation } from "redux/features/sales/Merchandise";
+import { useGetMerchandiseQuery, useSoftDeleteMerchandiseMutation, useUpdateMerchandiseMutation } from "redux/features/sales/Merchandise";
 import { MerchandiseType } from "types/models";
 import { deepEqual } from "utils/ObjectEqualityChecker";
+import AreYouSure from "./dialogs/AreYouSure";
 
 type EditMerchandisePropsType = {
   merchandiseId?: string;
@@ -20,10 +22,11 @@ const EditMerchandise: FC<EditMerchandisePropsType> = ({
   merchandiseId,
   merchandise: passedMerchandise,
 }) => {
-
+  const [isDeleteMerchandiseDialogOpen, setDeleteMerchandiseDialogOpen] = useState(false);
   const [merchandise, setMerchandise] = useState<MerchandiseType>(passedMerchandise);
   const { data: fetchedMerchandise, isSuccess } = useGetMerchandiseQuery({ merchandiseId }, { skip: Boolean(passedMerchandise) });
-  const [updateMerchandise, result] = useUpdateMerchandiseMutation();
+  const [updateMerchandise, updateMerchandiseResult] = useUpdateMerchandiseMutation();
+  const [softDeleteMerchandise] = useSoftDeleteMerchandiseMutation();
 
   const initialMerchandise = passedMerchandise || fetchedMerchandise;
 
@@ -34,14 +37,14 @@ const EditMerchandise: FC<EditMerchandisePropsType> = ({
   }, [isSuccess])
 
   useEffect(() => {
-    if (result.isSuccess) {
-      toast.success('قیمت بلیط با موفقیت ثبت شد.')
+    if (updateMerchandiseResult.isSuccess) {
+      toast.success('بلیط با موفقیت به‌روز شد.')
     }
-  }, [result])
+  }, [updateMerchandiseResult])
 
   const onSubmit = () => {
     if (merchandise.discounted_price > merchandise.price) {
-      toast.error('قیمت تخفیف‌خورده نباید از قیمت اصلی بیشتر باشد.');
+      toast.error('قیمت تخفیف‌خورده باید از قیمت اصلی کمتر باشد.');
       return;
     }
     updateMerchandise(merchandise);
@@ -54,9 +57,13 @@ const EditMerchandise: FC<EditMerchandisePropsType> = ({
     })
   }
 
+  const softDeleteMerchandiseCallBack = () => {
+    softDeleteMerchandise({ merchandiseId: merchandiseId || merchandise.id })
+  }
+
   return (
     <Grid container spacing={1}>
-      <Grid container item xs={12} md={10} spacing={1.5}>
+      <Grid container item xs={12} md={9} spacing={1.5}>
         <Grid item xs={12}>
           <TextField
             label='نام بلیط'
@@ -86,7 +93,7 @@ const EditMerchandise: FC<EditMerchandisePropsType> = ({
             onChange={(event) => setData({ fieldName: 'discounted_price', newValue: parseInt(event.target.value) })} />
         </Grid>
       </Grid>
-      <Grid container item xs={12} md={2} spacing={1.5}>
+      <Grid container item xs={12} md={3} spacing={1.5}>
         <Grid item xs={6} md={12}>
           <FormControlLabel
             name='is_active'
@@ -98,9 +105,19 @@ const EditMerchandise: FC<EditMerchandisePropsType> = ({
           />
         </Grid>
         <Grid item xs={6} md={12}>
-          <Button fullWidth onClick={onSubmit} disabled={deepEqual(initialMerchandise, merchandise)} variant='contained'>
-            {'به‌روز‌رسانی'}
-          </Button>
+          <ButtonGroup fullWidth>
+            <Button onClick={() => setDeleteMerchandiseDialogOpen(true)} color='error' variant='outlined'>
+              {'حذف'}
+            </Button>
+            <AreYouSure
+              open={isDeleteMerchandiseDialogOpen}
+              handleClose={() => setDeleteMerchandiseDialogOpen(!isDeleteMerchandiseDialogOpen)}
+              callBackFunction={softDeleteMerchandiseCallBack}
+              text={'آیا از پاک‌کردن بلیط مطمئن هستید؟'} />
+            <Button onClick={onSubmit} disabled={deepEqual(initialMerchandise, merchandise)} variant='contained'>
+              {'به‌روز‌رسانی'}
+            </Button>
+          </ButtonGroup>
         </Grid>
       </Grid>
 

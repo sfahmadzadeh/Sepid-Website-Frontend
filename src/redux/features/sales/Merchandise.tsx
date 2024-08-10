@@ -23,6 +23,12 @@ type UpdateMerchandiseInputType = Partial<MerchandiseType>
 
 type UpdateMerchandiseOutputType = MerchandiseType;
 
+type SoftDeleteInputType = {
+  merchandiseId: string;
+}
+
+type SoftDeleteOutputType = void;
+
 
 export const MerchandiseSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
@@ -62,6 +68,12 @@ export const MerchandiseSlice = ManageContentServiceApi.injectEndpoints({
         body,
       }),
     }),
+
+    softDeleteMerchandise: builder.mutation<SoftDeleteOutputType, SoftDeleteInputType>({
+      invalidatesTags: ['merchandises', 'merchandise', 'programs'],
+      query: ({ merchandiseId }) => `sales/merchandise/${merchandiseId}/soft_delete/`,
+    }),
+
   })
 });
 
@@ -70,4 +82,5 @@ export const {
   useGetMerchandiseQuery,
   useCreateMerchandiseMutation,
   useUpdateMerchandiseMutation,
+  useSoftDeleteMerchandiseMutation,
 } = MerchandiseSlice;
