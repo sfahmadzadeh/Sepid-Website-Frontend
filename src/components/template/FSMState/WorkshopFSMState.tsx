@@ -1,26 +1,28 @@
 import { Box, Divider, Grid, Paper, Typography, Stack } from '@mui/material';
 import React, { FC, Fragment, useMemo } from 'react';
 import Widget from 'components/organisms/Widget';
-import BackButton from 'components/atoms/BackButton';
-import NextButton from 'components/atoms/NextButton';
+import FSMBackStateButton from 'components/atoms/FSMBackStateButton';
+import FSMNextStateButton from 'components/atoms/FSMNextStateButton';
 import FSMStateRoadMap from 'components/organisms/FSMStateRoadMap';
 import FSMStateHelpButton from 'components/molecules/FSMStateHelpButton';
 import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
 import { FSMStateType } from 'types/models';
+import { useGetFSMStateQuery } from 'redux/features/fsm/FSMStateSlice';
 
 export type WorkshopFSMStatePropsType = {
   type: 'workshop'; // | 'exam' | 'form' | 'game' | 'roadmap';
-  state: FSMStateType;
+  stateId: string;
   playerId: string;
 }
 
-const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ state, playerId }) => {
-  const { data: paper } = useGetPaperQuery({ paperId: state.id }, { skip: !state.id });
+const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ stateId, playerId }) => {
+  const { data: paper } = useGetPaperQuery({ paperId: stateId }, { skip: !stateId });
+  const { data: state } = useGetFSMStateQuery({ fsmStateId: stateId })
 
   const widgets = [...(paper?.widgets || [])];
-  const hints = [...state.hints];
-
-  const { inward_edges, outward_edges } = state;
+  const hints = [...(state?.hints || [])];
+  const inward_edges = state?.inward_edges || [];
+  const outward_edges = state?.outward_edges || [];
 
   hints.sort((a, b) => a.id - b.id);
   widgets.sort((a, b) => a.id - b.id);
@@ -33,7 +35,7 @@ const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ state, playerId }) =>
     questions.map((widget, index) => (
       <Stack key={widget.id}>
         <Divider style={{ marginBottom: 20 }} />
-        <Widget paperId={state.id} coveredWithPaper={false} key={widget.id} widget={widget} />
+        <Widget paperId={stateId} coveredWithPaper={false} key={widget.id} widget={widget} />
       </Stack>
     )), [questions]);
 
@@ -44,7 +46,7 @@ const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ state, playerId }) =>
   const notQuestionWidgets = useMemo(() =>
     notQuestions.map((widget) => (
       <Stack key={widget.id}>
-        <Widget paperId={state.id} coveredWithPaper={false} widget={widget} />
+        <Widget paperId={stateId} coveredWithPaper={false} widget={widget} />
       </Stack>
     )), [notQuestions]);
 
@@ -62,7 +64,7 @@ const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ state, playerId }) =>
                 <FSMStateHelpButton hints={hints} />
               </Box>
               <Typography component="h2" variant="h3" align='center' alignSelf={'center'}>
-                {state.name}
+                {state?.name}
               </Typography>
               {questionWidgets}
               {!(inward_edges?.length === 0 && outward_edges?.length === 0) &&
@@ -71,23 +73,25 @@ const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ state, playerId }) =>
               <Stack sx={{ display: { xs: 'none', md: 'inherit' } }}>
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    <BackButton inwardEdges={inward_edges} playerId={playerId} />
+                    <FSMBackStateButton inwardEdges={inward_edges} playerId={playerId} />
                   </Grid>
                   <Grid item xs={6}>
-                    <NextButton outwardEdges={outward_edges} />
+                    <FSMNextStateButton outwardEdges={outward_edges} />
                   </Grid>
                 </Grid>
               </Stack>
             </Stack>
-            <FSMStateRoadMap currentNodeName={state.name} playerId={playerId} fsmId={state.fsm} />
+            {state &&
+              <FSMStateRoadMap currentNodeName={state?.name} playerId={playerId} />
+            }
             {notQuestions.length === 0 &&
               <Stack sx={{ display: { xs: 'inherit', md: 'none' } }} >
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    <BackButton inwardEdges={inward_edges} playerId={playerId} />
+                    <FSMBackStateButton inwardEdges={inward_edges} playerId={playerId} />
                   </Grid>
                   <Grid item xs={6}>
-                    <NextButton outwardEdges={outward_edges} />
+                    <FSMNextStateButton outwardEdges={outward_edges} />
                   </Grid>
                 </Grid>
               </Stack>
@@ -103,10 +107,10 @@ const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ state, playerId }) =>
               <Stack sx={{ display: { xs: 'inherit', md: 'none' } }} >
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    <BackButton inwardEdges={inward_edges} playerId={playerId} />
+                    <FSMBackStateButton inwardEdges={inward_edges} playerId={playerId} />
                   </Grid>
                   <Grid item xs={6}>
-                    <NextButton outwardEdges={outward_edges} />
+                    <FSMNextStateButton outwardEdges={outward_edges} />
                   </Grid>
                 </Grid>
               </Stack>

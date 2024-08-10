@@ -1,32 +1,30 @@
 import { Button } from '@mui/material';
 import React, { FC, Fragment, useContext, useState } from 'react';
-import { connect } from 'react-redux';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useNavigate } from 'react-router-dom';
 
 import { StatePageContext } from 'pages/FSM';
-import {
-  goForwardAction,
-  mentorMoveForwardAction,
-} from 'redux/slices/currentState';
 import ChangeStateDialog from 'components/organisms/dialogs/ChangeStateDialog';
 import StatePasswordDialog from 'components/organisms/dialogs/StatePasswordDialog';
+import {
+  useGoForwardMutation,
+  useMentorMoveForwardMutation,
+} from 'redux/features/program/PlayerSlice';
 
-type NextButtonPropsType = {
+type FSMNextStateButtonPropsType = {
   outwardEdges: any[]
-  goForward: any;
-  mentorMoveForward: any;
 }
 
-const NextButton: FC<NextButtonPropsType> = ({
+const FSMNextStateButton: FC<FSMNextStateButtonPropsType> = ({
   outwardEdges = [],
-  goForward,
-  mentorMoveForward,
 }) => {
   const t = useTranslate();
   const [openChangeStateDialog, setOpenChangeStateDialog] = useState(false);
   const [selectedEdge, setSelectedEdge] = useState(null);
   const { isMentor, teamId } = useContext(StatePageContext);
+  const [goForward, goForwardResult] = useGoForwardMutation();
+  const [mentorMoveForward, mentorMoveForwardResult] = useMentorMoveForwardMutation();
+
 
   const edges = isMentor
     ? outwardEdges
@@ -38,16 +36,14 @@ const NextButton: FC<NextButtonPropsType> = ({
   const changeState = (edge) => {
     if (isMentor) {
       mentorMoveForward({
-        id: edge.id,
-        teamId,
+        edgeId: edge.id,
       });
     } else {
       if (edge.has_lock) {
         setSelectedEdge(edge);
       } else {
         goForward({
-          id: edge.id,
-          teamId,
+          edgeId: edge.id,
         });
       }
     }
@@ -74,7 +70,7 @@ const NextButton: FC<NextButtonPropsType> = ({
         fullWidth
         variant="contained"
         color="primary"
-        disabled={edges.length === 0 && outwardEdges.length !== 0}
+        disabled={edges.length === 0 || goForwardResult?.isLoading || mentorMoveForwardResult?.isLoading}
         onClick={handleClick}>
         {edges.length === 0
           ? 'جابجایی با همیار'
@@ -91,9 +87,8 @@ const NextButton: FC<NextButtonPropsType> = ({
         handleClose={() => setSelectedEdge(null)}
         onSubmit={(password) =>
           goForward({
-            id: selectedEdge.id,
+            edgeId: selectedEdge.id,
             password,
-            teamId,
           })
         }
       />
@@ -101,7 +96,4 @@ const NextButton: FC<NextButtonPropsType> = ({
   );
 }
 
-export default connect(null, {
-  goForward: goForwardAction,
-  mentorMoveForward: mentorMoveForwardAction,
-})(NextButton);
+export default FSMNextStateButton;

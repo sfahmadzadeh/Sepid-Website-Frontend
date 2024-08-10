@@ -13,7 +13,6 @@ import { Helmet } from "react-helmet";
 
 import createEmotionCache from './configs/CreateEmotionCache'
 import selectTheme from './configs/themes';
-import { initParseServer } from './parse/init';
 import { resetRedirectAction } from './redux/slices/redirect';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import Root from './routes';
@@ -51,10 +50,6 @@ const App = ({
       resetRedirect();
     }
   }, [redirectTo]);
-
-  useEffect(() => {
-    initParseServer();
-  }, []);
 
   useEffect(() => {
     document.body.dir = dir;

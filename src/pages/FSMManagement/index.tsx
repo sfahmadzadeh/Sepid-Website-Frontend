@@ -9,7 +9,6 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import React, { FC, useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
-import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -33,6 +32,7 @@ import GoToAnswer from './GoToAnswer';
 import { DashboardTabType } from 'types/global';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
+import { useEnterFSMMutation } from 'redux/features/program/PlayerSlice';
 
 const initialTabs: DashboardTabType[] = [
   {
@@ -81,11 +81,12 @@ type FSMManagementPropsType = {
 const FSMManagement: FC<FSMManagementPropsType> = ({
   getProgramTeams: getProgramTeams,
 }) => {
-  const t = useTranslate();
   const navigate = useNavigate();
   const { fsmId, programId, section } = useParams();
   const { data: fsm } = useGetFSMQuery({ fsmId });
   const { data: program } = useGetProgramQuery({ programId });
+  const [enterFSM, result] = useEnterFSMMutation();
+
 
   useEffect(() => {
     if (!section) {
@@ -93,7 +94,12 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
     }
   }, [section])
 
-  const tabs: DashboardTabType[] = (fsm && fsm.id == parseInt(fsmId) && fsm.fsm_learning_type == 'Supervised') ?
+  useEffect(() => {
+    if (result.isSuccess)
+      navigate(`/program/${programId}/fsm/${fsmId}/`)
+  }, [result])
+
+  const tabs: DashboardTabType[] = (fsm && fsm.id == fsmId && fsm.fsm_learning_type == 'Supervised') ?
     (fsm.fsm_p_type == 'Team') ?
       [
         ...initialTabs,
@@ -145,8 +151,7 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
             </ButtonGroup>
             <ButtonGroup variant="outlined" orientation="vertical" color="primary" fullWidth>
               <Button
-                component={Link}
-                to={`/program/${programId}/fsm/${fsmId}/`}
+                onClick={() => enterFSM({ fsmId })}
                 startIcon={<VisibilityIcon />}>
                 {'مشاهده کارگاه'}
               </Button>

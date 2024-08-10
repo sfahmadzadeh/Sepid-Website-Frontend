@@ -57,25 +57,6 @@ export const validateRegistrationReceiptUrl = ({ receiptId }) => `/fsm/receipts/
 export const hintUrl = ({ hintId }) => hintId ? `fsm/hint/${hintId}/` : 'fsm/hint/';
 export const widgetHintUrl = ({ hintId }) => hintId ? `fsm/widget-hint/${hintId}/` : 'fsm/widget-hint/';
 
-
-
-
-export const goBackwardUrl = ({ id }) => `fsm/player/${id}/go_backward/`;
-
-export const goForwardUrl = ({ id }) => `fsm/edge/${id}/transit_player_on_edge/`;
-
-export const mentorMoveBackwardUrl = ({ id }) =>
-  `fsm/player/${id}/mentor_move_backward/`;
-
-export const mentorMoveForwardUrl = ({ id }) =>
-  `fsm/edge/${id}/mentor_move_forward/`;
-
-
-export const mentorGetCurrentStateUrl = ({ id }) => `fsm/player/${id}/`;
-
-
-export const enterWorkshopUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/enter/`;
-
 export const requestMentorUrl = 'fsm/requestmentor/';
 
 export const paymentRequestUrl = 'auth/pay/';

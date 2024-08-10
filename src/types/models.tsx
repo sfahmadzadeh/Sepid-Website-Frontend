@@ -100,7 +100,7 @@ type FSMPType = 'Individual' | 'Team' | 'Hybrid';
 export type FSMType = {
   players_count: number;
   is_mentor: boolean;
-  id: number;
+  id: string;
   name: string;
   first_state: FSMStateType;
   description: string;
@@ -244,4 +244,10 @@ export type PurchaseType = {
   uniq_code: string;
   user: string;
   voucher?: VoucherType;
+}
+
+export type PlayerType = {
+  id: string;
+  team: TeamType;
+  current_state: FSMStateType;
 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import BackButton from "./BackButton";
+import FSMBackStateButton from "./FSMBackStateButton";
 
 describe('BackButton component', () => {
   it('renders correctly', () => {
     const wrapper = shallow(
-      <BackButton
+      <FSMBackStateButton
         inwardEdges={[{ is_back_enabled: true }]}
         goBackward={() => {}}
         mentorMoveBackward={() => {}}
@@ -17,7 +17,7 @@ describe('BackButton component', () => {
 
   it('is empty', () => {
     const wrapper = shallow(
-      <BackButton
+      <FSMBackStateButton
         inwardEdges={[]}
         goBackward={() => {}}
         mentorMoveBackward={() => {}}
@@ -30,7 +30,7 @@ describe('BackButton component', () => {
   it('true', () => {
     const mentorMoveBackwardMock = jest.fn();
     const wrapper = shallow(
-      <BackButton
+      <FSMBackStateButton
         inwardEdges={[{ is_back_enabled: true }]}
         goBackward={() => {}}
         mentorMoveBackward={mentorMoveBackwardMock}
@@ -44,7 +44,7 @@ describe('BackButton component', () => {
   it('true', () => {
     const goBackwardMock = jest.fn();
     const wrapper = shallow(
-      <BackButton
+      <FSMBackStateButton
         inwardEdges={[{ is_back_enabled: true }]}
         goBackward={goBackwardMock}
         mentorMoveBackward={() => {}}
@@ -58,7 +58,7 @@ describe('BackButton component', () => {
   it('false', () => {
     const goBackwardMock = jest.fn();
     const wrapper = shallow(
-      <BackButton
+      <FSMBackStateButton
         inwardEdges={[{ is_back_enabled: false }]}
         goBackward={goBackwardMock}
         mentorMoveBackward={() => {}}

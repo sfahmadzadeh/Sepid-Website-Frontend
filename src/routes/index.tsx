@@ -14,7 +14,7 @@ import FailedPayment from 'pages/Message/FailedPayment';
 import SuccessfulPayment from 'pages/Message/SuccessfulPayment';
 import Registration from 'pages/Registration';
 import TeamSelection from 'pages/TeamSelection';
-import Workshop from 'pages/FSM';
+import FSM from 'pages/FSM';
 import Article from 'pages/Article';
 import Articles from 'pages/Articles';
 import PrivateRoute from './PrivateRoute';
@@ -51,7 +51,7 @@ const Root = () => {
         <Route path="/receipt/:receiptId/" element={<RegistrationReceipt />} />
         <Route path="/setting/:section?/" element={<Setting />} />
         <Route path="/articles/" element={<Articles />} />
-        <Route path="/program/:programId/fsm/:fsmId/" element={<Workshop />} />
+        <Route path="/program/:programId/fsm/:fsmId/" element={<FSM />} />
         <Route
           path="/program/:programId/form/"
           element={<Registration />}

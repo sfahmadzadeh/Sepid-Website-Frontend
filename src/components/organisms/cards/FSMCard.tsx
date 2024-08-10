@@ -13,27 +13,31 @@ import {
 } from '@mui/material';
 import { Lock, LockOpen } from '@mui/icons-material';
 import ModeEditTwoToneIcon from '@mui/icons-material/ModeEditTwoTone';
-import React, { useState, Fragment, FC } from 'react';
-import { connect } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, Fragment, FC, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-import { enterWorkshopAction } from 'redux/slices/currentState';
-import PasswordDialog from 'components/organisms/dialogs/PasswordDialog';
+import EnterFSMPasswordDialog from 'components/organisms/dialogs/EnterFSMPasswordDialog';
 import { FSMType } from 'types/models';
+import { useEnterFSMMutation } from 'redux/features/program/PlayerSlice';
 
 type FSMCardPropsType = {
   fsm: Partial<FSMType>;
-  enterFSM: any;
   isLoading?: boolean;
 }
 
 export const FSMCard: FC<FSMCardPropsType> = ({
   fsm,
-  enterFSM,
   isLoading = false,
 }) => {
+  const navigate = useNavigate();
   const { programId } = useParams();
   const [openPassword, setOpenPassword] = useState(false);
+  const [enterFSM, result] = useEnterFSMMutation();
+
+  useEffect(() => {
+    if (result.isSuccess)
+      navigate(`fsm/${fsm.id}/`)
+  }, [result])
 
   return (
     <Card
@@ -129,24 +133,21 @@ export const FSMCard: FC<FSMCardPropsType> = ({
               fsm.id ?
                 fsm?.lock
                   ? () => setOpenPassword(true)
-                  : () => enterFSM({ fsmId: fsm.id, programId })
+                  : () => enterFSM({ fsmId: fsm.id })
                 : null
             }>
             {'بزن بریم!'}
           </Button>
         }
       </CardActions>
-      <PasswordDialog
+      <EnterFSMPasswordDialog
         programId={programId}
         open={openPassword}
         handleClose={() => setOpenPassword(false)}
         fsmId={fsm?.id}
-        enterWorkshop={enterFSM}
       />
     </Card>
   );
 };
 
-export default connect(null, {
-  enterFSM: enterWorkshopAction
-})(FSMCard);
+export default FSMCard;

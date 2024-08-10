@@ -6,12 +6,26 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
+import { useNavigate } from 'react-router-dom';
+import { useEnterFSMMutation } from 'redux/features/program/PlayerSlice';
 
-function PasswordDialog({ open, handleClose, programId, fsmId, enterWorkshop }) {
+function EnterFSMPasswordDialog({
+  open,
+  handleClose,
+  programId,
+  fsmId,
+}) {
+  const navigate = useNavigate();
   const t = useTranslate();
   const [password, setPassword] = useState('');
+  const [enterFSM, result] = useEnterFSMMutation();
+
+  useEffect(() => {
+    if (result.isSuccess)
+      navigate(`fsm/${fsmId}/`)
+  }, [result])
 
   return (
     <Dialog disableScrollLock open={open} onClose={handleClose} maxWidth="sm">
@@ -31,7 +45,7 @@ function PasswordDialog({ open, handleClose, programId, fsmId, enterWorkshop }) 
         <Button
           variant="contained"
           color="primary"
-          onClick={() => enterWorkshop({  programId, fsmId, password })}>
+          onClick={() => enterFSM({ fsmId, password })}>
           {t('submit')}
         </Button>
       </DialogActions>
@@ -39,4 +53,4 @@ function PasswordDialog({ open, handleClose, programId, fsmId, enterWorkshop }) 
   );
 }
 
-export default PasswordDialog;
+export default EnterFSMPasswordDialog;
