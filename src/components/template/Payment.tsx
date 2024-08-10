@@ -22,14 +22,20 @@ const Payment: FC<PaymentPropsType> = ({ }) => {
       </Typography>
       <Stack component={Paper} padding={2}>
         <Grid container spacing={2}>
-          <Grid item container justifyContent="center" alignItems="center">
+          <Grid item justifyContent="center" alignItems="center">
             <Typography variant='h6' align="center">
               {'شما برای شرکت در این دوره پذیرفته‌شده‌اید! توجه کنید تا پرداخت خود را انجام ندهید، ثبت‌نامتان قطعی نشده است.'}
             </Typography>
           </Grid>
-          {merchandises?.filter(merchandise => merchandise.is_active).map(merchandise =>
-            <PurchaseMerchandise merchandise={merchandise} />
-          )}
+          <Grid item xs={12}>
+            <Grid container spacing={2}>
+              {merchandises?.filter(merchandise => merchandise.is_active).map(merchandise =>
+                <Grid item xs={12} key={merchandise.id}>
+                  <PurchaseMerchandise merchandise={merchandise} />
+                </Grid>
+              )}
+            </Grid>
+          </Grid>
         </Grid>
       </Stack>
     </Stack>

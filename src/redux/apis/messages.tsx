@@ -38,7 +38,7 @@ export const persianMessages = { //todo: handle english
   '4035': 'ظرفیت ثبت‌نام پر شده است.',
   '4036': 'مهلت به پایان رسیده است.',
   '4037': 'percentage numbers must be between zero and one',
-  '4038': 'given discount code doesn\'t belong to this user',
+  '4038': 'این کد تخفیف متعلق به شما نیست.',
   '4039': 'given discount code has a merchandise, no merchandise provided',
   '4040': 'این کد تخفیف برای این بلیط معتبر نیست.',
   '4041': 'given code is expired',

@@ -1,12 +1,12 @@
 import {
   Button,
   Grid,
+  Paper,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { FC, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useApplyDiscountCodeMutation, usePurchaseMutation } from "redux/features/sales/Purchase";
 import { MerchandiseType } from "types/models";
@@ -19,7 +19,6 @@ type PurchaseMerchandisePropsType = {
 const PurchaseMerchandise: FC<PurchaseMerchandisePropsType> = ({
   merchandise,
 }) => {
-  const navigate = useNavigate();
   const [discountCode, setDiscountCode] = useState(null);
   const [price, setPrice] = useState(merchandise.price);
   const [applyDiscountCode, applyDiscountCodeResult] = useApplyDiscountCodeMutation();
@@ -60,52 +59,62 @@ const PurchaseMerchandise: FC<PurchaseMerchandisePropsType> = ({
   };
 
   return (
-    <Grid container item justifyContent="center" alignItems='start' spacing={2}>
-      <Grid item xs={12} sm={6} md={4}>
-        <Typography>
-          {`توضیحات: ${merchandise.name}`}
-        </Typography>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <Stack spacing={1}>
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="کد تخفیف"
-            onChange={(e) => setDiscountCode(e.target.value)}
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={submitDiscount}>
-            {'اعمال'}
-          </Button>
-        </Stack>
-      </Grid>
-      <Grid item xs={12} sm={6} md={4}>
-        <Stack spacing={1}>
-          <Typography align="center" gutterBottom>
-            {'مبلغ قابل پرداخت:'}
+    <Stack component={Paper}>
+      <Grid padding={2} container spacing={2} alignItems={'center'}>
+        <Grid item xs={12} sm={4}>
+          <Typography variant="h3">
+            {merchandise.name}
           </Typography>
-          <Typography
-            align="center"
-            sx={{
-              fontSize: 25,
-              fontWeight: 400,
-            }}>
-            {`${toPersianNumber(price)} تومان`}
-          </Typography>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={goForPurchase}>
-            {'پرداخت'}
-          </Button>
-        </Stack>
+        </Grid>
+        <Grid
+          xs={12} sm={8}
+          container
+          item
+          justifyContent="center"
+          alignItems='end'
+          spacing={2}>
+          <Grid item xs={12} sm={6}>
+            <Stack spacing={1}>
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="کد تخفیف"
+                onChange={(e) => setDiscountCode(e.target.value)}
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={submitDiscount}>
+                {'اعمال'}
+              </Button>
+            </Stack>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Stack spacing={1}>
+              <Typography align="center" gutterBottom>
+                {'مبلغ قابل پرداخت:'}
+              </Typography>
+              <Typography
+                align="center"
+                sx={{
+                  fontSize: 25,
+                  fontWeight: 400,
+                }}>
+                {`${toPersianNumber(price)} تومان`}
+              </Typography>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                onClick={goForPurchase}>
+                {'پرداخت'}
+              </Button>
+            </Stack>
+          </Grid>
+        </Grid>
       </Grid>
-    </Grid>
+    </Stack>
   )
 }
 
