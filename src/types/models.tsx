@@ -215,6 +215,7 @@ export type MerchandiseType = {
   price: number;
   discounted_price: number;
   is_active: boolean;
+  is_deleted: boolean;
 }
 
 export type DiscountCodeType = {

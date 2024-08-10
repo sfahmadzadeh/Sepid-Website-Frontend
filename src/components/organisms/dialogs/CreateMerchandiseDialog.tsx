@@ -35,7 +35,7 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
   }, [result])
 
   const onSubmit = () => {
-    if (merchandise.discounted_price > merchandise.price) {
+    if (merchandise?.discounted_price > merchandise?.price) {
       toast.error('قیمت تخفیف‌خورده نباید از قیمت اصلی بیشتر باشد.');
       return;
     }
@@ -64,7 +64,7 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
           <Grid item xs={12} sm={6}>
             <TextField
               size="small"
-              label='قیمت (ریال)'
+              label='قیمت (تومان)'
               fullWidth
               required
               value={merchandise?.price || ''}
@@ -75,7 +75,7 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
           <Grid item xs={12} sm={6}>
             <TextField
               size="small"
-              label='قیمت تخفیف‌خورده (ریال)'
+              label='قیمت تخفیف‌خورده (تومان)'
               fullWidth
               value={merchandise?.discounted_price || ''}
               onChange={(event) =>
@@ -88,10 +88,9 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
         <Button onClick={handleClose} variant='outlined'>
           {'انصراف'}
         </Button>
-        <Button onClick={onSubmit} variant='contained'>
+        <Button disabled={!merchandise} onClick={onSubmit} variant='contained'>
           {'افزودن'}
         </Button>
-
       </DialogActions>
     </Dialog>
   )

@@ -109,7 +109,7 @@ const Tickets: FC<TicketsTabPropsType> = ({
                   </TableCell>
                   <TableCell align='center'>
                     <Stack spacing={1} alignItems={'center'}>
-                      {discountCode?.merchandises.map(merchandise => <Chip label={merchandise.name} />)}
+                      {discountCode?.merchandises.map(merchandise => <Chip label={`${merchandise.name}${merchandise.is_deleted ? ' (حذف‌شده)' : ''}`} />)}
                     </Stack>
                   </TableCell>
                   <TableCell align='center'>
