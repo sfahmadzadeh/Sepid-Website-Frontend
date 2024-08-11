@@ -226,6 +226,7 @@ export type DiscountCodeType = {
   remaining: number;
   user?: UserPublicInfoType;
   merchandises: MerchandiseType[];
+  discount_code_limit?: number;
 }
 
 export type VoucherType = any;

@@ -103,6 +103,15 @@ const CreateDiscountCodeDialog: FC<CreateDiscountCodeDialogType> = ({
               value={discountCode?.remaining || ''}
             />
           </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label='حداکثر میزان تخفیف (تومان)'
+              fullWidth
+              value={discountCode?.discount_code_limit || ''}
+              onChange={(event) =>
+                setDiscountCode({ ...discountCode, discount_code_limit: parseInt(event.target.value) })
+              } />
+          </Grid>
           <Grid item xs={12}>
             <Autocomplete
               multiple

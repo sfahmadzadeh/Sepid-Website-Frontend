@@ -89,6 +89,7 @@ const Tickets: FC<TicketsTabPropsType> = ({
                 <TableCell align='center'>میزان تخفیف</TableCell>
                 <TableCell align='center'>بلیط‌ها</TableCell>
                 <TableCell align='center'>دفعات باقی‌مانده</TableCell>
+                <TableCell align='center'>حداکثر میزان تخفیف (تومان)</TableCell>
                 <TableCell align='center'>عملیات</TableCell>
               </TableRow>
             </TableHead>
@@ -114,6 +115,9 @@ const Tickets: FC<TicketsTabPropsType> = ({
                   </TableCell>
                   <TableCell align='center'>
                     {toPersianNumber(discountCode?.remaining)}
+                  </TableCell>
+                  <TableCell align='center'>
+                    {discountCode?.discount_code_limit ? toPersianNumber(discountCode.discount_code_limit) : '-'}
                   </TableCell>
                   <TableCell align='center'>
                     <IconButton size='small'
