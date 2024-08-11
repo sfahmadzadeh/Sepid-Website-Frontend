@@ -21,7 +21,7 @@ export const PurchaseSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     applyDiscountCode: builder.mutation<ApplyDiscountCodeOutputType, ApplyDiscountCodeInputType>({
       query: ({ ...body }) => ({
-        url: `sales/payment/verify_discount/`,
+        url: `sales/payment/apply_discount_code/`,
         method: 'POST',
         body: {
           merchandise: body.merchandiseId,
