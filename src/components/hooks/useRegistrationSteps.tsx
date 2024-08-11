@@ -45,11 +45,28 @@ const useRegistrationSteps = ({
     const steps: RegistrationStepType[] = [];
 
     steps.push({
+      name: 'form',
+      label: 'ثبت‌نام در دوره',
+      disabled: true,
+      component: <RegistrationForm onSuccess={() => goToNextStep()} />,
+      onClick: () => { }
+    })
+
+    steps.push({
       name: 'user-setting',
       label: 'تکمیل اطلاعات شخصی',
       component: <UserSetting isInForm={true} onSuccessfulSubmission={() => goToNextStep()} />,
       onClick: () => goToStep(getStepIndex('user-setting')),
     })
+
+    if (registrationForm.accepting_status == 'Manual') {
+      steps.push({
+        name: 'status',
+        label: 'وضعیت ثبت‌نام',
+        component: <RegistrationStatus />,
+        onClick: () => goToStep(getStepIndex('status')),
+      })
+    }
 
     if (program.audience_type === 'Student') {
       steps.push({
@@ -66,23 +83,6 @@ const useRegistrationSteps = ({
         label: 'تکمیل اطلاعات دانشجویی',
         component: <UniversitySetting onSuccessfulSubmission={() => goToNextStep()} />,
         onClick: () => goToStep(getStepIndex('university-setting'))
-      })
-    }
-
-    steps.push({
-      name: 'form',
-      label: 'ثبت‌نام در دوره',
-      disabled: true,
-      component: <RegistrationForm onSuccess={() => goToNextStep()} />,
-      onClick: () => { }
-    })
-
-    if (registrationForm.accepting_status == 'Manual') {
-      steps.push({
-        name: 'status',
-        label: 'وضعیت ثبت‌نام',
-        component: <RegistrationStatus />,
-        onClick: () => goToStep(getStepIndex('status')),
       })
     }
 
@@ -109,7 +109,7 @@ const useRegistrationSteps = ({
         goToStep(getStepIndex('status'));
       }
       if (!program?.is_free && registrationReceipt?.status === 'Accepted') {
-        goToStep(getStepIndex('payment'));
+        goToStep(getStepIndex('school-setting'));
       }
       setIsFirstRender(false);
     }
