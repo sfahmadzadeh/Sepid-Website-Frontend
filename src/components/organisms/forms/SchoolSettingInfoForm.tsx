@@ -8,6 +8,8 @@ import {
   Select,
   Autocomplete,
   TextField,
+  Typography,
+  Stack,
 } from '@mui/material';
 import React, { FC, Fragment, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -20,6 +22,8 @@ import {
 import { useGetSchoolsQuery } from 'redux/features/party/InstituteSlice';
 import { SchoolStudentshipType } from 'types/profile';
 import getInstituteFullName from 'utils/getInstituteFullName';
+import UploadFile from 'components/molecules/UploadFile';
+import { Link } from 'react-router-dom';
 
 const GRADES = [
   { value: 1, name: 'اول' },
@@ -106,7 +110,9 @@ const SchoolSettingInfoForm: FC<SchoolSettingInfoFormPropsType> = ({
             size='small' color='info'
             startIcon={<AddCircleOutlineIcon />}
             onClick={() => setIsAddInstituteDialogOpen(true)}>
-            {'اگر مدرسه شما در لیست بالا نیست، برای افزودن آن کلیک کنید.'}
+            <Typography textAlign={'start'} variant='button'>
+              {'اگر مدرسه شما در لیست بالا نیست، برای افزودن آن کلیک کنید.'}
+            </Typography>
           </Button>
         </Grid>
 
@@ -126,6 +132,30 @@ const SchoolSettingInfoForm: FC<SchoolSettingInfoFormPropsType> = ({
             </Select>
           </FormControl>
         </Grid>
+        <Grid item xs={12} sm={6}>
+          <Stack direction={'row'} justifyContent={'space-between'}>
+            <Typography variant='h5'>
+              {'مدرکی را برای تایید اطلاعات تحصیلی خود بارگذاری کنید*'}
+            </Typography>
+            <Stack spacing={1}>
+              <UploadFile
+                setFileLink={(link) =>
+                  setData({
+                    ...data,
+                    document: link,
+                  })} />
+              {data?.document &&
+                <Button size='small' variant='outlined' component={Link} to={data.document}>
+                  <Typography variant='caption' textAlign={'center'}>
+                    {'آخرین فایل ارسالی'}
+                  </Typography>
+                </Button>
+              }
+            </Stack>
+
+          </Stack>
+        </Grid>
+
       </Grid>
 
       <AddInstitute
