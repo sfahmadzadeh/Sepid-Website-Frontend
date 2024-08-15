@@ -22,15 +22,15 @@ import {
 import {
   getFSMPlayersAction,
 } from 'redux/slices/workshop';
-import { Request, Player, Token } from 'types/models'
+import { PlayerRequestType, Token, PlayerType } from 'types/models'
 
 type InfoPropsType = {
   getFSMPlayers: Function,
   getRequestMentor: Function,
   deleteRequestMentor: Function,
   accessToken: Token,
-  requests: Request,
-  players: Player,
+  requests: PlayerRequestType,
+  players: PlayerType[],
   createRequestMentor: Function,
   removeRequestMentor: Function,
 }

@@ -1,4 +1,7 @@
 import { SchoolStudentshipType, UserInfoType } from "./profile";
+import { WidgetType } from "./widgets/widget";
+
+export type PlayerRequestType = any;
 
 export type FileType = {
   id: string;
@@ -88,16 +91,17 @@ export type RegistrationReceiptType = {
   'StudentshipDataIncomplete';
 }
 
-export type Widget = any
-export type Request = any
-
 type PaperType = 'RegistrationForm';
 type AcceptingStatus = 'AutoAccept' | 'Manual';
 type AudienceType = 'Student' | 'Academic' | 'All';
 type FSMLearningType = 'Supervised' | 'Unsupervised';
 type FSMPType = 'Individual' | 'Team' | 'Hybrid';
 
-export type FSMType = {
+export type ContentType = {
+  has_entrance_lock?: boolean;
+}
+
+export type FSMType = ContentType & {
   players_count: number;
   is_mentor: boolean;
   id: string;
@@ -108,7 +112,6 @@ export type FSMType = {
   fsm_p_type: FSMPType | '';
   program: string;
   cover_page: string;
-  has_entrance_lock: boolean;
   is_active: boolean;
   is_visible: boolean;
   order_in_program: number;
@@ -135,7 +138,7 @@ export type RegistrationFormType = {
   paper_type: PaperType;
   since: string;
   till: string;
-  widgets: Widget;
+  widgets: WidgetType[];
 }
 export type Article = any
 export type Problem = any
@@ -145,7 +148,6 @@ export type FSMStateType = any;
 export type FSMEdgeType = any;
 export type Answer = any
 export type WorkshopEdge = any
-export type Player = any
 export type Token = any
 export type UserPublicInfoType = {
   username: string;
@@ -248,7 +250,9 @@ export type PurchaseType = {
 }
 
 export type PlayerType = {
+  user?: string;
   id: string;
   team: TeamType;
   current_state: FSMStateType;
+  last_visit?: string;
 }

@@ -3,7 +3,6 @@ import {
   Article,
   Problem,
   Submission,
-  Widget,
   FSMType,
 } from '../models'
 

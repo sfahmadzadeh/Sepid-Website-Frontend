@@ -1,8 +1,8 @@
+import { WidgetType } from 'types/widgets/widget';
 import {
   ProgramType, 
   Invitation, 
-  RegistrationReceiptType, 
-  Widget, 
+  RegistrationReceiptType,  
   TeamType, 
   RegistrationFormType,
   UploadedFile,
@@ -21,7 +21,7 @@ export type InitialState = {
   teamInvitations: Invitation[],
   allRegistrationReceipts: RegistrationReceiptType[],
   registrationReceipt: RegistrationReceiptType,
-  widgets: Widget,
+  widgets: WidgetType[],
   allProgramTeams: TeamType[],
   teamsRequests: object,
   myWorkshops: FSMType[],

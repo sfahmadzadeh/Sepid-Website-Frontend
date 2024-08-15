@@ -1,10 +1,10 @@
+import { WidgetType } from 'types/widgets/widget';
 import {
     FSMStateType,
     WorkshopEdge,
     TeamType,
-    Widget,
     Answer,
-    Player,
+    PlayerType,
     UserPublicInfoType,
     FSMType
 } from '../models'
@@ -20,10 +20,10 @@ export type InitialStateType = {
     workshop: FSMType,
     answers: Answer[],
     allWorkshops: FSMType[],
-    players: Player,
+    players: PlayerType[],
     allWorkshopMentors: UserPublicInfoType[],
 };
 
 type CurrentState = {
-    widgets: Widget[]
+    widgets: WidgetType[]
 }

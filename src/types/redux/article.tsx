@@ -1,5 +1,5 @@
+import { WidgetType } from 'types/widgets/widget';
 import {
-    Widget,
     Article,
     Problem,
     Submission,
@@ -14,7 +14,7 @@ export type ArticleType = {
 
 export type ArticlesInitialStateType = {
     isFetching: boolean;
-    widgets: Widget[];
+    widgets: WidgetType[];
     articles: Article[];
     teams: any; // TODO: fix this! because of teams: {} in another file. but I think it must be Array instead of object
     problems: Problem[];
