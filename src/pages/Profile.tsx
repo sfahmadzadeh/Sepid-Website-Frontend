@@ -1,4 +1,3 @@
-import { Stack } from '@mui/material';
 import React, { FC, Fragment } from 'react';
 
 import Layout from 'components/template/Layout';
