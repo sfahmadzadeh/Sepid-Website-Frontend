@@ -10,9 +10,10 @@ import {
   useGoForwardMutation,
   useMentorMoveForwardMutation,
 } from 'redux/features/program/PlayerSlice';
+import { EdgeType } from 'types/models';
 
 type FSMNextStateButtonPropsType = {
-  outwardEdges: any[]
+  outwardEdges: EdgeType[]
 }
 
 const FSMNextStateButton: FC<FSMNextStateButtonPropsType> = ({
@@ -21,7 +22,7 @@ const FSMNextStateButton: FC<FSMNextStateButtonPropsType> = ({
   const t = useTranslate();
   const [openChangeStateDialog, setOpenChangeStateDialog] = useState(false);
   const [selectedEdge, setSelectedEdge] = useState(null);
-  const { isMentor, teamId } = useContext(StatePageContext);
+  const { isMentor } = useContext(StatePageContext);
   const [goForward, goForwardResult] = useGoForwardMutation();
   const [mentorMoveForward, mentorMoveForwardResult] = useMentorMoveForwardMutation();
 
@@ -39,7 +40,7 @@ const FSMNextStateButton: FC<FSMNextStateButtonPropsType> = ({
         edgeId: edge.id,
       });
     } else {
-      if (edge.has_lock) {
+      if (edge.has_transition_lock) {
         setSelectedEdge(edge);
       } else {
         goForward({

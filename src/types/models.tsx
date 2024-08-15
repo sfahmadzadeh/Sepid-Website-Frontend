@@ -256,3 +256,9 @@ export type PlayerType = {
   current_state: FSMStateType;
   last_visit?: string;
 }
+
+export type EdgeType = {
+  id: string;
+  has_transition_lock?: boolean;
+  is_visible: boolean;
+}
