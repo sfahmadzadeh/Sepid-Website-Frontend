@@ -80,7 +80,7 @@ export const persianMessages = { //todo: handle english
   '4077': 'fsm can\'t have registration form when its program has registration form too',
   '4078': 'برای ورود به کارگاه‌های گروهی، باید ابتدا گروه تشکیل دهید.',
   '4079': 'no valid registration found for given fsm / program',
-  '4080': 'invalid key',
+  '4080': 'رمز ورود اشتباه است.',
   '4081': 'player history not found',
   '4082': 'player not found',
   '4083': 'player current state and edge tail/head must be the same to move forward/backward on edge',

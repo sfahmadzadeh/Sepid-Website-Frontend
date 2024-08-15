@@ -104,17 +104,6 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
           helperText={'کارگاه با اولویت نمایش بزرگ‌تر، زودتر در صفحه‌ی اصلی دوره نمایش داده می‌شود.'}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          value={data.lock || ''}
-          variant='outlined'
-          label={'رمز ورود'}
-          name='lock'
-          onChange={putData}
-          helperText={'رمزی که شرکت‌کنندگان برای ورود به کارگاه باید وارد کنند (اختیاری)'}
-        />
-      </Grid>
 
       <Grid item xs={12} sm={6}>
         <FormControlLabel

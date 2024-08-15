@@ -108,7 +108,7 @@ export type FSMType = {
   fsm_p_type: FSMPType | '';
   program: string;
   cover_page: string;
-  lock: string;
+  has_entrance_lock: boolean;
   is_active: boolean;
   is_visible: boolean;
   order_in_program: number;

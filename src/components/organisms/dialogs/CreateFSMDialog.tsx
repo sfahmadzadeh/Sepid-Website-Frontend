@@ -36,7 +36,6 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
     fsm_p_type: '',
     program: programId,
     cover_page: 'https://kamva-minio-storage.darkube.app/sepid/fsm-placeholder-image.png',
-    lock: '',
     is_active: true,
     is_visible: true,
   });

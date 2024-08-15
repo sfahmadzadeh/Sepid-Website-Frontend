@@ -70,7 +70,7 @@ export const FSMCard: FC<FSMCardPropsType> = ({
               }}>
 
               <Stack direction='row' alignSelf='center' marginTop='7px'>
-                <Box marginLeft='5px' marginRight='5px'>{fsm?.lock ? <Lock /> : <LockOpen />}</Box>
+                <Box marginLeft='5px' marginRight='5px'>{fsm?.has_entrance_lock ? <Lock /> : <LockOpen />}</Box>
                 {fsm?.fsm_p_type &&
                   <Typography>{fsm.fsm_p_type == 'Team' ? 'گروهی' : 'فردی'}</Typography>
                 }
@@ -131,7 +131,7 @@ export const FSMCard: FC<FSMCardPropsType> = ({
             color="primary"
             onClick={
               fsm.id ?
-                fsm?.lock
+                fsm?.has_entrance_lock
                   ? () => setOpenPassword(true)
                   : () => enterFSM({ fsmId: fsm.id })
                 : null
