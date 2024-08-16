@@ -39,7 +39,7 @@ const _sendWidgetAnswerAction = createAsyncThunkApi(
 
 export const sendBigAnswerAction = ({ questionId, text, onSuccess, onFailure }) =>
   _sendWidgetAnswerAction({
-    question_id: questionId,
+    question: questionId,
     text,
     answer_type: 'BigAnswer',
     onSuccess,
@@ -48,7 +48,7 @@ export const sendBigAnswerAction = ({ questionId, text, onSuccess, onFailure }) 
 
 export const sendSmallAnswerAction = ({ questionId, text, onSuccess, onFailure }) =>
   _sendWidgetAnswerAction({
-    question_id: questionId,
+    question: questionId,
     text,
     answer_type: 'SmallAnswer',
     onSuccess,
@@ -57,7 +57,7 @@ export const sendSmallAnswerAction = ({ questionId, text, onSuccess, onFailure }
 
 export const sendInviteeUsernameResponseAction = ({ questionId, username, onSuccess, onFailure }) =>
   _sendWidgetAnswerAction({
-    question_id: questionId,
+    question: questionId,
     username,
     answer_type: 'InviteeUsernameResponse',
     onSuccess,
@@ -66,7 +66,7 @@ export const sendInviteeUsernameResponseAction = ({ questionId, username, onSucc
 
 export const sendMultiChoiceAnswerAction = ({ questionId, selectedChoices, onSuccess, onFailure }) =>
   _sendWidgetAnswerAction({
-    question_id: questionId,
+    question: questionId,
     choices: selectedChoices,
     answer_type: 'MultiChoiceAnswer',
     onSuccess,
@@ -75,7 +75,7 @@ export const sendMultiChoiceAnswerAction = ({ questionId, selectedChoices, onSuc
 
 export const sendUploadFileAnswerAction = ({ questionId, answerFile, onSuccess, onFailure }) =>
   _sendWidgetAnswerAction({
-    question_id: questionId,
+    question: questionId,
     answer_file: answerFile,
     answer_type: 'UploadFileAnswer',
     onSuccess,

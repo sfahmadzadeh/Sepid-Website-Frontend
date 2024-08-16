@@ -53,7 +53,7 @@ const UploadFileProblemWidget: FC<UploadFileProblemWidgetPropsType> = ({
 
   const clearFile = (e) => {
     e.preventDefault();
-    clearQuestionAnswer({ question_id: questionId }).then((response) => {
+    clearQuestionAnswer({ question: questionId }).then((response) => {
       if (response.type?.endsWith('fulfilled')) {
         setFileLink('');
         onAnswerChange({ answer_file: '' });

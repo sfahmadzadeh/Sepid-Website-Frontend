@@ -7,8 +7,6 @@ import {
   createCommentUrl,
   getAnswerScoresAndCommentsUrl,
   setAnswerScoreUrl,
-  transactionUrl,
-  scoreTypeUrl,
 } from '../constants/urls';
 
 
@@ -60,28 +58,6 @@ export const createCommentAction = createAsyncThunkApi(
   }
 );
 
-export const getUserCurrentScoresAction = createAsyncThunkApi(
-  'scoring/getUserCurrentScoresAction',
-  Apis.POST,
-  transactionUrl({ actionUrl: 'get_user_current_scores' }),
-  {
-    defaultNotification: {
-      error: 'مشکلی در دریافت امتیازات وجود داشت',
-    },
-  }
-);
-
-export const getScoreTypesAction = createAsyncThunkApi(
-  'scoring/getScoreTypesAction',
-  Apis.GET,
-  scoreTypeUrl({ actionUrl: null }),
-  {
-    defaultNotification: {
-      error: 'مشکلی در دریافت انواع امتیازات وجود داشت',
-    },
-  }
-);
-
 const initialState = {
   scores: [],
   answer: null,
@@ -98,8 +74,8 @@ const isNotFetching = (state) => {
   state.isFetching = false;
 };
 
-const scoringSlice = createSlice({
-  name: 'scoring',
+const AssessmentSlice = createSlice({
+  name: 'assessment',
   initialState,
   reducers: {},
   extraReducers: {
@@ -127,16 +103,8 @@ const scoringSlice = createSlice({
       state.isFetching = false;
     },
     [createCommentAction.rejected.toString()]: isNotFetching,
-
-
-    [getUserCurrentScoresAction.pending.toString()]: isFetching,
-    [getUserCurrentScoresAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.scores = response;
-      state.isFetching = false;
-    },
-    [getUserCurrentScoresAction.rejected.toString()]: isNotFetching,
   },
 });
 
 
-export const { reducer: scoringReducer } = scoringSlice;
+export const { reducer: assessmentReducer } = AssessmentSlice;

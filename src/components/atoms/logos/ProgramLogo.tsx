@@ -2,7 +2,6 @@ import { Button, IconButton, Stack, Tooltip, Typography } from '@mui/material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useWidth from 'utils/UseWidth';
-import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 

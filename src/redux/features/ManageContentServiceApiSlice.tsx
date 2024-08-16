@@ -30,6 +30,7 @@ export const ManageContentServiceApi = createApi({
     'merchandises',
     'merchandise',
     'discount-codes',
+    'currencies',
   ],
   baseQuery: CustomBaseQuery({ baseUrl: MCS_URL + 'api/' }),
   endpoints: build => ({

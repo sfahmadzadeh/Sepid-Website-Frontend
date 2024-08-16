@@ -262,3 +262,22 @@ export type EdgeType = {
   has_transition_lock?: boolean;
   is_visible: boolean;
 }
+
+export type CurrencyType = any;
+
+
+export type Attribute = {
+
+}
+
+export type Cost = Attribute & {
+
+}
+
+export type Reward = Attribute & {
+
+}
+
+export type RequiredBalance = Attribute & {
+
+}

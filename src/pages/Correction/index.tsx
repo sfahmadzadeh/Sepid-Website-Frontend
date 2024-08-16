@@ -3,26 +3,30 @@ import {
   Paper,
   Typography,
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useParams } from 'react-router-dom';
 import Widget, { WidgetModes } from 'components/organisms/Widget';
 import {
   getAnswerAction,
   getScoresAndCommentsAction,
   setScoreAction,
-} from 'redux/slices/scoring';
+} from 'redux/slices/assessment';
 import Layout from 'components/template/Layout';
 import ScoringColumn from './ScoringColumn';
 import { useGetWidgetQuery } from 'redux/features/widget/WidgetSlice';
 
-function Correction({
+type CorrectionPropsType = {
+  getAnswer: any;
+  getScoresAndComments: any;
+  answer: any;
+}
+
+const Correction: FC<CorrectionPropsType> = ({
   getAnswer,
   getScoresAndComments,
   answer,
-}) {
-  const t = useTranslate();
+}) => {
   const { answerId } = useParams();
   const { data: widget } = useGetWidgetQuery({ widgetId: answer?.problem }, { skip: !Boolean(answer?.problem) });
 
@@ -67,8 +71,7 @@ function Correction({
 }
 
 const mapStateToProps = (state) => ({
-  answer: state.scoring.answer,
-  scores: state.scoring.scores,
+  answer: state.assessment.answer,
 });
 
 export default connect(mapStateToProps, {

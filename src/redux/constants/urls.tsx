@@ -115,10 +115,16 @@ export const answerCRUDUrl = ({ answerId }) => answerId ? `response/answers/${an
 export const sendWidgetAnswerUrl = `/response/answers/submit_answer/`;
 
 
-// scoring:
+// assessment:
 export const getAnswerScoresAndCommentsUrl = 'scoring/get_answer_scores_and_comments/';
 export const setAnswerScoreUrl = 'scoring/set_answer_score/';
 export const createCommentUrl = 'scoring/create_comment/';
+
+
+// attributes
+
+
+// bank
 export const transactionUrl = ({ actionUrl }) => actionUrl ? `scoring/transaction/${actionUrl}/` : 'scoring/transaction/';
 export const scoreTypeUrl = ({ actionUrl }) => actionUrl ? `scoring/score_type/${actionUrl}/` : 'scoring/score_type/';
 

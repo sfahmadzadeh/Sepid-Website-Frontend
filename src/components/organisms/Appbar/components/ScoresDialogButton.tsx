@@ -1,26 +1,20 @@
 import { Dialog, IconButton, Tooltip } from '@mui/material';
 import React, { FC, Fragment, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import {
-  getScoreTypesAction,
-} from 'redux/slices/scoring'
 import { useParams } from 'react-router-dom';
 import SportsScoreIcon from '@mui/icons-material/SportsScore';
 import UserCurrentScores from 'components/organisms/lists/UserCurrentScores';
+import { useGetCurrenciesQuery } from 'redux/features/attributes/AttributesSlice';
+import { useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 
-type ScoreDialogButtonPropsType = {
-  getScoreTypes: any;
+type ScoresDialogButtonPropsType = {
 }
 
-const ScoreDialogButton: FC<ScoreDialogButtonPropsType> = ({
-  getScoreTypes,
+const ScoresDialogButton: FC<ScoresDialogButtonPropsType> = ({
 }) => {
   const [openScoresDialog, setOpenScoresDialog] = useState(false);
   const { programId } = useParams();
-
-  useEffect(() => {
-    getScoreTypes({ program_id: programId })
-  }, [])
+  const { data: website } = useGetWebsiteQuery();
+  const { data: currencies } = useGetCurrenciesQuery({ website: website.name }, { skip: !Boolean(website) });
 
   return (
     <Fragment>
@@ -37,6 +31,4 @@ const ScoreDialogButton: FC<ScoreDialogButtonPropsType> = ({
   );
 }
 
-export default connect(null, {
-  getScoreTypes: getScoreTypesAction,
-})(ScoreDialogButton);
+export default ScoresDialogButton;

@@ -14,18 +14,18 @@ import {
   createCommentAction,
   getAnswerAction,
   setScoreAction,
-} from 'redux/slices/scoring';
+} from 'redux/slices/assessment';
 
 function Index({
   setScore,
   createComment,
-  scores,
   comments,
 }) {
   const t = useTranslate();
   const { answerId } = useParams();
   const [scoreValues, setScoreValues] = useState({});
   const [commentContent, setCommentContent] = useState('');
+  const scores = [];
 
   useEffect(() => {
     if (scores) {
@@ -92,8 +92,7 @@ function Index({
 }
 
 const mapStateToProps = (state) => ({
-  comments: state.scoring.comments,
-  scores: state.scoring.scores,
+  comments: state.assessment.comments,
 });
 
 export default connect(mapStateToProps, {

@@ -1,10 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { requestMentor } from 'parse/mentor'
-import { Apis } from 'redux/apis'
-import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk'
-import {
-  getScoresUrl
-} from '../constants/urls'
 
 export const requestMentorAction = createAsyncThunk(
   'requestMentor',
@@ -19,15 +14,6 @@ export const requestMentorAction = createAsyncThunk(
         message: 'یه مشکلی وجود داره. یه چند لحظه دیگه دوباره تلاش کن!'
       })
     }
-  }
-)
-
-export const getScoresAction = createAsyncThunkApi(
-  'player/getScore',
-  Apis.POST,
-  getScoresUrl,
-  {
-    bodyCreator: ({ fsmId, playerId }) => ({ fsm: fsmId, player: playerId })
   }
 )
 
@@ -48,12 +34,7 @@ const currentStateSlice = createSlice({
       state.openChatRoom = !state.openChatRoom
     }
   },
-  extraReducers: {
-    [getScoresAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.scores = response.score_transactions
-      state.totalScore = response.scores_sum
-    }
-  }
+  extraReducers: {}
 })
 
 export const { changeOpenChatRoom: changeOpenChatRoomAction } =

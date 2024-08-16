@@ -1,5 +1,10 @@
 import { Box, Divider, IconButton, Paper, Stack, Typography, Tooltip } from '@mui/material';
-import { Delete as DeleteIcon, Edit as EditIcon, Help as HelpIcon } from '@mui/icons-material';
+import {
+  Delete as DeleteIcon,
+  Edit as EditIcon,
+  Help as HelpIcon,
+  Label as LabelIcon,
+} from '@mui/icons-material';
 import React, { FC, Fragment, useMemo, useState } from 'react';
 
 import DeleteWidgetDialog from 'components/organisms/dialogs/DeleteWidgetDialog';
@@ -10,6 +15,7 @@ import CostDialog from '../dialogs/CostDialog';
 import { AnswerType } from 'types/models';
 import { WidgetType } from 'types/widgets/widget';
 import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
+import CreateAttributeDialog from '../dialogs/CreateAttributeDialog';
 
 export enum WidgetModes {
   Create,
@@ -49,6 +55,7 @@ const Widget: FC<WidgetPropsType> = ({
   collectAnswer,
   submittedAnswer,
 }) => {
+  const [openAddAttributeDialog, setAddAttributeDialogOpen] = useState(false);
   const [openDeleteWidgetDialog, setOpenDeleteWidgetDialog] = useState(false);
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [openEditHintDialog, setEditHintDialog] = useState(false);
@@ -107,6 +114,11 @@ const Widget: FC<WidgetPropsType> = ({
                   {widget.name}
                 </Typography>
                 <Box>
+                  <Tooltip title='خصیصه‌ها' arrow>
+                    <IconButton size='small' onClick={() => setAddAttributeDialogOpen(true)}>
+                      <LabelIcon />
+                    </IconButton>
+                  </Tooltip>
                   <Tooltip title='راهنمایی‌ها' arrow>
                     <IconButton size='small' onClick={() => setEditHintDialog(true)}>
                       <HelpIcon />
@@ -156,6 +168,7 @@ const Widget: FC<WidgetPropsType> = ({
       {cost &&
         <CostDialog cost={cost} callBackFunction={onSubmit} open={showCostDialog} handleClose={() => setShowCostDialog(showCostDialog => !showCostDialog)} />
       }
+      <CreateAttributeDialog open={openAddAttributeDialog} handleClose={() => setAddAttributeDialogOpen(!openAddAttributeDialog)} />
     </Fragment>
   );
 };

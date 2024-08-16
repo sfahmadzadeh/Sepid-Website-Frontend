@@ -5,11 +5,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { FC, Fragment } from 'react';
-import { connect } from 'react-redux';
-import {
-  getUserCurrentScoresAction
-} from 'redux/slices/scoring';
+import React, { FC } from 'react';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import { MessageType } from 'types/models';
 import NotificationListItem from 'components/molecules/listItems/NotificationListItem';
