@@ -108,8 +108,8 @@ const useRegistrationSteps = ({
       if (['Waiting', 'Rejected'].includes(registrationReceipt.status)) {
         goToStep(getStepIndex('status'));
       }
-      if (!program?.is_free && registrationReceipt?.status === 'Accepted') {
-        goToStep(getStepIndex('school-setting'));
+      if (!program.is_free && registrationReceipt?.status === 'Accepted') {
+        goToStep(getStepIndex('payment'));
       }
       setIsFirstRender(false);
     }

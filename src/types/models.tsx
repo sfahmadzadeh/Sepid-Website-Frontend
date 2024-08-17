@@ -88,6 +88,7 @@ export type RegistrationReceiptType = {
   'NotRegistered' |
   'NotStarted' |
   'GradeNotAvailable' |
+  'GradeNotSuitable' |  
   'StudentshipDataIncomplete';
 }
 
