@@ -134,7 +134,7 @@ const SchoolSettingInfoForm: FC<SchoolSettingInfoFormPropsType> = ({
         </Grid>
         <Grid item xs={12} sm={6}>
           <Stack direction={'row'} justifyContent={'space-between'}>
-            <Typography variant='h5'>
+            <Typography variant='subtitle2'>
               {'مدرکی را برای تایید اطلاعات تحصیلی خود بارگذاری کنید*'}
             </Typography>
             <Stack spacing={1}>
