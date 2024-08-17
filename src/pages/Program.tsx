@@ -19,13 +19,16 @@ const Program: FC<ProgramPropsType> = ({ }) => {
   const { data: website } = useGetWebsiteQuery();
   const {
     data: registrationReceipt,
+    isSuccess: isGettingRegistrationReceiptSuccess,
     isFetching: isGettingRegistrationReceiptFetching,
   } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
   useEffect(() => {
-    if (!isGettingRegistrationReceiptFetching && !registrationReceipt?.is_participating) {
-      navigate(`/program/${programId}/form/`);
+    if (isGettingRegistrationReceiptSuccess) {
+      if (!isGettingRegistrationReceiptFetching && !registrationReceipt?.is_participating) {
+        navigate(`/program/${programId}/form/`);
+      }
     }
   }, [registrationReceipt])
 
