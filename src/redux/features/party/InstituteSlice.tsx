@@ -15,7 +15,7 @@ type CreateInstituteOutputType = InstituteType;
 export const ProfileSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getSchools: builder.query<GetInstitutesOutputType, GetInstitutesInputType>({
-      providesTags: ['schools'],
+      providesTags: ['institutes', 'schools'],
       query: ({ city, gender_type }) => ({
         url: `auth/schools/?city=${city}&gender_type=${gender_type}`,
         method: 'GET',

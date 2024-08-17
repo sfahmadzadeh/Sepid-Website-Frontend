@@ -51,6 +51,8 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
 
   if (!userProfile || !schoolStudentship) return null;
 
+  console.log(schoolStudentship)
+
   const submitSchoolStudentship = () => {
     if (!hasUserCompletedStudentshipInformation(schoolStudentship)) {
       toast.error('لطفاً همه‌ی اطلاعات خواسته‌شده را وارد کنید');
