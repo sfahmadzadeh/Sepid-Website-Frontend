@@ -24,7 +24,7 @@ const Program: FC<ProgramPropsType> = ({ }) => {
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
   useEffect(() => {
-    if (!isGettingRegistrationReceiptFetching && !registrationReceipt.is_participating) {
+    if (!isGettingRegistrationReceiptFetching && !registrationReceipt?.is_participating) {
       navigate(`/program/${programId}/form/`);
     }
   }, [registrationReceipt])
