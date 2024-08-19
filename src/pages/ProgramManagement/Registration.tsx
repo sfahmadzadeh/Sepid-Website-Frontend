@@ -7,13 +7,13 @@ import { toast } from 'react-toastify';
 import { deepEqual } from 'utils/ObjectEqualityChecker';
 
 type RegistrationPropsType = {
-  formId: any;
+  registrationFormId: any;
 }
 
 const Registration: FC<RegistrationPropsType> = ({
-  formId,
+  registrationFormId,
 }) => {
-  const { data: registrationForm, isSuccess } = useGetFormQuery({ formId }, { skip: !Boolean(formId) });
+  const { data: registrationForm, isSuccess } = useGetFormQuery({ formId: registrationFormId }, { skip: !Boolean(registrationFormId) });
   const [form, setForm] = useState(registrationForm)
   const [updateForm, result] = useUpdateFormMutation();
 
@@ -55,7 +55,7 @@ const Registration: FC<RegistrationPropsType> = ({
         <Typography variant='h2' gutterBottom>
           {'فرم ثبت‌نام'}
         </Typography>
-        <EditPaper paperId={formId} />
+        <EditPaper paperId={registrationFormId} />
       </Stack>
     </Stack>
   );
