@@ -7,24 +7,24 @@ import {
 import React, { FC, useEffect } from 'react';
 import RegisterUsersViaExcelInProgram from './RegisterUsersViaExcelInProgram';
 import RegisterUserInProgram from './RegisterUserInProgram';
-import AnswerSheetTable from 'components/organisms/tables/AnswerSheet';
+import RegistrationReceiptsTable from 'components/organisms/tables/RegistrationReceipts';
 import { useGetFormRespondentsAnswersMutation } from 'redux/features/report/ReportSlice';
 import downloadFromURL from 'utils/downloadFromURL';
 import { MEDIA_BASE_URL } from 'configs/Constants';
 import isValidURL from 'utils/validators/urlValidator';
 
 type RegistrationReceiptsPropsType = {
-  formId: string;
+  registrationFormId: string;
 }
 
 const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
-  formId,
+  registrationFormId,
 }) => {
 
   const [getFormRespondentsAnswers, result] = useGetFormRespondentsAnswersMutation();
 
   const downloadExcelExport = () => {
-    getFormRespondentsAnswers({ formId })
+    getFormRespondentsAnswers({ formId: registrationFormId })
   }
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
             {'خروجی اکسل'}
           </Button>
         </Stack>
-        <AnswerSheetTable formId={formId} />
+        <RegistrationReceiptsTable registrationFormId={registrationFormId} />
       </Stack>
     </Stack>
   );

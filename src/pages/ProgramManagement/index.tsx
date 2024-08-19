@@ -115,8 +115,8 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab || !program) return null;
-  // todo: it is not necessary to pass formId to other tabs components
-  const TabComponent = <currentTab.component formId={program.registration_form} />;
+  // todo: it is not necessary to pass registrationFormId to other tabs components
+  const TabComponent = <currentTab.component registrationFormId={program.registration_form} />;
 
   return (
     <Layout appbarMode='PROGRAM'>

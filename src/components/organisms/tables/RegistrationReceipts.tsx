@@ -15,26 +15,27 @@ const STATUS = {
   Rejected: 'رد‌شده',
 }
 
-type AnswerSheetTablePropsType = {
-  formId: string;
+type RegistrationReceiptsTablePropsType = {
+  registrationFormId: string;
 }
 
-const AnswerSheetTable: FC<AnswerSheetTablePropsType> = ({
-  formId,
+const RegistrationReceiptsTable: FC<RegistrationReceiptsTablePropsType> = ({
+  registrationFormId,
 }) => {
   const [page, setPage] = React.useState(1);
   const [selectedReceiptId, setSelectedReceiptId] = useState<string>(null);
   const { data: allRegistrationReceipts } = useGetFormAnswerSheetsQuery({
-    formId: formId,
+    formId: registrationFormId,
     pageNumber: page.toString()
   }, {
-    skip: !formId,
+    skip: !registrationFormId,
   });
   const [deleteReceipt, result] = useDeleteReceiptMutation();
 
   return (
     <Fragment>
       <SimpleTable
+        hideRowNumbersColumn={true}
         headers={[
           { name: 'id', label: 'شناسه' },
           { name: 'name', label: 'نام' },
@@ -69,4 +70,4 @@ const AnswerSheetTable: FC<AnswerSheetTablePropsType> = ({
   );
 }
 
-export default AnswerSheetTable;
+export default RegistrationReceiptsTable;

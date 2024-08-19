@@ -20,6 +20,7 @@ type SimpleTablePropsType = {
   itemsPerPage?: number;
   page?: number;
   setPage?: Function;
+  hideRowNumbersColumn?: boolean;
 }
 
 const SimpleTable: FC<SimpleTablePropsType> = ({
@@ -29,6 +30,7 @@ const SimpleTable: FC<SimpleTablePropsType> = ({
   itemsPerPage,
   page,
   setPage,
+  hideRowNumbersColumn,
 }) => {
 
   return (
@@ -49,7 +51,9 @@ const SimpleTable: FC<SimpleTablePropsType> = ({
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align='center'>ردیف</TableCell>
+              {!hideRowNumbersColumn &&
+                <TableCell align='center'>ردیف</TableCell>
+              }
               {headers.map((header) =>
                 <TableCell key={header.name} align='center'>{header.label}</TableCell>
               )}
@@ -58,9 +62,11 @@ const SimpleTable: FC<SimpleTablePropsType> = ({
           <TableBody>
             {rows?.map((row, index) =>
               <TableRow key={index}>
-                <TableCell align='center'>
-                  {index + 1}
-                </TableCell>
+                {!hideRowNumbersColumn &&
+                  <TableCell align='center'>
+                    {index + 1}
+                  </TableCell>
+                }
                 {headers.map((header, index) =>
                   <TableCell key={index} align='center'>
                     {row[header.name] || '-'}
