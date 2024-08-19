@@ -23,7 +23,7 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
 
   const [getFormRespondentsAnswers, result] = useGetFormRespondentsAnswersMutation();
 
-  const downloadCSVExport = () => {
+  const downloadExcelExport = () => {
     getFormRespondentsAnswers({ formId })
   }
 
@@ -42,13 +42,11 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
       <Stack padding={2} spacing={2}>
         <RegisterOneUser />
       </Stack>
-
       <Divider />
 
       <Stack padding={2} spacing={2}>
         <RegisterUsersViaCSV />
       </Stack>
-
       <Divider />
 
       <Stack spacing={2}>
@@ -56,7 +54,7 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
           <Typography variant='h2' gutterBottom>
             {'شرکت‌کنندگان'}
           </Typography>
-          <Button variant='contained' onClick={downloadCSVExport} disabled={result.isLoading}>
+          <Button variant='contained' onClick={downloadExcelExport} disabled={result.isLoading}>
             {'خروجی اکسل'}
           </Button>
         </Stack>

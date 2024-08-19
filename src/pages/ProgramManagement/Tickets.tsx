@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
-import React, { FC, Fragment, useState } from 'react';
+import React, { FC, Fragment, useEffect, useState } from 'react';
 import { toPersianNumber } from 'utils/translateNumber';
 import { useParams } from 'react-router-dom';
 import EditMerchandise from 'components/organisms/EditMerchandise';
@@ -21,6 +21,11 @@ import CreateMerchandiseDialog from 'components/organisms/dialogs/CreateMerchand
 import { useGetProgramMerchandisesQuery } from 'redux/features/sales/Merchandise';
 import { useDeleteDiscountCodeMutation, useGetProgramDiscountCodesQuery } from 'redux/features/sales/DiscountCode';
 import CreateDiscountCodeDialog from 'components/organisms/dialogs/CreateDiscountCodeDialog';
+import { useGetProgramMerchandisesPurchasesMutation } from 'redux/features/report/ReportSlice';
+import { MEDIA_BASE_URL } from 'configs/Constants';
+import isValidURL from 'utils/validators/urlValidator';
+import downloadFromURL from 'utils/downloadFromURL';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type TicketsTabPropsType = {
 }
@@ -33,11 +38,29 @@ const Tickets: FC<TicketsTabPropsType> = ({
   const [isCreateDiscountCodeDialogOpen, setCreateDiscountCodeDialogOpen] = useState(false);
   const { data: merchandises } = useGetProgramMerchandisesQuery({ programId });
   const { data: discountCodes } = useGetProgramDiscountCodesQuery({ programId });
-  const [deleteDiscountCode, result] = useDeleteDiscountCodeMutation();
+  const [deleteDiscountCode] = useDeleteDiscountCodeMutation();
+  const { data: program } = useGetProgramQuery({ programId });
 
   const handleDeleteDiscountCode = (discountCodeId) => {
     deleteDiscountCode({ discountCodeId })
   }
+
+  const [getProgramMerchandisesPurchases, getExcelResult] = useGetProgramMerchandisesPurchasesMutation();
+
+  const downloadExcelExport = () => {
+    // todo: EHSAN: it should not be registration_form_id
+    getProgramMerchandisesPurchases({ programId: program.registration_form })
+  }
+
+  useEffect(() => {
+    if (getExcelResult.isSuccess) {
+      let url = getExcelResult.data.file;
+      if (!isValidURL(url)) {
+        url = `${MEDIA_BASE_URL}${getExcelResult.data.file}`;
+      }
+      downloadFromURL(url, `registrants-answers.xlsx`);
+    }
+  }, [getExcelResult])
 
   return (
     <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
@@ -66,6 +89,23 @@ const Tickets: FC<TicketsTabPropsType> = ({
       </Stack>
 
       <Divider />
+
+      <Stack padding={2} spacing={2}>
+        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'start'}>
+          <Typography variant='h2' gutterBottom>
+            {'بلیط‌های خریداری‌شده'}
+          </Typography>
+          <Fragment>
+            <Button variant='contained' onClick={downloadExcelExport} disabled={getExcelResult.isLoading}>
+              {'خروجی اکسل'}
+            </Button>
+            <CreateMerchandiseDialog open={isCreateMerchandiseDialogOpen} handleClose={() => setCreateMerchandiseDialogOpen(false)} />
+          </Fragment>
+        </Stack>
+      </Stack>
+
+      <Divider />
+
 
       <Stack>
         <Stack padding={2} paddingBottom={0} direction={'row'} alignItems={'start'} justifyContent={'space-between'}>

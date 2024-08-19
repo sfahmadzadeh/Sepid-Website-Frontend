@@ -1,4 +1,4 @@
-import { FileType, ProgramType } from 'types/models';
+import { FileType } from 'types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type GetFormRespondentsInfoInputType = {
@@ -12,6 +12,12 @@ type GetFormRespondentsAnswersInputType = {
 }
 
 type GetFormRespondentsAnswersOutputType = FileType;
+
+type GetProgramMerchandisesPurchasesInputType = {
+  programId: string;
+}
+
+type GetProgramMerchandisesPurchasesOutputType = FileType;
 
 export const ReportSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
@@ -38,10 +44,22 @@ export const ReportSlice = ManageContentServiceApi.injectEndpoints({
       }),
     }),
 
+    getProgramMerchandisesPurchases: builder.mutation<GetProgramMerchandisesPurchasesOutputType, GetProgramMerchandisesPurchasesInputType>({
+      invalidatesTags: ['programs'],
+      query: ({ programId }) => ({
+        url: `/report/program-merchandises-purchases/`,
+        method: 'POST',
+        body: {
+          program_id: programId
+        },
+      }),
+    }),
+
   })
 });
 
 export const {
   useGetFormRespondentsInfoMutation,
   useGetFormRespondentsAnswersMutation,
+  useGetProgramMerchandisesPurchasesMutation
 } = ReportSlice;
