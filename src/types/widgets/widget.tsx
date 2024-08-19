@@ -20,4 +20,5 @@ export type WidgetType = {
   cost: any;
   reward: any;
   hints: HintType[];
+  is_hidden: boolean;
 };

@@ -1,4 +1,5 @@
 import {
+  Box,
   FormControlLabel,
   Switch,
 } from '@mui/material';
@@ -17,15 +18,34 @@ const EditQuestionWidgetFields: FC<EditQuestionWidgetFieldsPropsType> = ({
 
   return (
     <Fragment>
+      <Box paddingTop={2} />
       <FormControlLabel
-        sx={{ paddingTop: 2 }}
         name='is_required'
         checked={fields.is_required}
-        onChange={() => setFields({
-          is_required: !fields.is_required,
-        })}
+        onChange={() => {
+          const isRequiredNewValue = !fields.is_required;
+          setFields({
+            ...fields,
+            is_required: isRequiredNewValue,
+            is_hidden: isRequiredNewValue ? false : fields.is_hidden,
+          })
+        }}
         control={<Switch color="primary" />}
         label="پاسخ به سوال اجباری باشد"
+        labelPlacement='start' />
+      <FormControlLabel
+        name='is_hidden'
+        checked={fields.is_hidden}
+        onChange={() => {
+          const isHiddenNewValue = !fields.is_hidden;
+          setFields({
+            ...fields,
+            is_hidden: isHiddenNewValue,
+            is_required: isHiddenNewValue ? false : fields.is_required,
+          })
+        }}
+        control={<Switch color="primary" />}
+        label="پنهان‌کردن ویجت"
         labelPlacement='start' />
     </Fragment>
   );
