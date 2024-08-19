@@ -23,8 +23,8 @@ type SchoolSettingPropsType = {
 }
 
 const hasUserCompletedStudentshipInformation = (schoolStudentship) => {
-  const { grade, school, document } = schoolStudentship;
-  return grade && school && document;
+  const { grade, school } = schoolStudentship;
+  return grade && school;
 }
 
 const SchoolSetting: FC<SchoolSettingPropsType> = ({
