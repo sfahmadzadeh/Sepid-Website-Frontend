@@ -16,10 +16,11 @@ const AnswerSheetPaper: FC<AnswerSheetPaperPropsType> = ({
   answers,
 }) => {
   const { data: paper } = useGetPaperQuery({ paperId }, { skip: !paperId });
+  const visibleWidgets = paper?.widgets.filter(widget => !widget.is_hidden)
 
   return (
     <Fragment>
-      {paper?.widgets?.map((widget) => (
+      {visibleWidgets?.map((widget) => (
         <Widget
           submittedAnswer={answers?.find(answer => answer.problem === widget.id)}
           key={widget.id}

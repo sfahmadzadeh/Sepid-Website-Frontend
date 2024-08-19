@@ -17,6 +17,7 @@ const Paper: FC<PaperPropsType> = (props) => {
   if (props.mode === 'answer_sheet') {
     return <AnswerSheetPaper {...props} />
   }
+  // todo: add FSM state here
 };
 
 export { EditPaper };

@@ -30,10 +30,12 @@ const GeneralPaper: FC<GeneralPaperPropsType> = ({
     );
   }
   widgets = widgets || [];
+  const visibleWidgets = widgets.filter(widget => !widget.is_hidden)
+
 
   return (
     <Fragment>
-      {widgets.map((widget) => (
+      {visibleWidgets.map((widget) => (
         <Widget
           key={widget.id}
           paperId={paper?.id}

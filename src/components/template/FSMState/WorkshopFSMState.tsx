@@ -6,7 +6,6 @@ import FSMNextStateButton from 'components/atoms/FSMNextStateButton';
 import FSMStateRoadMap from 'components/organisms/FSMStateRoadMap';
 import FSMStateHelpButton from 'components/molecules/FSMStateHelpButton';
 import { useGetPaperQuery } from 'redux/features/paper/PaperSlice';
-import { FSMStateType } from 'types/models';
 import { useGetFSMStateQuery } from 'redux/features/fsm/FSMStateSlice';
 
 export type WorkshopFSMStatePropsType = {
@@ -19,15 +18,15 @@ const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ stateId, playerId }) 
   const { data: paper } = useGetPaperQuery({ paperId: stateId }, { skip: !stateId });
   const { data: state } = useGetFSMStateQuery({ fsmStateId: stateId })
 
-  const widgets = [...(paper?.widgets || [])];
+  const visibleWidgets = paper?.widgets.filter(widget => !widget.is_hidden) || []
   const hints = [...(state?.hints || [])];
   const inward_edges = state?.inward_edges || [];
   const outward_edges = state?.outward_edges || [];
 
   hints.sort((a, b) => a.id - b.id);
-  widgets.sort((a, b) => a.id - b.id);
+  visibleWidgets.sort((a, b) => a.id - b.id);
 
-  const questions = widgets.filter((widget) =>
+  const questions = visibleWidgets.filter((widget) =>
     widget.widget_type.includes('Problem')
   );
 
@@ -39,7 +38,7 @@ const WorkshopFSMState: FC<WorkshopFSMStatePropsType> = ({ stateId, playerId }) 
       </Stack>
     )), [questions]);
 
-  const notQuestions = widgets.filter(
+  const notQuestions = visibleWidgets.filter(
     (widget) => !widget.widget_type.includes('Problem')
   );
 

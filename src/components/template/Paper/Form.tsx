@@ -36,10 +36,11 @@ const FormPaper: FC<FormPaperPropsType> = ({
     );
   }
   widgets = widgets || [];
+  const visibleWidgets = widgets.filter(widget => !widget.is_hidden)
 
   return (
     <Fragment>
-      {widgets.map((widget) => (
+      {visibleWidgets.map((widget) => (
         <Widget
           collectAnswer={getAnswerCollector({ widgetId: widget.id, widgetType: widget.widget_type })}
           key={widget.id}
