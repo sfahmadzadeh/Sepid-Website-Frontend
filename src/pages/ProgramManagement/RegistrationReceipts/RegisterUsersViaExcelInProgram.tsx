@@ -14,11 +14,11 @@ import {
 } from 'redux/slices/programs';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
-type RegisterUsersViaCSVPropsType = {
+type RegisterUsersViaExcelInProgramPropsType = {
   registerUsersViaCSV: any;
 }
 
-const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
+const RegisterUsersViaExcelInProgram: FC<RegisterUsersViaExcelInProgramPropsType> = ({
   registerUsersViaCSV,
 }) => {
   const { programId } = useParams();
@@ -109,4 +109,4 @@ const RegisterUsersViaCSV: FC<RegisterUsersViaCSVPropsType> = ({
 
 export default connect(null, {
   registerUsersViaCSV: registerUsersViaCSVAction,
-})(RegisterUsersViaCSV);
+})(RegisterUsersViaExcelInProgram);

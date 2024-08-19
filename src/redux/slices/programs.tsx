@@ -9,7 +9,6 @@ import {
   getMyInvitationsUrl,
   getTeamInvitationsUrl,
   getTeamUrl,
-  registerOneUserUrl,
   inviteSomeoneUrl,
   paymentRequestUrl,
   respondInvitationUrl,
@@ -205,18 +204,6 @@ export const registerUsersViaCSVAction = createAsyncThunkApi(
     defaultNotification: {
       success: 'کاربران در دست افزودن قرار گرفتند...',
       error: 'اشکالی در افزودن کاربران وجود داشت.'
-    },
-  }
-);
-
-export const registerOneUserAction = createAsyncThunkApi(
-  'programs/registerOneUserAction',
-  Apis.POST,
-  registerOneUserUrl,
-  {
-    defaultNotification: {
-      success: 'کاربر با موفقیت ثبت‌نام شد.',
-      error: 'اشکالی در ثبت‌نام کاربر وجود داشت.'
     },
   }
 );

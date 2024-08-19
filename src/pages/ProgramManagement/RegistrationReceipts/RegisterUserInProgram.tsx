@@ -5,14 +5,36 @@ import {
   Button,
   TextField,
 } from '@mui/material';
-import React, { useState, FC } from 'react';
+import React, { useState, FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useGetProgramQuery, useRegisterUserInProgramMutation } from 'redux/features/program/ProgramSlice';
 
-type AddOneUserPropsType = {}
+type RegisterUserInProgramPropsType = {}
 
-const RegisterOneUser: FC<AddOneUserPropsType> = ({ }) => {
+const RegisterUserInProgram: FC<RegisterUserInProgramPropsType> = ({ }) => {
+  const { programId } = useParams();
   const [username, setUsername] = useState<string>('');
+  const [_registerUserInProgram, result] = useRegisterUserInProgramMutation();
+  const { data: program } = useGetProgramQuery({ programId });
 
+  const registerUserInProgram = () => {
+    if (!username) {
+      toast.error('لطفاً نام کاربری کاربر را وارد کنید.');
+      return;
+    }
+    _registerUserInProgram({
+      registrationFormId: program.registration_form,
+      username,
+    })
+  }
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      toast.success('کاربر با موفقیت به دوره اضافه شد.');
+      setUsername('');
+    }
+  }, [result])
 
   return (
     <Stack spacing={2}>
@@ -40,7 +62,7 @@ const RegisterOneUser: FC<AddOneUserPropsType> = ({ }) => {
               fullWidth
               variant="contained"
               color="primary"
-              onClick={() => toast.info('این فیچر در دست پیاده‌سازی است!')}>
+              onClick={registerUserInProgram}>
               {'ثبت‌نام کاربر جدید'}
             </Button>
           </Grid>
@@ -50,4 +72,4 @@ const RegisterOneUser: FC<AddOneUserPropsType> = ({ }) => {
   );
 }
 
-export default RegisterOneUser;
+export default RegisterUserInProgram;

@@ -102,20 +102,15 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
       query: ({ programId }) => `fsm/program/${programId}/soft_delete/`
     }),
 
-    getProgramPermission: builder.query<GetProgramPermissionOutputType, GetProgramPermissionInputType>({
-      providesTags: ['program'],
-      query: ({ programId }) => `fsm/program/${programId}/permission/`,
-      transformResponse: (response: any): GetProgramPermissionOutputType => {
-        return response;
-      },
-    }),
-
-    getProgramsPermissions: builder.query<GetProgramsPermissionsOutputType, GetProgramsPermissionsInputType>({
-      providesTags: ['programs'],
-      query: ({ websiteName, pageNumber }) => `fsm/program/permissions/?website=${websiteName}&page=${pageNumber}`,
-      transformResponse: (response: any): GetProgramsPermissionsOutputType => {
-        return response;
-      },
+    registerUserInProgram: builder.mutation<any, { registrationFormId: string, username: string }>({
+      invalidatesTags: ['receipts'],
+      query: ({ registrationFormId, username }) => ({
+        url: `fsm/registration_form_admin/${registrationFormId}/register_user_in_program/`,
+        method: 'POST',
+        body: {
+          username,
+        },
+      }),
     }),
   })
 });
@@ -126,6 +121,5 @@ export const {
   useUpdateProgramMutation,
   useCreateProgramMutation,
   useSoftDeleteProgramMutation,
-  useGetProgramPermissionQuery,
-  useGetProgramsPermissionsQuery,
+  useRegisterUserInProgramMutation,
 } = ProgramSlice;

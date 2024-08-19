@@ -77,7 +77,6 @@ export const removeFromTeamUrl = '/fsm/team/remove_from_team/';
 export const addUserToTeamUrl = ({ teamId }) => `fsm/team/${teamId}/register_and_join/`
 export const createTeamUrl = 'fsm/team/';
 export const registerUsersViaCSVUrl = ({ registrationFormId }) => `fsm/registration_form_admin/${registrationFormId}/register_participants_via_list/`;
-export const registerOneUserUrl = ({ registrationFormId }) => `fsm/registration_form_admin/${registrationFormId}/register_individual_participant/`;
 
 // program:
 export const teamCRUDUrl = ({ teamId }) => teamId ? `fsm/team/${teamId}/` : 'fsm/team/';

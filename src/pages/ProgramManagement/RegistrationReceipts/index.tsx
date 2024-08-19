@@ -5,8 +5,8 @@ import {
   Typography,
 } from '@mui/material';
 import React, { FC, useEffect } from 'react';
-import RegisterUsersViaCSV from './RegisterUsersViaCSV';
-import RegisterOneUser from './RegisterOneUser';
+import RegisterUsersViaExcelInProgram from './RegisterUsersViaExcelInProgram';
+import RegisterUserInProgram from './RegisterUserInProgram';
 import AnswerSheetTable from 'components/organisms/tables/AnswerSheet';
 import { useGetFormRespondentsAnswersMutation } from 'redux/features/report/ReportSlice';
 import downloadFromURL from 'utils/downloadFromURL';
@@ -40,12 +40,12 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
   return (
     <Stack spacing={2} alignItems={'stretch'} justifyContent={'center'}>
       <Stack padding={2} spacing={2}>
-        <RegisterOneUser />
+        <RegisterUserInProgram />
       </Stack>
       <Divider />
 
       <Stack padding={2} spacing={2}>
-        <RegisterUsersViaCSV />
+        <RegisterUsersViaExcelInProgram />
       </Stack>
       <Divider />
 
