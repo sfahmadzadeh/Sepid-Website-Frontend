@@ -23,7 +23,7 @@ const CreateAttributeDialog: FC<CreateAttributeDialogPropsType> = ({
 
   return (
     <Dialog disableScrollLock open={open} maxWidth="md">
-      <DialogTitle>{'افزودن خصیصه جدید'}</DialogTitle>
+      <DialogTitle>{'ویژگی‌ها'}</DialogTitle>
       <DialogContent>
 
       </DialogContent>

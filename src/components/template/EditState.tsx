@@ -102,6 +102,10 @@ const EditState: FC<EditStatePropsType> = ({
         </Typography>
         <Divider />
         <EditPaper paperId={fsmStateId} mode='contents' />
+        <Typography variant="h2" gutterBottom>
+          {'راهنمایی‌ها'}
+        </Typography>
+        <Divider />
         <EditHints paperId={fsmStateId} hints={fsmState?.hints} type='state' referenceId={fsmStateId} />
       </Stack >
       <CreateWidgetDialog

@@ -9,6 +9,7 @@ import CreateWidgetDialog from 'components/organisms/dialogs/CreateWidgetDialog'
 import { toPersianNumber } from 'utils/translateNumber';
 import { EditPaper } from './Paper';
 import { useCreateFSMStateHintMutation, useCreateWidgetHintMutation, useDeleteFSMStateHintMutation, useDeleteWidgetHintMutation } from 'redux/features/hint/HintSlice';
+import NoDataFound from 'components/molecules/NoDataFound';
 
 type EditHintsPropsType = {
   type: 'widget' | 'state';
@@ -33,10 +34,6 @@ const EditHints: FC<EditHintsPropsType> = ({
 
   return (
     <Stack spacing={2} width='100%'>
-      <Typography variant="h2" gutterBottom>
-        {'راهنمایی‌ها'}
-      </Typography>
-      <Divider />
       {hints?.length > 0 ?
         <Stack>
           <Grid container alignItems='stretch' spacing={2}>
@@ -62,9 +59,7 @@ const EditHints: FC<EditHintsPropsType> = ({
           </Grid>
         </Stack>
         :
-        <Box mt={2}>
-          <Typography variant='h4' align="center">{'موردی وجود ندارد!'}</Typography>
-        </Box>
+        <NoDataFound variant={6} message='راهنمایی‌ای وجود ندارد' />
       }
       <Button
         fullWidth

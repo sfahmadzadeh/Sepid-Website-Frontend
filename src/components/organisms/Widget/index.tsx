@@ -3,7 +3,7 @@ import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   Help as HelpIcon,
-  Label as LabelIcon,
+  Paid as PaidIcon,
 } from '@mui/icons-material';
 import React, { FC, Fragment, useMemo, useState } from 'react';
 
@@ -114,9 +114,9 @@ const Widget: FC<WidgetPropsType> = ({
                   {widget.name}
                 </Typography>
                 <Box>
-                  <Tooltip title='خصیصه‌ها' arrow>
+                  <Tooltip title='ویژگی‌ها' arrow>
                     <IconButton size='small' onClick={() => setAddAttributeDialogOpen(true)}>
-                      <LabelIcon />
+                      <PaidIcon />
                     </IconButton>
                   </Tooltip>
                   <Tooltip title='راهنمایی‌ها' arrow>
