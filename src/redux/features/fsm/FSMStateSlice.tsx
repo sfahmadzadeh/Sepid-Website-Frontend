@@ -36,11 +36,15 @@ export const FSMStateSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     updateFSMState: builder.mutation<UpdateFSMStateOutputType, UpdateFSMStateInputType>({
-      invalidatesTags: (result) => [
-        { type: 'fsm-state', id: result.id },
-        'fsm-states',
-        'player-transited-path',
-      ],
+      invalidatesTags: (result, error, item) => {
+        if (!error) {
+          return ([
+            { type: 'fsm-state', id: result.id },
+            'fsm-states',
+            'player-transited-path',
+          ]);
+        }
+      },
       query: ({ fsmStateId, ...body }) => ({
         url: `/fsm/state/${fsmStateId}/`,
         method: 'PATCH',
@@ -60,7 +64,11 @@ export const FSMStateSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     getFSMState: builder.query<GetFSMStateOutputType, { fsmStateId: string }>({
-      providesTags: (result) => [{ type: 'fsm-state', id: result.id }],
+      providesTags: (result, error, item) => {
+        if (!error){
+          return ([{ type: 'fsm-state', id: result.id }]);
+        }
+      },
       query: ({ fsmStateId }) => `fsm/state/${fsmStateId}/`,
       transformResponse: (response: any): GetFSMStateOutputType => {
         return response;

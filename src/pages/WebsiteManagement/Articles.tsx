@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 import { ITEMS_PER_PAGE_NUMBER } from 'configs/Constants';
 import { addMentorToWorkshopAction } from 'redux/slices/programs';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
-import { useGetArticlesQuery } from 'redux/features/ArticleSlice';
+import { useGetArticlesQuery } from 'redux/features/article/ArticleSlice';
 import ArticleCard from 'components/organisms/cards/ArticleCard';
 import { toast } from 'react-toastify';
 import NoDataFound from 'components/molecules/NoDataFound';
