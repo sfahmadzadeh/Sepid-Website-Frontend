@@ -116,7 +116,7 @@ const dictionary = {
       thereIsNoItem: 'موردی وجود ندارد!',
       createWidget: 'ایجاد ویجت',
       removeState: 'حذف گام',
-      createState: 'ایجاد گام',
+      createState: 'ایجاد گام جدید',
       stateName: 'نام گام',
       help: 'راهنمایی',
       helpNumber: 'راهنمایی شماره',

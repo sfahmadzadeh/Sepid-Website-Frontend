@@ -1,9 +1,9 @@
 import {
-  Box,
   FormControlLabel,
+  Stack,
   Switch,
 } from '@mui/material';
-import React, { FC, Fragment } from 'react';
+import React, { FC } from 'react';
 import { QuestionWidgetType } from 'types/widgets/QuestionWidget';
 
 type EditQuestionWidgetFieldsPropsType = {
@@ -17,8 +17,7 @@ const EditQuestionWidgetFields: FC<EditQuestionWidgetFieldsPropsType> = ({
 }) => {
 
   return (
-    <Fragment>
-      <Box paddingTop={2} />
+    <Stack alignItems={'start'}>
       <FormControlLabel
         name='is_required'
         checked={fields.is_required}
@@ -47,7 +46,7 @@ const EditQuestionWidgetFields: FC<EditQuestionWidgetFieldsPropsType> = ({
         control={<Switch color="primary" />}
         label="پنهان‌کردن ویجت"
         labelPlacement='start' />
-    </Fragment>
+    </Stack>
   );
 }
 

@@ -36,7 +36,7 @@ const AudioEditWidget = ({
   };
 
   return (
-    <Dialog disableScrollLock open={open} onClose={handleClose}>
+    <Dialog disableScrollLock open={open}>
       <DialogTitle>صوت</DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
@@ -54,6 +54,12 @@ const AudioEditWidget = ({
         </Stack>
       </DialogContent>
       <DialogActions>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleClose}>
+          {'انصراف'}
+        </Button>
         <Button onClick={handleClick} color="primary" variant="contained">
           {t('submit')}
         </Button>

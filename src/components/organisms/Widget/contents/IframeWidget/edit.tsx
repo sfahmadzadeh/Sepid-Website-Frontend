@@ -5,7 +5,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Stack,
   TextField,
+  Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
@@ -33,21 +35,29 @@ function IframeEditWidget({
   };
 
   return (
-    <Dialog disableScrollLock open={open} onClose={handleClose}>
-      <DialogTitle>{t('لینک')}</DialogTitle>
+    <Dialog disableScrollLock open={open}>
+      <DialogTitle>{'لینک'}</DialogTitle>
       <DialogContent>
-        <DialogContentText>
-          {'لطفاً لینک مورد نظر خود را قرار دهید. '}
-        </DialogContentText>
-        <TextField
-          autoFocus
-          fullWidth
-          label='لینک'
-          value={link}
-          inputProps={{ className: 'ltr-input' }}
-          onChange={(e) => setLink(e.target.value)} />
+        <Stack spacing={1}>
+          <Typography>
+            {'لطفاً لینک مورد نظر خود را قرار دهید. '}
+          </Typography>
+          <TextField
+            autoFocus
+            fullWidth
+            label='لینک'
+            value={link}
+            inputProps={{ className: 'ltr-input' }}
+            onChange={(e) => setLink(e.target.value)} />
+        </Stack>
       </DialogContent>
       <DialogActions>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleClose}>
+          {'انصراف'}
+        </Button>
         <Button onClick={onEditWrapper} color="primary" variant="contained">
           {t('submit')}
         </Button>

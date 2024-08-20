@@ -7,6 +7,7 @@ import {
   Typography,
   MobileStepper,
   useTheme,
+  DialogTitle,
 } from '@mui/material';
 import React, { Fragment, useState } from 'react';
 import TinyEditorComponent from 'components/organisms/TinyMCE/ReactTiny/TinyEditorComponent';
@@ -56,13 +57,15 @@ const DetailBoxEditDialog = ({
       maxWidth='md'
       disableScrollLock
       open={open}
-      onClose={handleClose}
       disableAutoFocus
       disableEnforceFocus>
+      <DialogTitle>
+        {activeStep === 0 && 'عنوان نکته'}
+        {activeStep === 1 && 'جزئیات بیشتر'}
+      </DialogTitle>
       <DialogContent>
         {activeStep === 0 &&
           <Fragment>
-            <Typography variant='h5' gutterBottom>{'عنوان'}</Typography>
             <DialogContentText gutterBottom>متن مورد نظر خود را وارد کنید.</DialogContentText>
             <TinyEditorComponent
               content={title}
@@ -72,8 +75,7 @@ const DetailBoxEditDialog = ({
         }
         {activeStep === 1 &&
           <Fragment>
-            <Typography mt={2} variant='h5' gutterBottom>{'جزئیات بیشتر'}</Typography>
-            <DialogContentText gutterBottom>ویجت‌هایی را که می‌خواهید به‌صورت پنهان‌شونده باشند، اینجا بگذارید.</DialogContentText>
+            <DialogContentText gutterBottom>ویجت‌هایی را که می‌خواهید به‌صورت پنهان‌شده باشند، اینجا بگذارید.</DialogContentText>
             {detailsId &&
               <EditPaper
                 paperId={detailsId}
@@ -91,24 +93,31 @@ const DetailBoxEditDialog = ({
           position="static"
           activeStep={activeStep}
           nextButton={
-            <Button size="small" onClick={handleNext}>
+            <Button variant="contained" onClick={handleNext}>
               {activeStep === 0 ? 'بعدی' : 'تمام'}
-              {theme.direction === 'rtl' ? (
-                <KeyboardArrowLeft />
-              ) : (
-                <KeyboardArrowRight />
+              {activeStep === 0 && (
+                theme.direction === 'rtl' ?
+                  <KeyboardArrowLeft /> :
+                  <KeyboardArrowRight />
               )}
             </Button>
           }
           backButton={
-            <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-              {theme.direction === 'rtl' ? (
-                <KeyboardArrowRight />
-              ) : (
-                <KeyboardArrowLeft />
-              )}
-              {'قبلی'}
-            </Button>
+            activeStep === 0 ?
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={handleClose}>
+                {'انصراف'}
+              </Button> :
+              <Button variant="outlined" onClick={handleBack}>
+                {theme.direction === 'rtl' ? (
+                  <KeyboardArrowRight />
+                ) : (
+                  <KeyboardArrowLeft />
+                )}
+                {'قبلی'}
+              </Button>
           }
         />
       </DialogActions>

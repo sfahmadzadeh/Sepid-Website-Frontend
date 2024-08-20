@@ -124,12 +124,12 @@ const Widget: FC<WidgetPropsType> = ({
                       <HelpIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title='ویرایش ویجت' arrow>
+                  <Tooltip title='ویرایش' arrow>
                     <IconButton size='small' onClick={() => setOpenEditDialog(true)}>
                       <EditIcon />
                     </IconButton>
                   </Tooltip>
-                  <Tooltip title='حذف ویجت' arrow>
+                  <Tooltip title='حذف' arrow>
                     <IconButton size='small' onClick={() => setOpenDeleteWidgetDialog(true)}>
                       <DeleteIcon />
                     </IconButton>

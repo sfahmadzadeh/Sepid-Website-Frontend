@@ -69,7 +69,7 @@ const WIDGET_TYPE_MAPPER = {
   Image: {
     WidgetComponent: ImageWidget,
     EditWidgetDialog: ImageEditWidget,
-    label: 'عکس',
+    label: 'تصویر',
     backendType: 'Image',
   },
   Video: {

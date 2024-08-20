@@ -40,7 +40,6 @@ function InviteeUsernameEdit({
   return (
     <Dialog disableScrollLock
       open={open}
-      onClose={handleClose}
       maxWidth="sm"
       fullWidth
       disableAutoFocus
@@ -59,6 +58,12 @@ function InviteeUsernameEdit({
         </Stack>
       </DialogContent>
       <DialogActions>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleClose}>
+          {'انصراف'}
+        </Button>
         <Button onClick={handleSubmit} color="primary" variant="contained">
           {t('submit')}
         </Button>

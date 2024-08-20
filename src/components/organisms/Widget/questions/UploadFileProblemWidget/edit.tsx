@@ -53,7 +53,7 @@ const UploadFileProblemEditWidget: FC<UploadFileProblemEditWidgetPropsType> = ({
   };
 
   return (
-    <Dialog disableScrollLock open={open} onClose={handleClose} maxWidth='md'>
+    <Dialog disableScrollLock open={open} maxWidth='md'>
       <DialogTitle>{'ارسال فایل'}</DialogTitle>
       <DialogContent>
         <Stack spacing={1} alignItems={'start'}>
@@ -79,6 +79,12 @@ const UploadFileProblemEditWidget: FC<UploadFileProblemEditWidgetPropsType> = ({
         </Stack>
       </DialogContent>
       <DialogActions>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleClose}>
+          {'انصراف'}
+        </Button>
         <Button onClick={handleSubmit} color="primary" variant="contained">
           {t('submit')}
         </Button>

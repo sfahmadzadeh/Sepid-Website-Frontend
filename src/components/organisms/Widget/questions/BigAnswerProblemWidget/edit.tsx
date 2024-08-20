@@ -54,9 +54,9 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
   };
 
   return (
-    <Dialog disableScrollLock
+    <Dialog
+      disableScrollLock
       open={open}
-      onClose={handleClose}
       maxWidth="md"
       fullWidth
       scroll="body"
@@ -82,6 +82,12 @@ const BigAnswerProblemEditWidget: FC<BigAnswerProblemEditWidgetPropsType> = ({
         </Stack>
       </DialogContent>
       <DialogActions>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleClose}>
+          {'انصراف'}
+        </Button>
         <Button onClick={handleClick} color="primary" variant="contained">
           {t('submit')}
         </Button>

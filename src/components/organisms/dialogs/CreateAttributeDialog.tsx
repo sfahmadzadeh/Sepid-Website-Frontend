@@ -22,7 +22,7 @@ const CreateAttributeDialog: FC<CreateAttributeDialogPropsType> = ({
   const { data: currencies } = useGetCurrenciesQuery({ website: website.name }, { skip: !Boolean(website) });
 
   return (
-    <Dialog disableScrollLock open={open} maxWidth="md">
+    <Dialog disableScrollLock open={open} maxWidth="md" onClose={handleClose}>
       <DialogTitle>{'ویژگی‌ها'}</DialogTitle>
       <DialogContent>
 

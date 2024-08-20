@@ -35,7 +35,7 @@ const ImageEditWidget = ({
   };
 
   return (
-    <Dialog disableScrollLock open={open} onClose={handleClose}>
+    <Dialog disableScrollLock open={open}>
       <DialogTitle>{t('image')}</DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
@@ -44,7 +44,7 @@ const ImageEditWidget = ({
           <DialogContentText>{t('uploadFileFillUrl')}</DialogContentText>
           <TextField
             fullWidth
-            label="آدرس عکس"
+            label="آدرس تصویر"
             value={link}
             inputProps={{ className: 'ltr-input' }}
             placeholder="http://example.com/example.png"
@@ -53,6 +53,12 @@ const ImageEditWidget = ({
         </Stack>
       </DialogContent>
       <DialogActions>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleClose}>
+          {'انصراف'}
+        </Button>
         <Button onClick={handleClick} color="primary" variant="contained">
           {t('submit')}
         </Button>
