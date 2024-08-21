@@ -23,6 +23,7 @@ import Correction from 'pages/Correction';
 import EditArticle from 'pages/EditArticle';
 import WebsiteManagement from 'pages/WebsiteManagement';
 import ProfilePage from 'pages/Profile';
+import FilmBazi from 'pages/customs/FilmBazi';
 
 const Root = () => {
 
@@ -39,6 +40,9 @@ const Root = () => {
       <Route path="/profile/:partyType/:partyId/" element={<ProfilePage />} />
 
       <Route path="/" element={<PrivateRoute />}>
+        <Route path="/c/filmbazi" element={<FilmBazi />} />
+
+
         <Route path="/edit-article/:articleId/" element={<EditArticle />} />
         <Route
           path="/message/payment/success/:paymentId?/"
