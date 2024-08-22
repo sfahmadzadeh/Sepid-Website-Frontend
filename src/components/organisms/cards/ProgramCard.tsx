@@ -5,8 +5,8 @@ import {
   Stack,
   Typography,
   Tooltip,
-  IconButton,
   ButtonBase,
+  Box,
 } from '@mui/material';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import React, { FC } from 'react';
@@ -15,7 +15,6 @@ import { useNavigate } from 'react-router-dom';
 import { toPersianNumber } from 'utils/translateNumber';
 import { ProgramType } from 'types/models';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 type ProgramCardPropsType = {
   program: Partial<ProgramType>;
@@ -116,7 +115,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
                 {program.description}
               </Typography>
 
-              <Stack spacing={1} direction={'row'}>
+              <Box display="flex" flexWrap="wrap" gap={1}>
                 <Chip
                   color='info'
                   sx={{ userSelect: 'none' }}
@@ -135,7 +134,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
                     label={'رایگان'}
                   />
                 }
-              </Stack>
+              </Box>
             </Stack>
           </Grid>
         </Grid>
