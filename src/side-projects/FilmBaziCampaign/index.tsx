@@ -18,7 +18,7 @@ import persianFilms from './SampleFilms';
 type FilmBaziCampaignPropsType = {}
 
 const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
-  const programId = '17';
+  const { programId } = useParams();
   const navigate = useNavigate();
   const { data: program } = useGetProgramQuery({ programId });
   const { data: website } = useGetWebsiteQuery();
