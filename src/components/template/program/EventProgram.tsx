@@ -1,50 +1,22 @@
 import { Box, Stack, Typography } from '@mui/material';
-import React, { FC, Fragment, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { FC, Fragment } from 'react';
+import { useParams } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
 import FSMsGrid from 'components/organisms/FSMsGrid';
-import Layout from 'components/template/Layout';
 import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
-import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
 import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
-import EventProgram from 'components/template/program/EventProgram';
-import CampaignProgram from 'components/template/program/CampaignProgram';
+import Layout from 'components/template/Layout';
 
-type ProgramPropsType = {}
+type EventProgramPropsType = {}
 
-const Program: FC<ProgramPropsType> = ({ }) => {
+const EventProgram: FC<EventProgramPropsType> = ({ }) => {
   const { programId } = useParams();
-  const navigate = useNavigate();
   const { data: program } = useGetProgramQuery({ programId });
   const { data: website } = useGetWebsiteQuery();
-  const {
-    data: registrationReceipt,
-    isSuccess: isGettingRegistrationReceiptSuccess,
-    isFetching: isGettingRegistrationReceiptFetching,
-  } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
-
-  useEffect(() => {
-    if (isGettingRegistrationReceiptSuccess) {
-      if (!isGettingRegistrationReceiptFetching && !registrationReceipt?.is_participating) {
-        navigate(`/program/${programId}/form/`);
-      }
-    }
-  }, [registrationReceipt])
-
-  if (!registrationReceipt?.is_participating) {
-    return null;
-  }
-
-  if (program.type === 'Event') {
-    return <EventProgram />
-  }
-
-  if (program.type === 'Campaign') {
-    return <CampaignProgram />
-  }
 
   return (
     <Fragment>
@@ -71,4 +43,4 @@ const Program: FC<ProgramPropsType> = ({ }) => {
   );
 }
 
-export default Program;
+export default EventProgram;

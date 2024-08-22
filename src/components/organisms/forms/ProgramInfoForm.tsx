@@ -68,23 +68,23 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
         <FormControl fullWidth variant="outlined">
           <InputLabel>وضعیت دوره</InputLabel>
           <Select
-            value={data.program_type}
+            value={data.participation_type}
             onChange={(event) => {
               setData(data => ({
                 ...data,
-                program_type: event.target.value,
+                participation_type: event.target.value,
                 team_size: null,
               }))
             }}
-            name='program_type'
+            name='participation_type'
             label='وضعیت دوره'>
             <MenuItem value={'Individual'}>{'انفرادی'}</MenuItem>
             <MenuItem value={'Team'}>{'گروهی'}</MenuItem>
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12} md={6} display={{ xs: data.program_type !== 'Team' && 'none', md: 'inline' }}>
-        {data.program_type === 'Team' &&
+      <Grid item xs={12} md={6} display={{ xs: data.participation_type !== 'Team' && 'none', md: 'inline' }}>
+        {data.participation_type === 'Team' &&
           <TextField
             value={data.team_size}
             fullWidth

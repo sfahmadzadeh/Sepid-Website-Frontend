@@ -49,7 +49,7 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
       </Stack>
       <ProgramContactInfo programContactInfo={program.program_contact_info} />
       <Stack spacing={2} justifyContent={'space-between'}>
-        {program.program_type === 'Team' &&
+        {program.participation_type === 'Team' &&
           <Button
             size='large'
             variant="contained"

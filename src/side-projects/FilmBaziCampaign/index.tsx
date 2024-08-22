@@ -15,9 +15,9 @@ import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 import FilmCard from './FilmCard';
 import persianFilms from './SampleFilms';
 
-type FilmBaziPropsType = {}
+type FilmBaziCampaignPropsType = {}
 
-const FilmBazi: FC<FilmBaziPropsType> = ({ }) => {
+const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
   const programId = '17';
   const navigate = useNavigate();
   const { data: program } = useGetProgramQuery({ programId });
@@ -86,4 +86,4 @@ const FilmBazi: FC<FilmBaziPropsType> = ({ }) => {
   );
 }
 
-export default FilmBazi;
+export default FilmBaziCampaign;

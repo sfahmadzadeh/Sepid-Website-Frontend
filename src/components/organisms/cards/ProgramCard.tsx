@@ -121,7 +121,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
                   sx={{ userSelect: 'none' }}
                   icon={<PeopleAltIcon />}
                   label={
-                    program.program_type === 'Individual'
+                    program.participation_type === 'Individual'
                       ? 'انفرادی'
                       : `${toPersianNumber(program.team_size)} ${t('person')}`
                   }

@@ -8,9 +8,6 @@ export type FileType = {
   file: string;
 };
 
-type AudienceTypeType = "All" | "Student" | "Academic";
-type ProgramTypeType = "Team" | "Individual";
-
 export type ProgramContactInfoType = {
   phone_number: string;
   eitaa_link: string;
@@ -20,7 +17,12 @@ export type ProgramContactInfoType = {
   telegram_link: string;
 }
 
+type AudienceTypeType = "All" | "Student" | "Academic";
+type ProgramParticipationType = "Team" | "Individual";
+type ProgramTypeType = 'Campaign' | 'Event' | 'Class' | 'Course' | 'Game';
+
 export type ProgramType = {
+  type: ProgramTypeType;
   slug: string;
   is_free: boolean;
   site_help_paper_id: number;
@@ -36,7 +38,7 @@ export type ProgramType = {
   creator: string;
   description: string;
   end_date: string | null;
-  program_type: ProgramTypeType;
+  participation_type: ProgramParticipationType;
   has_certificate: boolean
   holder: number;
   id: number;
