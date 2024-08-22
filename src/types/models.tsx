@@ -21,6 +21,7 @@ export type ProgramContactInfoType = {
 }
 
 export type ProgramType = {
+  slug: string;
   is_free: boolean;
   site_help_paper_id: number;
   FAQs_paper_id: number;
@@ -88,7 +89,7 @@ export type RegistrationReceiptType = {
   'NotRegistered' |
   'NotStarted' |
   'GradeNotAvailable' |
-  'GradeNotSuitable' |  
+  'GradeNotSuitable' |
   'StudentshipDataIncomplete';
 }
 

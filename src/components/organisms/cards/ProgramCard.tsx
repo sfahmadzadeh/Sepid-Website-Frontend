@@ -31,7 +31,7 @@ const ProgramCard: FC<ProgramCardPropsType> = ({
   return (
     <ButtonBase
       disableRipple
-      onClick={() => navigate(`/program/${program.id}/`)}>
+      onClick={() => navigate(`/program/${program.slug || program.id}/`)}>
       <Card
         sx={{
           height: { xs: 480, md: 240 },
