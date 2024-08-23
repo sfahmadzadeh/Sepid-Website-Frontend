@@ -3,6 +3,7 @@ import { Breadcrumbs, Typography, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useParams, Link as RouterLink } from 'react-router-dom';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
+import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
@@ -36,9 +37,10 @@ const LargeLink = styled(RouterLink)(({ theme }) => ({
   },
 }));
 
-const ProgramGroupSettingBreadcrumbs = () => {
-  const { programSlug } = useParams();
+const FSMManagementBreadcrumbs = () => {
+  const { programSlug, fsmId } = useParams();
   const { data: program } = useGetProgramQuery({ programSlug: programSlug });
+  const { data: fsm } = useGetFSMQuery({ fsmId });
 
   return (
     <StyledPaper elevation={0}>
@@ -47,11 +49,11 @@ const ProgramGroupSettingBreadcrumbs = () => {
           {program?.name}
         </LargeLink>
         <Typography fontSize='1.2rem' color="text.primary" padding={(theme) => theme.spacing(0.5)}>
-          {'گروه‌بندی'}
+          {`مدیریت کارگاه ${fsm ? fsm.name : ''}`}
         </Typography>
       </LargeBreadcrumbs>
     </StyledPaper>
   );
 };
 
-export default ProgramGroupSettingBreadcrumbs;
+export default FSMManagementBreadcrumbs;

@@ -59,7 +59,7 @@ const Info: FC<InfoPropsType> = ({ }) => {
           <Typography variant='h2' gutterBottom>
             {'مشخصات کارگاه'}
           </Typography>
-          <SoftDeleteFSMButton fsmId={fsmId} programId={program.id} />
+          <SoftDeleteFSMButton fsmId={fsmId} programId={program?.id} />
         </Stack>
         <Stack>
           {properties &&

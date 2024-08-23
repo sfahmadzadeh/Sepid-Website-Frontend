@@ -33,6 +33,7 @@ import { DashboardTabType } from 'types/global';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 import { useEnterFSMMutation } from 'redux/features/program/PlayerSlice';
+import FSMManagementBreadcrumbs from 'components/organisms/breadcrumbs/FSMManagement';
 
 const initialTabs: DashboardTabType[] = [
   {
@@ -131,8 +132,11 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
   const TabComponent = <currentTab.component />;
 
   return (
-    <Layout appbarMode='PROGRAM'>
+    <Layout appbarMode='None'>
       <Grid container spacing={2} direction="row" justifyContent="center">
+        <Grid item xs={12} marginTop={-2}>
+          <FSMManagementBreadcrumbs />
+        </Grid>
         <Grid container item sm={3} xs={12} direction="column" justifyContent="flex-start">
           <Stack spacing={2}>
             <ButtonGroup variant="outlined" orientation="vertical" color="primary" fullWidth>

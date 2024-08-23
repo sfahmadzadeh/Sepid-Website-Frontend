@@ -8,11 +8,9 @@ type ProfilePropsType = {}
 const ProfilePage: FC<ProfilePropsType> = ({ }) => {
 
   return (
-    <Fragment>
-      <Layout appbarMode='PROGRAM'>
-        <Profile />
-      </Layout>
-    </Fragment>
+    <Layout appbarMode='DASHBOARD'>
+      <Profile />
+    </Layout>
   );
 }
 

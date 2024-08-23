@@ -36,7 +36,7 @@ const LargeLink = styled(RouterLink)(({ theme }) => ({
   },
 }));
 
-const ProgramGroupSettingBreadcrumbs = () => {
+const ProgramManagementBreadcrumbs = () => {
   const { programSlug } = useParams();
   const { data: program } = useGetProgramQuery({ programSlug: programSlug });
 
@@ -47,11 +47,11 @@ const ProgramGroupSettingBreadcrumbs = () => {
           {program?.name}
         </LargeLink>
         <Typography fontSize='1.2rem' color="text.primary" padding={(theme) => theme.spacing(0.5)}>
-          {'گروه‌بندی'}
+          {'مدیریت دوره'}
         </Typography>
       </LargeBreadcrumbs>
     </StyledPaper>
   );
 };
 
-export default ProgramGroupSettingBreadcrumbs;
+export default ProgramManagementBreadcrumbs;
