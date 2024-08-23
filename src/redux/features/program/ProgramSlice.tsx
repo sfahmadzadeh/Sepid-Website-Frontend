@@ -12,7 +12,7 @@ type GetProgramsOutputType = {
 }
 
 type GetProgramInputType = {
-  programId: string;
+  programSlug: string;
 }
 
 type GetProgramOutputType = ProgramType;
@@ -34,19 +34,6 @@ type CreateProgramInputType = {
 type CreateProgramOutputType = {
 
 }
-
-type GetProgramPermissionInputType = {
-  programId: string;
-}
-
-type GetProgramPermissionOutputType = any;
-
-type GetProgramsPermissionsInputType = {
-  websiteName: string;
-  pageNumber: number;
-}
-
-type GetProgramsPermissionsOutputType = any;
 
 export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
@@ -91,7 +78,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
 
     getProgram: builder.query<GetProgramOutputType, GetProgramInputType>({
       providesTags: ['program'],
-      query: ({ programId }) => `fsm/program/${programId}/`,
+      query: ({ programSlug }) => `fsm/program/${programSlug}/`,
       transformResponse: (response: any): GetProgramOutputType => {
         return response;
       },

@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import FSMInfoForm from 'components/organisms/forms/FSMInfoForm';
 import { FSMType } from 'types/models';
 import { useCreateFSMMutation } from 'redux/features/fsm/FSMSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type CreateFSMDialog = {
   open: boolean;
@@ -28,13 +29,13 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
   handleClose,
 }) => {
   const t = useTranslate();
-  const { programId } = useParams();
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const [properties, setProperties] = useState<Partial<FSMType>>({
     name: '',
     description: '',
     fsm_learning_type: '',
     fsm_p_type: '',
-    program: programId,
     cover_page: 'https://kamva-minio-storage.darkube.app/sepid/fsm-placeholder-image.png',
     is_active: true,
     is_visible: true,
@@ -54,7 +55,13 @@ const CreateFSMDialog: FC<CreateFSMDialog> = ({
       toast.error('لطفاً وضعیت فردی یا گروهی بودن کارگاه را انتخاب کنید.');
       return;
     }
-    createFSM({ ...removeBlankAttributes(properties), onSuccess: handleClose });
+    createFSM({
+      ...removeBlankAttributes({
+        ...properties,
+        program: program.id,
+      }),
+      onSuccess: handleClose,
+    });
   }
 
   useEffect(() => {

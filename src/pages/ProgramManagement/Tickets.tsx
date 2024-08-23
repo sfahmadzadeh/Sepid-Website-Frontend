@@ -33,13 +33,13 @@ type TicketsTabPropsType = {
 const Tickets: FC<TicketsTabPropsType> = ({
 
 }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const [isCreateMerchandiseDialogOpen, setCreateMerchandiseDialogOpen] = useState(false);
   const [isCreateDiscountCodeDialogOpen, setCreateDiscountCodeDialogOpen] = useState(false);
-  const { data: merchandises } = useGetProgramMerchandisesQuery({ programId });
-  const { data: discountCodes } = useGetProgramDiscountCodesQuery({ programSlug: programId });
+  const { data: merchandises } = useGetProgramMerchandisesQuery({ programId: program.id }, { skip: !Boolean(program) });
+  const { data: discountCodes } = useGetProgramDiscountCodesQuery({ programId: program.id }, { skip: !Boolean(program) });
   const [deleteDiscountCode] = useDeleteDiscountCodeMutation();
-  const { data: program } = useGetProgramQuery({ programId });
 
   const handleDeleteDiscountCode = (discountCodeId) => {
     deleteDiscountCode({ discountCodeId })

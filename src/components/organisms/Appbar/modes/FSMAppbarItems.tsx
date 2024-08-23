@@ -14,7 +14,7 @@ import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
 const FSMAppbarItems = ({ }) => {
-  const { fsmId, programId } = useParams();
+  const { fsmId, programSlug } = useParams();
   // todo: refactor: fetch program minimal info (not whole program info!)
   // const { data: program } = useGetProgramQuery({ programId });
   const { data: fsm } = useGetFSMQuery({ fsmId });
@@ -27,7 +27,7 @@ const FSMAppbarItems = ({ }) => {
   const teamAvatar = <TeamAvatar />;
   const fsmLogo = <FSMLogo />;
   const scoresDialogButton = <ScoresDialogButton />
-  const backToProgram = <DashboardButton label={'بازگشت به دوره'} to={`/program/${programId}/`} />;
+  const backToProgram = <DashboardButton label={'بازگشت به دوره'} to={`/program/${programSlug}/`} />;
 
   const desktopLeftItems = [];
   const desktopRightItems = [fsmLogo];

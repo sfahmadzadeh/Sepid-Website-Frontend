@@ -6,17 +6,22 @@ import {
   DialogTitle,
   TextField,
 } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { useNavigate } from 'react-router-dom';
 import { useEnterFSMMutation } from 'redux/features/program/PlayerSlice';
 
-function EnterFSMPasswordDialog({
+type EnterFSMPasswordDialogPropsType = {
+  open: boolean;
+  handleClose: any;
+  fsmId: string;
+}
+
+const EnterFSMPasswordDialog: FC<EnterFSMPasswordDialogPropsType> = ({
   open,
   handleClose,
-  programId,
   fsmId,
-}) {
+}) => {
   const navigate = useNavigate();
   const t = useTranslate();
   const [password, setPassword] = useState('');

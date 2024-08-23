@@ -14,14 +14,16 @@ import { addMentorToWorkshopAction } from 'redux/slices/programs';
 import AddNewThingButton from 'components/atoms/AddNewThingButton';
 import { useGetFSMsQuery } from 'redux/features/fsm/FSMSlice';
 import NoDataFound from 'components/molecules/NoDataFound';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 type ProgramManagementFsmTabPropsType = {}
 
 const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({ }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const [openCreateFSMDialog, setOpenCreateFSMDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const { data: fsmsData, isLoading } = useGetFSMsQuery({ programId, pageNumber });
+  const { data: fsmsData, isLoading } = useGetFSMsQuery({ programId: program.id, pageNumber }, { skip: !Boolean(program) });
 
   return (
     <Fragment>

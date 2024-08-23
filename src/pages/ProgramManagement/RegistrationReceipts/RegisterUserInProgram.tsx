@@ -13,10 +13,10 @@ import { useGetProgramQuery, useRegisterUserInProgramMutation } from 'redux/feat
 type RegisterUserInProgramPropsType = {}
 
 const RegisterUserInProgram: FC<RegisterUserInProgramPropsType> = ({ }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const [username, setUsername] = useState<string>('');
   const [_registerUserInProgram, result] = useRegisterUserInProgramMutation();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { data: program } = useGetProgramQuery({ programSlug });
 
   const registerUserInProgram = () => {
     if (!username) {

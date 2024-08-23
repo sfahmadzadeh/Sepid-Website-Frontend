@@ -10,11 +10,11 @@ type ShareProgramButtonPropsType = {}
 const ShareProgramButton: FC<ShareProgramButtonPropsType> = ({
 
 }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
 
   function copyToClipboard() {
     navigator.clipboard.writeText(
-      `${window.location.origin}/program/${programId}/`
+      `${window.location.origin}/program/${programSlug}/`
     ).then(function () {
       toast.success('لینک اشتراک دوره با موفقیت کپی شد');
     }, function (err) {

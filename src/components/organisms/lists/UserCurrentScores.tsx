@@ -1,6 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import React, { FC, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 
 type UserCurrentScoresPropsType = {
@@ -8,7 +7,7 @@ type UserCurrentScoresPropsType = {
 
 const UserCurrentScores: FC<UserCurrentScoresPropsType> = ({
 }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const getCurrentScores = null;
   const scores = [];
 

@@ -51,24 +51,24 @@ const Root = () => {
         <Route path="/receipt/:receiptId/" element={<RegistrationReceipt />} />
         <Route path="/setting/:section?/" element={<Setting />} />
         <Route path="/articles/" element={<Articles />} />
-        <Route path="/program/:programId/fsm/:fsmId/" element={<FSM />} />
+        <Route path="/program/:programSlug/fsm/:fsmId/" element={<FSM />} />
         <Route
-          path="/program/:programId/form/"
+          path="/program/:programSlug/form/"
           element={<Registration />}
         />
         <Route
-          path="/program/:programId/team-selection/"
+          path="/program/:programSlug/team-selection/"
           element={<TeamSelection />}
         />
-        <Route path="/program/:programId/" element={<Program />} />
+        <Route path="/program/:programSlug/" element={<Program />} />
 
         {/* only website admins can visit: */}
         <Route path="/website/:websiteName/manage/:section?/" element={<WebsiteManagement />} />
 
         {/* only mentors can visit: */}
-        <Route path="/program/:programId/manage/:section?/" element={<ProgramManagement />} />
-        <Route path="/program/:programId/fsm/:fsmId/manage/correction/:answerId/" element={<Correction />} />
-        <Route path="/program/:programId/fsm/:fsmId/manage/:section?/" element={<FSMManagement />} />
+        <Route path="/program/:programSlug/manage/:section?/" element={<ProgramManagement />} />
+        <Route path="/program/:programSlug/fsm/:fsmId/manage/correction/:answerId/" element={<Correction />} />
+        <Route path="/program/:programSlug/fsm/:fsmId/manage/:section?/" element={<FSMManagement />} />
       </Route>
 
       <Route path="*" element={<NotFoundPage />} />

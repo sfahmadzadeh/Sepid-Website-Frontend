@@ -19,10 +19,10 @@ import removeBlankAttributes from 'utils/removeBlankAttributes';
 type InfoTabPropsType = {}
 
 const InfoTab: FC<InfoTabPropsType> = ({ }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const [properties, setProperties] = useState<ProgramType>();
   const [updateProgram, result] = useUpdateProgramMutation();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { data: program } = useGetProgramQuery({ programSlug });
 
   useEffect(() => {
     if (program) {
@@ -41,7 +41,7 @@ const InfoTab: FC<InfoTabPropsType> = ({ }) => {
       toast.error('لطفاً نام دوره را انتخاب کنید.');
       return;
     }
-    updateProgram({ programId, ...removeBlankAttributes(properties) });
+    updateProgram({ programId: program.id, ...removeBlankAttributes(properties) });
   }
 
   return (
@@ -51,7 +51,7 @@ const InfoTab: FC<InfoTabPropsType> = ({ }) => {
           <Typography variant='h2' gutterBottom>
             {'مشخصات دوره'}
           </Typography>
-          <SoftDeleteProgramButton programId={programId} />
+          <SoftDeleteProgramButton programId={program.id} />
         </Stack>
 
         <Box>

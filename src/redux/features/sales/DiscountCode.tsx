@@ -12,7 +12,7 @@ type DeleteDiscountCodeInputType = {
 type DeleteDiscountCodeOutputType = void;
 
 type GetProgramDiscountCodesInputType = {
-  programSlug: string;
+  programId: string;
 }
 
 type GetProgramDiscountCodesOutputType = DiscountCodeType[];
@@ -40,7 +40,7 @@ export const MerchandiseSlice = ManageContentServiceApi.injectEndpoints({
 
     getProgramDiscountCodes: builder.query<GetProgramDiscountCodesOutputType, GetProgramDiscountCodesInputType>({
       providesTags: ['discount-codes'],
-      query: ({ programSlug }) => `sales/discount_code/program_discount_codes/?program_slug=${programSlug}`,
+      query: ({ programId }) => `sales/discount_code/program_discount_codes/?program_id=${programId}`,
       transformResponse: (response: any): GetProgramDiscountCodesOutputType => {
         return response;
       },

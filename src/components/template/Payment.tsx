@@ -2,13 +2,15 @@ import { Grid, Paper, Stack, Typography } from '@mui/material';
 import PurchaseMerchandise from 'components/organisms/PurchaseMerchandise';
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { useGetProgramMerchandisesQuery } from 'redux/features/sales/Merchandise';
 
 type PaymentPropsType = {}
 
 const Payment: FC<PaymentPropsType> = ({ }) => {
-  const { programId } = useParams();
-  const { data: merchandises } = useGetProgramMerchandisesQuery({ programId })
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
+  const { data: merchandises } = useGetProgramMerchandisesQuery({ programId: program.id }, { skip: !Boolean(program) })
 
   return (
     <Stack spacing={4}  >

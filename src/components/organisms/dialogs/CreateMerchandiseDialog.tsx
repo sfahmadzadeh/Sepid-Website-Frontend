@@ -10,6 +10,7 @@ import {
 import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useGetProgramQuery } from "redux/features/program/ProgramSlice";
 import { useCreateMerchandiseMutation } from "redux/features/sales/Merchandise";
 import { MerchandiseType } from "types/models";
 
@@ -22,7 +23,8 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
   open,
   handleClose,
 }) => {
-  const { programId } = useParams()
+  const { programSlug } = useParams()
+  const { data: program } = useGetProgramQuery({ programSlug });
   const [merchandise, setMerchandise] = useState<Partial<MerchandiseType>>(null);
   const [createMerchandise, result] = useCreateMerchandiseMutation();
 
@@ -40,7 +42,7 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
       return;
     }
     createMerchandise({
-      programId,
+      programId: program.id,
       ...merchandise,
     });
   }

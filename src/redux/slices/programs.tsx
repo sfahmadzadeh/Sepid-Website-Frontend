@@ -16,7 +16,6 @@ import {
   addMentorToWorkshopUrl,
   registerUsersViaCSVUrl,
   addUserToTeamUrl,
-  programInfoUrl,
   getPlayerFromTeamUrl,
   getTeamsUrl,
   makeTeamHeadUrl,
@@ -219,18 +218,6 @@ export const addUserToTeamAction = createAsyncThunkApi(
     },
   }
 );
-
-export const editOneProgramInfoAction = createAsyncThunkApi(
-  'programs/editOneProgramInfoAction',
-  Apis.PATCH,
-  programInfoUrl,
-  {
-    bodyCreator: ({ workshopPlayerId }) => ({
-      player_workshop: workshopPlayerId,
-    }),
-  }
-);
-
 
 export const validateRegistrationReceiptAction = createAsyncThunkApi(
   'programs/validateRegistrationReceiptAction',

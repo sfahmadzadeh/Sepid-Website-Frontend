@@ -21,10 +21,10 @@ type RegisterUsersViaExcelInProgramPropsType = {
 const RegisterUsersViaExcelInProgram: FC<RegisterUsersViaExcelInProgramPropsType> = ({
   registerUsersViaCSV,
 }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const [file, setFile] = useState(null);
   const fileRef = useRef(null);
-  const { data: program } = useGetProgramQuery({ programId });
+  const { data: program } = useGetProgramQuery({ programSlug });
 
   const submit = () => {
     registerUsersViaCSV({ registrationFormId: program?.registration_form, file })

@@ -13,8 +13,8 @@ import Layout from 'components/template/Layout';
 type EventProgramPropsType = {}
 
 const EventProgram: FC<EventProgramPropsType> = ({ }) => {
-  const { programId } = useParams();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const { data: website } = useGetWebsiteQuery();
   const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
 
@@ -28,14 +28,14 @@ const EventProgram: FC<EventProgramPropsType> = ({ }) => {
       <Layout appbarMode='PROGRAM'>
         <Stack width={'100%'} direction={{ xs: 'column', sm: 'row' }} alignItems='flex-start' spacing={2}>
           <Box width={{ xs: '100%', sm: '25%', md: '20%' }} position={{ xs: null, sm: 'sticky' }} top={16}>
-            <ProgramPageSidebar programId={programId} />
+            <ProgramPageSidebar />
           </Box>
           <Stack width={{ xs: '100%', sm: '75%', md: '80%' }} spacing={2}>
             {/* <Banner banners={pageMetadata?.banners} /> */}
             <Typography component="h1" fontWeight={700} fontSize={28} gutterBottom>
               {'کارگاه‌ها'}
             </Typography>
-            <FSMsGrid programId={programId} />
+            <FSMsGrid programId={program.id} />
           </Stack>
         </Stack>
       </Layout>

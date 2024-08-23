@@ -11,8 +11,8 @@ type RegistrationStatusPropsType = {
 const RegistrationStatus: FC<RegistrationStatusPropsType> = ({
 
 }) => {
-  const { programId } = useParams();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
 
   return (

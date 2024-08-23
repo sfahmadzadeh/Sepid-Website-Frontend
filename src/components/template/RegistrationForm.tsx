@@ -20,11 +20,11 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   onSuccess,
   onFailure,
 }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const navigate = useNavigate();
   const [isDialogOpen, setDialogStatus] = useState(false);
   const { answers, getAnswerCollector } = useCollectWidgetsAnswers([]);
-  const { data: program } = useGetProgramQuery({ programId });
+  const { data: program } = useGetProgramQuery({ programSlug });
   const { data: registrationForm } = useGetFormQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
   const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
   const [submitRegistrationForm, submitRegistrationFormResult] = useSubmitFormMutation();
@@ -67,7 +67,7 @@ const RegistrationForm: FC<RegistrationFormPropsType> = ({
   useEffect(() => {
     // todo: when registration form is editable, this "if" should be removed
     if (registrationReceipt?.is_participating) {
-      navigate(`/program/${programId}/`);
+      navigate(`/program/${programSlug}/`);
     }
   }, [registrationReceipt])
 

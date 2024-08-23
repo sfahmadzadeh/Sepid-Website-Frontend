@@ -97,13 +97,13 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
   getProgramTeams,
 }) => {
   const t = useTranslate();
-  const { programId, section } = useParams();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { programSlug, section } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!section) {
-      navigate(`/program/${programId}/manage/info/`);
+      navigate(`/program/${programSlug}/manage/info/`);
     }
   }, [section])
 
@@ -135,7 +135,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
                   disabled={tab.isActive === false}
                   key={index}
                   onClick={() => {
-                    navigate(`/program/${programId}/manage/${tabs[index].name}/`)
+                    navigate(`/program/${programSlug}/manage/${tabs[index].name}/`)
                   }}
                   variant={tab.name === section ? 'contained' : 'outlined'}
                   startIcon={tab.icon && <tab.icon />}>

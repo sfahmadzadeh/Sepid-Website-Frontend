@@ -14,29 +14,31 @@ import ClearIcon from '@mui/icons-material/Clear';
 import InfoIcon from '@mui/icons-material/Info';
 import { useAddAdminToProgramMutation, useGetProgramAdminsQuery, useRemoveAdminFromProgramMutation } from 'redux/features/program/ProgramAdminsSlice';
 import SimpleTable from 'components/organisms/tables/SimpleTable';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 
 type AdminsTabPropsType = {}
 
 const AdminTab: FC<AdminsTabPropsType> = ({ }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const [username, setUsername] = useState<string>('');
-  const [addAdminToProgram, addAdminToProgramResutl] = useAddAdminToProgramMutation();
+  const [addAdminToProgram, addAdminToProgramResult] = useAddAdminToProgramMutation();
   const [removeAdminFromProgram, _] = useRemoveAdminFromProgramMutation();
-  const { data: programAdmins } = useGetProgramAdminsQuery({ programId });
+  const { data: programAdmins } = useGetProgramAdminsQuery({ programId: program.id }, { skip: !Boolean(program) });
 
   const addAdmin = () => {
-    addAdminToProgram({ programId, username })
+    addAdminToProgram({ programId: program.id, username })
   };
 
   useEffect(() => {
-    if (addAdminToProgramResutl.isSuccess) {
+    if (addAdminToProgramResult.isSuccess) {
       setUsername('');
     }
-  }, [addAdminToProgramResutl])
+  }, [addAdminToProgramResult])
 
   const removeAdmin = (username) => {
-    removeAdminFromProgram({ programId, username })
+    removeAdminFromProgram({ programId: program.id, username })
   }
 
   return (

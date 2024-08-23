@@ -17,16 +17,15 @@ import ShareProgramButton from 'components/atoms/ShareProgramButton';
 import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 
 type ProgramPageSidebarPropsType = {
-  programId: string;
   getCertificate: any;
 }
 
 const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
   getCertificate,
-  programId,
 }) => {
   const navigate = useNavigate();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
 
   if (!program) return null;

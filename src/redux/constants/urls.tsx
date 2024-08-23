@@ -96,7 +96,6 @@ export const stateCRUDUrl = ({ paperId }) => paperId ? `/fsm/state/${paperId}/` 
 export const edgeUrl = ({ fsmEdgeId }) => fsmEdgeId ? `/fsm/edge/${fsmEdgeId}/` : '/fsm/edge/';
 
 // fsm:
-export const programInfoUrl = ({ pageNumber, programId }) => programId ? `fsm/program/${programId}/` : `fsm/program/?page=${pageNumber}`;
 export const getPlayerFromTeamUrl = ({ id }) => `/fsm/fsm/${id}/get_player_from_team/`;
 
 // articles

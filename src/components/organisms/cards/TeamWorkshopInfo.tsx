@@ -59,7 +59,7 @@ const TeamWorkshopInfo: FC<TeamWorkshopInfoPropsType> = ({
   isStarred,
   toggleStar,
 }) => {
-  const { programId, fsmId } = useParams();
+  const { programSlug, fsmId } = useParams();
   const [click, setClick] = useState(false);
   const stateChangeSubscriberRef = useRef(null);
   const mentorsInRoomSubscriberRef = useRef(null);
@@ -161,7 +161,7 @@ available playerId field, otherwise we fetch one team members Id and use it to a
   useEffect(() => {
     if ((playerId || playerIdFromRedux) && click) {
       setClick(false);
-      window.open(`/program/${programId}/fsm/${fsmId}?playerId=${playerId || playerIdFromRedux}&teamId=${teamId}`, '_blank');
+      window.open(`/program/${programSlug}/fsm/${fsmId}?playerId=${playerId || playerIdFromRedux}&teamId=${teamId}`, '_blank');
     }
   }, [playerId, click, playerIdFromRedux])
 

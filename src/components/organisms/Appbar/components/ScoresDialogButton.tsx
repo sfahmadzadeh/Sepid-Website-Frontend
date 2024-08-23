@@ -12,7 +12,7 @@ type ScoresDialogButtonPropsType = {
 const ScoresDialogButton: FC<ScoresDialogButtonPropsType> = ({
 }) => {
   const [openScoresDialog, setOpenScoresDialog] = useState(false);
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const { data: website } = useGetWebsiteQuery();
   const { data: currencies } = useGetCurrenciesQuery({ website: website.name }, { skip: !Boolean(website) });
 

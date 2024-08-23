@@ -41,7 +41,7 @@ export type ProgramType = {
   participation_type: ProgramParticipationType;
   has_certificate: boolean
   holder: number;
-  id: number;
+  id: string;
   is_active: boolean;
   is_approved: boolean;
   is_user_participating: boolean;

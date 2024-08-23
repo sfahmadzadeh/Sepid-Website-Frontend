@@ -18,9 +18,9 @@ import persianFilms from './SampleFilms';
 type FilmBaziCampaignPropsType = {}
 
 const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const navigate = useNavigate();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { data: program } = useGetProgramQuery({ programSlug });
   const { data: website } = useGetWebsiteQuery();
   const {
     data: registrationReceipt,
@@ -32,7 +32,7 @@ const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
   useEffect(() => {
     if (isGettingRegistrationReceiptSuccess) {
       if (!isGettingRegistrationReceiptFetching && !registrationReceipt?.is_participating) {
-        navigate(`/program/${programId}/form/`);
+        navigate(`/program/${programSlug}/form/`);
       }
     }
   }, [registrationReceipt])
@@ -57,7 +57,7 @@ const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
       <Layout appbarMode='PROGRAM'>
         <Stack width={'100%'} direction={{ xs: 'column', sm: 'row' }} alignItems='flex-start' spacing={2}>
           <Box width={{ xs: '100%', sm: '25%', md: '20%' }} position={{ xs: null, sm: 'sticky' }} top={16}>
-            <ProgramPageSidebar programId={programId} />
+            <ProgramPageSidebar />
           </Box>
           <Stack width={{ xs: '100%', sm: '75%', md: '80%' }} spacing={2}>
             {/* <Banner banners={pageMetadata?.banners} /> */}

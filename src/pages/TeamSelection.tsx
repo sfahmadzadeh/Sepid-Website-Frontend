@@ -76,10 +76,10 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
   teamInvitations,
 }) => {
   const navigate = useNavigate();
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const [isCreateInvitationDialogOpen, changeCreateInvitationDialogStatus] = useState(false);
   const [isDeleteTeamDialogOpen, changeDeleteTeamDialogStatus] = useState(false);
-  const { data: program } = useGetProgramQuery({ programId });
+  const { data: program } = useGetProgramQuery({ programSlug });
   const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
   const [newTeamName, setNewTeamName] = useState('');
 
@@ -98,7 +98,7 @@ const TeamSelection: FC<TeamSelectionPropsType> = ({
   }, [registrationReceipt]);
 
   if (!registrationReceipt?.is_participating) {
-    navigate(`/program/${programId}/form/`);
+    navigate(`/program/${programSlug}/form/`);
   }
 
   const isHead = registrationReceipt?.id === team?.team_head.toString()

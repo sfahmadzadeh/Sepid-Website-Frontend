@@ -23,11 +23,11 @@ type StatisticsTabPropsType = {
 const StatisticsTab: FC<StatisticsTabPropsType> = ({
 
 }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const [pageNumber, setPageNumber] = useState(1);
   const { data: website } = useGetWebsiteQuery();
-  const { data: program } = useGetProgramQuery({ programId });
-  const { data: fsmsData } = useGetFSMsQuery({ programId, pageNumber })
+  const { data: program } = useGetProgramQuery({ programSlug });
+  const { data: fsmsData } = useGetFSMsQuery({ programId: program.id, pageNumber }, { skip: !Boolean(program) })
 
   const getTotalParticipantsCountOfAllProgramFSMs = (allProgramFSMs) => {
     let totalParticipantsCount = 0;
@@ -91,7 +91,7 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
 
       <Divider />
       {/* todo: website should not be passed trough this dashboard */}
-      <MetabaseDashboard dashboard_id={5} params={{ website: website.name, program: programId }} />
+      <MetabaseDashboard dashboard_id={5} params={{ website: website.name, program: program.id }} />
     </Stack>
   );
 }

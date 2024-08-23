@@ -8,8 +8,8 @@ type CampaignProgramPropsType = {}
 
 const CampaignProgram: FC<CampaignProgramPropsType> = ({
 }) => {
-  const { programId } = useParams();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
 
   if (program.slug === 'filmbazi') {
     return <FilmBazi />

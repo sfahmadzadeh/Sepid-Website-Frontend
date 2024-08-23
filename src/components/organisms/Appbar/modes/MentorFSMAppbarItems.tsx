@@ -10,13 +10,13 @@ import { announceMentorDeparture } from 'parse/mentorsInRoom';
 import { useGetFSMQuery } from 'redux/features/fsm/FSMSlice';
 
 const MentorFSMAppbarItems = ({ mentorId }) => {
-  const { programId, fsmId } = useParams();
+  const { programSlug, fsmId } = useParams();
   const { data: fsm } = useGetFSMQuery({ fsmId });
 
   const search = useLocation().search;
   let teamId = new URLSearchParams(search).get('teamId');
   const chatRoomButton = <ChatRoomButton />;
-  const backToProgramButton = <DashboardButton onClick={() => { announceMentorDeparture(teamId, mentorId) }} label={'بازگشت'} to={`/program/${programId}/fsm/${fsmId}/manage/requests/`} />;
+  const backToProgramButton = <DashboardButton onClick={() => { announceMentorDeparture(teamId, mentorId) }} label={'بازگشت'} to={`/program/${programSlug}/fsm/${fsmId}/manage/requests/`} />;
   const whiteboardButton = <WhiteboardButton />;
   const teamAvatar = <TeamAvatar />;
   const userAvatar = <UserAvatar />;

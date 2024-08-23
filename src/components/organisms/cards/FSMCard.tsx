@@ -30,7 +30,7 @@ export const FSMCard: FC<FSMCardPropsType> = ({
   isLoading = false,
 }) => {
   const navigate = useNavigate();
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const [openPassword, setOpenPassword] = useState(false);
   const [enterFSM, result] = useEnterFSMMutation();
 
@@ -79,7 +79,7 @@ export const FSMCard: FC<FSMCardPropsType> = ({
               <Box>
                 {fsm.is_mentor ?
                   <Tooltip title='ورود به بخش همیاران' arrow>
-                    <IconButton component={Link} to={`/program/${programId}/fsm/${fsm?.id}/manage/`} >
+                    <IconButton component={Link} to={`/program/${programSlug}/fsm/${fsm?.id}/manage/`} >
                       <ModeEditTwoToneIcon />
                     </IconButton>
                   </Tooltip> :
@@ -141,7 +141,6 @@ export const FSMCard: FC<FSMCardPropsType> = ({
         }
       </CardActions>
       <EnterFSMPasswordDialog
-        programId={programId}
         open={openPassword}
         handleClose={() => setOpenPassword(false)}
         fsmId={fsm?.id}

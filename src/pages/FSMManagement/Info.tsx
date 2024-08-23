@@ -9,14 +9,16 @@ import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useGetFSMQuery, useUpdateFSMMutation } from 'redux/features/fsm/FSMSlice';
+import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { FSMType } from 'types/models';
 import removeBlankAttributes from 'utils/removeBlankAttributes';
 
 type InfoPropsType = {}
 
 const Info: FC<InfoPropsType> = ({ }) => {
+  const { fsmId, programSlug } = useParams();
   const [properties, setProperties] = useState<FSMType>();
-  const { fsmId, programId } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const { data: fsm } = useGetFSMQuery({ fsmId });
   const [updateFSM, result] = useUpdateFSMMutation();
 
@@ -34,7 +36,7 @@ const Info: FC<InfoPropsType> = ({ }) => {
 
   const handleUpdateFSM = () => {
     if (!properties) return;
-    
+
     if (!properties.name) {
       toast.error('لطفاً نام کارگاه را انتخاب کنید.');
       return;
@@ -57,7 +59,7 @@ const Info: FC<InfoPropsType> = ({ }) => {
           <Typography variant='h2' gutterBottom>
             {'مشخصات کارگاه'}
           </Typography>
-          <SoftDeleteFSMButton fsmId={fsmId} programId={programId} />
+          <SoftDeleteFSMButton fsmId={fsmId} programId={program.id} />
         </Stack>
         <Stack>
           {properties &&

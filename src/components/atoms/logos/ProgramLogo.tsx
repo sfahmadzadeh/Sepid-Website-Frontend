@@ -6,14 +6,14 @@ import { useParams } from 'react-router-dom';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
 function ProgramLogo({ }) {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const width = useWidth();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { data: program } = useGetProgramQuery({ programSlug: programSlug });
 
   return (
     <Stack direction={'row'} alignItems={'center'}>
       <Tooltip title={program?.name} arrow>
-        <IconButton disabled={width !== 'xs'} component={Link} to={`/program/${programId}/`}>
+        <IconButton disabled={width !== 'xs'} component={Link} to={`/program/${programSlug}/`}>
           <img
             src={program?.cover_page}
             alt='course-logo'
@@ -27,7 +27,7 @@ function ProgramLogo({ }) {
           />
         </IconButton>
       </Tooltip>
-      <Button component={Link} to={`/program/${programId}/`}>
+      <Button component={Link} to={`/program/${programSlug}/`}>
         <Typography
           fontSize={20} color={'black'}
           maxWidth={{ xs: 100, sm: 200, md: 300 }} whiteSpace={'nowrap'}

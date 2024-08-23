@@ -20,8 +20,8 @@ const Programs = ({ }) => {
   const programs = programsData?.programs.filter(program => program.is_visible) || [];
   const visiblePrograms = programs.filter(program => program.is_visible)
 
-  const activePrograms: ProgramType[] = visiblePrograms.filter((program: ProgramType) => program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
-  const inactivePrograms: ProgramType[] = visiblePrograms.filter((program: ProgramType) => !program.is_active).sort((program1: ProgramType, program2: ProgramType) => program2.id - program1.id)
+  const activePrograms: ProgramType[] = visiblePrograms.filter((program: ProgramType) => program.is_active);
+  const inactivePrograms: ProgramType[] = visiblePrograms.filter((program: ProgramType) => !program.is_active);
 
   const activeProgramsElement = (
     <Grid item container spacing={2} xs={12}>

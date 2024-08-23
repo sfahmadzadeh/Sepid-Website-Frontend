@@ -37,8 +37,7 @@ type SettingPropsType = {
 
 const Setting: FC<SettingPropsType> = ({ }) => {
   const navigate = useNavigate();
-  const { programId, section } = useParams();
-  const { data: program } = useGetProgramQuery({ programId }, { skip: !Boolean(programId) });
+  const { section } = useParams();
 
   useEffect(() => {
     if (!section) {
@@ -46,20 +45,12 @@ const Setting: FC<SettingPropsType> = ({ }) => {
     }
   }, [section])
 
-  if (program?.audience_type == 'Student') {
-    tabs = [tabs[0], tabs[1]];
-  } else if (program?.audience_type == 'Academic') {
-    tabs = [tabs[0], tabs[2]];
-  } else if (program?.audience_type == 'All') {
-    tabs = [tabs[0]];
-  }
-
   if (!section) return null;
 
   const tab: DashboardTabType = tabs.find(tab => tab.name == section);
 
   return (
-    <Layout appbarMode={programId ? 'PROGRAM' : 'DASHBOARD'}>
+    <Layout appbarMode={'DASHBOARD'}>
       <Grid container justifyContent="center" spacing={2}>
         <Grid item xs={12} sm={3}>
           <Tabs

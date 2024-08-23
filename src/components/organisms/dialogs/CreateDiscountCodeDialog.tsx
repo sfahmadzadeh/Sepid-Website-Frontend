@@ -7,6 +7,7 @@ import { useGetProgramMerchandisesQuery } from "redux/features/sales/Merchandise
 import { DiscountCodeType, MerchandiseType } from "types/models";
 import { toEnglishNumber } from "utils/translateNumber";
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import { useGetProgramQuery } from "redux/features/program/ProgramSlice";
 
 type CreateDiscountCodeDialogType = {
   open: boolean;
@@ -17,10 +18,11 @@ const CreateDiscountCodeDialog: FC<CreateDiscountCodeDialogType> = ({
   open,
   handleClose,
 }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const [discountCode, setDiscountCode] = useState<DiscountCodeType>(null);
   const [createDiscountCode, result] = useCreateDiscountCodeMutation();
-  const { data: programMerchandises } = useGetProgramMerchandisesQuery({ programId });
+  const { data: programMerchandises } = useGetProgramMerchandisesQuery({ programId: program.id }, { skip: !Boolean(program) });
 
 
   const handleCreateDiscountCode = () => {

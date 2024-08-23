@@ -15,9 +15,9 @@ import CampaignProgram from 'components/template/program/CampaignProgram';
 type ProgramPropsType = {}
 
 const Program: FC<ProgramPropsType> = ({ }) => {
-  const { programId } = useParams();
+  const { programSlug } = useParams();
   const navigate = useNavigate();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { data: program } = useGetProgramQuery({ programSlug });
   const { data: website } = useGetWebsiteQuery();
   const {
     data: registrationReceipt,
@@ -29,7 +29,7 @@ const Program: FC<ProgramPropsType> = ({ }) => {
   useEffect(() => {
     if (isGettingRegistrationReceiptSuccess) {
       if (!isGettingRegistrationReceiptFetching && !registrationReceipt?.is_participating) {
-        navigate(`/program/${programId}/form/`);
+        navigate(`/program/${programSlug}/form/`);
       }
     }
   }, [registrationReceipt])
@@ -56,14 +56,14 @@ const Program: FC<ProgramPropsType> = ({ }) => {
       <Layout appbarMode='PROGRAM'>
         <Stack width={'100%'} direction={{ xs: 'column', sm: 'row' }} alignItems='flex-start' spacing={2}>
           <Box width={{ xs: '100%', sm: '25%', md: '20%' }} position={{ xs: null, sm: 'sticky' }} top={16}>
-            <ProgramPageSidebar programId={programId} />
+            <ProgramPageSidebar />
           </Box>
           <Stack width={{ xs: '100%', sm: '75%', md: '80%' }} spacing={2}>
             {/* <Banner banners={pageMetadata?.banners} /> */}
             <Typography component="h1" fontWeight={700} fontSize={28} gutterBottom>
               {'کارگاه‌ها'}
             </Typography>
-            <FSMsGrid programId={programId} />
+            <FSMsGrid programId={program.id} />
           </Stack>
         </Stack>
       </Layout>

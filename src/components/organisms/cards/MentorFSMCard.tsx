@@ -8,7 +8,6 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useParams } from 'react-router-dom';
 
 
@@ -17,11 +16,8 @@ const MentorFSMCard = ({
   name,
   cover_page,
   description,
-  teamsNumber = 0,
-  mentorsNumber = 0,
 }) => {
-  const t = useTranslate();
-  const { programId } = useParams();
+  const { programSlug } = useParams();
 
   return (
     <Card
@@ -63,27 +59,11 @@ const MentorFSMCard = ({
             {description}
           </Typography>
         </CardContent>
-        {/* <Grid container direction="row" justify="center">
-          <Grid container item xs={6} justify="center">
-            <Chip
-              variant="outlined"
-              icon={<EmojiPeopleIcon />}
-              label={`${mentorsNumber} ${t('mentor')}`}
-            />
-          </Grid>
-          <Grid container item xs={6} justify="center">
-            <Chip
-              variant="outlined"
-              icon={<PeopleAltIcon />}
-              label={`${teamsNumber} ${t('team')}`}
-            />
-          </Grid>
-        </Grid> */}
       </CardActionArea>
       <CardActions>
         <Button
           variant="contained" fullWidth color="primary"
-          component={Link} to={`/program/${programId}/fsm/${id}/manage/`}>
+          component={Link} to={`/program/${programSlug}/fsm/${id}/manage/`}>
           {'ویرایش کارگاه'}
         </Button>
       </CardActions>

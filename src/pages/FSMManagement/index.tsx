@@ -82,21 +82,21 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
   getProgramTeams: getProgramTeams,
 }) => {
   const navigate = useNavigate();
-  const { fsmId, programId, section } = useParams();
+  const { fsmId, programSlug, section } = useParams();
   const { data: fsm } = useGetFSMQuery({ fsmId });
-  const { data: program } = useGetProgramQuery({ programId });
+  const { data: program } = useGetProgramQuery({ programSlug });
   const [enterFSM, result] = useEnterFSMMutation();
 
 
   useEffect(() => {
     if (!section) {
-      navigate(`/program/${programId}/fsm/${fsmId}/manage/info/`)
+      navigate(`/program/${programSlug}/fsm/${fsmId}/manage/info/`)
     }
   }, [section])
 
   useEffect(() => {
     if (result.isSuccess)
-      navigate(`/program/${programId}/fsm/${fsmId}/`)
+      navigate(`/program/${programSlug}/fsm/${fsmId}/`)
   }, [result])
 
   const tabs: DashboardTabType[] = (fsm && fsm.id == fsmId && fsm.fsm_learning_type == 'Supervised') ?
@@ -141,7 +141,7 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
                   key={index}
                   disabled={tab.isActive === false}
                   onClick={() => {
-                    navigate(`/program/${programId}/fsm/${fsmId}/manage/${tabs[index].name}/`)
+                    navigate(`/program/${programSlug}/fsm/${fsmId}/manage/${tabs[index].name}/`)
                   }}
                   variant={currentTab.name === tab.name ? 'contained' : 'outlined'}
                   startIcon={tab.icon && <tab.icon />}>
@@ -160,7 +160,7 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
                 variant='outlined'
                 color="primary"
                 component={Link}
-                to={`/program/${programId}/`}
+                to={`/program/${programSlug}/`}
                 startIcon={<ExitToAppIcon />}>
                 {'بازگشت به دوره'}
               </Button>

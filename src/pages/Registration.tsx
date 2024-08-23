@@ -11,8 +11,8 @@ type RegistrationProcessPropsType = {}
 
 const RegistrationProcess: FC<RegistrationProcessPropsType> = ({ }) => {
   const navigate = useNavigate();
-  const { programId } = useParams();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
 
   const {
     currentStepNameIndex,
@@ -22,7 +22,7 @@ const RegistrationProcess: FC<RegistrationProcessPropsType> = ({ }) => {
 
   useEffect(() => {
     if (currentStepNameIndex === steps.length - 1) {
-      navigate(`/program/${programId}/`);
+      navigate(`/program/${programSlug}/`);
     }
   }, [currentStepNameIndex])
 

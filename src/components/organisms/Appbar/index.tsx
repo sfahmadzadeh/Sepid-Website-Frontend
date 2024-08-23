@@ -16,7 +16,6 @@ import React, { FC, Fragment, useState } from 'react';
 import { connect } from 'react-redux'
 import HideOnScroll from './components/HideOnScroll';
 import useWidth from 'utils/UseWidth';
-import { useParams } from 'react-router-dom';
 import useAppbarItems from './useAppbarModes';
 import { AppbarModes } from 'types/global';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
@@ -36,7 +35,6 @@ const ResponsiveAppBar: FC<AppbarPropsType> = ({
   position = 'fixed',
   mentorId,
 }) => {
-  const { programId } = useParams();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [openToolbar, setOpenToolbar] = useState(true);
   const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 30 });

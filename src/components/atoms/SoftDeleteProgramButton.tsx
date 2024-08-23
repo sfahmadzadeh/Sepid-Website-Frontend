@@ -35,7 +35,7 @@ const SoftDeleteProgramButton: FC<SoftDeleteProgramButtonPropsType> = ({
       <AreYouSure
         text='آیا مطمئنید؟ با پاک‌کردن دوره، تمامی کارگاه‌های آن نیز پاک خواهد شد و دیگر قابل بازیابی نیستند.'
         open={openDialog}
-        callBackFunction={() => softDeleteProgram({ programId })}
+        callBackFunction={() => softDeleteProgram({ programId: programId })}
         handleClose={() => setOpenDialog(openDialog => !openDialog)} />
     </Fragment>
   );

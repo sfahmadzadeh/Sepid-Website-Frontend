@@ -33,8 +33,8 @@ function Groups({
 
   allProgramTeams: allProgramTeams,
 }) {
-  const { fsmId, programId } = useParams();
-  const { data: program } = useGetProgramQuery({ programId });
+  const { programSlug } = useParams();
+  const { data: program } = useGetProgramQuery({ programSlug });
   const [newTeamName, setNewTeamName] = useState('');
   const [username, setUserName] = useState(null);
   const [selectedTeamId, setSelectedTeamId] = useState('');
