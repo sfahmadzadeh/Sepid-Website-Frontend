@@ -39,7 +39,7 @@ import { toast } from 'react-toastify';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 import { TeamType } from 'types/models';
-import ProgramGroupSetting from 'components/organisms/breadcrumbs/ProgramGroupSetting';
+import ProgramGroupSettingBreadcrumbs from 'components/organisms/breadcrumbs/ProgramGroupSetting';
 import ProgramPageTemplate from 'components/template/program/ProgramPageTemplate';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
@@ -128,7 +128,7 @@ const GroupSetting: FC<GroupSettingPropsType> = ({
           alignItems="flex-start"
           spacing={2}>
           <Grid item xs={12} marginTop={-2}>
-            <ProgramGroupSetting />
+            <ProgramGroupSettingBreadcrumbs />
           </Grid>
           <Grid item xs={12}>
             <Typography gutterBottom align="center" variant='h1'>
