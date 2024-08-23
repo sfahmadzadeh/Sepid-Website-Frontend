@@ -51,8 +51,6 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
 
   if (!userProfile || !schoolStudentship) return null;
 
-  console.log(schoolStudentship)
-
   const submitSchoolStudentship = () => {
     if (!hasUserCompletedStudentshipInformation(schoolStudentship)) {
       toast.error('لطفاً همه‌ی اطلاعات خواسته‌شده را وارد کنید');
@@ -68,7 +66,7 @@ const SchoolSetting: FC<SchoolSettingPropsType> = ({
           <Typography variant="h2" gutterBottom>{'اطلاعات دانش‌آموزی'}</Typography>
           {!isInForm &&
             <Button
-              disabled={isInForm ? false : deepEqual(schoolStudentship, userProfile?.school_studentship)}
+              disabled={deepEqual(schoolStudentship, userProfile.school_studentship)}
               onClick={submitSchoolStudentship}
               variant="contained"
               color="secondary">

@@ -46,7 +46,7 @@ const UserSetting: FC<UserSettingPropsType> = ({
     }
   }, [updateUserProfileResult])
 
-  if (!userInfo) return null;
+  if (!userInfo || !userProfile) return null;
 
   const submitUserInfo = () => {
     if (!hasUserCompletedPrimaryInformation(userInfo)) {
