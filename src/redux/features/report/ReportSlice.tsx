@@ -22,7 +22,7 @@ type GetProgramMerchandisesPurchasesOutputType = FileType;
 export const ReportSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
 
-    getFormRespondentsInfo: builder.mutation<GetFormRespondentsInfoOutputType, GetFormRespondentsInfoInputType>({
+    getFormRespondentsInfoFile: builder.mutation<GetFormRespondentsInfoOutputType, GetFormRespondentsInfoInputType>({
       invalidatesTags: ['programs'],
       query: ({ formId }) => ({
         url: `/report/form-respondents-info/`,
@@ -33,7 +33,7 @@ export const ReportSlice = ManageContentServiceApi.injectEndpoints({
       }),
     }),
 
-    getFormRespondentsAnswers: builder.mutation<GetFormRespondentsAnswersOutputType, GetFormRespondentsAnswersInputType>({
+    getFormRespondentsAnswersFile: builder.mutation<GetFormRespondentsAnswersOutputType, GetFormRespondentsAnswersInputType>({
       invalidatesTags: ['programs'],
       query: ({ formId }) => ({
         url: `/report/form-respondents-answers/`,
@@ -44,7 +44,7 @@ export const ReportSlice = ManageContentServiceApi.injectEndpoints({
       }),
     }),
 
-    getProgramMerchandisesPurchases: builder.mutation<GetProgramMerchandisesPurchasesOutputType, GetProgramMerchandisesPurchasesInputType>({
+    getProgramMerchandisesPurchasesFile: builder.mutation<GetProgramMerchandisesPurchasesOutputType, GetProgramMerchandisesPurchasesInputType>({
       invalidatesTags: ['programs'],
       query: ({ programId }) => ({
         url: `/report/program-merchandises-purchases/`,
@@ -59,7 +59,7 @@ export const ReportSlice = ManageContentServiceApi.injectEndpoints({
 });
 
 export const {
-  useGetFormRespondentsInfoMutation,
-  useGetFormRespondentsAnswersMutation,
-  useGetProgramMerchandisesPurchasesMutation
+  useGetFormRespondentsInfoFileMutation,
+  useGetFormRespondentsAnswersFileMutation,
+  useGetProgramMerchandisesPurchasesFileMutation
 } = ReportSlice;

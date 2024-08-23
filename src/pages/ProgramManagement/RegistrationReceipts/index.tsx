@@ -8,7 +8,7 @@ import React, { FC, useEffect } from 'react';
 import RegisterUsersViaExcelInProgram from './RegisterUsersViaExcelInProgram';
 import RegisterUserInProgram from './RegisterUserInProgram';
 import RegistrationReceiptsTable from 'components/organisms/tables/RegistrationReceipts';
-import { useGetFormRespondentsAnswersMutation } from 'redux/features/report/ReportSlice';
+import { useGetFormRespondentsAnswersFileMutation } from 'redux/features/report/ReportSlice';
 import downloadFromURL from 'utils/downloadFromURL';
 import { MEDIA_BASE_URL } from 'configs/Constants';
 import isValidURL from 'utils/validators/urlValidator';
@@ -21,10 +21,10 @@ const RegistrationReceipts: FC<RegistrationReceiptsPropsType> = ({
   registrationFormId,
 }) => {
 
-  const [getFormRespondentsAnswers, result] = useGetFormRespondentsAnswersMutation();
+  const [getFormRespondentsAnswersFile, result] = useGetFormRespondentsAnswersFileMutation();
 
   const downloadExcelExport = () => {
-    getFormRespondentsAnswers({ formId: registrationFormId })
+    getFormRespondentsAnswersFile({ formId: registrationFormId })
   }
 
   useEffect(() => {

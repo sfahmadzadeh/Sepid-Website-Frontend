@@ -21,7 +21,7 @@ import CreateMerchandiseDialog from 'components/organisms/dialogs/CreateMerchand
 import { useGetProgramMerchandisesQuery } from 'redux/features/sales/Merchandise';
 import { useDeleteDiscountCodeMutation, useGetProgramDiscountCodesQuery } from 'redux/features/sales/DiscountCode';
 import CreateDiscountCodeDialog from 'components/organisms/dialogs/CreateDiscountCodeDialog';
-import { useGetProgramMerchandisesPurchasesMutation } from 'redux/features/report/ReportSlice';
+import { useGetProgramMerchandisesPurchasesFileMutation } from 'redux/features/report/ReportSlice';
 import { MEDIA_BASE_URL } from 'configs/Constants';
 import isValidURL from 'utils/validators/urlValidator';
 import downloadFromURL from 'utils/downloadFromURL';
@@ -37,7 +37,7 @@ const Tickets: FC<TicketsTabPropsType> = ({
   const [isCreateMerchandiseDialogOpen, setCreateMerchandiseDialogOpen] = useState(false);
   const [isCreateDiscountCodeDialogOpen, setCreateDiscountCodeDialogOpen] = useState(false);
   const { data: merchandises } = useGetProgramMerchandisesQuery({ programId });
-  const { data: discountCodes } = useGetProgramDiscountCodesQuery({ programId });
+  const { data: discountCodes } = useGetProgramDiscountCodesQuery({ programSlug: programId });
   const [deleteDiscountCode] = useDeleteDiscountCodeMutation();
   const { data: program } = useGetProgramQuery({ programId });
 
@@ -45,11 +45,11 @@ const Tickets: FC<TicketsTabPropsType> = ({
     deleteDiscountCode({ discountCodeId })
   }
 
-  const [getProgramMerchandisesPurchases, getExcelResult] = useGetProgramMerchandisesPurchasesMutation();
+  const [getProgramMerchandisesPurchasesFile, getExcelResult] = useGetProgramMerchandisesPurchasesFileMutation();
 
   const downloadExcelExport = () => {
     // todo: EHSAN: it should not be registration_form_id
-    getProgramMerchandisesPurchases({ programId: program.registration_form })
+    getProgramMerchandisesPurchasesFile({ programId: program.registration_form })
   }
 
   useEffect(() => {
