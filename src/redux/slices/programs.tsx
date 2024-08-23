@@ -105,7 +105,6 @@ export const respondInvitationAction = createAsyncThunkApi(
   }
 );
 
-
 export const createTeamAction = createAsyncThunkApi(
   'programs/createTeamAction',
   Apis.POST,
@@ -142,7 +141,6 @@ export const updateTeamChatRoomLinkAction = createAsyncThunkApi(
   }
 );
 
-
 export const deleteTeamAction = createAsyncThunkApi(
   'programs/deleteTeamAction',
   Apis.DELETE,
@@ -154,7 +152,6 @@ export const deleteTeamAction = createAsyncThunkApi(
     },
   }
 );
-
 
 export const paymentRequestAction = createAsyncThunkApi(
   'programs/paymentRequest',
@@ -193,7 +190,6 @@ export const getCertificateAction = createAsyncThunkApi(
     },
   }
 );
-
 
 export const registerUsersViaCSVAction = createAsyncThunkApi(
   'programs/registerUsersViaCSVAction',

@@ -162,7 +162,7 @@ function Groups({
 
       <Stack spacing={2} padding={2}>
         <Typography variant='h2' gutterBottom>
-          {'تیم‌ها'}
+          {'گروه‌ها'}
         </Typography>
         {teams.length > 0 &&
           <Pagination
