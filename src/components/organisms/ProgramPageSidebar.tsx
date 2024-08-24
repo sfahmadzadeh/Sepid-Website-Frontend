@@ -18,10 +18,12 @@ import { useGetMyReceiptQuery } from 'redux/features/form/ReceiptSlice';
 
 type ProgramPageSidebarPropsType = {
   getCertificate: any;
+  otherButtons?: any[];
 }
 
 const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
   getCertificate,
+  otherButtons = [],
 }) => {
   const navigate = useNavigate();
   const { programSlug } = useParams();
@@ -84,6 +86,7 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
             {'مدیریت دوره'}
           </Button>
         }
+        {otherButtons.map(button => button)}
       </Stack>
       <Stack alignItems={'center'}>
         <ShareProgramButton />

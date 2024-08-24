@@ -7,6 +7,7 @@ import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import FilmCard from './FilmCard';
 import persianFilms from './SampleFilms';
+import Scoreboard from './Scoreboard';
 
 type FilmBaziCampaignPropsType = {}
 
@@ -24,7 +25,11 @@ const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
       <Layout appbarMode='PROGRAM'>
         <Stack width={'100%'} direction={{ xs: 'column', sm: 'row' }} alignItems='flex-start' spacing={2}>
           <Box width={{ xs: '100%', sm: '25%', md: '20%' }} position={{ xs: null, sm: 'sticky' }} top={16}>
-            <ProgramPageSidebar />
+            <ProgramPageSidebar
+              otherButtons={[
+                <Scoreboard />
+              ]}
+            />
           </Box>
           <Stack width={{ xs: '100%', sm: '75%', md: '80%' }} spacing={2}>
             {/* <Banner banners={pageMetadata?.banners} /> */}
