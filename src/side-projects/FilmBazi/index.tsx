@@ -8,6 +8,7 @@ import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import FilmCard from './FilmCard';
 import persianFilms from './SampleFilms';
 import Scoreboard from './Scoreboard';
+import CinemaScene from './CinemaScene';
 
 type FilmBaziCampaignPropsType = {}
 
@@ -27,7 +28,8 @@ const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
           <Box width={{ xs: '100%', sm: '25%', md: '20%' }} position={{ xs: null, sm: 'sticky' }} top={16}>
             <ProgramPageSidebar
               otherButtons={[
-                <Scoreboard />
+                <Scoreboard />,
+                <CinemaScene />
               ]}
             />
           </Box>
