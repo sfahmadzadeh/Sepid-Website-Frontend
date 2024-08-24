@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 
-import FilmBazi from 'side-projects/FilmBaziCampaign'
+import FilmBazi from 'side-projects/FilmBazi'
 
 type CampaignProgramPropsType = {}
 
