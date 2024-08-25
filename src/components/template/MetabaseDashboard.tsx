@@ -23,7 +23,7 @@ const MetabaseDashboard: FC<MetabaseDashboardPropsType> = ({
     params,
   };
 
-  const secret = new TextEncoder().encode(METABASE_SECRET_KEY);
+  const secret = new TextEncoder().encode(METABASE_SECRET_KEY || "A_RANDOM_STRING_JUST_FOR_PREVENTING_EMPTY_HMAC_EXCEPTION");
   const alg = 'HS256';
   useEffect(() => {
     const setJwt = async () => {
@@ -38,6 +38,10 @@ const MetabaseDashboard: FC<MetabaseDashboardPropsType> = ({
   })
 
   if (token == null) return null;
+
+  if (!METABASE_SITE_URL || !METABASE_SECRET_KEY) {
+    return <Typography padding={2}>{'اطلاعات ورود به متابیس داده نشده است. با پشتیبانی سایت تماس بگیرید.'}</Typography>
+  }
 
   var iframeUrl = METABASE_SITE_URL + "/embed/dashboard/" + token + "#theme=transparent&bordered=false&titled=false";
 

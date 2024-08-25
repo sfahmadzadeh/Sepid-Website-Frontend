@@ -139,7 +139,7 @@ const LoginPage: FC<LoginPagePropsType> = ({
                 fullWidth>
                 بزن بریم
               </Button>
-              {website?.has_login_with_google &&
+              {(website?.has_login_with_google && process.env.REACT_APP_GOOGLE_CLIENT_ID) &&
                 <GoogleLogin />
               }
             </Stack>
