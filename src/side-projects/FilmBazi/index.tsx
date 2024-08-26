@@ -6,15 +6,22 @@ import Layout from 'components/template/Layout';
 import ProgramPageSidebar from 'components/organisms/ProgramPageSidebar';
 import { useGetProgramQuery } from 'redux/features/program/ProgramSlice';
 import FilmCard from './FilmCard';
-import persianFilms from './SampleFilms';
 import Scoreboard from './Scoreboard';
 import CinemaScene from './CinemaScene';
+import useFilmsByCity from './apis/useFilmsByCity';
+import { useSelector } from 'react-redux';
+import { useGetUserProfileQuery } from 'redux/features/party/ProfileSlice';
+import { getCityByName } from 'utils/iran';
 
 type FilmBaziCampaignPropsType = {}
 
 const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
   const { programSlug } = useParams();
+  const userInfo = useSelector((state: any) => state.account.userInfo);
+  const { data: userProfile } = useGetUserProfileQuery({ userId: userInfo.id });
+
   const { data: program } = useGetProgramQuery({ programSlug });
+  const { films, loading, error } = useFilmsByCity(getCityByName(userProfile?.city)?.id);
 
   return (
     <Fragment>
@@ -40,12 +47,12 @@ const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
             </Typography>
             <Stack>
               <Grid container spacing={2}>
-                {persianFilms.map((film) => (
-                  <Grid item xs={12} sm={6} md={4} key={film.filmName}>
+                {films.map((film) => (
+                  <Grid item xs={12} sm={6} md={4} key={film.name}>
                     <FilmCard
-                      filmName={film.filmName}
+                      name={film.name}
                       releasedCities={film.releasedCities}
-                      picture={film.picture}
+                      image={film.image}
                       director={film.director}
                       description={film.description}
                     />

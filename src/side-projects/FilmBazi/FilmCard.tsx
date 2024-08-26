@@ -3,24 +3,15 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
-import Box from '@mui/material/Box';
-import MovieIcon from '@mui/icons-material/Movie';
 import { Button, CardActions } from '@mui/material';
 import DiscountDialog from './DIscounCodeDialog';
+import { FilmType } from './models';
 
-type FilmCardPropsType = {
-  filmName: string;
-  releasedCities: string[];
-  picture: string;
-  director: string;
-  description: string;
-}
+type FilmCardPropsType = FilmType;
 
 const FilmCard: React.FC<FilmCardPropsType> = ({
-  filmName,
-  releasedCities,
-  picture,
+  name,
+  image,
   director,
   description,
 }) => {
@@ -46,31 +37,19 @@ const FilmCard: React.FC<FilmCardPropsType> = ({
         <CardMedia
           component="img"
           height="300"
-          image={picture}
-          alt={filmName}
+          image={image}
+          alt={name}
         />
         <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', paddingBottom: 1 }}>
           <Typography gutterBottom variant="h5" component="div">
-            {filmName}
+            {name}
           </Typography>
           <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-            فیلمی از {director}
+            فیلمی از {`${director.first_name} ${director.last_name}`}
           </Typography>
           <Typography variant="body2" color="text.secondary" paragraph>
             {description}
           </Typography>
-          {/* <Box display="flex" flexWrap="wrap" gap={1} mt={2}>
-          {releasedCities.map((city) => (
-            <Chip
-              key={city}
-              label={city}
-              size="small"
-              icon={<MovieIcon />}
-              color="primary"
-              variant="outlined"
-            />
-          ))}
-        </Box> */}
         </CardContent>
         <CardActions>
           <Button variant='contained' fullWidth color="primary" onClick={handleOpenDialog}>
@@ -81,7 +60,7 @@ const FilmCard: React.FC<FilmCardPropsType> = ({
       <DiscountDialog
         open={isDialogOpen}
         onClose={handleCloseDialog}
-        filmName={filmName}
+        filmName={name}
       />
     </Fragment>
   );
