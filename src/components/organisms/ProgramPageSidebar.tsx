@@ -3,7 +3,7 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import downloadFile from 'utils/downloadFile';
@@ -86,7 +86,7 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
             {'مدیریت دوره'}
           </Button>
         }
-        {otherButtons.map(button => button)}
+        {otherButtons.map((button, index) => <Fragment key={index}>{button}</Fragment>)}
       </Stack>
       <Stack alignItems={'center'}>
         <ShareProgramButton />
