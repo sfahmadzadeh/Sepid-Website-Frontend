@@ -1,4 +1,6 @@
-const Cities = [
+import { CityType } from "./models"
+
+const Cities: CityType[] = [
   {
     id: 452,
     title: 'بشرویه',

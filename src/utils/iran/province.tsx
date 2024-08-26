@@ -1,4 +1,6 @@
-const Provinces = [
+import { ProvinceType } from "./models"
+
+const Provinces: ProvinceType[] = [
   {
     id: 4,
     title: 'آذربایجان شرقی',
