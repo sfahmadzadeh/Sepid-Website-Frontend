@@ -37,7 +37,7 @@ const ProgramContactInfo: FC<ProgramContactInfoPropsType> = ({
     return null;
   }
 
-  const sociaMedias = [
+  const socialMedias = [
     {
       icon: EitaaSVG,
       href: programContactInfo.eitaa_link,
@@ -63,7 +63,7 @@ const ProgramContactInfo: FC<ProgramContactInfoPropsType> = ({
   return (
     <Stack alignItems={'center'} spacing={3}>
       <Stack width={'100%'} direction={'row'} justifyContent={'space-evenly'} alignContent={'space-between'}>
-        {sociaMedias.filter(socialMedia => socialMedia.href).map((socialMedia, index) =>
+        {socialMedias.filter(socialMedia => socialMedia.href).map((socialMedia, index) =>
           <IconButton key={index} href={socialMedia.href} sx={{
             padding: 0,
             transition: 'transform 0.1s ease-in-out',
