@@ -21,7 +21,7 @@ type CreateFSMEdgeOutputType = {
 export const EdgeSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     createFSMEdge: builder.mutation<CreateFSMEdgeOutputType, CreateFSMEdgeInputType>({
-      invalidatesTags: ['fsm-edges'],
+      invalidatesTags: ['fsm-edges', 'fsm-state'],
       query: ({ ...body }) => ({
         url: `/fsm/edge/`,
         method: 'POST',
@@ -33,7 +33,7 @@ export const EdgeSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     updateFSMEdge: builder.mutation<UpdateFSMEdgeOutputType, UpdateFSMEdgeInputType>({
-      invalidatesTags: ['fsm-edges', 'player-transited-path'],
+      invalidatesTags: ['fsm-edges', 'player-transited-path', 'fsm-state'],
       query: ({ fsmEdgeId, ...body }) => ({
         url: `/fsm/edge/${fsmEdgeId}/`,
         method: 'PATCH',
@@ -45,7 +45,7 @@ export const EdgeSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     deleteFSMEdge: builder.mutation<any, { fsmEdgeId: string }>({
-      invalidatesTags: ['fsm-edges', 'player-transited-path'],
+      invalidatesTags: ['fsm-edges', 'player-transited-path', 'fsm-state'],
       query: ({ fsmEdgeId }) => ({
         url: `/fsm/edge/${fsmEdgeId}/`,
         method: 'DELETE',
