@@ -1,4 +1,4 @@
-import './configs/styles/App.css';
+import 'commons/configs/styles/App.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Slide, ToastContainer } from 'react-toastify';
@@ -11,18 +11,18 @@ import { IntlProvider } from 'react-redux-multilingual';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
-import createEmotionCache from './configs/CreateEmotionCache'
-import selectTheme from './configs/themes';
-import { resetRedirectAction } from './redux/slices/redirect';
-import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'redux/features/WebsiteSlice';
-import Root from './routes';
-import translations from './translations';
-import LinearLoading from 'components/atoms/LinearLoading';
-import { useGetThirdPartiesQuery } from 'redux/features/ThirdPartySlice';
-import { initSupportingThirdPartyApps } from 'configs/SupportingThirdPartyApps';
-import { ConfettiContainer } from 'components/molecules/confetti';
-import { useCheckAuthenticationQuery } from 'redux/features/user/UserSlice';
-import GlobalStyles from 'configs/styles/GlobalStyles';
+import createEmotionCache from 'commons/configs/CreateEmotionCache'
+import selectTheme from 'commons/configs/themes';
+import { resetRedirectAction } from 'apps/website-display/redux/slices/redirect';
+import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'apps/website-display/redux/features/WebsiteSlice';
+import Root from 'commons/routes';
+import translations from 'commons/translations';
+import LinearLoading from 'commons/components/atoms/LinearLoading';
+import { useGetThirdPartiesQuery } from 'apps/website-display/redux/features/ThirdPartySlice';
+import { initSupportingThirdPartyApps } from 'commons/configs/SupportingThirdPartyApps';
+import { ConfettiContainer } from 'commons/components/molecules/confetti';
+import { useCheckAuthenticationQuery } from 'apps/website-display/redux/features/user/UserSlice';
+import GlobalStyles from 'commons/configs/styles/GlobalStyles';
 
 const App = ({
   dir,

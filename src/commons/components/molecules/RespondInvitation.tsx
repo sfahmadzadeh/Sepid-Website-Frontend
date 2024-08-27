@@ -1,0 +1,67 @@
+import React, { FC, Fragment, useState } from 'react';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import {
+  respondInvitationAction,
+} from 'apps/website-display/redux/slices/programs';
+import AreYouSure from 'commons/components/organisms/dialogs/AreYouSure';
+import {
+  IconButton
+} from "@mui/material";
+import { connect } from 'react-redux';
+
+type RespondInvitationPropsType = {
+  invitationId: number;
+  respondInvitation: any;
+}
+
+const RespondInvitation: FC<RespondInvitationPropsType> = ({
+  invitationId,
+  respondInvitation,
+}) => {
+  const [acceptedInvitationId, setAcceptedInvitationId] = useState<number>(null);
+  const [rejectedInvitationId, setRejectedInvitationId] = useState<number>(null);
+
+  return (
+    <Fragment>
+      <IconButton
+        size="small"
+        onClick={() => {
+          setAcceptedInvitationId(invitationId);
+        }}>
+        <CheckCircleIcon />
+      </IconButton>
+      <IconButton
+        size="small"
+        onClick={() => {
+          setRejectedInvitationId(invitationId);
+        }}>
+        <CancelIcon />
+      </IconButton>
+      <AreYouSure
+        open={!!acceptedInvitationId}
+        handleClose={() => setAcceptedInvitationId(null)}
+        callBackFunction={() =>
+          respondInvitation({
+            invitationId,
+            status: "Accepted",
+          })
+        }
+      />
+      <AreYouSure
+        open={!!rejectedInvitationId}
+        handleClose={() => setRejectedInvitationId(null)}
+        callBackFunction={() =>
+          respondInvitation({
+            invitationId,
+            status: "Rejected",
+          })
+        }
+      />
+    </Fragment>
+  );
+}
+
+export default connect(null, {
+  respondInvitation: respondInvitationAction,
+})(RespondInvitation);

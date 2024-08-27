@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
-import reduxStore from './redux/store';
+import reduxStore from 'apps/website-display/redux/store';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const rootContent =
