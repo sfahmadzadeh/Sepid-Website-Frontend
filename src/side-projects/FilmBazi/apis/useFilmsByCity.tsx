@@ -1,16 +1,26 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { FilmBaziBackendURL } from './consts';
-import { FilmType } from '../models';
+import { FilmType } from '../types';
 
-const useFilmsByCity = (cityId: number) => {
+const useFilmsByCity = ({ cityId }: { cityId: number }) => {
   const [films, setFilms] = useState<FilmType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const accessToken = useSelector((state: any) => state.account.accessToken);
+
   useEffect(() => {
     const fetchFilms = async () => {
       try {
-        const response = await fetch(`${FilmBaziBackendURL}films/films/by_city/?city_id=${cityId}`);
+        const headers = new Headers();
+        if (accessToken) {
+          headers.append('Authorization', `JWT ${accessToken}`);
+        }
+
+        const response = await fetch(`${FilmBaziBackendURL}films/films/by_city/?city_id=${cityId}`, {
+          headers: headers,
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -22,10 +32,10 @@ const useFilmsByCity = (cityId: number) => {
         setLoading(false);
       }
     };
-    if (cityId) {
+    if (cityId && accessToken) {
       fetchFilms();
     }
-  }, [cityId]);
+  }, [cityId, accessToken]);
 
   return { films, loading, error };
 };

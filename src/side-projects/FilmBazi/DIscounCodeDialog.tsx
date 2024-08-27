@@ -11,15 +11,15 @@ type DiscountDialogProps = {
   open: boolean;
   onClose: () => void;
   filmName: string;
+  discountCode: string;
 };
 
 const DiscountDialog: React.FC<DiscountDialogProps> = ({
   open,
   onClose,
   filmName,
+  discountCode,
 }) => {
-
-  const discountCode = 'A4dkcvIOc10';
 
   return (
     <Dialog open={open} onClose={onClose} disableScrollLock>

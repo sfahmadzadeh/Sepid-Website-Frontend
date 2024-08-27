@@ -12,6 +12,7 @@ import useFilmsByCity from './apis/useFilmsByCity';
 import { useSelector } from 'react-redux';
 import { useGetUserProfileQuery } from 'redux/features/party/ProfileSlice';
 import { getCityByName } from 'utils/iran';
+import { persianFilms } from './SampleFilms';
 
 type FilmBaziCampaignPropsType = {}
 
@@ -21,7 +22,8 @@ const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
   const { data: userProfile } = useGetUserProfileQuery({ userId: userInfo.id });
 
   const { data: program } = useGetProgramQuery({ programSlug });
-  const { films, loading, error } = useFilmsByCity(getCityByName(userProfile?.city)?.id);
+  // const { films } = useFilmsByCity({cityId: getCityByName(userProfile?.city)?.id});
+  const films = persianFilms;
 
   return (
     <Fragment>
@@ -49,13 +51,7 @@ const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
               <Grid container spacing={2}>
                 {films.map((film) => (
                   <Grid item xs={12} sm={6} md={4} key={film.name}>
-                    <FilmCard
-                      name={film.name}
-                      releasedCities={film.releasedCities}
-                      image={film.image}
-                      director={film.director}
-                      description={film.description}
-                    />
+                    <FilmCard film={film} />
                   </Grid>
                 ))}
               </Grid>

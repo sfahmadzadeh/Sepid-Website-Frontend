@@ -9,8 +9,9 @@ export type CityType = {
 }
 
 export type FilmType = {
+  id: number;
   name: string;
-  releasedCities: CityType[];
+  releasedCities: number[] | CityType[];
   image: string;
   director: ArtistType;
   description: string;
