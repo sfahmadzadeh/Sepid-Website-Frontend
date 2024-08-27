@@ -132,7 +132,7 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
   const TabComponent = <currentTab.component />;
 
   return (
-    <Layout appbarMode='None'>
+    <Layout appbarMode='GENERAL'>
       <Grid container spacing={2} direction="row" justifyContent="center">
         <Grid item xs={12} marginTop={-2}>
           <FSMManagementBreadcrumbs />

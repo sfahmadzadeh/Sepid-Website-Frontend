@@ -120,7 +120,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
   const TabComponent = <currentTab.component registrationFormId={program.registration_form} />;
 
   return (
-    <Layout appbarMode='None'>
+    <Layout appbarMode='GENERAL'>
       <Grid container spacing={2} direction="row" justifyContent="center">
         <Grid item xs={12} marginTop={-2}>
           <ProgramManagementBreadcrumbs />
