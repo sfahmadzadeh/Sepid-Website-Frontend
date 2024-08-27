@@ -58,12 +58,12 @@ const useWidgetFactory = ({
   onAnswerSubmit = (props) => dispatcher(submitAnswerAction(props)).then((response) => {
     const CORRECTNESS_THRESHOLD = 50;
     if (response.error) return;
-    if (response.payload?.response?.correctness_percentage >= 0) {
-      if (response.payload.response.correctness_percentage > CORRECTNESS_THRESHOLD) {
+    if (response.payload?.response?.score >= 0) {
+      if (response.payload.response.score > CORRECTNESS_THRESHOLD) {
         runConfetti();
         toast.success('آفرین! پاسخ شما درست بود.')
       } else {
-        toast.error('پاسخ شما اشتباه بود')
+        toast.error(response.payload.response.feedback)
       }
     } else {
       toast.success('پاسخ شما با موفقیت ثبت شد.');
