@@ -1,15 +1,13 @@
 import React from 'react'
 
-import Frame from '../Frame'
-import fixDocumentMathElements from './fixDocumentMathElements'
+import SecureHTMLDisplay from 'commons/components/organisms/SecureHTMLDisplay'
 
 const TinyPreview = ({ content = '', frameProps = {} }) => {
 
   return (
-    <Frame
-      handleUpdateContent={(doc) => { fixDocumentMathElements(doc) }}
+    <SecureHTMLDisplay
       content={content}
-      frameProps={frameProps}
+      customStyle={{ direction: 'rtl' }}
     />
   )
 }
