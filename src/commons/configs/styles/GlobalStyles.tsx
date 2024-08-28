@@ -1,18 +1,8 @@
-import React from 'react';
-import { Global, css } from '@emotion/react';
+import { fontsStyles } from 'commons/components/organisms/SecureHTMLDisplay/styles/fonts';
+import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyles = () => {
-  return (
-    <Global
-      styles={css`
-      .MuiFormControlLabel-root {
-        // Your global styles here
-        margin: 0px !important;
-        padding-left: 8px;
-      }
-    `}
-    />
-  )
-};
+const GlobalStyles = createGlobalStyle`
+  ${fontsStyles}
+`;
 
 export default GlobalStyles;

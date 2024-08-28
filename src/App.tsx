@@ -57,6 +57,7 @@ const App = ({
 
   return (
     <Fragment>
+      <GlobalStyles />
       {websiteMetadata?.header_data &&
         <Helmet>
           <title>{websiteMetadata.header_data.title}</title>
