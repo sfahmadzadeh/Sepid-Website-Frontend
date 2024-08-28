@@ -15,13 +15,13 @@ import { removeFromTeamAction } from 'apps/website-display/redux/slices/programs
 import {
   makeTeamHeadAction,
 } from 'apps/website-display/redux/slices/programs';
+import { UserInfoType } from 'commons/types/profile';
 
 type TeamMemberListItemPropsType = {
   memberId: string;
-  firstName: string;
-  lastName: string;
+  user: UserInfoType;
   teamId: string;
-  teamHead: number;
+  teamHead: string;
   username: string;
 
   makeTeamHead: any;
@@ -30,8 +30,7 @@ type TeamMemberListItemPropsType = {
 
 const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
   memberId,
-  firstName,
-  lastName,
+  user,
   teamId,
   teamHead,
   username,
@@ -60,13 +59,13 @@ const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
         <FormControlLabel
           control={
             <Checkbox
-              checked={teamHead.toString() == memberId}
+              checked={teamHead == memberId}
               onClick={() => {
                 makeTeamHead({ receipt: memberId, teamId })
               }}
               color="primary" />
           }
-          label={`${firstName} ${lastName}` === ' ' ? 'بی‌نام!' : `${firstName} ${lastName} (${username})`}
+          label={(!user?.first_name || !user?.last_name) ? 'بی‌نام!' : `${user.first_name} ${user.last_name} (${username})`}
           labelPlacement="end"
         />
         <IconButton onClick={handleClick}>

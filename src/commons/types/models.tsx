@@ -65,7 +65,7 @@ export type TeamType = {
   members: RegistrationReceiptType[]
   name: string;
   registration_form: number;
-  team_head: number;
+  team_head: string;
 };
 export type AnswerType = any;
 

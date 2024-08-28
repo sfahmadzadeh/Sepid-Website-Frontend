@@ -87,8 +87,7 @@ const TeamInfoCard: FC<TeamInfoCardPropsType> = ({
               <Box key={member.id}>
                 <TeamMemberListItem
                   memberId={member.id}
-                  firstName={member.user.first_name}
-                  lastName={member.user.last_name}
+                  user={member.user}
                   teamId={team.id}
                   username={member.user.username}
                   teamHead={team.team_head} />
