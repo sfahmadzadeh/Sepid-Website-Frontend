@@ -27,22 +27,37 @@ const IframeWidget = ({ link = '' }) => {
       return;
     }
 
-    if (iframe.requestFullscreen) {
-      iframe.requestFullscreen().catch(err => {
-        console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-      });
-    } else if (iframe.webkitRequestFullscreen) { // Safari
-      iframe.webkitRequestFullscreen().catch(err => {
-        console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-      });
-    } else if (iframe.msRequestFullscreen) { // IE11
-      iframe.msRequestFullscreen().catch(err => {
-        console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-      });
+    const enterFullscreen = (element: HTMLElement) => {
+      if (element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if ((element as any).webkitRequestFullscreen) { // Safari
+        (element as any).webkitRequestFullscreen();
+      } else if ((element as any).msRequestFullscreen) { // IE11
+        (element as any).msRequestFullscreen();
+      }
+    };
+
+    const exitFullscreen = () => {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) { // Safari
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).msExitFullscreen) { // IE11
+        (document as any).msExitFullscreen();
+      }
+    };
+
+    const isFullscreen = () =>
+      document.fullscreenElement ||
+      (document as any).webkitFullscreenElement ||
+      (document as any).msFullscreenElement;
+
+    if (!isFullscreen()) {
+      enterFullscreen(iframe);
     } else {
-      console.error("Fullscreen is not supported by this browser.");
+      exitFullscreen();
     }
-  }
+  };
 
   return (
     <Box position={'relative'}>
