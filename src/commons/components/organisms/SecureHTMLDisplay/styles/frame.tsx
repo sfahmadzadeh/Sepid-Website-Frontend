@@ -10,19 +10,9 @@ const bodyStyles = css`
   height: -moz-fit-content;
 `;
 
-// Styles for print layout
-const printStyles = css`
-  @page {
-    size: auto;
-    margin: 0mm;
-  }
-`;
-
 // Combine and export all styles
 export const frameStyles = css`
   html, body {
     ${bodyStyles}
   }
-
-  ${printStyles}
 `;
