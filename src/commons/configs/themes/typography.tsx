@@ -40,10 +40,6 @@ const typography: TypographyOptions = {
     fontWeight: 400,
     fontSize: '14px',
   },
-  body1: {
-    fontWeight: 300,
-    fontSize: '14px',
-  },
   body2: {
     fontWeight: 300,
     fontSize: '14px',
