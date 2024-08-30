@@ -131,6 +131,12 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
   if (!currentTab) return null;
   const TabComponent = <currentTab.component />;
 
+  const handleEnterFSM = () => {
+    if (!result.isLoading) {
+      enterFSM({ fsmId });
+    }
+  };
+
   return (
     <Layout appbarMode='GENERAL'>
       <Grid container spacing={2} direction="row" justifyContent="center">
@@ -155,7 +161,7 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
             </ButtonGroup>
             <ButtonGroup variant="outlined" orientation="vertical" color="primary" fullWidth>
               <Button
-                onClick={() => enterFSM({ fsmId })}
+                onClick={handleEnterFSM}
                 startIcon={<VisibilityIcon />}>
                 {'مشاهده کارگاه'}
               </Button>

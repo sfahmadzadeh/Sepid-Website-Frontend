@@ -32,6 +32,12 @@ const EnterFSMPasswordDialog: FC<EnterFSMPasswordDialogPropsType> = ({
       navigate(`fsm/${fsmId}/`)
   }, [result])
 
+  const handleEnterFSM = ({ fsmId, password }) => {
+    if (!result.isLoading) {
+      enterFSM({ fsmId, password });
+    }
+  };
+
   return (
     <Dialog disableScrollLock open={open} onClose={handleClose} maxWidth="sm">
       <DialogTitle>
@@ -50,7 +56,7 @@ const EnterFSMPasswordDialog: FC<EnterFSMPasswordDialogPropsType> = ({
         <Button
           variant="contained"
           color="primary"
-          onClick={() => enterFSM({ fsmId, password })}>
+          onClick={() => handleEnterFSM({ fsmId, password })}>
           {t('submit')}
         </Button>
       </DialogActions>

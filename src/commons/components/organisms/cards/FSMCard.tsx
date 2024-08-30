@@ -39,6 +39,12 @@ export const FSMCard: FC<FSMCardPropsType> = ({
       navigate(`fsm/${fsm.id}/`)
   }, [result])
 
+  const handleEnterFSM = ({ fsmId }) => {
+    if (!result.isLoading) {
+      enterFSM({ fsmId });
+    }
+  };
+
   return (
     <Card
       elevation={3}
@@ -133,7 +139,7 @@ export const FSMCard: FC<FSMCardPropsType> = ({
               fsm.id ?
                 fsm?.has_entrance_lock
                   ? () => setOpenPassword(true)
-                  : () => enterFSM({ fsmId: fsm.id })
+                  : () => handleEnterFSM({ fsmId: fsm.id })
                 : null
             }>
             {'بزن بریم!'}
