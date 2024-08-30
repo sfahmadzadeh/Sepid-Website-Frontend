@@ -1,4 +1,4 @@
-import { FSMUserPermissions, ProgramType } from 'commons/types/models';
+import { FSMUserPermissions, ProgramType, ProgramUserPermissions } from 'commons/types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type GetProgramsInputType = {
@@ -21,9 +21,7 @@ type GetProgramUserPermissionsInputType = {
   programSlug: string;
 }
 
-type GetProgramUserPermissionsOutputType = {
-  is_manager: boolean;
-};
+type GetProgramUserPermissionsOutputType = ProgramUserPermissions;
 
 type GetProgramFSMsUserPermissionsInputType = {
   programSlug: string;

@@ -284,6 +284,10 @@ export type RequiredBalance = Attribute & {
 
 }
 
+export type ProgramUserPermissions = {
+  is_manager: boolean;
+}
+
 export type FSMUserPermissions = {
   fsm_id: string;
   is_mentor: boolean;
