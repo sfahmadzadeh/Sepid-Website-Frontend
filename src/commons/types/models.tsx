@@ -283,3 +283,8 @@ export type Reward = Attribute & {
 export type RequiredBalance = Attribute & {
 
 }
+
+export type FSMUserPermissions = {
+  fsm_id: string;
+  is_mentor: boolean;
+}

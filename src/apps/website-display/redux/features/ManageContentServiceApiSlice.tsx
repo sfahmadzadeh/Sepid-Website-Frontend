@@ -10,6 +10,7 @@ export const ManageContentServiceApi = createApi({
     'program-user-permissions',
     'fsm',
     'fsms',
+    'fsms-user-permissions',
     'program-admins',
     'fsm-states',
     'fsm-state',

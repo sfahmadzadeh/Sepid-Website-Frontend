@@ -1,4 +1,4 @@
-import { ProgramType } from 'commons/types/models';
+import { FSMUserPermissions, ProgramType } from 'commons/types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type GetProgramsInputType = {
@@ -25,6 +25,11 @@ type GetProgramUserPermissionsOutputType = {
   is_manager: boolean;
 };
 
+type GetProgramFSMsUserPermissionsInputType = {
+  programSlug: string;
+}
+
+type GetProgramFSMsUserPermissionsOutputType = FSMUserPermissions[];
 
 type UpdateProgramInputType = {
   programId: string;
@@ -101,6 +106,15 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
       },
     }),
 
+    getProgramFSMsUserPermissions: builder.query<GetProgramFSMsUserPermissionsOutputType, GetProgramFSMsUserPermissionsInputType>({
+      providesTags: ['fsms-user-permissions'],
+      query: ({ programSlug }) => `fsm/program/${programSlug}/get_fsms_user_permissions/`,
+      transformResponse: (response: any): GetProgramFSMsUserPermissionsOutputType => {
+        return response;
+      },
+    }),
+
+
     softDeleteProgram: builder.mutation<any, { programId: string }>({
       invalidatesTags: ['programs'],
       query: ({ programId }) => `fsm/program/${programId}/soft_delete/`
@@ -127,4 +141,5 @@ export const {
   useSoftDeleteProgramMutation,
   useRegisterUserInProgramMutation,
   useGetProgramUserPermissionsQuery,
+  useGetProgramFSMsUserPermissionsQuery,
 } = ProgramSlice;

@@ -17,17 +17,19 @@ import React, { useState, Fragment, FC, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import EnterFSMPasswordDialog from 'commons/components/organisms/dialogs/EnterFSMPasswordDialog';
-import { FSMType } from 'commons/types/models';
+import { FSMType, FSMUserPermissions } from 'commons/types/models';
 import { useEnterFSMMutation } from 'apps/website-display/redux/features/program/PlayerSlice';
 
 type FSMCardPropsType = {
   fsm: Partial<FSMType>;
   isLoading?: boolean;
+  userPermissions?: FSMUserPermissions;
 }
 
 export const FSMCard: FC<FSMCardPropsType> = ({
   fsm,
   isLoading = false,
+  userPermissions,
 }) => {
   const navigate = useNavigate();
   const { programSlug } = useParams();
@@ -83,7 +85,7 @@ export const FSMCard: FC<FSMCardPropsType> = ({
               </Stack>
 
               <Box>
-                {fsm.is_mentor ?
+                {userPermissions?.is_mentor ?
                   <Tooltip title='ورود به بخش همیاران' arrow>
                     <IconButton component={Link} to={`/program/${programSlug}/fsm/${fsm?.id}/manage/`} >
                       <ModeEditTwoToneIcon />

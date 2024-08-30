@@ -7,7 +7,6 @@ import FSMsGrid from 'commons/components/organisms/FSMsGrid';
 import ProgramPageSidebar from 'commons/components/organisms/ProgramPageSidebar';
 import { useGetProgramQuery } from 'apps/website-display/redux/features/program/ProgramSlice';
 import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'apps/website-display/redux/features/WebsiteSlice';
-import { useGetMyReceiptQuery } from 'apps/website-display/redux/features/form/ReceiptSlice';
 import Layout from 'commons/components/template/Layout';
 
 type EventProgramPropsType = {}

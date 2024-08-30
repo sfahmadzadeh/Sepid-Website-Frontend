@@ -6,6 +6,8 @@ import useWidth from 'commons/utils/UseWidth';
 import NoDataFound from 'commons/components/molecules/NoDataFound';
 import { useGetFSMsQuery } from 'apps/website-display/redux/features/fsm/FSMSlice';
 import { ITEMS_PER_PAGE_NUMBER } from 'commons/configs/Constants';
+import { useParams } from 'react-router-dom';
+import { useGetProgramFSMsUserPermissionsQuery } from 'apps/website-display/redux/features/program/ProgramSlice';
 
 type FSMsGridPropsType = {
   programId: string;
@@ -14,13 +16,15 @@ type FSMsGridPropsType = {
 const FSMsGrid: FC<FSMsGridPropsType> = ({
   programId
 }) => {
+  const { programSlug } = useParams();
   const width = useWidth();
   const [pageNumber, setPageNumber] = useState(1);
-  const { data: fsmsData, isLoading } = useGetFSMsQuery({ programId, pageNumber })
+  const { data: FSMsData, isLoading } = useGetFSMsQuery({ programId, pageNumber })
+  const { data: programFSMsUserPermissions } = useGetProgramFSMsUserPermissionsQuery({ programSlug });
 
   const numberOfSkeleton = width === 'sm' || width === 'md' ? 4 : 3;
 
-  const visibleFSMS = fsmsData?.fsms?.filter(fsm => fsm.is_visible) || []
+  const visibleFSMS = FSMsData?.fsms?.filter(fsm => fsm.is_visible) || []
 
   if (isLoading) {
     return (
@@ -42,7 +46,10 @@ const FSMsGrid: FC<FSMsGridPropsType> = ({
           <Grid container spacing={2}>
             {tmpArr.map((fsm) => (
               <Grid item key={fsm.id} xs={12} sm={6} lg={4}>
-                <FSMCard fsm={fsm} />
+                <FSMCard
+                  fsm={fsm}
+                  userPermissions={programFSMsUserPermissions?.find(programFSMsUserPermissions => programFSMsUserPermissions.fsm_id === fsm.id)}
+                />
               </Grid>
             ))}
           </Grid>
@@ -51,7 +58,7 @@ const FSMsGrid: FC<FSMsGridPropsType> = ({
           variant="outlined"
           color="primary"
           shape='rounded'
-          count={Math.ceil(fsmsData?.count / ITEMS_PER_PAGE_NUMBER)}
+          count={Math.ceil(FSMsData?.count / ITEMS_PER_PAGE_NUMBER)}
           page={pageNumber}
           onChange={(e, value) => setPageNumber(value)}
         />
