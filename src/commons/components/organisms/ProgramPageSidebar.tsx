@@ -12,7 +12,7 @@ import {
 } from 'apps/website-display/redux/slices/programs';
 import ProgramPageDashboardButton from 'commons/components/molecules/ProgramPageDashboardButton';
 import ProgramContactInfo from 'commons/components/molecules/ProgramContactInfo';
-import { useGetProgramQuery } from 'apps/website-display/redux/features/program/ProgramSlice';
+import { useGetProgramQuery, useGetProgramUserPermissionsQuery } from 'apps/website-display/redux/features/program/ProgramSlice';
 import ShareProgramButton from 'commons/components/atoms/ShareProgramButton';
 import { useGetMyReceiptQuery } from 'apps/website-display/redux/features/form/ReceiptSlice';
 
@@ -29,6 +29,7 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
   const { programSlug } = useParams();
   const { data: program } = useGetProgramQuery({ programSlug });
   const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
+  const { data: programPermissions } = useGetProgramUserPermissionsQuery({ programSlug });
 
   if (!program) return null;
 
@@ -77,7 +78,7 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
         {program.FAQs_paper_id &&
           <ProgramPageDashboardButton paperId={program.FAQs_paper_id} buttonLabel='سوالات متداول' />
         }
-        {program.is_manager &&
+        {programPermissions?.is_manager &&
           <Button
             variant="contained"
             color='info'

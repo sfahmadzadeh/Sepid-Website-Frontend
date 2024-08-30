@@ -7,6 +7,7 @@ export const ManageContentServiceApi = createApi({
   tagTypes: [
     'program',
     'programs',
+    'program-user-permissions',
     'fsm',
     'fsms',
     'program-admins',
