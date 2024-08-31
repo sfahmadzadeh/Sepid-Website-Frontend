@@ -20,6 +20,10 @@ const CustomBaseQuery = ({ baseUrl }) =>
         if (accessToken) {
           headers.append('Authorization', `JWT ${accessToken}`);
         }
+        const website = state.website?.website;
+        if (website) {
+          headers.append('Website', website.name);
+        }
         return headers
       },
     })(args, api, extraOptions);

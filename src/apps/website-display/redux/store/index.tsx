@@ -20,6 +20,9 @@ reduxStore.subscribe(() => {
         accessToken: state.account.accessToken,
         refreshToken: state.account.refreshToken,
       },
+      website: {
+        website: state.website.website,
+      },
       Intl: state.Intl,
     })
   );
