@@ -14,7 +14,6 @@ const ProgramPageTemplate: FC<ProgramPageTemplatePropsType> = ({
   const { programSlug } = useParams();
   const navigate = useNavigate();
   const { data: program } = useGetProgramQuery({ programSlug });
-  const { data: website } = useGetWebsiteQuery();
   const {
     data: registrationReceipt,
     isSuccess: isGettingRegistrationReceiptSuccess,

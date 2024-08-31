@@ -18,7 +18,6 @@ type InfoPropsType = {}
 const Info: FC<InfoPropsType> = ({ }) => {
   const { fsmId, programSlug } = useParams();
   const [properties, setProperties] = useState<FSMType>();
-  const { data: program } = useGetProgramQuery({ programSlug });
   const { data: fsm } = useGetFSMQuery({ fsmId });
   const [updateFSM, result] = useUpdateFSMMutation();
 
