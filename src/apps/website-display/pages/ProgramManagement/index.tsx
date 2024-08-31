@@ -155,7 +155,7 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
                 variant='outlined'
                 color="primary"
                 component={Link}
-                to={`/program/${program?.id}/`}
+                to={`/program/${programSlug}/`}
                 startIcon={<ExitToAppIcon />}>
                 {'بازگشت به دوره'}
               </Button>

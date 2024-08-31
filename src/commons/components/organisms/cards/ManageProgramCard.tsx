@@ -1,19 +1,13 @@
 import {
   Button,
   Card,
-  Chip,
   Grid,
   Stack,
   Typography,
-  Tooltip,
 } from '@mui/material';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import React, { FC, useEffect, useState } from 'react';
-import { useTranslate } from 'react-redux-multilingual/lib/context';
-import { useNavigate } from 'react-router-dom';
-import { toPersianNumber } from 'commons/utils/translateNumber';
+import React, { FC } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ProgramType } from 'commons/types/models';
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 
 type ProgramButtonPropsType = {
   to?: string;
@@ -47,7 +41,7 @@ type ManageProgramCardPropsType = {
 const ManageProgramCard: FC<ManageProgramCardPropsType> = ({
   program
 }) => {
-  const t = useTranslate();
+  const { programSlug } = useParams();
 
   return (
     <Card
@@ -96,7 +90,7 @@ const ManageProgramCard: FC<ManageProgramCardPropsType> = ({
                 {program.name}
               </Typography>
             </Stack>
-            <ProgramButton to={`/program/${program?.id}/manage/`} text={'ویرایش دوره'} />
+            <ProgramButton to={`/program/${programSlug}/manage/`} text={'ویرایش دوره'} />
           </Stack>
         </Grid>
       </Grid>
