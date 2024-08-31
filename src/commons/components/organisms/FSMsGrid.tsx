@@ -9,17 +9,13 @@ import { ITEMS_PER_PAGE_NUMBER } from 'commons/configs/Constants';
 import { useParams } from 'react-router-dom';
 import { useGetProgramFSMsUserPermissionsQuery } from 'apps/website-display/redux/features/program/ProgramSlice';
 
-type FSMsGridPropsType = {
-  programId: string;
-}
+type FSMsGridPropsType = {}
 
-const FSMsGrid: FC<FSMsGridPropsType> = ({
-  programId
-}) => {
+const FSMsGrid: FC<FSMsGridPropsType> = ({ }) => {
   const { programSlug } = useParams();
   const width = useWidth();
   const [pageNumber, setPageNumber] = useState(1);
-  const { data: FSMsData, isLoading } = useGetFSMsQuery({ programId, pageNumber })
+  const { data: FSMsData, isLoading } = useGetFSMsQuery({ programSlug, pageNumber })
   const { data: programFSMsUserPermissions } = useGetProgramFSMsUserPermissionsQuery({ programSlug });
 
   const numberOfSkeleton = width === 'sm' || width === 'md' ? 4 : 3;

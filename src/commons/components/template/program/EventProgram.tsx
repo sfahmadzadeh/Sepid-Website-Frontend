@@ -34,7 +34,7 @@ const EventProgram: FC<EventProgramPropsType> = ({ }) => {
             <Typography component="h1" fontWeight={700} fontSize={28} gutterBottom>
               {'کارگاه‌ها'}
             </Typography>
-            <FSMsGrid programId={program.id} />
+            <FSMsGrid />
           </Stack>
         </Stack>
       </Layout>

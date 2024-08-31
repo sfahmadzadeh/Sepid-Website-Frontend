@@ -2,7 +2,7 @@ import { MerchandiseType } from 'commons/types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type GetProgramMerchandisesInputType = {
-  programId: string;
+  programSlug: string;
 }
 
 type GetProgramMerchandisesOutputType = MerchandiseType[];
@@ -14,7 +14,7 @@ type GetMerchandiseInputType = {
 type GetMerchandiseOutputType = MerchandiseType;
 
 type AddMerchandiseToProgramInputType = {
-  programId: string;
+  programSlug: string;
 } & Partial<MerchandiseType>
 
 type AddMerchandiseToProgramOutputType = MerchandiseType;
@@ -34,7 +34,7 @@ export const MerchandiseSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
     getProgramMerchandises: builder.query<GetProgramMerchandisesOutputType, GetProgramMerchandisesInputType>({
       providesTags: ['merchandises'],
-      query: ({ programId }) => `sales/merchandise/program_merchandises/?program_id=${programId}`,
+      query: ({ programSlug }) => `sales/merchandise/program_merchandises/?program=${programSlug}`,
       transformResponse: (response: any): GetProgramMerchandisesOutputType => {
         return response;
       },
@@ -50,11 +50,11 @@ export const MerchandiseSlice = ManageContentServiceApi.injectEndpoints({
 
     createMerchandise: builder.mutation<AddMerchandiseToProgramOutputType, AddMerchandiseToProgramInputType>({
       invalidatesTags: ['merchandises', 'programs'],
-      query: ({ programId, ...body }) => ({
+      query: ({ programSlug, ...body }) => ({
         url: `sales/merchandise/`,
         method: 'POST',
         body: {
-          program: programId,
+          program: programSlug,
           ...body,
         }
       }),

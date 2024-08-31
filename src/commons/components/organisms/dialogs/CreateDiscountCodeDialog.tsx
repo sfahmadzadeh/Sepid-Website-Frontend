@@ -22,7 +22,7 @@ const CreateDiscountCodeDialog: FC<CreateDiscountCodeDialogType> = ({
   const { data: program } = useGetProgramQuery({ programSlug });
   const [discountCode, setDiscountCode] = useState<DiscountCodeType>(null);
   const [createDiscountCode, result] = useCreateDiscountCodeMutation();
-  const { data: programMerchandises } = useGetProgramMerchandisesQuery({ programId: program.id }, { skip: !Boolean(program) });
+  const { data: programMerchandises } = useGetProgramMerchandisesQuery({ programSlug }, { skip: !Boolean(program) });
 
 
   const handleCreateDiscountCode = () => {

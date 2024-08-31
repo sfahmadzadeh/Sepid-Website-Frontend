@@ -9,16 +9,6 @@ export const institutesUrl = ({ cityTitle }) => cityTitle ? `auth/institutes?cit
 
 // workshop
 export const getOneWorkshopUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/`;
-export const getWorkshopsUrl = ({ programId, pageNumber }) => {
-  let url = 'fsm/fsm/';
-  if (programId) {
-    url += `?program=${programId}`;
-  }
-  if (pageNumber) {
-    url += `&page=${pageNumber}`;
-  }
-  return url;
-}
 export const getRegistrableWorkshopsUrl = 'fsm/fsm/?registrable=true';
 export const reviewAnswersUrl = ({ fsmId }) => `fsm/fsm/${fsmId}/review/`;
 

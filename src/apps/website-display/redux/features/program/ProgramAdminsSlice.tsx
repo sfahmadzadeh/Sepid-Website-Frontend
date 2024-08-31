@@ -2,13 +2,13 @@ import { UserPublicInfoType } from 'commons/types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type ProgramInputType = {
-  programId: string;
+  programSlug: string;
 }
 
 type GetProgramAdminsOutputType = UserPublicInfoType[];
 
 type AddAdminToProgramInputType = {
-  programId: string;
+  programSlug: string;
   username: string;
 };
 
@@ -17,7 +17,7 @@ type AddAdminToProgramOutputType = {
 }
 
 type RemoveAdminFromProgramInputType = {
-  programId: string;
+  programSlug: string;
   username: string;
 };
 
@@ -30,7 +30,7 @@ export const ProgramAdminsSlice = ManageContentServiceApi.injectEndpoints({
 
     getProgramAdmins: builder.query<GetProgramAdminsOutputType, ProgramInputType>({
       providesTags: ['program-admins'],
-      query: ({ programId }) => `fsm/program/${programId}/get_admins/`,
+      query: ({ programSlug }) => `fsm/program/${programSlug}/get_admins/`,
       transformResponse: (response: any): GetProgramAdminsOutputType => {
         return response;
       },
@@ -38,8 +38,8 @@ export const ProgramAdminsSlice = ManageContentServiceApi.injectEndpoints({
 
     addAdminToProgram: builder.mutation<AddAdminToProgramOutputType, AddAdminToProgramInputType>({
       invalidatesTags: ['program-admins'],
-      query: ({ programId, ...body }) => ({
-        url: `/fsm/program/${programId}/add_admin/`,
+      query: ({ programSlug, ...body }) => ({
+        url: `/fsm/program/${programSlug}/add_admin/`,
         method: 'POST',
         body,
       }),
@@ -50,8 +50,8 @@ export const ProgramAdminsSlice = ManageContentServiceApi.injectEndpoints({
 
     removeAdminFromProgram: builder.mutation<RemoveAdminFromProgramOutputType, RemoveAdminFromProgramInputType>({
       invalidatesTags: ['program-admins'],
-      query: ({ programId, ...body }) => ({
-        url: `/fsm/program/${programId}/remove_admin/`,
+      query: ({ programSlug, ...body }) => ({
+        url: `/fsm/program/${programSlug}/remove_admin/`,
         method: 'POST',
         body,
       }),

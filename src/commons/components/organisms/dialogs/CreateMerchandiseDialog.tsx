@@ -24,7 +24,6 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
   handleClose,
 }) => {
   const { programSlug } = useParams()
-  const { data: program } = useGetProgramQuery({ programSlug });
   const [merchandise, setMerchandise] = useState<Partial<MerchandiseType>>(null);
   const [createMerchandise, result] = useCreateMerchandiseMutation();
 
@@ -42,7 +41,7 @@ const CreateMerchandiseDialog: FC<CreateMerchandiseDialogPropsType> = ({
       return;
     }
     createMerchandise({
-      programId: program.id,
+      programSlug,
       ...merchandise,
     });
   }

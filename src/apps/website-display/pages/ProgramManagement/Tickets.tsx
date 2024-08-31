@@ -37,8 +37,8 @@ const Tickets: FC<TicketsTabPropsType> = ({
   const { data: program } = useGetProgramQuery({ programSlug });
   const [isCreateMerchandiseDialogOpen, setCreateMerchandiseDialogOpen] = useState(false);
   const [isCreateDiscountCodeDialogOpen, setCreateDiscountCodeDialogOpen] = useState(false);
-  const { data: merchandises } = useGetProgramMerchandisesQuery({ programId: program.id }, { skip: !Boolean(program) });
-  const { data: discountCodes } = useGetProgramDiscountCodesQuery({ programId: program.id }, { skip: !Boolean(program) });
+  const { data: merchandises } = useGetProgramMerchandisesQuery({ programSlug }, { skip: !Boolean(program) });
+  const { data: discountCodes } = useGetProgramDiscountCodesQuery({ programSlug }, { skip: !Boolean(program) });
   const [deleteDiscountCode] = useDeleteDiscountCodeMutation();
 
   const handleDeleteDiscountCode = (discountCodeId) => {
@@ -49,7 +49,7 @@ const Tickets: FC<TicketsTabPropsType> = ({
 
   const downloadExcelExport = () => {
     // todo: EHSAN: it should not be registration_form_id
-    getProgramMerchandisesPurchasesFile({ programId: program.registration_form })
+    getProgramMerchandisesPurchasesFile({ programSlug: program.registration_form })
   }
 
   useEffect(() => {

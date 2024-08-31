@@ -9,13 +9,12 @@ import { toast } from 'react-toastify';
 
 type SoftDeleteFSMButtonPropsType = {
   fsmId: string;
-  programId: string;
 }
 
 const SoftDeleteFSMButton: FC<SoftDeleteFSMButtonPropsType> = ({
   fsmId,
-  programId,
 }) => {
+  const { programSlug } = useParams();
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [softDelete, result] = useSoftDeleteFSMMutation();
@@ -23,7 +22,7 @@ const SoftDeleteFSMButton: FC<SoftDeleteFSMButtonPropsType> = ({
   useEffect(() => {
     if (result?.isSuccess) {
       toast.success('کارگاه با موفقیت حذف شد.');
-      navigate(`/program/${programId}/`);
+      navigate(`/program/${programSlug}/`);
     }
   }, [result])
 

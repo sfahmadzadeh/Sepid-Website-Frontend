@@ -10,7 +10,7 @@ type PaymentPropsType = {}
 const Payment: FC<PaymentPropsType> = ({ }) => {
   const { programSlug } = useParams();
   const { data: program } = useGetProgramQuery({ programSlug });
-  const { data: merchandises } = useGetProgramMerchandisesQuery({ programId: program.id }, { skip: !Boolean(program) })
+  const { data: merchandises } = useGetProgramMerchandisesQuery({ programSlug }, { skip: !Boolean(program) })
 
   return (
     <Stack spacing={4}  >

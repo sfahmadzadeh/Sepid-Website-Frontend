@@ -41,7 +41,7 @@ const InfoTab: FC<InfoTabPropsType> = ({ }) => {
       toast.error('لطفاً نام دوره را انتخاب کنید.');
       return;
     }
-    updateProgram({ programId: program.id, ...removeBlankAttributes(properties) });
+    updateProgram({ programSlug, ...removeBlankAttributes(properties) });
   }
 
   return (
@@ -51,7 +51,7 @@ const InfoTab: FC<InfoTabPropsType> = ({ }) => {
           <Typography variant='h2' gutterBottom>
             {'مشخصات دوره'}
           </Typography>
-          <SoftDeleteProgramButton programId={program.id} />
+          <SoftDeleteProgramButton />
         </Stack>
 
         <Box>

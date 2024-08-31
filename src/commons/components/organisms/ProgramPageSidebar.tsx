@@ -57,7 +57,7 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
             variant="contained"
             color='info'
             fullWidth
-            onClick={() => navigate(`/program/${program.id}/group-setting/`)}>
+            onClick={() => navigate(`/program/${programSlug}/group-setting/`)}>
             {'گروه‌بندی'}
           </Button>
         }
@@ -83,7 +83,7 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
             variant="contained"
             color='info'
             fullWidth
-            onClick={() => navigate(`/program/${program.id}/manage/`)}>
+            onClick={() => navigate(`/program/${programSlug}/manage/`)}>
             {'مدیریت دوره'}
           </Button>
         }

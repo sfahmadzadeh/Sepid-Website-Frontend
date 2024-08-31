@@ -14,7 +14,7 @@ type GetFormRespondentsAnswersInputType = {
 type GetFormRespondentsAnswersOutputType = FileType;
 
 type GetProgramMerchandisesPurchasesInputType = {
-  programId: string;
+  programSlug: string;
 }
 
 type GetProgramMerchandisesPurchasesOutputType = FileType;
@@ -46,11 +46,11 @@ export const ReportSlice = ManageContentServiceApi.injectEndpoints({
 
     getProgramMerchandisesPurchasesFile: builder.mutation<GetProgramMerchandisesPurchasesOutputType, GetProgramMerchandisesPurchasesInputType>({
       invalidatesTags: ['programs'],
-      query: ({ programId }) => ({
+      query: ({ programSlug }) => ({
         url: `/report/program-merchandises-purchases/`,
         method: 'POST',
         body: {
-          program_id: programId
+          program_id: programSlug
         },
       }),
     }),

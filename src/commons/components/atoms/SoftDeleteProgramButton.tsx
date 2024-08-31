@@ -7,13 +7,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useSoftDeleteProgramMutation } from 'apps/website-display/redux/features/program/ProgramSlice';
 
-type SoftDeleteProgramButtonPropsType = {
-  programId: string;
-}
+type SoftDeleteProgramButtonPropsType = {}
 
-const SoftDeleteProgramButton: FC<SoftDeleteProgramButtonPropsType> = ({
-  programId,
-}) => {
+const SoftDeleteProgramButton: FC<SoftDeleteProgramButtonPropsType> = ({ }) => {
+  const { programSlug } = useParams();
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [softDeleteProgram, result] = useSoftDeleteProgramMutation();
@@ -35,7 +32,7 @@ const SoftDeleteProgramButton: FC<SoftDeleteProgramButtonPropsType> = ({
       <AreYouSure
         text='آیا مطمئنید؟ با پاک‌کردن دوره، تمامی کارگاه‌های آن نیز پاک خواهد شد و دیگر قابل بازیابی نیستند.'
         open={openDialog}
-        callBackFunction={() => softDeleteProgram({ programId: programId })}
+        callBackFunction={() => softDeleteProgram({ programSlug })}
         handleClose={() => setOpenDialog(openDialog => !openDialog)} />
     </Fragment>
   );

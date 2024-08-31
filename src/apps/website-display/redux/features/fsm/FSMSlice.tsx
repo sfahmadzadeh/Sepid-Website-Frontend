@@ -18,7 +18,7 @@ type CreateFSMOutputType = {
 }
 
 type GetFSMsInputType = {
-  programId: string;
+  programSlug: string;
   pageNumber: number;
 };
 
@@ -75,7 +75,7 @@ export const FSMSlice = ManageContentServiceApi.injectEndpoints({
 
     getFSMs: builder.query<GetFSMsOutputType, GetFSMsInputType>({
       providesTags: ['fsms'],
-      query: ({ programId, pageNumber = 1 }) => `fsm/fsm/?program=${programId}&page=${pageNumber}`,
+      query: ({ programSlug, pageNumber = 1 }) => `fsm/fsm/?program=${programSlug}&page=${pageNumber}`,
       transformResponse: (response: any): GetFSMsOutputType => {
         return {
           fsms: response.results,

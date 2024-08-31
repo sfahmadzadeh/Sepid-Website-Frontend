@@ -27,7 +27,7 @@ const StatisticsTab: FC<StatisticsTabPropsType> = ({
   const [pageNumber, setPageNumber] = useState(1);
   const { data: website } = useGetWebsiteQuery();
   const { data: program } = useGetProgramQuery({ programSlug });
-  const { data: fsmsData } = useGetFSMsQuery({ programId: program.id, pageNumber }, { skip: !Boolean(program) })
+  const { data: fsmsData } = useGetFSMsQuery({ programSlug, pageNumber }, { skip: !Boolean(program) })
 
   const getTotalParticipantsCountOfAllProgramFSMs = (allProgramFSMs) => {
     let totalParticipantsCount = 0;

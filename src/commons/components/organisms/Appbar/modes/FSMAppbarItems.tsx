@@ -16,7 +16,7 @@ import { useGetFSMQuery } from 'apps/website-display/redux/features/fsm/FSMSlice
 const FSMAppbarItems = ({ }) => {
   const { fsmId, programSlug } = useParams();
   // todo: refactor: fetch program minimal info (not whole program info!)
-  // const { data: program } = useGetProgramQuery({ programId });
+  // const { data: program } = useGetProgramQuery({ programSlug });
   const { data: fsm } = useGetFSMQuery({ fsmId });
 
   const reviewAnswers = <ReviewAnswersButton />

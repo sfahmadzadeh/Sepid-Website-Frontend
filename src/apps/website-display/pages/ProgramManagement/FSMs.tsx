@@ -23,7 +23,7 @@ const ProgramManagementFsmTab: FC<ProgramManagementFsmTabPropsType> = ({ }) => {
   const { data: program } = useGetProgramQuery({ programSlug });
   const [openCreateFSMDialog, setOpenCreateFSMDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const { data: fsmsData, isLoading } = useGetFSMsQuery({ programId: program.id, pageNumber }, { skip: !Boolean(program) });
+  const { data: fsmsData, isLoading } = useGetFSMsQuery({ programSlug, pageNumber }, { skip: !Boolean(program) });
 
   return (
     <Fragment>

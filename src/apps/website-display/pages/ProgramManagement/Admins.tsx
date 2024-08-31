@@ -25,10 +25,10 @@ const AdminTab: FC<AdminsTabPropsType> = ({ }) => {
   const [username, setUsername] = useState<string>('');
   const [addAdminToProgram, addAdminToProgramResult] = useAddAdminToProgramMutation();
   const [removeAdminFromProgram, _] = useRemoveAdminFromProgramMutation();
-  const { data: programAdmins } = useGetProgramAdminsQuery({ programId: program.id }, { skip: !Boolean(program) });
+  const { data: programAdmins } = useGetProgramAdminsQuery({ programSlug: program.id }, { skip: !Boolean(program) });
 
   const addAdmin = () => {
-    addAdminToProgram({ programId: program.id, username })
+    addAdminToProgram({ programSlug: program.id, username })
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const AdminTab: FC<AdminsTabPropsType> = ({ }) => {
   }, [addAdminToProgramResult])
 
   const removeAdmin = (username) => {
-    removeAdminFromProgram({ programId: program.id, username })
+    removeAdminFromProgram({ programSlug: program.id, username })
   }
 
   return (
