@@ -114,11 +114,11 @@ const Widget: FC<WidgetPropsType> = ({
                   {widget.name}
                 </Typography>
                 <Box>
-                  <Tooltip title='ویژگی‌ها' arrow>
+                  {/* <Tooltip title='ویژگی‌ها' arrow>
                     <IconButton size='small' onClick={() => setAddAttributeDialogOpen(true)}>
                       <PaidIcon />
                     </IconButton>
-                  </Tooltip>
+                  </Tooltip> */}
                   <Tooltip title='راهنمایی‌ها' arrow>
                     <IconButton size='small' onClick={() => setEditHintDialog(true)}>
                       <HelpIcon />
