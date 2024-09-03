@@ -1,26 +1,22 @@
 import React, { FC, Fragment, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import {
-  respondInvitationAction,
-} from 'apps/website-display/redux/slices/programs';
 import AreYouSure from 'commons/components/organisms/dialogs/AreYouSure';
 import {
   IconButton
 } from "@mui/material";
-import { connect } from 'react-redux';
+import { useRespondInvitationMutation } from 'apps/website-display/redux/features/team/InvitationSlice';
 
 type RespondInvitationPropsType = {
-  invitationId: number;
-  respondInvitation: any;
+  invitationId: string;
 }
 
 const RespondInvitation: FC<RespondInvitationPropsType> = ({
   invitationId,
-  respondInvitation,
 }) => {
-  const [acceptedInvitationId, setAcceptedInvitationId] = useState<number>(null);
-  const [rejectedInvitationId, setRejectedInvitationId] = useState<number>(null);
+  const [acceptedInvitationId, setAcceptedInvitationId] = useState<string>(null);
+  const [rejectedInvitationId, setRejectedInvitationId] = useState<string>(null);
+  const [respondInvitation, result] = useRespondInvitationMutation();
 
   return (
     <Fragment>
@@ -62,6 +58,4 @@ const RespondInvitation: FC<RespondInvitationPropsType> = ({
   );
 }
 
-export default connect(null, {
-  respondInvitation: respondInvitationAction,
-})(RespondInvitation);
+export default RespondInvitation;

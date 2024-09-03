@@ -56,7 +56,7 @@ export type ProgramType = {
 
 export type AnswerSheetType = 'RegistrationReceipt' | 'StateAnswerSheet';
 
-export type Invitation = any
+export type InvitationType = any
 export type CertificateType = any;
 export type TeamType = {
   chat_room: string;

@@ -3,12 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Apis } from '../apis';
 import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
 import {
-  deleteInvitationUrl,
   getCertificateUrl,
-  getMyInvitationsUrl,
-  getTeamInvitationsUrl,
-  inviteSomeoneUrl,
-  respondInvitationUrl,
   addMentorToWorkshopUrl,
   registerUsersViaCSVUrl,
   getPlayerFromTeamUrl,
@@ -40,54 +35,6 @@ const initialState: InitialState = {
   playerId: {},
   teamCurrentState: null,
 };
-
-export const getTeamInvitationsAction = createAsyncThunkApi(
-  'programs/getTeamInvitationsAction',
-  Apis.GET,
-  getTeamInvitationsUrl
-);
-
-export const getMyInvitationsAction = createAsyncThunkApi(
-  'programs/getMyInvitationsAction',
-  Apis.GET,
-  getMyInvitationsUrl
-);
-
-export const inviteSomeoneAction = createAsyncThunkApi(
-  'programs/inviteSomeoneAction',
-  Apis.POST,
-  inviteSomeoneUrl,
-  {
-    defaultNotification: {
-      success: 'دعوت‌نامه‌ی شما با موفقیت ارسال شد.',
-      error: 'مشکلی وجود داشت. .',
-    },
-  }
-);
-
-export const deleteInvitationAction = createAsyncThunkApi(
-  'programs/deleteInvitationAction',
-  Apis.DELETE,
-  deleteInvitationUrl,
-  {
-    defaultNotification: {
-      success: 'دعوت‌نامه پس گرفته شد.',
-      error: 'مشکلی وجود داشت. .',
-    },
-  }
-);
-
-export const respondInvitationAction = createAsyncThunkApi(
-  'programs/respondInvitationAction',
-  Apis.POST,
-  respondInvitationUrl,
-  {
-    defaultNotification: {
-      success: 'پاسخ به دعوت‌نامه با موفقیت ثبت شد.',
-      error: 'مشکلی وجود داشت. .',
-    },
-  }
-);
 
 export const getCertificateAction = createAsyncThunkApi(
   'programs/getCertificate',
@@ -202,59 +149,6 @@ const programSlice = createSlice({
     },
   },
   extraReducers: {
-
-    [getTeamInvitationsAction.pending.toString()]: isFetching,
-    [getTeamInvitationsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.isFetching = false;
-      state.teamInvitations = response;
-    },
-    [getTeamInvitationsAction.rejected.toString()]: isNotFetching,
-
-    [inviteSomeoneAction.pending.toString()]: isFetching,
-    [inviteSomeoneAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.isFetching = false;
-      state.teamInvitations = [response, ...state.teamInvitations];
-    },
-    [inviteSomeoneAction.rejected.toString()]: isNotFetching,
-
-    [deleteInvitationAction.pending.toString()]: isFetching,
-    [deleteInvitationAction.fulfilled.toString()]: (state, action) => {
-      state.isFetching = false;
-      let newTeamInvitations = [...state.teamInvitations];
-      for (let i = 0; i < newTeamInvitations.length; i++) {
-        if (newTeamInvitations[i].id == action.meta.arg.invitationId) {
-          newTeamInvitations.splice(i, 1); // todo
-        }
-      }
-      state.teamInvitations = newTeamInvitations;
-    },
-    [deleteInvitationAction.rejected.toString()]: isNotFetching,
-
-    [getMyInvitationsAction.pending.toString()]: isFetching,
-    [getMyInvitationsAction.fulfilled.toString()]: (
-      state,
-      { payload: { response } }
-    ) => {
-      state.isFetching = false;
-      state.myInvitations = response;
-    },
-    [getMyInvitationsAction.rejected.toString()]: isNotFetching,
-
-    [respondInvitationAction.pending.toString()]: isFetching,
-    [respondInvitationAction.fulfilled.toString()]: (state, action) => {
-      state.isFetching = false;
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-      // let newMyInvitations = [...state.myInvitations];
-      // for (let i = 0; i < newMyInvitations.length; i++) {
-      //   if (newMyInvitations[i].id == action.meta.arg.invitationId) {
-      //     newMyInvitations[i] = action.payload.response; //todo
-      //   }
-      // }
-      // state.myInvitations = newMyInvitations;
-    },
-    [respondInvitationAction.rejected.toString()]: isNotFetching,
 
     [getCertificateAction.pending.toString()]: isFetching,
     [getCertificateAction.fulfilled.toString()]: (state, { payload: { response } }) => {

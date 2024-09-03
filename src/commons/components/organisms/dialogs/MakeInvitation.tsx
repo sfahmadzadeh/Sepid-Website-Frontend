@@ -6,29 +6,35 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import isNumber from 'commons/utils/validators/isNumber';
+import { useInviteMemberMutation } from 'apps/website-display/redux/features/team/InvitationSlice';
 
 type MakeInvitationDialogPropsType = {
-  inviteSomeone: any;
   handleClose: any;
-  invitee?: string;
   teamId: string;
   open: boolean;
 }
 
-const MakeInvitationDialog: FC<MakeInvitationDialogPropsType> = ({ inviteSomeone, handleClose, invitee, teamId, open }) => {
+const MakeInvitationDialog: FC<MakeInvitationDialogPropsType> = ({
+  handleClose,
+  teamId,
+  open,
+}) => {
   const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [inviteMember, { isSuccess }] = useInviteMemberMutation();
 
   const sendInvitation = () => {
     if (!phoneNumber) return;
-    inviteSomeone({ teamId, invitee, username: phoneNumber }).then((response) => {
-      if (response.type?.endsWith('fulfilled')) {
-        handleClose();
-      }
-    });
-    ;
+    inviteMember({ teamId, username: phoneNumber });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      handleClose();
+      setPhoneNumber('');
+    }
+  }, [isSuccess])
 
   return (
     <Dialog disableScrollLock maxWidth="sm" open={open} onClose={handleClose}>

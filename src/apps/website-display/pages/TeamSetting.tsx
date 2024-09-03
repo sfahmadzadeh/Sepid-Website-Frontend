@@ -20,25 +20,18 @@ import {
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import ClearIcon from '@mui/icons-material/Clear';
 import React, { FC, Fragment, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import AreYouSure from 'commons/components/organisms/dialogs/AreYouSure';
 import MakeInvitation from 'commons/components/organisms/dialogs/MakeInvitation';
-import {
-  deleteInvitationAction,
-  getMyInvitationsAction,
-  getTeamInvitationsAction,
-  inviteSomeoneAction,
-} from 'apps/website-display/redux/slices/programs';
 import Layout from 'commons/components/template/Layout';
 import RespondInvitation from 'commons/components/molecules/RespondInvitation';
 import { toast } from 'react-toastify';
 import { useGetProgramQuery } from 'apps/website-display/redux/features/program/ProgramSlice';
 import { useGetMyReceiptQuery } from 'apps/website-display/redux/features/form/ReceiptSlice';
-import { TeamType } from 'commons/types/models';
 import ProgramTeamSettingBreadcrumbs from 'commons/components/organisms/breadcrumbs/ProgramTeamSetting';
 import ProgramPageTemplate from 'commons/components/template/program/ProgramPageTemplate';
 import { useCreateAndJoinTeamMutation, useDeleteTeamMutation, useGetTeamQuery } from '../redux/features/team/TeamSlice';
+import { useDeleteInvitationMutation, useGetMyInvitationsQuery, useGetTeamInvitationsQuery, useInviteMemberMutation } from '../redux/features/team/InvitationSlice';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
@@ -48,26 +41,9 @@ const invitationStatusTranslation = {
   Accepted: 'قبول',
 }
 
-type TeamSettingPropsType = {
-  getMyInvitations: any;
-  deleteInvitation: any;
-  getTeamInvitations: any;
-  inviteSomeone: any;
+type TeamSettingPropsType = {}
 
-  team: TeamType;
-  myInvitations: any[],
-  teamInvitations: any[],
-}
-
-const TeamSetting: FC<TeamSettingPropsType> = ({
-  getMyInvitations,
-  deleteInvitation,
-  getTeamInvitations,
-  inviteSomeone,
-
-  myInvitations,
-  teamInvitations,
-}) => {
+const TeamSetting: FC<TeamSettingPropsType> = ({ }) => {
   const { programSlug } = useParams();
   const [isCreateInvitationDialogOpen, changeCreateInvitationDialogStatus] = useState(false);
   const [isDeleteTeamDialogOpen, changeDeleteTeamDialogStatus] = useState(false);
@@ -76,22 +52,12 @@ const TeamSetting: FC<TeamSettingPropsType> = ({
   const { data: team } = useGetTeamQuery({ teamId: registrationReceipt?.team as string }, { skip: !Boolean(registrationReceipt?.team) });
   const [newTeamName, setNewTeamName] = useState('');
   const isHead = registrationReceipt?.id == team?.team_head.toString()
-  teamInvitations = teamInvitations.slice().sort((team1, team2) => team2.id - team1.id);
   const [createAndJoinTeam] = useCreateAndJoinTeamMutation();
   const [deleteTeam, { isSuccess: isDeleteTeamSuccess }] = useDeleteTeamMutation();
-
-  useEffect(() => {
-    if (program?.registration_form) {
-      getMyInvitations({ registrationFormId: program.registration_form });
-    }
-  }, [program]);
-
-  useEffect(() => {
-    if (registrationReceipt?.team) {
-      const teamId = registrationReceipt.team;
-      getTeamInvitations({ teamId });
-    }
-  }, [registrationReceipt]);
+  const [deleteInvitation] = useDeleteInvitationMutation();
+  const { data: myInvitations } = useGetMyInvitationsQuery({ registrationFormId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
+  const { data: teamInvitations } = useGetTeamInvitationsQuery({ teamId: team?.id }, { skip: !Boolean(team?.id) });
+  const sortedTeamInvitations = teamInvitations?.slice().sort((team1, team2) => team2.id - team1.id);
 
   const submitCreateTeam = () => {
     if (!newTeamName) {
@@ -246,7 +212,7 @@ const TeamSetting: FC<TeamSettingPropsType> = ({
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {isHead && teamInvitations?.map((invitation, index) => (
+                      {isHead && sortedTeamInvitations?.map((invitation, index) => (
                         <TableRow key={index}>
                           <TableCell align="center">
                             {`${invitation.first_name || "بی‌نام"} ${invitation.last_name || "بی‌نام‌زاده"}`}
@@ -294,7 +260,7 @@ const TeamSetting: FC<TeamSettingPropsType> = ({
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {myInvitations.map((invitation, index) => (
+                      {myInvitations?.map((invitation, index) => (
                         <TableRow key={index}>
                           <TableCell align="center">
                             {invitation.team_name}
@@ -319,7 +285,6 @@ const TeamSetting: FC<TeamSettingPropsType> = ({
         </Grid>
         <MakeInvitation
           open={isCreateInvitationDialogOpen}
-          inviteSomeone={inviteSomeone}
           handleClose={() => changeCreateInvitationDialogStatus(false)}
           teamId={team?.id}
         />
@@ -335,20 +300,4 @@ const TeamSetting: FC<TeamSettingPropsType> = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  registrationReceipt: state.programs.registrationReceipt,
-  team: state.programs.team,
-  //todo: handle not showing self invitation, in back:
-  myInvitations: state.programs.myInvitations.filter(
-    (invitation) => invitation.head_phone_number !== invitation.phone_number
-  ),
-  teamInvitations: state.programs.teamInvitations,
-  isFetching: state.programs.isFetching,
-});
-
-export default connect(mapStateToProps, {
-  getMyInvitations: getMyInvitationsAction,
-  deleteInvitation: deleteInvitationAction,
-  inviteSomeone: inviteSomeoneAction,
-  getTeamInvitations: getTeamInvitationsAction,
-})(TeamSetting);
+export default TeamSetting;

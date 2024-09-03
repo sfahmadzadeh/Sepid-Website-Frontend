@@ -35,6 +35,8 @@ export const ManageContentServiceApi = createApi({
     'currencies',
     'teams',
     'team',
+    'my-invitations',
+    'team-invitations',
   ],
   baseQuery: CustomBaseQuery({ baseUrl: MCS_URL + 'api/' }),
   endpoints: build => ({

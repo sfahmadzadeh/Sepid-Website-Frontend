@@ -1,7 +1,7 @@
 import { WidgetType } from 'commons/types/widgets/widget';
 import {
   ProgramType, 
-  Invitation, 
+  InvitationType, 
   RegistrationReceiptType,  
   TeamType, 
   RegistrationFormType,
@@ -17,8 +17,8 @@ export type InitialState = {
   programs: ProgramType[],
   program: ProgramType,
   uploadedFile: UploadedFile,
-  myInvitations: Invitation[],
-  teamInvitations: Invitation[],
+  myInvitations: InvitationType[],
+  teamInvitations: InvitationType[],
   allRegistrationReceipts: RegistrationReceiptType[],
   registrationReceipt: RegistrationReceiptType,
   widgets: WidgetType[],
