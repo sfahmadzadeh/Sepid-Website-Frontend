@@ -8,7 +8,6 @@ import UploadFileProblemWidget, { UploadFileProblemEditWidget } from '../questio
 import VideoWidget, { VideoEditWidget } from '../contents/VideoWidget';
 import AudioWidget, { AudioEditWidget } from '../contents/AudioWidget';
 import DetailBoxWidget, { DetailBoxEditDialog } from '../contents/DetailBoxWidget';
-import InviteeUsername, { InviteeUsernameEdit } from '../questions/InviteeUsername';
 
 import {
   sendSmallAnswerAction,
@@ -40,13 +39,6 @@ const WIDGET_TYPE_MAPPER = {
     backendType: 'MultiChoiceProblem',
     submitAnswerAction: sendMultiChoiceAnswerAction,
   },
-  // InviteeUsername: {
-  //   WidgetComponent: InviteeUsername,
-  //   EditWidgetDialog: InviteeUsernameEdit,
-  //   label: 'سوال کد معرف',
-  //   backendType: 'InviteeUsernameProblem',
-  //   submitAnswerAction: sendInviteeUsernameResponseAction,
-  // },
   UploadFileProblem: {
     WidgetComponent: UploadFileProblemWidget,
     EditWidgetDialog: UploadFileProblemEditWidget,

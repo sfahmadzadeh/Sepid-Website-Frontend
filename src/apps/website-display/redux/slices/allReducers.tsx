@@ -7,7 +7,6 @@ import { whiteboardReducer } from './whiteboard';
 import { workshopReducer } from './workshop';
 import { articleReducer } from './article';
 import { assessmentReducer } from './assessment';
-import { questionReducer } from './Question';
 import { AnswerReducer } from './Answer';
 import { WebsiteReducer } from './Website';
 import { GlobalReducer } from './Global';
@@ -26,7 +25,6 @@ const allReducers = {
   article: articleReducer,
   Intl: translatorReducer,
   scoring: assessmentReducer,
-  question: questionReducer,
   answer: AnswerReducer,
 };
 
