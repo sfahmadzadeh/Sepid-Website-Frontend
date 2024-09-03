@@ -13,18 +13,20 @@ import {
 
 import TeamsTab from './TeamsTab';
 import { TeamType } from 'commons/types/models';
+import { useGetProgramTeamsQuery } from 'apps/website-display/redux/features/team/TeamSlice';
 
 const Teams: FC<TeamPropsType> = ({
   teamsRequests,
-  programTeams = [],
   getRequestMentor = undefined,
   createRequestMentor = undefined,
   removeRequestMentor = undefined,
 }) => {
-  const { fsmId } = useParams();
+  const { fsmId, programSlug } = useParams();
   const subscriptionRef = useRef(null);
   const [starredTeams, setStarredTeams] = useState([])
   const [value, setValue] = useState(0);
+  const { data: programTeams } = useGetProgramTeamsQuery({ programSlug })
+
 
   useEffect(() => {
     const subscribe = async () => {
@@ -125,8 +127,8 @@ const Teams: FC<TeamPropsType> = ({
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="همه گروه‌ها" {...a11yProps(0)} />
-          <Tab label="گروه‌های نشان شده" {...a11yProps(1)} />
+          <Tab label="همه تیم‌ها" {...a11yProps(0)} />
+          <Tab label="تیم‌های نشان شده" {...a11yProps(1)} />
           <Tab label="درخواست‌ها" {...a11yProps(2)} />
         </Tabs>
       </Box>
@@ -144,7 +146,6 @@ const Teams: FC<TeamPropsType> = ({
 }
 
 const mapStateToProps = (state) => ({
-  programTeams: state.programs.allProgramTeams,
   teamsRequests: state.programs.teamsRequests,
 });
 

@@ -7,8 +7,7 @@ import {
 } from '@mui/material';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import React, { FC, useEffect, useMemo } from 'react';
-import { connect } from 'react-redux';
+import React, { FC, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -17,9 +16,6 @@ import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import InfoIcon from '@mui/icons-material/Info';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import {
-  getProgramTeamsAction,
-} from 'apps/website-display/redux/slices/programs';
 import Layout from 'commons/components/template/Layout';
 import DesignStates from './DesignStates';
 import Edges from './Edges';
@@ -75,13 +71,9 @@ const initialTabs: DashboardTabType[] = [
   },
 ]
 
-type FSMManagementPropsType = {
-  getProgramTeams: Function,
-}
+type FSMManagementPropsType = {}
 
-const FSMManagement: FC<FSMManagementPropsType> = ({
-  getProgramTeams: getProgramTeams,
-}) => {
+const FSMManagement: FC<FSMManagementPropsType> = ({ }) => {
   const navigate = useNavigate();
   const { fsmId, programSlug, section } = useParams();
   const { data: fsm } = useGetFSMQuery({ fsmId });
@@ -120,12 +112,6 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
             component: IndividualRequests,
           },
         ] : initialTabs : initialTabs
-
-  useEffect(() => {
-    if (program && program.registration_form) {
-      getProgramTeams({ registrationFormId: program.registration_form });
-    }
-  }, [program?.registration_form]);
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab) return null;
@@ -187,6 +173,4 @@ const FSMManagement: FC<FSMManagementPropsType> = ({
   );
 };
 
-export default connect(null, {
-  getProgramTeams: getProgramTeamsAction,
-})(FSMManagement);
+export default FSMManagement;

@@ -8,14 +8,12 @@ import {
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import React, { FC, Fragment, useState } from 'react';
-import { connect } from 'react-redux';
 import AreYouSure from 'commons/components/organisms/dialogs/AreYouSure'
-import { removeFromTeamAction } from 'apps/website-display/redux/slices/programs';
-
-import {
-  makeTeamHeadAction,
-} from 'apps/website-display/redux/slices/programs';
 import { UserInfoType } from 'commons/types/profile';
+import {
+  useMakeUserTeamHeadMutation,
+  useRemoveUserFromTeamMutation,
+} from 'apps/website-display/redux/features/team/MemberSlice';
 
 type TeamMemberListItemPropsType = {
   memberId: string;
@@ -23,9 +21,6 @@ type TeamMemberListItemPropsType = {
   teamId: string;
   teamHead: string;
   username: string;
-
-  makeTeamHead: any;
-  removeFromTeam: any;
 }
 
 const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
@@ -34,12 +29,12 @@ const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
   teamId,
   teamHead,
   username,
-
-  makeTeamHead,
-  removeFromTeam,
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
+  const [removeUserFromTeam] = useRemoveUserFromTeamMutation();
+  const [makeUserTeamHead] = useMakeUserTeamHeadMutation();
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -50,7 +45,7 @@ const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
   const [removeTeamMemberDialog, setRemoveTeamMemberDialog] = useState(false)
 
   const submitRemoveFromTeam = () => {
-    removeFromTeam({ receipt: memberId })
+    removeUserFromTeam({ receiptId: memberId, teamId })
   }
 
   return (
@@ -61,7 +56,7 @@ const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
             <Checkbox
               checked={teamHead == memberId}
               onClick={() => {
-                makeTeamHead({ receipt: memberId, teamId })
+                makeUserTeamHead({ receiptId: memberId, teamId })
               }}
               color="primary" />
           }
@@ -78,7 +73,9 @@ const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
           <MenuItem onClick={() => {
             setRemoveTeamMemberDialog(true);
             handleClose();
-          }}>{'حذف از گروه'}</MenuItem>
+          }}>
+            {'حذف از تیم'}
+          </MenuItem>
         </Menu>
       </Stack>
 
@@ -91,8 +88,4 @@ const TeamMemberListItem: FC<TeamMemberListItemPropsType> = ({
   );
 };
 
-
-export default connect(null, {
-  removeFromTeam: removeFromTeamAction,
-  makeTeamHead: makeTeamHeadAction,
-})(TeamMemberListItem);
+export default TeamMemberListItem;

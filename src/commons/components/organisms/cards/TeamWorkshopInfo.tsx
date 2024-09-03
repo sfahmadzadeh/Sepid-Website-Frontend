@@ -233,7 +233,7 @@ available playerId field, otherwise we fetch one team members Id and use it to a
             </Stack>
             :
             <Typography align='right' sx={{ ":dir": 'rtl', fontSize: "8px", margin: '10px' }}>
-              {`همیاری بالای سر این گروه نیست`}
+              {`همیاری بالای سر این تیم نیست`}
             </Typography>
           }
         </Stack>
@@ -261,7 +261,7 @@ available playerId field, otherwise we fetch one team members Id and use it to a
                 ))}
               </ul>
                 : <Typography>
-                  {'این گروه هیچ عضوی ندارد.'}
+                  {'این تیم هیچ عضوی ندارد.'}
                 </Typography>}
             </Grid>
           </CardContent>
@@ -279,9 +279,9 @@ available playerId field, otherwise we fetch one team members Id and use it to a
               <Divider sx={{ margin: '15px auto 15px auto', width: '80%' }}></Divider>
               <Stack direction={'row'} sx={{ justifyContent: "space-between", fontSize: '10px', padding: '0 0 10px 0', alignItems: 'center' }}> {/* this stack is for time chip and the level team is in */}
                 <Box>
-                  {currentStateName ? `گام: ${currentStateName}` : 'گروه هنوز وارد کارگاه نشده است.'}
+                  {currentStateName ? `گام: ${currentStateName}` : 'تیم هنوز وارد کارگاه نشده است.'}
                 </Box>
-                {teamEnterTimeToState && <Tooltip title={'زمان حضور گروه در این گام'} arrow>
+                {teamEnterTimeToState && <Tooltip title={'زمان حضور تیم در این گام'} arrow>
                   <span>
                     <Button disabled sx={{ padding: 0 }}>
                       <TimeChip startTime={teamEnterTimeToState} />
@@ -308,7 +308,7 @@ available playerId field, otherwise we fetch one team members Id and use it to a
                 color="primary"
                 fullWidth
                 onClick={redirect}>
-                سرزدن به گروه
+                سرزدن به تیم
               </Button>
             )}
           </Grid>

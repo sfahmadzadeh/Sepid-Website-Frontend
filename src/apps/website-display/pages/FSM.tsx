@@ -94,7 +94,7 @@ const FSM: FC<FSMPagePropsType> = ({
     if (!player?.current_state?.id || !parseTeamStateId) return;
     if (+parseTeamStateId !== +player?.current_state.id) {
       if (isMentor) {
-        toast.info('یکی از دانش‌آموزان مکان گروه رو جا‌به‌جا کرد');
+        toast.info('یکی از دانش‌آموزان مکان تیم رو جا‌به‌جا کرد');
         mentorGetCurrentState({ id: teamHeadPlayerId });
       } else {
         // با حرکت خود بازیکن هم، اینجا اجرا میشه!‌ نباید اینطوری باشه

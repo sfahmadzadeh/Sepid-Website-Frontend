@@ -5,7 +5,6 @@ import { createAsyncThunkApi } from 'apps/website-display/redux/apis/cerateApiAs
 import {
   reviewAnswersUrl,
   addMentorToWorkshopUrl,
-  edgeUrl,
   getFSMPlayersUrl,
   getAllWorkshopMentors,
   removeMentorURL,

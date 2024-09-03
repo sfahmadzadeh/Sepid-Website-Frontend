@@ -88,7 +88,7 @@ const dictionary = {
       callMentor: 'درخواست همیار',
       mentor: 'همیار',
       edit: 'ویرایش',
-      team: 'گروه',
+      team: 'تیم',
       readArticle: 'مطالعه مقاله',
       support: 'پشتیبانی',
       history: 'سابقه',

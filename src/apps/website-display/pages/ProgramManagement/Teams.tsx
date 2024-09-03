@@ -8,7 +8,6 @@ import {
   TextField,
   Typography,
   Divider,
-  Box,
   Stack
 } from '@mui/material';
 import React, { useState, useMemo, useEffect } from 'react';
@@ -18,21 +17,16 @@ import Pagination from '@mui/material/Pagination';
 
 import TeamInfoCard from 'commons/components/organisms/cards/TeamInfoCard';
 import {
-  addUserToTeamAction,
   createRequestMentorAction,
-  createTeamAction,
   getRequestMentorAction,
   removeRequestMentorAction,
 } from 'apps/website-display/redux/slices/programs';
 import NoDataFound from 'commons/components/molecules/NoDataFound';
 import { useGetProgramQuery } from 'apps/website-display/redux/features/program/ProgramSlice';
+import { useCreateTeamMutation, useGetProgramTeamsQuery } from 'apps/website-display/redux/features/team/TeamSlice';
+import { useAddUserToTeamMutation } from 'apps/website-display/redux/features/team/MemberSlice';
 
-function Groups({
-  addUserToTeam,
-  createTeam,
-
-  allProgramTeams: allProgramTeams,
-}) {
+function Teams({ }) {
   const { programSlug } = useParams();
   const { data: program } = useGetProgramQuery({ programSlug });
   const [newTeamName, setNewTeamName] = useState('');
@@ -40,11 +34,17 @@ function Groups({
   const [selectedTeamId, setSelectedTeamId] = useState('');
   const [teams, setTeams] = useState([])
   const [teamsCards, setTeamsCards] = useState([])
+  const [addUserToTeam] = useAddUserToTeamMutation();
+  const [createTeam] = useCreateTeamMutation();
+
+  const { data: allProgramTeams } = useGetProgramTeamsQuery({ programSlug })
+
+
 
   const itemsPerPage = 12;
   const [page, setPage] = React.useState(1);
   const [noOfPages, setNoOfPages] = React.useState(
-    Math.ceil(allProgramTeams.length / itemsPerPage)
+    Math.ceil(allProgramTeams?.length / itemsPerPage)
   );
 
   useEffect(() => {
@@ -62,9 +62,10 @@ function Groups({
   };
 
   useMemo(() => {
+    if (!allProgramTeams) return;
     setNoOfPages(Math.ceil(allProgramTeams.length / itemsPerPage))
     setTeams(
-      allProgramTeams?.slice().sort((a, b) => {
+      allProgramTeams.slice().sort((a, b) => {
         if (!isNaN(parseInt(a.name)) && !isNaN(parseInt(b.name)) && parseInt(b.name) !== parseInt(a.name)) {
           return parseInt(a.name) - parseInt(b.name)
         }
@@ -74,7 +75,7 @@ function Groups({
   }, [allProgramTeams])
 
   const doCreateTeam = () => {
-    createTeam({ name: newTeamName, registration_form: program?.registration_form })
+    createTeam({ name: newTeamName, programSlug })
   }
 
   const doAddUserToTeam = () => {
@@ -85,7 +86,7 @@ function Groups({
     <Stack spacing={2}>
       <Stack spacing={2} padding={2}>
         <Typography gutterBottom variant='h2'>
-          {'ساخت گروه'}
+          {'ساخت تیم'}
         </Typography>
         <Stack>
           <Grid container spacing={1}>
@@ -95,7 +96,7 @@ function Groups({
                 size="small"
                 fullWidth
                 variant="outlined"
-                label="نام گروه"
+                label="نام تیم"
                 onChange={(e) => { setNewTeamName(e.target.value) }}
               />
             </Grid>
@@ -117,7 +118,7 @@ function Groups({
 
       <Stack spacing={2} padding={2}>
         <Typography variant='h2' gutterBottom>
-          {'افزودن کاربر به گروه'}
+          {'افزودن کاربر به تیم'}
         </Typography>
         <Stack>
           <Grid container spacing={1}>
@@ -134,8 +135,8 @@ function Groups({
             </Grid>
             <Grid item xs={12} sm={4}>
               <FormControl size="small" fullWidth variant="outlined">
-                <InputLabel>گروه</InputLabel>
-                <Select defaultValue="" onChange={(e) => setSelectedTeamId(e.target.value)} label="گروه">
+                <InputLabel>تیم</InputLabel>
+                <Select defaultValue="" onChange={(e) => setSelectedTeamId(e.target.value)} label="تیم">
                   {allProgramTeams?.map((team) => (
                     <MenuItem key={team.id} value={team.id || ''}>
                       {team.name}
@@ -162,9 +163,9 @@ function Groups({
 
       <Stack spacing={2} padding={2}>
         <Typography variant='h2' gutterBottom>
-          {'گروه‌ها'}
+          {'تیم‌ها'}
         </Typography>
-        {teams.length > 0 &&
+        {teams?.length > 0 &&
           <Pagination
             sx={{ alignSelf: 'center' }}
             count={noOfPages}
@@ -191,7 +192,7 @@ function Groups({
             {teamsCards}
           </Grid>
         </Stack>
-        {teams.length === 0 &&
+        {teams?.length === 0 &&
           <NoDataFound variant={4} />
         }
       </Stack>
@@ -200,8 +201,6 @@ function Groups({
 }
 
 const mapStateToProps = (state) => ({
-  allWorkshops: state.programs.myWorkshops || [],
-  allProgramTeams: state.programs.allProgramTeams || [],
   requestTeams: state.programs.requestTeams || {},
 });
 
@@ -209,6 +208,4 @@ export default connect(mapStateToProps, {
   getRequestMentor: getRequestMentorAction,
   createRequestMentor: createRequestMentorAction,
   removeRequestMentor: removeRequestMentorAction,
-  createTeam: createTeamAction,
-  addUserToTeam: addUserToTeamAction,
-})(Groups);
+})(Teams);

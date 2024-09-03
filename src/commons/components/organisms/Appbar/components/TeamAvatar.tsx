@@ -34,11 +34,11 @@ const TeamAvatar = () => {
       <Tooltip
         onClick={handleClick}
         arrow
-        title={`گروه ${myTeam?.name}`}>
+        title={`تیم ${myTeam?.name}`}>
         <IconButton sx={{ padding: 0 }}>
           <Avatar
             sx={{
-              backgroundColor: stringToColor(`گروه ${myTeam?.name}`),
+              backgroundColor: stringToColor(`تیم ${myTeam?.name}`),
               border: '0.1px solid lightgray',
             }}>
             {myTeam?.name.trim()[0]}
@@ -51,7 +51,7 @@ const TeamAvatar = () => {
         open={open}
         onClose={handleClose}>
         <MenuItem>
-          {`گروه ${myTeam?.name ? myTeam?.name : '؟'}`}
+          {`تیم ${myTeam?.name ? myTeam?.name : '؟'}`}
         </MenuItem>
         {myTeam?.members?.map((member) =>
           <MenuItem key={member.id}>

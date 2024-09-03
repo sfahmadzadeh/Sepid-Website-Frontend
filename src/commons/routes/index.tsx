@@ -13,7 +13,7 @@ import Login from 'apps/website-display/pages/Login';
 import FailedPayment from 'apps/website-display/pages/Message/FailedPayment';
 import SuccessfulPayment from 'apps/website-display/pages/Message/SuccessfulPayment';
 import Registration from 'apps/website-display/pages/Registration';
-import GroupSetting from 'apps/website-display/pages/GroupSetting';
+import TeamSetting from 'apps/website-display/pages/TeamSetting';
 import FSM from 'apps/website-display/pages/FSM';
 import Article from 'apps/website-display/pages/Article';
 import Articles from 'apps/website-display/pages/Articles';
@@ -57,8 +57,8 @@ const Root = () => {
           element={<Registration />}
         />
         <Route
-          path="/program/:programSlug/group-setting/"
-          element={<GroupSetting />}
+          path="/program/:programSlug/team-setting/"
+          element={<TeamSetting />}
         />
         <Route path="/program/:programSlug/" element={<Program />} />
 

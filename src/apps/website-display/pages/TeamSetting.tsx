@@ -25,11 +25,8 @@ import { useParams } from 'react-router-dom';
 import AreYouSure from 'commons/components/organisms/dialogs/AreYouSure';
 import MakeInvitation from 'commons/components/organisms/dialogs/MakeInvitation';
 import {
-  createTeamAndJoinAction,
   deleteInvitationAction,
-  deleteTeamAction,
   getMyInvitationsAction,
-  getTeamAction,
   getTeamInvitationsAction,
   inviteSomeoneAction,
 } from 'apps/website-display/redux/slices/programs';
@@ -39,8 +36,9 @@ import { toast } from 'react-toastify';
 import { useGetProgramQuery } from 'apps/website-display/redux/features/program/ProgramSlice';
 import { useGetMyReceiptQuery } from 'apps/website-display/redux/features/form/ReceiptSlice';
 import { TeamType } from 'commons/types/models';
-import ProgramGroupSettingBreadcrumbs from 'commons/components/organisms/breadcrumbs/ProgramGroupSetting';
+import ProgramTeamSettingBreadcrumbs from 'commons/components/organisms/breadcrumbs/ProgramTeamSetting';
 import ProgramPageTemplate from 'commons/components/template/program/ProgramPageTemplate';
+import { useCreateAndJoinTeamMutation, useDeleteTeamMutation, useGetTeamQuery } from '../redux/features/team/TeamSlice';
 
 const PROFILE_PICTURE = process.env.PUBLIC_URL + '/images/profile.png';
 
@@ -50,30 +48,23 @@ const invitationStatusTranslation = {
   Accepted: 'قبول',
 }
 
-type GroupSettingPropsType = {
+type TeamSettingPropsType = {
   getMyInvitations: any;
-  deleteTeam: any;
   deleteInvitation: any;
-  getTeam: any;
   getTeamInvitations: any;
   inviteSomeone: any;
-  createTeamAndJoin: any;
 
   team: TeamType;
   myInvitations: any[],
   teamInvitations: any[],
 }
 
-const GroupSetting: FC<GroupSettingPropsType> = ({
+const TeamSetting: FC<TeamSettingPropsType> = ({
   getMyInvitations,
-  deleteTeam,
   deleteInvitation,
-  getTeam,
   getTeamInvitations,
   inviteSomeone,
-  createTeamAndJoin,
 
-  team,
   myInvitations,
   teamInvitations,
 }) => {
@@ -82,9 +73,12 @@ const GroupSetting: FC<GroupSettingPropsType> = ({
   const [isDeleteTeamDialogOpen, changeDeleteTeamDialogStatus] = useState(false);
   const { data: program } = useGetProgramQuery({ programSlug });
   const { data: registrationReceipt } = useGetMyReceiptQuery({ formId: program?.registration_form }, { skip: !Boolean(program?.registration_form) });
+  const { data: team } = useGetTeamQuery({ teamId: registrationReceipt?.team as string }, { skip: !Boolean(registrationReceipt?.team) });
   const [newTeamName, setNewTeamName] = useState('');
   const isHead = registrationReceipt?.id == team?.team_head.toString()
   teamInvitations = teamInvitations.slice().sort((team1, team2) => team2.id - team1.id);
+  const [createAndJoinTeam] = useCreateAndJoinTeamMutation();
+  const [deleteTeam, { isSuccess: isDeleteTeamSuccess }] = useDeleteTeamMutation();
 
   useEffect(() => {
     if (program?.registration_form) {
@@ -95,28 +89,29 @@ const GroupSetting: FC<GroupSettingPropsType> = ({
   useEffect(() => {
     if (registrationReceipt?.team) {
       const teamId = registrationReceipt.team;
-      getTeam({ teamId });
       getTeamInvitations({ teamId });
     }
   }, [registrationReceipt]);
 
   const submitCreateTeam = () => {
     if (!newTeamName) {
-      toast.error('لطفاً نام گروه را وارد کنید.');
+      toast.error('لطفاً نام تیم را وارد کنید.');
       return;
     }
-    createTeamAndJoin({
+    createAndJoinTeam({
       name: newTeamName,
-      registration_form: program?.registration_form,
+      programSlug,
     });
   };
 
+  useEffect(() => {
+    if (isDeleteTeamSuccess) {
+      window.location.reload();
+    }
+  }, [isDeleteTeamSuccess])
+
   const submitDeleteTeam = (teamId) => {
-    deleteTeam({ teamId }).then((response) => {
-      if (response.type?.endsWith('fulfilled')) {
-        window.location.reload();
-      }
-    })
+    deleteTeam({ teamId });
   }
 
   return (
@@ -128,11 +123,11 @@ const GroupSetting: FC<GroupSettingPropsType> = ({
           alignItems="flex-start"
           spacing={2}>
           <Grid item xs={12} marginTop={-2}>
-            <ProgramGroupSettingBreadcrumbs />
+            <ProgramTeamSettingBreadcrumbs />
           </Grid>
           <Grid item xs={12}>
             <Typography gutterBottom align="center" variant='h1'>
-              {'گروه‌بندی'}
+              {'تیم‌بندی'}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -146,19 +141,19 @@ const GroupSetting: FC<GroupSettingPropsType> = ({
                     <Fragment>
                       <Typography variant="caption">
                         {
-                          'شما در گروهی عضو نیستید. یا خودتان یک گروه بسازید  و دیگران را به آن دعوت کنید، یا یکی از دعوت‌نامه‌هایی را که برایتان ارسال شده، قبول کنید.'
+                          'شما در تیمی عضو نیستید. یا خودتان یک تیم بسازید  و دیگران را به آن دعوت کنید، یا یکی از دعوت‌نامه‌هایی را که برایتان ارسال شده، قبول کنید.'
                         }
                       </Typography>
                       <Stack spacing={1}>
                         <Typography align="center" variant="h2">
-                          {'ایجاد گروه جدید'}
+                          {'ایجاد تیم جدید'}
                         </Typography>
                         <TextField
                           size="small"
                           fullWidth
                           variant="outlined"
                           value={newTeamName}
-                          label="نام گروه"
+                          label="نام تیم"
                           onChange={(e) => setNewTeamName(e.target.value)}
                         />
                         <Button
@@ -174,11 +169,11 @@ const GroupSetting: FC<GroupSettingPropsType> = ({
                   {team &&
                     <Fragment>
                       <Typography align="center" variant="h2" gutterBottom>
-                        {`گروه «${team.name}»`}
+                        {`تیم «${team.name}»`}
                       </Typography>
                       {isHead && (
                         <Box sx={{ position: 'absolute', right: 0, top: 0, marginTop: '0px !important' }}>
-                          <Tooltip title="حذف گروه" arrow>
+                          <Tooltip title="حذف تیم" arrow>
                             <IconButton
                               size="small"
                               onClick={() => changeDeleteTeamDialogStatus(true)}>
@@ -231,7 +226,7 @@ const GroupSetting: FC<GroupSettingPropsType> = ({
                 </Typography>
                 {isHead && team?.id && (
                   <Box sx={{ position: 'absolute', right: 0, top: 0 }}>
-                    <Tooltip title={'دعوت عضو جدید به گروه'} arrow>
+                    <Tooltip title={'دعوت عضو جدید به تیم'} arrow>
                       <IconButton
                         size="small"
                         onClick={() => changeCreateInvitationDialogStatus(true)}>
@@ -292,9 +287,9 @@ const GroupSetting: FC<GroupSettingPropsType> = ({
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell align="center">گروه</TableCell>
-                        <TableCell align="center">نام سرگروه</TableCell>
-                        <TableCell align="center">شماره تلفن سرگروه</TableCell>
+                        <TableCell align="center">تیم</TableCell>
+                        <TableCell align="center">نام سرتیم</TableCell>
+                        <TableCell align="center">شماره تلفن سرتیم</TableCell>
                         <TableCell align="center">پاسخ</TableCell>
                       </TableRow>
                     </TableHead>
@@ -353,10 +348,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   getMyInvitations: getMyInvitationsAction,
-  deleteTeam: deleteTeamAction,
   deleteInvitation: deleteInvitationAction,
-  createTeamAndJoin: createTeamAndJoinAction,
   inviteSomeone: inviteSomeoneAction,
   getTeamInvitations: getTeamInvitationsAction,
-  getTeam: getTeamAction,
-})(GroupSetting);
+})(TeamSetting);

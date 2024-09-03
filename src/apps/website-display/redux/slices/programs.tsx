@@ -3,26 +3,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Apis } from '../apis';
 import { createAsyncThunkApi } from '../apis/cerateApiAsyncThunk';
 import {
-  applyDiscountUrl,
   deleteInvitationUrl,
   getCertificateUrl,
   getMyInvitationsUrl,
   getTeamInvitationsUrl,
-  getTeamUrl,
   inviteSomeoneUrl,
-  paymentRequestUrl,
   respondInvitationUrl,
-  TeamCRUDUrl,
   addMentorToWorkshopUrl,
   registerUsersViaCSVUrl,
-  addUserToTeamUrl,
   getPlayerFromTeamUrl,
-  getTeamsUrl,
-  makeTeamHeadUrl,
-  removeFromTeamUrl,
   validateRegistrationReceiptUrl,
-  workshopCRUDUrl,
-  createTeamAndJoinActionUrl,
 } from '../constants/urls';
 import { getRequests, deleteRequest } from 'apps/website-display/parse/mentor'
 import { InitialState } from 'commons/types/redux/program'
@@ -50,12 +40,6 @@ const initialState: InitialState = {
   playerId: {},
   teamCurrentState: null,
 };
-
-export const getTeamAction = createAsyncThunkApi(
-  'programs/getTeamAction',
-  Apis.GET,
-  getTeamUrl
-);
 
 export const getTeamInvitationsAction = createAsyncThunkApi(
   'programs/getTeamInvitationsAction',
@@ -105,81 +89,6 @@ export const respondInvitationAction = createAsyncThunkApi(
   }
 );
 
-export const createTeamAction = createAsyncThunkApi(
-  'programs/createTeamAction',
-  Apis.POST,
-  TeamCRUDUrl,
-  {
-    defaultNotification: {
-      success: 'گروه با موفقیت ساخته شد.',
-      error: 'مشکلی وجود داشت.',
-    },
-  }
-);
-
-export const createTeamAndJoinAction = createAsyncThunkApi(
-  'programs/createTeamAndJoinAction',
-  Apis.POST,
-  createTeamAndJoinActionUrl,
-  {
-    defaultNotification: {
-      success: 'گروه با موفقیت ساخته شد.',
-      error: 'مشکلی وجود داشت.',
-    },
-  }
-);
-
-export const updateTeamChatRoomLinkAction = createAsyncThunkApi(
-  'programs/updateTeamChatRoomLinkAction',
-  Apis.PATCH,
-  TeamCRUDUrl,
-  {
-    defaultNotification: {
-      success: 'اتاق گفت‌وگوی گروه با موفقیت تغییر کرد.',
-      error: 'مشکلی وجود داشت.',
-    },
-  }
-);
-
-export const deleteTeamAction = createAsyncThunkApi(
-  'programs/deleteTeamAction',
-  Apis.DELETE,
-  TeamCRUDUrl,
-  {
-    defaultNotification: {
-      success: 'گروه با موفقیت حذف شد.',
-      error: 'مشکلی وجود داشت.',
-    },
-  }
-);
-
-export const paymentRequestAction = createAsyncThunkApi(
-  'programs/paymentRequest',
-  Apis.POST,
-  paymentRequestUrl,
-  {
-    bodyCreator: ({ discountCode, participantId }) => ({
-      code: discountCode,
-      participant_id: participantId,
-    }),
-    defaultNotification: {
-      success: 'در حال انتقال به صفحه‌ی پرداخت...',
-    },
-  }
-);
-
-export const applyDiscountAction = createAsyncThunkApi(
-  'programs/applyDiscount',
-  Apis.POST,
-  applyDiscountUrl,
-  {
-    bodyCreator: ({ discountCode, participantId }) => ({
-      code: discountCode,
-      participant_id: participantId,
-    }),
-  }
-);
-
 export const getCertificateAction = createAsyncThunkApi(
   'programs/getCertificate',
   Apis.GET,
@@ -203,18 +112,6 @@ export const registerUsersViaCSVAction = createAsyncThunkApi(
   }
 );
 
-export const addUserToTeamAction = createAsyncThunkApi(
-  'programs/addUserToTeamAction',
-  Apis.POST,
-  addUserToTeamUrl,
-  {
-    defaultNotification: {
-      success: 'کاربر با موفقیت به گروه اضافه شد',
-      error: 'اشکالی در اضافه‌کردن کاربر به گروه وجود داشت.'
-    },
-  }
-);
-
 export const validateRegistrationReceiptAction = createAsyncThunkApi(
   'programs/validateRegistrationReceiptAction',
   Apis.POST,
@@ -224,18 +121,6 @@ export const validateRegistrationReceiptAction = createAsyncThunkApi(
       success: 'وضعیت رسید ثبت‌نام با موفقیت ثبت شد.',
     },
   }
-);
-
-export const getProgramTeamsAction = createAsyncThunkApi(
-  'programs/getProgramTeamsAction',
-  Apis.GET,
-  getTeamsUrl
-);
-
-export const createWorkshopAction = createAsyncThunkApi(
-  'programs/createWorkshopAction',
-  Apis.POST,
-  workshopCRUDUrl
 );
 
 export const addMentorToWorkshopAction = createAsyncThunkApi(
@@ -252,34 +137,6 @@ export const getPlayerFromTeamAction = createAsyncThunkApi(
     bodyCreator: ({ teamId }) => ({
       team: teamId,
     }),
-  }
-);
-
-export const makeTeamHeadAction = createAsyncThunkApi(
-  'programs/makeTeamHeadAction',
-  Apis.POST,
-  makeTeamHeadUrl,
-  {
-    bodyCreator: ({ receipt }) => ({
-      receipt,
-    }),
-    defaultNotification: {
-      success: 'سرگروه گروه با موفقیت تغییر کرد.',
-    },
-  }
-);
-
-export const removeFromTeamAction = createAsyncThunkApi(
-  'programs/removeFromTeamAction',
-  Apis.POST,
-  removeFromTeamUrl,
-  {
-    bodyCreator: ({ receipt }) => ({
-      receipt,
-    }),
-    defaultNotification: {
-      success: 'کاربر از گروه با موفقیت حذف شد.',
-    },
   }
 );
 
@@ -345,12 +202,6 @@ const programSlice = createSlice({
     },
   },
   extraReducers: {
-    [getTeamAction.pending.toString()]: isFetching,
-    [getTeamAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.isFetching = false;
-      state.team = response;
-    },
-    [getTeamAction.rejected.toString()]: isNotFetching,
 
     [getTeamInvitationsAction.pending.toString()]: isFetching,
     [getTeamInvitationsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
@@ -405,35 +256,6 @@ const programSlice = createSlice({
     },
     [respondInvitationAction.rejected.toString()]: isNotFetching,
 
-    [createTeamAndJoinAction.pending.toString()]: isFetching,
-    [createTeamAndJoinAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.isFetching = false;
-      state.team = response;
-    },
-    [createTeamAndJoinAction.rejected.toString()]: isNotFetching,
-
-    [createTeamAction.pending.toString()]: isFetching,
-    [createTeamAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.isFetching = false;
-      state.allProgramTeams = [response, ...state.allProgramTeams];
-    },
-    [createTeamAction.rejected.toString()]: isNotFetching,
-
-    [updateTeamChatRoomLinkAction.pending.toString()]: isFetching,
-    [updateTeamChatRoomLinkAction.fulfilled.toString()]: (state, { meta: { arg: { teamId } }, payload: { response: returnedTeam } }) => {
-      state.allProgramTeams = [...state.allProgramTeams].map(team => team.id !== teamId ? team : { ...returnedTeam })
-      state.isFetching = false;
-    },
-    [updateTeamChatRoomLinkAction.rejected.toString()]: isNotFetching,
-
-    [deleteTeamAction.pending.toString()]: isFetching,
-    [deleteTeamAction.fulfilled.toString()]: (state, { meta: { arg: { teamId } } }) => {
-      state.allProgramTeams = [...state.allProgramTeams].filter(team => team.id != teamId)
-      state.isFetching = false;
-    },
-    [deleteTeamAction.rejected.toString()]: isNotFetching,
-
-
     [getCertificateAction.pending.toString()]: isFetching,
     [getCertificateAction.fulfilled.toString()]: (state, { payload: { response } }) => {
       state.certificateLink = response.certificate;
@@ -459,68 +281,9 @@ const programSlice = createSlice({
       delete state.teamsRequests[arg.teamId + '.' + arg.fsmId];
     },
 
-    [getProgramTeamsAction.pending.toString()]: isFetching,
-    [getProgramTeamsAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.allProgramTeams = response;
-      state.isFetching = false;
-    },
-    [getProgramTeamsAction.rejected.toString()]: isNotFetching,
-
-    [createWorkshopAction.pending.toString()]: isFetching,
-    [createWorkshopAction.fulfilled.toString()]: (state, { payload: { response } }) => {
-      state.workshops = [...state.workshops, response];
-      state.isFetching = false;
-    },
-    [createWorkshopAction.rejected.toString()]: isNotFetching,
-
-
-    [makeTeamHeadAction.pending.toString()]: isFetching,
-    [makeTeamHeadAction.fulfilled.toString()]: (state, action) => {
-      let newAllProgramTeams = [...state.allProgramTeams];
-      for (let i = 0; i < newAllProgramTeams.length; i++) {
-        if (newAllProgramTeams[i].id == action.payload.response.id) {
-          newAllProgramTeams[i] = action.payload.response;
-        }
-      }
-      state.allProgramTeams = newAllProgramTeams;
-      state.isFetching = false;
-    },
-    [makeTeamHeadAction.rejected.toString()]: isNotFetching,
-
-    [addUserToTeamAction.pending.toString()]: isFetching,
-    [addUserToTeamAction.fulfilled.toString()]: (state, action) => {
-      let newAllProgramTeams = [...state.allProgramTeams];
-      for (let i = 0; i < newAllProgramTeams.length; i++) {
-        if (newAllProgramTeams[i].id == action.payload.response.id) {
-          newAllProgramTeams[i] = action.payload.response;
-        }
-      }
-      state.allProgramTeams = newAllProgramTeams;
-      state.isFetching = false;
-    },
-    [addUserToTeamAction.rejected.toString()]: isNotFetching,
-
-
     [registerUsersViaCSVAction.pending.toString()]: isFetching,
     [registerUsersViaCSVAction.fulfilled.toString()]: isNotFetching,
     [registerUsersViaCSVAction.rejected.toString()]: isNotFetching,
-
-
-    [removeFromTeamAction.pending.toString()]: isFetching,
-    [removeFromTeamAction.fulfilled.toString()]: (state, { payload: { response }, meta: { arg: { receipt } } }) => {
-      const newAllProgramTeams = [...state.allProgramTeams];
-      for (let i = 0; i < newAllProgramTeams.length; i++) {
-        const team = newAllProgramTeams[i];
-        for (let j = 0; j < team.members.length; j++) {
-          if (team.members[j].id === receipt) {
-            team.members.splice(j, 1);
-          }
-        }
-      }
-      state.allProgramTeams = newAllProgramTeams;
-      state.isFetching = false;
-    },
-    [removeFromTeamAction.rejected.toString()]: isNotFetching,
   },
 });
 

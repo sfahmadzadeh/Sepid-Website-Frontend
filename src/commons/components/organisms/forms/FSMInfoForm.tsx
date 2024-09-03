@@ -88,7 +88,7 @@ const FSMInfoForm: FC<FSMInfoFormPropsType> = ({
             name='fsm_p_type'
             label='وضعیت کارگاه'>
             <MenuItem value={'Individual'}>{'فردی'}</MenuItem>
-            <MenuItem value={'Team'}>{'گروهی'}</MenuItem>
+            <MenuItem value={'Team'}>{'تیمی'}</MenuItem>
             {/* <MenuItem value={'Hybrid'}>{'هیبرید'}</MenuItem> */}
           </Select>
         </FormControl>

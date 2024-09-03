@@ -78,7 +78,7 @@ export type RegistrationReceiptType = {
   is_participating: boolean;
   answer_sheet_type: AnswerSheetType;
   certificate: CertificateType;
-  team: TeamType;
+  team: TeamType | string;
   answers: AnswerType[];
   status:
   'Waiting' |

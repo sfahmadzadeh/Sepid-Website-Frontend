@@ -80,7 +80,7 @@ export const FSMCard: FC<FSMCardPropsType> = ({
               <Stack direction='row' alignSelf='center' marginTop='7px'>
                 <Box marginLeft='5px' marginRight='5px'>{fsm?.has_entrance_lock ? <Lock /> : <LockOpen />}</Box>
                 {fsm?.fsm_p_type &&
-                  <Typography>{fsm.fsm_p_type == 'Team' ? 'گروهی' : 'فردی'}</Typography>
+                  <Typography>{fsm.fsm_p_type == 'Team' ? 'تیمی' : 'فردی'}</Typography>
                 }
               </Stack>
 

@@ -57,8 +57,8 @@ const ProgramPageSidebar: FC<ProgramPageSidebarPropsType> = ({
             variant="contained"
             color='info'
             fullWidth
-            onClick={() => navigate(`/program/${programSlug}/group-setting/`)}>
-            {'گروه‌بندی'}
+            onClick={() => navigate(`/program/${programSlug}/team-setting/`)}>
+            {'تیم‌بندی'}
           </Button>
         }
         {program.has_certificate &&

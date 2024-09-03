@@ -14,7 +14,6 @@ export type UserInfoType = {
   email: string | null;
   first_name: string | null;
   gender: GenderType;
-  groups: GroupType[];
   id: string;
   is_active: boolean;
   is_staff: boolean;
@@ -30,8 +29,6 @@ export type UserInfoType = {
   username: string;
   school_studentship: SchoolStudentshipType;
 }
-
-type GroupType = any;
 
 type UserPermissions = any;
 

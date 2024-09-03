@@ -79,7 +79,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
             name='participation_type'
             label='وضعیت دوره'>
             <MenuItem value={'Individual'}>{'انفرادی'}</MenuItem>
-            <MenuItem value={'Team'}>{'گروهی'}</MenuItem>
+            <MenuItem value={'Team'}>{'تیمی'}</MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -89,7 +89,7 @@ const ProgramInfoForm: FC<ProgramInfoFormPropsType> = ({
             value={data.team_size}
             fullWidth
             variant='outlined'
-            label={'تعداد نفرات هر گروه'}
+            label={'تعداد نفرات هر تیم'}
             name='team_size'
             onChange={putData}
           />

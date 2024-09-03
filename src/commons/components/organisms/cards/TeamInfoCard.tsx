@@ -11,42 +11,31 @@ import {
   Stack,
 } from '@mui/material';
 import React, { FC, Fragment, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
 import validateURL from 'commons/utils/validators/urlValidator'
 import AreYouSure from 'commons/components/organisms/dialogs/AreYouSure'
-
-import {
-  deleteTeamAction,
-  updateTeamChatRoomLinkAction,
-} from 'apps/website-display/redux/slices/programs';
 import { TeamType } from 'commons/types/models';
 import TeamMemberListItem from 'commons/components/molecules/listItems/TeamMemberListItem';
+import { useDeleteTeamMutation, useUpdateTeamMutation } from 'apps/website-display/redux/features/team/TeamSlice';
 
 type TeamInfoCardPropsType = {
   team: TeamType;
-  deleteTeam: Function;
-  updateTeamChatRoomLink: Function;
 }
 
 const TeamInfoCard: FC<TeamInfoCardPropsType> = ({
   team,
-  deleteTeam,
-  updateTeamChatRoomLink,
 }) => {
   const [teamLink, setTeamLink] = useState(team?.chat_room)
   const [linkIsValid, setLinkIsValid] = useState(false)
-  const [disableRequest, setDisableRequest] = useState(false)
   const [deleteDialogId, setDeleteDialogId] = useState(false)
+  const [updateTeam, { isLoading: isUpdateTeamLoading }] = useUpdateTeamMutation();
+  const [deleteTeam] = useDeleteTeamMutation();
 
   useEffect(() => {
     setLinkIsValid(validateURL(teamLink))
   }, [teamLink])
 
   function updateTeamLink() {
-    setDisableRequest(true)
-    updateTeamChatRoomLink({ teamId: team.id, chat_room: teamLink }).then((response) => {
-      setDisableRequest(false);
-    })
+    updateTeam({ teamId: team.id, chat_room: teamLink });
   }
 
   if (!team) {
@@ -94,7 +83,7 @@ const TeamInfoCard: FC<TeamInfoCardPropsType> = ({
               </Box>
             ))
               :
-              <Typography marginLeft='10px' marginTop='20px'>این گروه هیچ عضوی ندارد.</Typography>}
+              <Typography marginLeft='10px' marginTop='20px'>این تیم هیچ عضوی ندارد.</Typography>}
           </Stack>
         </CardContent>
         <CardActions sx={{ alignItems: 'center' }}>
@@ -107,7 +96,7 @@ const TeamInfoCard: FC<TeamInfoCardPropsType> = ({
                 error={!linkIsValid && !(teamLink == '' || teamLink == null)}
                 helperText={(!linkIsValid && !(teamLink == '' || teamLink == null)) ? ".ورودی وارد شده لینک معتبری نیست" : ' '}
                 id="standard-multiline-static"
-                label="لینک گروه"
+                label="لینک اتاق گفتگوی تیم"
                 multiline
                 rows={3}
                 placeholder="somelink.somedomain"
@@ -117,7 +106,7 @@ const TeamInfoCard: FC<TeamInfoCardPropsType> = ({
                 sx={{ marginBottom: '10px', marginTop: '10px', width: '100%', direction: 'rtl' }}
               />
               <ButtonGroup sx={{ height: '40px' }} variant="outlined" color="primary" fullWidth>
-                <Button disabled={!linkIsValid || teamLink === '' || teamLink === team.chat_room || disableRequest} onClick={updateTeamLink}>{'به‌روز‌رسانی'}</Button>
+                <Button disabled={!linkIsValid || teamLink === '' || teamLink === team.chat_room || isUpdateTeamLoading} onClick={updateTeamLink}>{'به‌روز‌رسانی'}</Button>
                 <Button onClick={() => setDeleteDialogId(true)}>{'حذف'}</Button>
               </ButtonGroup>
             </Box>
@@ -133,7 +122,4 @@ const TeamInfoCard: FC<TeamInfoCardPropsType> = ({
   );
 };
 
-export default connect(null, {
-  deleteTeam: deleteTeamAction,
-  updateTeamChatRoomLink: updateTeamChatRoomLinkAction
-})(TeamInfoCard);
+export default TeamInfoCard;

@@ -48,7 +48,7 @@ const ProgramInfo: FC<ProgramInfoPropsType> = ({
         <Typography align="center">{program.description}</Typography>
         {/* todo: this sentence may cause misunderstanding: */}
         {/* {program.participation_type == 'Team' && (
-          <Typography align="center">{`شرکت در این دوره در قالب گروه‌های ${toPersianNumber(program.team_size)} نفره امکان‌پذیر است.`}</Typography>
+          <Typography align="center">{`شرکت در این دوره در قالب تیم‌های ${toPersianNumber(program.team_size)} نفره امکان‌پذیر است.`}</Typography>
         )} */}
         {program.participation_type == 'Individual' && (
           <Typography align="center">{'شرکت در این دوره به صورت فردی است.'}</Typography>

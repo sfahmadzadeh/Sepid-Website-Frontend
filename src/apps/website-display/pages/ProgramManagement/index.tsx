@@ -11,19 +11,14 @@ import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import PersonIcon from '@mui/icons-material/Person';
 
 import React, { useEffect, FC } from 'react';
-import { connect } from 'react-redux';
-import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import {
-  getProgramTeamsAction,
-} from 'apps/website-display/redux/slices/programs';
 
 import Layout from 'commons/components/template/Layout';
 import Tickets from './Tickets';
 import Info from './Info';
 import Registration from './Registration';
 import RegistrationReceipts from './RegistrationReceipts';
-import Groups from './Groups';
+import Teams from './Teams';
 import FSMs from './FSMs';
 import StatisticsTab from './Statistics';
 import Certificates from './Certificates';
@@ -71,10 +66,10 @@ const tabs: DashboardTabType[] = [
     component: Admins,
   },
   {
-    name: 'groups',
-    label: 'گروه‌ها',
+    name: 'teams',
+    label: 'تیم‌ها',
     icon: GroupsIcon,
-    component: Groups,
+    component: Teams,
   },
   {
     name: 'fsms',
@@ -90,29 +85,19 @@ const tabs: DashboardTabType[] = [
   },
 ];
 
-type ProgramManagementPropsType = {
-  getProgramTeams: Function,
-}
+type ProgramManagementPropsType = {}
 
-const ProgramManagement: FC<ProgramManagementPropsType> = ({
-  getProgramTeams,
-}) => {
-  const t = useTranslate();
+const ProgramManagement: FC<ProgramManagementPropsType> = ({ }) => {
+  const navigate = useNavigate();
   const { programSlug, section } = useParams();
   const { data: program } = useGetProgramQuery({ programSlug });
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     if (!section) {
       navigate(`/program/${programSlug}/manage/info/`);
     }
   }, [section])
-
-  useEffect(() => {
-    if (program?.registration_form) {
-      getProgramTeams({ registrationFormId: program.registration_form });
-    }
-  }, [program?.registration_form]);
 
   const currentTab = tabs.find(tab => tab.name === section) || tabs[0];
   if (!currentTab || !program) return null;
@@ -172,6 +157,4 @@ const ProgramManagement: FC<ProgramManagementPropsType> = ({
   );
 };
 
-export default connect(null, {
-  getProgramTeams: getProgramTeamsAction,
-})(ProgramManagement);
+export default ProgramManagement;

@@ -94,7 +94,7 @@ function Meeting({ handleClose, displayName }) {
             ? <CustomJitsiMeeting
               key={random}
               appId={teamId}
-              userDisplayName={displayName} userEmail={''} roomName={`گروه ${myTeam?.name}`} />
+              userDisplayName={displayName} userEmail={''} roomName={`تیم ${myTeam?.name}`} />
             : <MeetingCustomSpinner />
         }
       </Box>
