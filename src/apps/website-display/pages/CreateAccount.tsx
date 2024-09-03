@@ -8,27 +8,24 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import {
-  createAccountAction,
-} from 'apps/website-display/redux/slices/account';
 import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
 import VerifyPhoneNumber from 'commons/components/molecules/VerifyPhoneNumber';
 import WebsiteLogo from 'commons/components/atoms/logos/WebsiteLogo';
+import { useCreateAccountMutation } from '../redux/features/user/UserSlice';
 
 type CreateAccountPropsType = {
   isFetching: boolean;
-  createAccount: any;
   accessToken: string;
 }
 
 const CreateAccount: FC<CreateAccountPropsType> = ({
   isFetching,
-  createAccount,
   accessToken,
 }) => {
   const navigate = useNavigate();
+  const [createAccount] = useCreateAccountMutation();
 
   const [data, _setData] = useState({
     firstName: '',
@@ -186,6 +183,4 @@ const mapStateToProps = (state) => ({
   isFetching: state.account.isFetching,
 });
 
-export default connect(mapStateToProps, {
-  createAccount: createAccountAction,
-})(CreateAccount);
+export default connect(mapStateToProps, {})(CreateAccount);

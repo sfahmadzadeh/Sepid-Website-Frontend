@@ -1,5 +1,19 @@
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
+type CreateAccountInputType = {
+  phoneNumber: string;
+  password: string;
+  verificationCode: string;
+  firstName: string;
+  lastName: string;
+}
+
+type CreateAccountOutputType = {
+  account: any;
+  access: string;
+  refresh: string;
+};
+
 type LoginGoogleUserInputType = {
   first_name: string;
   last_name: string;
@@ -7,7 +21,7 @@ type LoginGoogleUserInputType = {
 }
 
 type LoginGoogleUserOutputType = {
-  user: any;
+  account: any;
   access: string;
   refresh: string;
 };
@@ -45,6 +59,23 @@ type LoginOutputType = {
 
 export const UserSlice = ManageContentServiceApi.injectEndpoints({
   endpoints: builder => ({
+    createAccount: builder.mutation<CreateAccountOutputType, CreateAccountInputType>({
+      query: ({ phoneNumber, verificationCode, firstName, lastName, ...body }) => ({
+        url: 'auth/accounts/',
+        method: 'POST',
+        body: {
+          phone_number: phoneNumber,
+          code: verificationCode,
+          first_name: firstName,
+          last_name: lastName,
+          ...body
+        },
+      }),
+      transformResponse: (response: any): CreateAccountOutputType => {
+        return response;
+      },
+    }),
+
     checkAuthentication: builder.query<void, void>({
       query: () => ({
         url: 'auth/accounts/check-authentication/',
@@ -63,8 +94,6 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
     }),
 
     loginGoogleUser: builder.mutation<LoginGoogleUserOutputType, LoginGoogleUserInputType>({
-      // todo: this invalidation should be deleted (after separating permission and programs)
-      invalidatesTags: ['programs'],
       query: (body) => ({
         url: 'auth/accounts/login-with-google/',
         method: 'POST',
@@ -96,6 +125,7 @@ export const UserSlice = ManageContentServiceApi.injectEndpoints({
 });
 
 export const {
+  useCreateAccountMutation,
   useCheckAuthenticationQuery,
   useGetGoogleUserProfileQuery,
   useLoginGoogleUserMutation,

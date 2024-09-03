@@ -8,24 +8,6 @@ import {
 } from '../constants/urls';
 import { UserSlice } from 'apps/website-display/redux/features/user/UserSlice';
 
-export const createAccountAction = createAsyncThunkApi(
-  'account/createAccountAction',
-  Apis.POST,
-  accountCRUDUrl,
-  {
-    bodyCreator: ({ phoneNumber, password, verificationCode, firstName, lastName }) => ({
-      phone_number: phoneNumber,
-      password,
-      code: verificationCode,
-      first_name: firstName,
-      last_name: lastName,
-    }),
-    defaultNotification: {
-      success: 'حساب شما با موفقیت ایجاد شد.',
-      error: 'مشکلی در ایجاد حساب وجود داشت.',
-    },
-  }
-);
 
 export const getVerificationCodeAction = createAsyncThunkApi(
   'account/getVerificationCode',
@@ -101,13 +83,13 @@ const accountSlice = createSlice({
 
   extraReducers: (builder) => {
 
-    builder.addCase(
-      createAccountAction.fulfilled,
-      (state, { payload: { response } }) => {
-        state.userInfo = { ...state.userInfo, ...response.account };
-        state.id = response.account.id;
-        state.accessToken = response.access;
-        state.refreshToken = response.refresh;
+    builder.addMatcher(
+      UserSlice.endpoints.createAccount.matchFulfilled,
+      (state, { payload }) => {
+        state.userInfo = { ...state.userInfo, ...payload.account };
+        state.id = payload.account.id;
+        state.accessToken = payload.access;
+        state.refreshToken = payload.refresh;
         state.isFetching = false;
       }
     );
@@ -126,8 +108,8 @@ const accountSlice = createSlice({
     builder.addMatcher(
       UserSlice.endpoints.loginGoogleUser.matchFulfilled,
       (state, { payload }) => {
-        state.userInfo = { ...state.userInfo, ...payload.user };
-        // state.id = payload.account.id;
+        state.userInfo = { ...state.userInfo, ...payload.account };
+        state.id = payload.account.id;
         state.accessToken = payload.access;
         state.refreshToken = payload.refresh;
         state.isFetching = false;
@@ -146,8 +128,8 @@ const accountSlice = createSlice({
 
     builder.addMatcher(
       isAnyOf(
-        createAccountAction.pending,
         changePasswordAction.pending,
+        UserSlice.endpoints.createAccount.matchPending,
         UserSlice.endpoints.login.matchPending,
         UserSlice.endpoints.getGoogleUserProfile.matchPending,
         UserSlice.endpoints.loginGoogleUser.matchPending,
@@ -158,9 +140,9 @@ const accountSlice = createSlice({
 
     builder.addMatcher(
       isAnyOf(
-        createAccountAction.rejected,
         changePasswordAction.fulfilled,
         changePasswordAction.rejected,
+        UserSlice.endpoints.createAccount.matchRejected,
         UserSlice.endpoints.login.matchRejected,
         UserSlice.endpoints.getGoogleUserProfile.matchRejected,
         UserSlice.endpoints.loginGoogleUser.matchRejected,
