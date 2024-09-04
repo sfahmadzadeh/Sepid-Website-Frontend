@@ -10,12 +10,12 @@ import { useTranslate } from 'react-redux-multilingual/lib/context';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import Layout from 'commons/components/template/Layout';
-import WebsiteInfoTab from './Info';
-import ProgramsTab from './Programs';
-import StatisticsTab from './Statistics';
-import ArticlesTab from './Articles';
-import ThirdPartiesTab from './ThirdParties';
-import AppearanceTab from './Appearance';
+import WebsiteInfoTab from '../components/template/website-management/Info';
+import ProgramsTab from '../components/template/website-management/Programs';
+import StatisticsTab from '../components/template/website-management/Statistics';
+import ArticlesTab from '../components/template/website-management/Articles';
+import ThirdPartiesTab from '../components/template/website-management/ThirdParties';
+import AppearanceTab from '../components/template/website-management/Appearance';
 import { DashboardTabType } from 'commons/types/global';
 
 const tabs: DashboardTabType[] = [

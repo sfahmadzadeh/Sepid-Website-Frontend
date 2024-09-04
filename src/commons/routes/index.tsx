@@ -21,7 +21,7 @@ import PrivateRoute from './PrivateRoute';
 import FSMManagement from 'apps/website-display/pages/FSMManagement';
 import Correction from 'apps/website-display/pages/Correction';
 import EditArticle from 'apps/website-display/pages/EditArticle';
-import WebsiteManagement from 'apps/website-display/pages/WebsiteManagement';
+import WebsiteManagement from 'apps/website-factory/pages/WebsiteManagement';
 import ProfilePage from 'apps/website-display/pages/Profile';
 
 const Root = () => {
