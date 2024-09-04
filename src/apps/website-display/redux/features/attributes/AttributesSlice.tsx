@@ -1,9 +1,7 @@
 import { CurrencyType } from 'commons/types/models';
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
-type GetCurrenciesInputType = {
-  website: string;
-};
+type GetCurrenciesInputType = {};
 
 type GetCurrenciesOutputType = CurrencyType[];
 
@@ -15,7 +13,7 @@ export const AttributeSlice = ManageContentServiceApi.injectEndpoints({
 
     getCurrencies: builder.query<GetCurrenciesOutputType, GetCurrenciesInputType>({
       providesTags: ['currencies'],
-      query: ({ website }) => `attributes/currencies/?website=${website}`,
+      query: () => `attributes/currencies/`,
       transformResponse: (response: any): GetCurrenciesOutputType => {
         return response;
       },

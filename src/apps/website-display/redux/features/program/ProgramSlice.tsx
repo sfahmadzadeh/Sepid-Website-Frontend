@@ -2,7 +2,6 @@ import { FSMUserPermissions, ProgramType, ProgramUserPermissions } from 'commons
 import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type GetProgramsInputType = {
-  websiteName: string | undefined;
   pageNumber?: number;
 }
 
@@ -39,7 +38,6 @@ type UpdateProgramOutputType = {
 }
 
 type CreateProgramInputType = {
-  websiteName: string;
   body: any;
 };
 
@@ -52,13 +50,10 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
 
     createProgram: builder.mutation<CreateProgramOutputType, CreateProgramInputType>({
       invalidatesTags: ['programs'],
-      query: ({ websiteName, ...body }) => ({
+      query: (body) => ({
         url: `/fsm/program/`,
         method: 'POST',
-        body: {
-          ...body,
-          website: websiteName,
-        },
+        body,
       }),
       transformResponse: (response: any): UpdateProgramOutputType => {
         return response;
@@ -79,7 +74,7 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
 
     getPrograms: builder.query<GetProgramsOutputType, GetProgramsInputType>({
       providesTags: ['programs'],
-      query: ({ websiteName, pageNumber = 1 }) => `fsm/program/?website=${websiteName}&page=${pageNumber}`,
+      query: ({ pageNumber = 1 }) => `fsm/program/?page=${pageNumber}`,
       transformResponse: (response: any): GetProgramsOutputType => {
         return {
           programs: response.results,
@@ -111,7 +106,6 @@ export const ProgramSlice = ManageContentServiceApi.injectEndpoints({
         return response;
       },
     }),
-
 
     softDeleteProgram: builder.mutation<any, { programSlug: string }>({
       invalidatesTags: ['programs'],

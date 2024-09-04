@@ -4,7 +4,6 @@ import { ArticleType } from 'commons/types/redux/article';
 type GetArticleOutputType = ArticleType;
 
 type GetArticlesInputType = {
-  websiteName: string;
   pageNumber: number;
 }
 
@@ -29,7 +28,7 @@ export const ArticleSlice = ManageContentServiceApi.injectEndpoints({
 
     getArticles: builder.query<GetArticlesOutputType, GetArticlesInputType>({
       providesTags: ['articles'],
-      query: ({ websiteName, pageNumber }) => `fsm/article/?website=${websiteName}&page=${pageNumber}`,
+      query: ({ pageNumber }) => `fsm/article/?page=${pageNumber}`,
       transformResponse: (response: any): GetArticlesOutputType => {
         return {
           count: response.count,

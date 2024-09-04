@@ -2,13 +2,11 @@ import { Button, ButtonGroup, Container, Grid, Typography } from '@mui/material'
 import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
-import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'apps/website-display/redux/features/WebsiteSlice';
+import { useGetPageMetadataQuery } from 'apps/website-display/redux/features/WebsiteSlice';
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
-
-  const { data: website } = useGetWebsiteQuery();
-  const { data: websiteMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
+  const { data: websiteMetadata } = useGetPageMetadataQuery({ pageAddress: window.location.pathname });
 
   return (
     <Fragment>

@@ -6,17 +6,16 @@ import { ProgramType } from 'commons/types/models';
 import ProgramCardSkeleton from 'commons/components/organisms/cards/ProgramCardSkeleton';
 import Banner from 'commons/components/molecules/Banner';
 import { useGetProgramsQuery } from 'apps/website-display/redux/features/program/ProgramSlice';
-import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'apps/website-display/redux/features/WebsiteSlice';
+import { useGetPageMetadataQuery } from 'apps/website-display/redux/features/WebsiteSlice';
 import NoDataFound from 'commons/components/molecules/NoDataFound';
 
 const Programs = ({ }) => {
-  const { data: website } = useGetWebsiteQuery();
-  const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
+  const { data: pageMetadata } = useGetPageMetadataQuery({ pageAddress: window.location.pathname });
   const {
     data: programsData,
     isLoading,
     isSuccess,
-  } = useGetProgramsQuery({ websiteName: website?.name }, { skip: !Boolean(website) });
+  } = useGetProgramsQuery({});
   const programs = programsData?.programs.filter(program => program.is_visible) || [];
   const visiblePrograms = programs.filter(program => program.is_visible)
 

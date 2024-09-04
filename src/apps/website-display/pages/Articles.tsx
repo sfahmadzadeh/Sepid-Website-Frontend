@@ -8,18 +8,14 @@ import Layout from 'commons/components/template/Layout';
 
 import { ITEMS_PER_PAGE_NUMBER } from 'commons/configs/Constants';
 import { useGetArticlesQuery } from 'apps/website-display/redux/features/article/ArticleSlice';
-import { useGetWebsiteQuery } from 'apps/website-display/redux/features/WebsiteSlice';
 import NoDataFound from 'commons/components/molecules/NoDataFound';
 
-type ArticlesPropsType = {
-}
+type ArticlesPropsType = {}
 
-const Articles: FC<ArticlesPropsType> = ({
-}) => {
+const Articles: FC<ArticlesPropsType> = ({ }) => {
   const [pageNumber, setPageNumber] = useState(1);
 
-  const { data: website } = useGetWebsiteQuery();
-  const { data, isSuccess } = useGetArticlesQuery({ websiteName: website?.name, pageNumber }, { skip: !Boolean(website) });
+  const { data, isSuccess } = useGetArticlesQuery({ pageNumber });
   const articles = data?.articles || [];
   const count = data?.count || 0;
 

@@ -14,7 +14,7 @@ import { Helmet } from "react-helmet";
 import createEmotionCache from 'commons/configs/CreateEmotionCache'
 import selectTheme from 'commons/configs/themes';
 import { resetRedirectAction } from 'apps/website-display/redux/slices/redirect';
-import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'apps/website-display/redux/features/WebsiteSlice';
+import { useGetPageMetadataQuery } from 'apps/website-display/redux/features/WebsiteSlice';
 import Root from 'commons/routes';
 import translations from 'commons/translations';
 import LinearLoading from 'commons/components/atoms/LinearLoading';
@@ -34,9 +34,8 @@ const App = ({
   const navigate = useNavigate();
   // check token expiration:
   useCheckAuthenticationQuery(null, { skip: !accessToken });
-  const { data: website } = useGetWebsiteQuery();
-  const { data: websiteMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
-  const { data: thirdPartiesTokens } = useGetThirdPartiesQuery({ partyName: website?.name }, { skip: !Boolean(website) })
+  const { data: websiteMetadata } = useGetPageMetadataQuery({ pageAddress: window.location.pathname });
+  const { data: thirdPartiesTokens } = useGetThirdPartiesQuery()
 
   useEffect(() => {
     if (thirdPartiesTokens) {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import DashboardButton from '../components/DashboardButton';
-import { useGetPageMetadataQuery, useGetWebsiteQuery } from 'apps/website-display/redux/features/WebsiteSlice';
+import { useGetPageMetadataQuery } from 'apps/website-display/redux/features/WebsiteSlice';
 import WebsiteLogo from 'commons/components/atoms/logos/WebsiteLogo';
 import DefaultAppbarItems from './DefaultAppbarItems';
 import UserInfo from '../components/UserInfo';
@@ -10,8 +10,7 @@ import { useSelector } from 'react-redux';
 
 const DashboardAppbarItems = ({ }) => {
 
-  const { data: website } = useGetWebsiteQuery();
-  const { data: pageMetadata } = useGetPageMetadataQuery({ websiteName: website?.name, pageAddress: window.location.pathname }, { skip: !Boolean(website) });
+  const { data: pageMetadata } = useGetPageMetadataQuery({ pageAddress: window.location.pathname });
   const isUserAuthenticated = useSelector((state: any) => state.account.accessToken);
 
   if (!pageMetadata?.appbar?.body) {

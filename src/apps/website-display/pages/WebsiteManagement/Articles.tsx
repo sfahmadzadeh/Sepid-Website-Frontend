@@ -5,10 +5,7 @@ import {
 } from '@mui/material';
 import { Pagination } from '@mui/material';
 import React, { useState, Fragment, FC } from 'react';
-import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { ITEMS_PER_PAGE_NUMBER } from 'commons/configs/Constants';
-import { addMentorToWorkshopAction } from 'apps/website-display/redux/slices/programs';
 import AddNewThingButton from 'commons/components/atoms/AddNewThingButton';
 import { useGetArticlesQuery } from 'apps/website-display/redux/features/article/ArticleSlice';
 import ArticleCard from 'commons/components/organisms/cards/ArticleCard';
@@ -20,10 +17,9 @@ type ArticlesTabPropsType = {
 
 const ArticlesTab: FC<ArticlesTabPropsType> = ({
 }) => {
-  const { websiteName } = useParams();
   const [openCreateArticleDialog, setOpenCreateArticleDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const { data, isLoading } = useGetArticlesQuery({ websiteName, pageNumber: 1 });
+  const { data, isLoading } = useGetArticlesQuery({ pageNumber: 1 });
 
   const articles = data?.articles || [];
   const count = data?.count || 0;

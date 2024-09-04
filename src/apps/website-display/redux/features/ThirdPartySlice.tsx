@@ -3,8 +3,8 @@ import { ManageWebsiteServiceApi } from './ManageWebsiteServiceApiSlice';
 
 export const ThirdPartySlice = ManageWebsiteServiceApi.injectEndpoints({
   endpoints: builder => ({
-    getThirdParties: builder.query<ProgramType[], { partyName: string | undefined }>({
-      query: ({ partyName }) => `third-party/get-third-party/?website=${partyName}`,
+    getThirdParties: builder.query<ProgramType[], void>({
+      query: () => `third-party/get-third-party/`,
     })
   })
 });

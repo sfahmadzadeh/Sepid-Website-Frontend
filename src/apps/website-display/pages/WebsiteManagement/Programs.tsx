@@ -6,7 +6,6 @@ import {
 import { Pagination } from '@mui/material';
 import React, { useState, Fragment, FC } from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
 import { ITEMS_PER_PAGE_NUMBER } from 'commons/configs/Constants';
 import { addMentorToWorkshopAction } from 'apps/website-display/redux/slices/programs';
 import AddNewThingButton from 'commons/components/atoms/AddNewThingButton';
@@ -19,10 +18,9 @@ type ProgramsTabPropsType = {}
 
 const ProgramsTab: FC<ProgramsTabPropsType> = ({
 }) => {
-  const { websiteName } = useParams();
   const [openCreateProgramDialog, setOpenCreateProgramDialog] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
-  const { data, isLoading } = useGetProgramsQuery({ websiteName });
+  const { data, isLoading } = useGetProgramsQuery({});
 
   const programs = data?.programs;
   const count = data?.count || 0;

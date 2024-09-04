@@ -7,7 +7,6 @@ import {
 } from '@mui/material';
 import React, { FC } from 'react';
 import { useGetCurrenciesQuery } from 'apps/website-display/redux/features/attributes/AttributesSlice';
-import { useGetWebsiteQuery } from 'apps/website-display/redux/features/WebsiteSlice';
 
 type CreateAttributeDialogPropsType = {
   open: boolean;
@@ -18,8 +17,7 @@ const CreateAttributeDialog: FC<CreateAttributeDialogPropsType> = ({
   open,
   handleClose,
 }) => {
-  const { data: website } = useGetWebsiteQuery();
-  const { data: currencies } = useGetCurrenciesQuery({ website: website.name }, { skip: !Boolean(website) });
+  const { data: currencies } = useGetCurrenciesQuery({});
 
   return (
     <Dialog disableScrollLock open={open} maxWidth="md" onClose={handleClose}>

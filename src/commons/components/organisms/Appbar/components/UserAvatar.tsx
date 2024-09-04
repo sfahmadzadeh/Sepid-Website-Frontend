@@ -27,7 +27,7 @@ const UserAvatar = ({ name = 'بی‌نام', logout }: UserAvatarPropsType) => 
   };
 
   const { data: website } = useGetWebsiteQuery();
-  const { data: websitePermissions } = useGetPermissionQuery({ websiteName: website?.name }, { skip: !Boolean(website?.name) });
+  const { data: websitePermissions } = useGetPermissionQuery();
 
   return (
     <Fragment>
