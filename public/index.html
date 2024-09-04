@@ -6,71 +6,15 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>در حال بارگیری</title>
+  </script>
+</head>
 
-    <script>
-      const setOpenGraphMetaData = (openGraphGMetaData) => {
-        document.title = openGraphGMetaData.title;
+<body>
 
-        var ogUrl = document.createElement('meta');
-        ogUrl.setAttribute('property', 'og:url');
-        ogUrl.content = openGraphGMetaData.url;
-        document
-          .getElementsByTagName('head')[0]
-          .appendChild(ogUrl);
+  <noscript>You need to enable JavaScript to run this app.</noscript>
 
-        var ogType = document.createElement('meta');
-        ogType.setAttribute('property', 'og:type');
-        ogType.content = openGraphGMetaData.type;
-        document
-          .getElementsByTagName('head')[0]
-          .appendChild(ogType);
+  <div id="root"></div>
 
-        var ogTitle = document.createElement('meta');
-        ogTitle.setAttribute('property', 'og:title');
-        ogTitle.content = openGraphGMetaData.title;
-        document
-          .getElementsByTagName('head')[0]
-          .appendChild(ogTitle);
-
-        var ogDescription = document.createElement('meta');
-        ogDescription.setAttribute('property', 'og:description');
-        ogDescription.content = openGraphGMetaData.description;
-        document
-          .getElementsByTagName('head')[0]
-          .appendChild(ogDescription);
-
-        var ogImage = document.createElement('meta');
-        ogImage.setAttribute('property', 'og:image');
-        ogImage.content = openGraphGMetaData.image;
-        document
-          .getElementsByTagName('head')[0]
-          .appendChild(ogImage);
-
-      }
-      // fetch('https://mps.sepid.org/api/party/get-og_metadata/')
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     setOpenGraphMetaData(data);
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error:', error);
-      //     setOpenGraphMetaData({
-      //       title: 'پلتفرم سپید',
-      //       type: 'website',
-      //       image: '%PUBLIC_URL%/logo.png',
-      //       description: 'نسل بعدی تولید و عرضه‌ی محتوا',
-      //       url: 'https://sepid.org/',
-      //     })
-      //   });
-    </script>
-  </head>
-
-  <body>
-
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-
-    <div id="root"></div>
-
-  </body>
+</body>
 
 </html>
