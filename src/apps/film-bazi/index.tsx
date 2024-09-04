@@ -50,7 +50,7 @@ const FilmBaziCampaign: FC<FilmBaziCampaignPropsType> = ({ }) => {
             <Stack>
               <Grid container spacing={2}>
                 {films.map((film) => (
-                  <Grid item xs={12} sm={6} md={4} key={film.name}>
+                  <Grid container item xs={12} sm={6} md={4} key={film.name} justifyContent={'center'}>
                     <FilmCard film={film} />
                   </Grid>
                 ))}
