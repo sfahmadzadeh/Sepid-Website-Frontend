@@ -7,7 +7,7 @@ import { logoutAction } from 'apps/website-display/redux/slices/account';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useGetPermissionQuery, useGetWebsiteQuery } from 'apps/website-display/redux/features/WebsiteSlice';
+import { useGetPermissionQuery } from 'apps/website-display/redux/features/WebsiteSlice';
 
 type UserAvatarPropsType = {
   name: string;
@@ -26,7 +26,6 @@ const UserAvatar = ({ name = 'بی‌نام', logout }: UserAvatarPropsType) => 
     setAnchorEl(null);
   };
 
-  const { data: website } = useGetWebsiteQuery();
   const { data: websitePermissions } = useGetPermissionQuery();
 
   return (
@@ -57,7 +56,7 @@ const UserAvatar = ({ name = 'بی‌نام', logout }: UserAvatarPropsType) => 
           </Stack>
         </MenuItem>
         {websitePermissions?.isAdmin &&
-          <MenuItem onClick={() => navigate(`/website/${website.name}/manage/`)}>
+          <MenuItem onClick={() => navigate(`/website/manage/`)}>
             <Stack direction='row' spacing={1} alignItems={'center'}>
               <SettingsIcon />
               <Typography>

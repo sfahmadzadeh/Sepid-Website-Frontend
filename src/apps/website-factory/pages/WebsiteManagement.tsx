@@ -68,12 +68,12 @@ const WebsiteManagement: FC<WebsiteManagementPropsType> = ({
 
 }) => {
   const t = useTranslate();
-  const { websiteName, section } = useParams();
+  const { section } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!section) {
-      navigate(`/website/${websiteName}/manage/info/`);
+      navigate(`/website/manage/info/`);
     }
   }, [section])
 
@@ -97,7 +97,7 @@ const WebsiteManagement: FC<WebsiteManagementPropsType> = ({
                 <Button
                   key={index}
                   onClick={() => {
-                    navigate(`/website/${websiteName}/manage/${tabs[index].name}/`)
+                    navigate(`/website/manage/${tabs[index].name}/`)
                   }}
                   disabled={tab.isActive === false}
                   variant={tab.name === section ? 'contained' : 'outlined'}
