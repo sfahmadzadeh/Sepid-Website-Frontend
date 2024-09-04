@@ -228,7 +228,7 @@ const UserSettingInfoForm: FC<UserSettingInfoFormPropsType> = ({
         </FormControl>
       </Grid>
 
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <TextField
           fullWidth
           helperText='جوایز و یادگاری‌ها به این آدرس ارسال می‌شوند.'
@@ -239,9 +239,9 @@ const UserSettingInfoForm: FC<UserSettingInfoFormPropsType> = ({
           onChange={handleChange}
           label="آدرس منزل (اختیاری)"
         />
-      </Grid>
+      </Grid> */}
 
-      <Grid item xs={12} sm={6}>
+      {/* <Grid item xs={12} sm={6}>
         <TextField
           fullWidth
           name="postal_code"
@@ -254,7 +254,7 @@ const UserSettingInfoForm: FC<UserSettingInfoFormPropsType> = ({
           inputProps={{ className: 'ltr-input' }}
           label="کد پستی (اختیاری)"
         />
-      </Grid>
+      </Grid> */}
     </Grid >
   );
 }
