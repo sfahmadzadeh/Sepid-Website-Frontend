@@ -79,8 +79,8 @@ const Widget: FC<WidgetPropsType> = ({
   });
 
   const beCorrected = (widget as QuestionWidgetType).be_corrected;
-  const cost = widget.cost;
-  const reward = widget.reward;
+  const cost = null; // widget.cost;
+  const reward = null; // widget.reward;
 
   const onSubmit = () => {
     onAnswerSubmit({ ...answerBody, onSuccess: () => setShowCostDialog(showCostDialog => !showCostDialog) });

@@ -17,8 +17,6 @@ export type WidgetType = {
   id: number;
   mode: WidgetModes;
   widget_type: WidgetTypes;
-  cost: any;
-  reward: any;
   hints: HintType[];
   is_hidden: boolean;
 };
