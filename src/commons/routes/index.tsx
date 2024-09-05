@@ -21,13 +21,16 @@ import PrivateRoute from './PrivateRoute';
 import FSMManagement from 'apps/website-display/pages/FSMManagement';
 import Correction from 'apps/website-display/pages/Correction';
 import EditArticle from 'apps/website-display/pages/EditArticle';
-import WebsiteManagement from 'apps/website-factory/pages/WebsiteManagement';
 import ProfilePage from 'apps/website-display/pages/Profile';
+import WebsiteManagement from 'apps/website-factory/pages/WebsiteManagement';
+import StateEditor from 'apps/website-display/pages/StateEditor';
 
 const Root = () => {
 
   return (
     <Routes>
+
+      <Route path="/state-editor/" element={<StateEditor />} />
 
       <Route path="/" element={<Navigate to={'/programs/'} />} />
       <Route path="/login/" element={<Login />} />
@@ -63,7 +66,7 @@ const Root = () => {
         <Route path="/program/:programSlug/" element={<Program />} />
 
         {/* only website admins can visit: */}
-        <Route path="/website/:websiteName/manage/:section?/" element={<WebsiteManagement />} />
+        <Route path="/website/manage/:section?/" element={<WebsiteManagement />} />
 
         {/* only mentors can visit: */}
         <Route path="/program/:programSlug/manage/:section?/" element={<ProgramManagement />} />
