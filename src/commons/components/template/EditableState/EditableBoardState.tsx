@@ -1,23 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { Rnd } from 'react-rnd';
 import { useGetFSMStateQuery } from 'apps/website-display/redux/features/fsm/FSMStateSlice';
-import { WidgetType } from 'commons/types/widgets/widget';
+import { WidgetPositionType, WidgetType } from 'commons/types/widgets/widget';
 import Widget, { WidgetModes } from 'commons/components/organisms/Widget';
 import { useGetPaperQuery } from 'apps/website-display/redux/features/paper/PaperSlice';
+import { useGetWidgetPositionsByPaperQuery, useSaveWidgetPositionsMutation } from 'apps/website-display/redux/features/widget/WidgetPositionSlice';
+import { Button } from '@mui/material';
 
 const EditableBoardState = ({ fsmStateId }) => {
   const { data: fsmState } = useGetFSMStateQuery({ fsmStateId });
   const { data: paper } = useGetPaperQuery({ paperId: fsmStateId }, { skip: !fsmStateId });
-  const [widgets, setComponents] = useState<WidgetType[]>([]);
+  const [widgetsWithPositions, setWidgetsWithPositions] = useState<(WidgetType & WidgetPositionType)[]>([]);
+  const { data: widgetPositions } = useGetWidgetPositionsByPaperQuery({ paperId: fsmStateId });
+  const [savePositions] = useSaveWidgetPositionsMutation();
 
   useEffect(() => {
-    if (paper) {
-      setComponents(paper.widgets)
-    }
-  }, [paper])
+    if (!paper || !widgetPositions) return;
+    const widgets = paper.widgets;
+    const mergeWidgetsAndPositions = () => {
+      return widgets.map(widget => {
+        const position = widgetPositions.find(pos => pos.widget === widget.id) || {
+          x: Math.random() * 400,
+          y: Math.random() * 400,
+          width: 200,
+          height: 200
+        };
+        return {
+          ...widget,
+          ...position
+        };
+      });
+    };
+
+    const merged = mergeWidgetsAndPositions();
+    setWidgetsWithPositions(merged);
+  }, [paper, widgetPositions]);
 
   const handleDragStop = (id, d) => {
-    setComponents(prevComponents =>
+    setWidgetsWithPositions(prevComponents =>
       prevComponents.map(comp =>
         comp.id === id ? { ...comp, x: d.x, y: d.y } : comp
       )
@@ -25,7 +45,7 @@ const EditableBoardState = ({ fsmStateId }) => {
   };
 
   const handleResize = (id, ref, position) => {
-    setComponents(prevComponents =>
+    setWidgetsWithPositions(prevComponents =>
       prevComponents.map(comp =>
         comp.id === id
           ? { ...comp, width: ref.offsetWidth, height: ref.offsetHeight, x: position.x, y: position.y }
@@ -34,16 +54,31 @@ const EditableBoardState = ({ fsmStateId }) => {
     );
   };
 
+  const handleSaveWidgetPositions = () => {
+    savePositions({
+      positions: widgetsWithPositions.map(widgetWithPosition => ({
+        widget: widgetWithPosition.id,
+        x: widgetWithPosition.x,
+        y: widgetWithPosition.y,
+        width: widgetWithPosition.width,
+        height: widgetWithPosition.height,
+      }))
+    })
+  }
+
   return (
     <div style={{ width: 800, height: '100vh', background: '#f0f0f0', position: 'relative', overflow: 'hidden' }}>
-      {widgets?.map((widget) => (
+      <Button onClick={handleSaveWidgetPositions}>
+        {'ذخیره'}
+      </Button>
+      {widgetsWithPositions?.map((widget) => (
         <Rnd
           key={widget.id}
           default={{
-            x: widget.x || 100,
-            y: widget.y || 100,
-            width: widget.width || 200,
-            height: widget.height || 200,
+            x: widget.x,
+            y: widget.y,
+            width: widget.width,
+            height: widget.height,
           }}
           style={{ border: 'solid' }}
           bounds="parent"
