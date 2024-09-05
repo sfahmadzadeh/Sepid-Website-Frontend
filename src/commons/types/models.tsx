@@ -1,3 +1,4 @@
+import { HintType } from "./global";
 import { SchoolStudentshipType, UserInfoType } from "./profile";
 import { WidgetType } from "./widgets/widget";
 
@@ -93,11 +94,14 @@ export type RegistrationReceiptType = {
   'StudentshipDataIncomplete';
 }
 
-type PaperType = 'RegistrationForm';
-type AcceptingStatus = 'AutoAccept' | 'Manual';
-type AudienceType = 'Student' | 'Academic' | 'All';
-type FSMLearningType = 'Supervised' | 'Unsupervised';
-type FSMPType = 'Individual' | 'Team' | 'Hybrid';
+type StateTemplateTypes = 'normal' | 'board';
+type PaperTypes = 'RegistrationForm';
+type AcceptingStatusTypes = 'AutoAccept' | 'Manual';
+type AudienceTypes = 'Student' | 'Academic' | 'All';
+type FSMLearningTypes = 'Supervised' | 'Unsupervised';
+type FSMPTypes = 'Individual' | 'Team' | 'Hybrid';
+
+type a = FSMStateType;
 
 export type ContentType = {
   has_entrance_lock?: boolean;
@@ -110,8 +114,8 @@ export type FSMType = ContentType & {
   name: string;
   first_state: FSMStateType;
   description: string;
-  fsm_learning_type: FSMLearningType | '';
-  fsm_p_type: FSMPType | '';
+  fsm_learning_type: FSMLearningTypes | '';
+  fsm_p_type: FSMPTypes | '';
   program: string;
   cover_page: string;
   is_active: boolean;
@@ -122,9 +126,9 @@ export type FSMType = ContentType & {
 type GenderPartitionType = 'OnlyMale' | 'OnlyFemale' | 'BothPartitioned' | 'BothNonPartitioned';
 
 export type RegistrationFormType = {
-  accepting_status: AcceptingStatus;
+  accepting_status: AcceptingStatusTypes;
   gender_partition_status: GenderPartitionType;
-  audience_type: AudienceType;
+  audience_type: AudienceTypes;
   certificate_templates: any;
   certificates_ready: boolean;
   conditions: any;
@@ -137,7 +141,7 @@ export type RegistrationFormType = {
   is_exam: boolean;
   max_grade: number;
   min_grade: number;
-  paper_type: PaperType;
+  paper_type: PaperTypes;
   since: string;
   till: string;
   widgets: WidgetType[];
@@ -146,7 +150,18 @@ export type Article = any
 export type Problem = any
 export type Submission = any
 export type SubmissionIsLoading = boolean
-export type FSMStateType = any;
+export type PaperType = {
+  id: string;
+  widgets: WidgetType[]
+  hints: HintType[];
+}
+export type FSMStateType = PaperType & {
+  name: string;
+  fsm: string;
+  inward_edges: EdgeType[];
+  outward_edges: EdgeType[];
+  template: StateTemplateTypes;
+};
 export type FSMEdgeType = any;
 export type Answer = any
 export type WorkshopEdge = any
@@ -260,9 +275,12 @@ export type PlayerType = {
 }
 
 export type EdgeType = {
+  tail: any;
+  head: any;
   id: string;
   has_transition_lock?: boolean;
   is_visible: boolean;
+  is_back_enabled?: boolean;
 }
 
 export type CurrencyType = any;

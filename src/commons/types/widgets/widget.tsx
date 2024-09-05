@@ -12,6 +12,13 @@ export type WidgetTypes =
   'MultiChoiceProblem' |
   'UploadFileProblem';
 
+export type WidgetPositionType = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 export type WidgetType = {
   name: string;
   id: number;
@@ -19,4 +26,4 @@ export type WidgetType = {
   widget_type: WidgetTypes;
   hints: HintType[];
   is_hidden: boolean;
-};
+} & WidgetPositionType;

@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import { useParams } from 'react-router';
 import StatesMenu from 'commons/components/organisms/StatesMenu';
-import EditState from 'commons/components/template/EditState';
+import EditableState from 'commons/components/template/EditableState';
 import { useGetFSMStatesQuery } from 'apps/website-display/redux/features/fsm/FSMSlice';
 
 type DesignStatesPropsType = {}
@@ -34,7 +34,7 @@ const DesignStates: FC<DesignStatesPropsType> = ({ }) => {
       {(isLoading) ?
         <Skeleton variant="rounded" width={'100%'} height={600} /> :
         ((fsmStates[finalStateIndex]?.id) ?
-          <EditState fsmStateId={fsmStates[finalStateIndex].id} /> :
+          <EditableState fsmStateId={fsmStates[finalStateIndex].id} /> :
           <Typography variant='h2'>
             {'گامی وجود ندارد.'}
           </Typography>)

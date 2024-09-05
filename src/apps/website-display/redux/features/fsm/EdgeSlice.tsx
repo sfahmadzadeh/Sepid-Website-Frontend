@@ -3,7 +3,7 @@ import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type UpdateFSMEdgeInputType = {
   fsmEdgeId: string;
-} & FSMStateType;
+} & Partial<FSMEdgeType>;
 
 type UpdateFSMEdgeOutputType = FSMEdgeType;
 

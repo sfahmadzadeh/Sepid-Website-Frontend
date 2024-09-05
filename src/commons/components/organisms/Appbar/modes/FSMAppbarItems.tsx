@@ -36,9 +36,9 @@ const FSMAppbarItems = ({ }) => {
   const mobileMenuListItems = [];
   const toolbarItems = [];
 
-  if (fsm?.first_state?.is_exam) {
-    toolbarItems.push(reviewAnswers);
-  }
+  // if (fsm?.first_state?.is_exam) {
+  //   toolbarItems.push(reviewAnswers);
+  // }
 
   // if (program?.show_scores) {
   //   toolbarItems.push(scoresDialogButton);

@@ -97,78 +97,87 @@ const Widget: FC<WidgetPropsType> = ({
   const Cover = useMemo(() =>
     coveredWithPaper
       ? ({ children }) =>
-        <Paper elevation={2} sx={{ padding: 1 }}>
+        <Paper elevation={2} sx={{ padding: 1, width: '100%', height: '100%' }}>
           {children}
         </Paper>
-      : ({ children }) => children
+      : ({ children }) =>
+        <Fragment>
+          {children}
+        </Fragment>
     , [coveredWithPaper])
 
   return (
     <Fragment>
       <Cover>
-        <Stack sx={{ position: 'relative' }}>
-          {mode === WidgetModes.Edit &&
-            <Stack>
-              <Stack direction='row' alignItems='center' justifyContent='space-between'>
-                <Typography variant='h3' gutterBottom>
-                  {widget.name}
-                </Typography>
-                <Box>
-                  {/* <Tooltip title='ویژگی‌ها' arrow>
+        {mode === WidgetModes.Edit &&
+          <Stack>
+            <Stack direction='row' alignItems='center' justifyContent='space-between'>
+              <Typography variant='h3' gutterBottom>
+                {widget.name}
+              </Typography>
+              <Box>
+                {/* <Tooltip title='ویژگی‌ها' arrow>
                     <IconButton size='small' onClick={() => setAddAttributeDialogOpen(true)}>
                       <PaidIcon />
                     </IconButton>
                   </Tooltip> */}
-                  <Tooltip title='راهنمایی‌ها' arrow>
-                    <IconButton size='small' onClick={() => setEditHintDialog(true)}>
-                      <HelpIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title='ویرایش' arrow>
-                    <IconButton size='small' onClick={() => setOpenEditDialog(true)}>
-                      <EditIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title='حذف' arrow>
-                    <IconButton size='small' onClick={() => setOpenDeleteWidgetDialog(true)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Box>
-              </Stack>
-              <Box mb={2}>
-                <Divider />
+                <Tooltip title='راهنمایی‌ها' arrow>
+                  <IconButton size='small' onClick={() => setEditHintDialog(true)}>
+                    <HelpIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title='ویرایش' arrow>
+                  <IconButton size='small' onClick={() => setOpenEditDialog(true)}>
+                    <EditIcon />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title='حذف' arrow>
+                  <IconButton size='small' onClick={() => setOpenDeleteWidgetDialog(true)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
               </Box>
-              <EditWidgetDialog
-                {...widget}
-                paperId={paperId}
-                open={openEditDialog}
-                handleClose={() => setOpenEditDialog(false)}
-                onMutate={onMutate}
-              />
-              <DeleteWidgetDialog
-                widgetId={widget.id}
-                open={openDeleteWidgetDialog}
-                handleClose={() => setOpenDeleteWidgetDialog(false)}
-                onDelete={onDelete}
-              />
-              <EditHintsDialog
-                paperId={paperId}
-                hints={widget.hints}
-                referenceId={widget.id}
-                open={openEditHintDialog}
-                handleClose={() => setEditHintDialog(false)}
-              />
             </Stack>
-          }
-          {(mode === WidgetModes.View && widget?.hints?.length) ? <WidgetHint hints={widget.hints} /> : null}
-        </Stack>
+            <Box mb={2}>
+              <Divider />
+            </Box>
+          </Stack>
+        }
+        {(mode === WidgetModes.View && widget?.hints?.length) ? <WidgetHint hints={widget.hints} /> : null}
         <WidgetComponent submittedAnswer={submittedAnswer} {...widget} mode={mode} onAnswerSubmit={onAnswerSubmitWrapper || onAnswerSubmit} onAnswerChange={onAnswerChange} />
       </Cover>
       {cost &&
-        <CostDialog cost={cost} callBackFunction={onSubmit} open={showCostDialog} handleClose={() => setShowCostDialog(showCostDialog => !showCostDialog)} />
+        <CostDialog
+          cost={cost}
+          callBackFunction={onSubmit}
+          open={showCostDialog}
+          handleClose={() => setShowCostDialog(showCostDialog => !showCostDialog)}
+        />
       }
-      <CreateAttributeDialog open={openAddAttributeDialog} handleClose={() => setAddAttributeDialogOpen(!openAddAttributeDialog)} />
+      <CreateAttributeDialog
+        open={openAddAttributeDialog}
+        handleClose={() => setAddAttributeDialogOpen(!openAddAttributeDialog)}
+      />
+      <EditWidgetDialog
+        {...widget}
+        paperId={paperId}
+        open={openEditDialog}
+        handleClose={() => setOpenEditDialog(false)}
+        onMutate={onMutate}
+      />
+      <DeleteWidgetDialog
+        widgetId={widget.id}
+        open={openDeleteWidgetDialog}
+        handleClose={() => setOpenDeleteWidgetDialog(false)}
+        onDelete={onDelete}
+      />
+      <EditHintsDialog
+        paperId={paperId}
+        hints={widget.hints}
+        referenceId={widget.id}
+        open={openEditHintDialog}
+        handleClose={() => setEditHintDialog(false)}
+      />
     </Fragment>
   );
 };

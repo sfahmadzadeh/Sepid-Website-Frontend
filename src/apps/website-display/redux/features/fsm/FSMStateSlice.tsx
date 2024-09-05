@@ -3,9 +3,9 @@ import { ManageContentServiceApi } from '../ManageContentServiceApiSlice';
 
 type UpdateFSMStateInputType = {
   fsmStateId: string;
-} & FSMStateType;
+} & Partial<FSMStateType>;
 
-type UpdateFSMStateOutputType = FSMStateType;
+type UpdateFSMStateOutputType = Partial<FSMStateType>;
 
 type CreateFSMStateInputType = {
   fsmId: string;
@@ -65,7 +65,7 @@ export const FSMStateSlice = ManageContentServiceApi.injectEndpoints({
 
     getFSMState: builder.query<GetFSMStateOutputType, { fsmStateId: string }>({
       providesTags: (result, error, item) => {
-        if (!error){
+        if (!error) {
           return ([{ type: 'fsm-state', id: result.id }]);
         }
       },

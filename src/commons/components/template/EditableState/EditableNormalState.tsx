@@ -11,16 +11,16 @@ import React, { useState, FC, Fragment, useEffect } from 'react';
 import { useParams } from 'react-router';
 import AreYouSure from 'commons/components/organisms/dialogs/AreYouSure';
 import CreateWidgetDialog from 'commons/components/organisms/dialogs/CreateWidgetDialog';
-import { EditPaper } from './Paper';
-import EditHints from './EditHints';
+import { EditPaper } from '../Paper';
+import EditHints from '../EditHints';
 import { useDeleteFSMStateMutation, useGetFSMStateQuery, useUpdateFSMStateMutation } from 'apps/website-display/redux/features/fsm/FSMStateSlice';
 import { toast } from 'react-toastify';
 
-type EditStatePropsType = {
+type EditableNormalStatePropsType = {
   fsmStateId: string;
 }
 
-const EditState: FC<EditStatePropsType> = ({
+const EditableNormalState: FC<EditableNormalStatePropsType> = ({
   fsmStateId,
 }) => {
   const { fsmId } = useParams()
@@ -31,7 +31,7 @@ const EditState: FC<EditStatePropsType> = ({
   const [name, setName] = useState<string>(null);
   const { data: fsmState } = useGetFSMStateQuery({ fsmStateId });
   const [deleteFSMState] = useDeleteFSMStateMutation();
-  const [updateFSMState] = useUpdateFSMStateMutation();
+  const [updateFSMState, result] = useUpdateFSMStateMutation();
 
   useEffect(() => {
     if (fsmState) {
@@ -48,9 +48,14 @@ const EditState: FC<EditStatePropsType> = ({
       fsmStateId,
       name: name,
       fsm: fsmId,
-      onSuccess: () => setIsEditingStateName(false),
     });
   }
+
+  useEffect(() => {
+    if (result.isSuccess) {
+      setIsEditingStateName(false)
+    }
+  }, [result])
 
   return (
     <Fragment>
@@ -129,4 +134,4 @@ const EditState: FC<EditStatePropsType> = ({
   );
 }
 
-export default EditState;
+export default EditableNormalState;
