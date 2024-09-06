@@ -39,7 +39,7 @@ const EditableBoardState = ({ fsmStateId }) => {
   const handleDragStop = (id, d) => {
     setWidgetsWithPositions(prevComponents =>
       prevComponents.map(comp =>
-        comp.id === id ? { ...comp, x: d.x, y: d.y } : comp
+        comp.id === id ? { ...comp, x: Math.round(d.x), y: Math.round(d.y) } : comp
       )
     );
   };
@@ -48,7 +48,7 @@ const EditableBoardState = ({ fsmStateId }) => {
     setWidgetsWithPositions(prevComponents =>
       prevComponents.map(comp =>
         comp.id === id
-          ? { ...comp, width: ref.offsetWidth, height: ref.offsetHeight, x: position.x, y: position.y }
+          ? { ...comp, width: Math.round(ref.offsetWidth), height: Math.round(ref.offsetHeight), x: Math.round(position.x), y: Math.round(position.y) }
           : comp
       )
     );
