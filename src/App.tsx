@@ -1,6 +1,6 @@
 import 'commons/configs/styles/App.css';
 import 'react-toastify/dist/ReactToastify.css';
-
+             
 import { Slide, ToastContainer } from 'react-toastify';
 import React, { Fragment, useEffect } from 'react';
 import { CssBaseline } from '@mui/material';
