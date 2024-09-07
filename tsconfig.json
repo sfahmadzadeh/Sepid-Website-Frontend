@@ -32,7 +32,7 @@
     "strictNullChecks": false,
   },
   "include": [
-    "src", "types/font.d.ts"
+    "src", "commons/types/font.d.ts"
   ],
   "types": [
     "@types/moment-duration-format",
