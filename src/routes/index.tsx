@@ -23,6 +23,7 @@ import Correction from 'pages/Correction';
 import EditArticle from 'pages/EditArticle';
 import WebsiteManagement from 'pages/WebsiteManagement';
 import ProfilePage from 'pages/Profile';
+import CourseMapEditor from 'components/organisms/courseMap/CourseMapEditorProvider';
 
 const Root = () => {
 
@@ -31,6 +32,7 @@ const Root = () => {
 
       <Route path="/" element={<Navigate to={'/programs/'} />} />
       <Route path="/login/" element={<Login />} />
+      <Route path="map" element={<CourseMapEditor />} />
       <Route path="/reset-password/" element={<ResetPassword />} />
       <Route path="/create-account/" element={<CreateAccount />} />
       <Route path="/articles/" element={<Articles />} />
